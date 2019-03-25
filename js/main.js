@@ -1,7 +1,7 @@
 let config = {
   type: Phaser.AUTO,
   width: 800,
-  height: 600,
+  height: 400,
   scene: minigame
 };
 
