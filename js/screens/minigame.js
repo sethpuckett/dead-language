@@ -10,6 +10,7 @@ minigame.init = function() {
   this.wordPool = [...vocab.words]
   this.wordsInUse = []
   this.zombies = []
+  this.score = 0
 }
 
 minigame.preload = function() {
@@ -17,9 +18,13 @@ minigame.preload = function() {
 }
 
 minigame.create = function() {
-  this.textEntry = this.add.text(10, this.cameras.main.height - 50, '', { font: '32px Courier', fill: '#ffff00' });
-  this.keys = this.input.keyboard.addKeys('SPACE, BACKSPACE, ENTER, A,B,C')
+  // TODO: fonts and text location should be in config
+  this.textEntry = this.add.text(10, this.cameras.main.height - 50, '', { font: '32px Courier', fill: '#ffff00' })
+  this.scoreLabel = this.add.text(10, 10, 'Kills:', { font: '32px Courier', fill: '#ffff00' })
+  // TODO: calculate X value based on width of score label
+  this.scoreValue = this.add.text(125, 10, this.score, { font: '32px Courier', fill: '#ff0000' })
 
+  this.keys = this.input.keyboard.addKeys('SPACE, BACKSPACE, ENTER, A,B,C')
   this.input.keyboard.on('keydown', function (event) {
     if (event.keyCode === this.keys.BACKSPACE.keyCode  && this.textEntry.text.length > 0) {
       this.textEntry.text = this.textEntry.text.substr(0, this.textEntry.text.length - 1);
@@ -103,6 +108,8 @@ minigame.submitAnswer = function() {
     if (mg.textEntry.text === word.language2) {
       mg.destroyZombieByWord(word.language1)
       mg.releaseVocabWord(word.language1)
+      mg.score++
+      mg.scoreValue.text = mg.score
     }
   })
 
