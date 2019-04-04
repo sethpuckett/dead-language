@@ -11,6 +11,7 @@ minigame.init = function() {
   this.wordsInUse = []
   this.zombies = []
   this.score = 0
+  this.damage = 0
 }
 
 minigame.preload = function() {
@@ -23,6 +24,8 @@ minigame.create = function() {
   this.scoreLabel = this.add.text(10, 10, 'Kills:', { font: '32px Courier', fill: '#ffff00' })
   // TODO: calculate X value based on width of score label
   this.scoreValue = this.add.text(125, 10, this.score, { font: '32px Courier', fill: '#ff0000' })
+  this.damageLabel = this.add.text(this.cameras.main.width - 175, 10, 'Misses:', { font: '32px Courier', fill: '#ffff00' })
+  this.damageValue = this.add.text(this.cameras.main.width - 40, 10, this.damage, { font: '32px Courier', fill: '#ff0000' })
 
   this.keys = this.input.keyboard.addKeys('SPACE, BACKSPACE, ENTER, A,B,C')
   this.input.keyboard.on('keydown', function (event) {
@@ -35,16 +38,43 @@ minigame.create = function() {
     }
   }, this);
 
+  // TODO: position should be in config
+  // TODO: make configurable way to visual rect for debugging
+  this.playerHitRect = new Phaser.Geom.Rectangle(0, this.cameras.main.height - 50, this.cameras.main.width, 10)
+
   this.activateSpawnTimer();
 }
 
 minigame.update = function() {
-
   // TODO: is there a reason to use the Phaser Call loop here?
   this.zombies.forEach(function(zombie) {
     zombie.y += zombie.speed
     zombie.text.y += zombie.speed
   })
+
+  this.checkZombieAttack();
+}
+
+minigame.checkZombieAttack = function() {
+  let mg = this
+  this.zombies.forEach(function(zombie) {
+    if(Phaser.Geom.Intersects.RectangleToRectangle(zombie.getBounds(), mg.playerHitRect)) {
+      mg.damage++
+      mg.damageValue.text = mg.damage
+      mg.releaseVocabWord(zombie.text.text)
+      zombie.text.destroy()
+      zombie.destroy()
+      zombie.hit = true
+    }
+  })
+
+  this.zombies = this.zombies.filter(function(zombie) {
+    return !zombie.hit
+  })
+}
+
+minigame.zombieHit = function() {
+
 }
 
 minigame.activateSpawnTimer = function() {
