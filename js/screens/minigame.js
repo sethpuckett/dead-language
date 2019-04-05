@@ -26,6 +26,11 @@ minigame.create = function() {
   this.scoreValue = this.add.text(125, 10, this.score, { font: '32px Courier', fill: '#ff0000' })
   this.damageLabel = this.add.text(this.cameras.main.width - 175, 10, 'Misses:', { font: '32px Courier', fill: '#ffff00' })
   this.damageValue = this.add.text(this.cameras.main.width - 40, 10, this.damage, { font: '32px Courier', fill: '#ff0000' })
+  this.timerLabel = this.add.text(this.cameras.main.width / 2 - 150, 10, 'Time Remaining:', { font: '24px Courier', fill: '#ffff00' })
+  this.timerValue = this.add.text(this.cameras.main.width / 2 + 68, 10, '', { font: '24px Courier', fill: '#ff0000' })
+
+  // TODO: delay should be config
+  this.gameTimer = this.time.addEvent({ delay: 60000, callback: this.gameTimerFinish, callbackScope: this })
 
   this.keys = this.input.keyboard.addKeys('SPACE, BACKSPACE, ENTER, A,B,C')
   this.input.keyboard.on('keydown', function (event) {
@@ -56,6 +61,10 @@ minigame.update = function() {
     zombie.y += zombie.speed
     zombie.text.y += zombie.speed
   })
+
+  // TODO: time should be based on config values
+  remaining = 60 - this.gameTimer.getElapsedSeconds()
+  this.timerValue.text = remaining.toFixed(1)
 
   this.checkZombieAttack()
 }
@@ -158,6 +167,10 @@ minigame.destroyZombieByWord = function(word) {
   this.zombies[index].text.destroy()
   this.zombies[index].destroy()
   this.zombies.splice(index, 1)
+}
+
+minigame.gameTimerFinish = function() {
+
 }
 
 // TODO: move to helper class
