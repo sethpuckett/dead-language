@@ -1,4 +1,4 @@
-let minigame = new Phaser.Scene('Minigame');
+let minigame = new Phaser.Scene('Minigame')
 
 minigame.init = function() {
   // TODO: Put these in config somewhere
@@ -15,12 +15,12 @@ minigame.init = function() {
 }
 
 minigame.preload = function() {
-  this.load.image('zombie', 'assets/images/zombie.png');
+  this.load.image('zombie', 'assets/images/zombie.png')
 }
 
 minigame.create = function() {
   // TODO: fonts and text location should be in config
-  this.textEntry = this.add.text(10, this.cameras.main.height - 50, '', { font: '32px Courier', fill: '#ffff00' })
+  this.textEntry = this.add.text(10, this.cameras.main.height - 40, '', { font: '32px Courier', fill: '#ffff00' })
   this.scoreLabel = this.add.text(10, 10, 'Kills:', { font: '32px Courier', fill: '#ffff00' })
   // TODO: calculate X value based on width of score label
   this.scoreValue = this.add.text(125, 10, this.score, { font: '32px Courier', fill: '#ff0000' })
@@ -30,19 +30,24 @@ minigame.create = function() {
   this.keys = this.input.keyboard.addKeys('SPACE, BACKSPACE, ENTER, A,B,C')
   this.input.keyboard.on('keydown', function (event) {
     if (event.keyCode === this.keys.BACKSPACE.keyCode  && this.textEntry.text.length > 0) {
-      this.textEntry.text = this.textEntry.text.substr(0, this.textEntry.text.length - 1);
+      this.textEntry.text = this.textEntry.text.substr(0, this.textEntry.text.length - 1)
     } else if (isLetter(event.keyCode) || event.keyCode === this.keys.SPACE.keyCode) {
-      this.textEntry.text += event.key;
+      this.textEntry.text += event.key
     } else if (event.keyCode === this.keys.ENTER.keyCode) {
-      this.submitAnswer();
+      this.submitAnswer()
     }
-  }, this);
+  }, this)
+
+  // TODO: move positions, colors, etc to config
+  this.lineGraphics = this.add.graphics({ lineStyle: { width: 2, color: 0xaa0000 } })
+  this.failLine = new Phaser.Geom.Line(0, this.cameras.main.height - 50, this.cameras.main.width, this.cameras.main.height - 50)
+  this.lineGraphics.strokeLineShape(this.failLine)
 
   // TODO: position should be in config
   // TODO: make configurable way to visual rect for debugging
   this.playerHitRect = new Phaser.Geom.Rectangle(0, this.cameras.main.height - 50, this.cameras.main.width, 10)
 
-  this.activateSpawnTimer();
+  this.activateSpawnTimer()
 }
 
 minigame.update = function() {
@@ -52,7 +57,7 @@ minigame.update = function() {
     zombie.text.y += zombie.speed
   })
 
-  this.checkZombieAttack();
+  this.checkZombieAttack()
 }
 
 minigame.checkZombieAttack = function() {
@@ -79,9 +84,9 @@ minigame.zombieHit = function() {
 
 minigame.activateSpawnTimer = function() {
   if (this.spawnTimer != null) {
-    this.spawnTimer.reset({ delay: this.getSpawnDelay() , callback: this.spawnZombie, callbackScope: this, repeat: 1 });
+    this.spawnTimer.reset({ delay: this.getSpawnDelay() , callback: this.spawnZombie, callbackScope: this, repeat: 1 })
   } else {
-    this.spawnTimer = this.time.addEvent({ delay: this.getSpawnDelay(), callback: this.spawnZombie, callbackScope: this });
+    this.spawnTimer = this.time.addEvent({ delay: this.getSpawnDelay(), callback: this.spawnZombie, callbackScope: this })
   }
 }
 
@@ -157,5 +162,5 @@ minigame.destroyZombieByWord = function(word) {
 
 // TODO: move to helper class
 function isLetter(keyCode) {
-  return keyCode >= 65 && keyCode <= 90;
+  return keyCode >= 65 && keyCode <= 90
 }
