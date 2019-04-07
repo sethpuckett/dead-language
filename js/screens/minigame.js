@@ -16,6 +16,7 @@ minigame.init = function() {
 
 minigame.preload = function() {
   this.load.image('zombie', 'assets/images/zombie.png')
+  this.load.image('grass', 'assets/images/grass.png')
 }
 
 minigame.create = function() {
@@ -52,6 +53,10 @@ minigame.create = function() {
   // TODO: make configurable way to visual rect for debugging
   this.playerHitRect = new Phaser.Geom.Rectangle(0, this.cameras.main.height - 50, this.cameras.main.width, 10)
 
+  this.background = this.add.tileSprite(0, 0, this.cameras.main.width, this.cameras.main.height - 50, 'grass');
+  this.background.setOrigin(0, 0)
+  this.background.setDepth(-1)
+
   this.activateSpawnTimer()
 }
 
@@ -85,10 +90,6 @@ minigame.checkZombieAttack = function() {
   this.zombies = this.zombies.filter(function(zombie) {
     return !zombie.hit
   })
-}
-
-minigame.zombieHit = function() {
-
 }
 
 minigame.activateSpawnTimer = function() {
