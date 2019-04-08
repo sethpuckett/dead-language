@@ -1,5 +1,12 @@
 let minigame = new Phaser.Scene('Minigame')
 
+// let firestore = firebase.firestore()
+// const lessonRef = firestore.collection('lessons').where('name', '==', 'Basic Phrases').get().then((snap) => {
+//   snap.forEach(function(doc) {
+//     minigame.wordPool = [...doc.data().vocab]
+//   })
+// });
+
 minigame.init = function() {
   // TODO: Put these in config somewhere
   this.baseFallSpeed = 25
