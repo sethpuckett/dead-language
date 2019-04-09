@@ -1,4 +1,4 @@
-let vocab = {
+export default {
   words: [
     { language1: 'time', language2: 'vez', gender: 'f', permitted: [], example: '' },
     // { language1: 'year', language2: 'año', gender: 'm', permitted: ['ano'], example: '' },

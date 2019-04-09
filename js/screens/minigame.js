@@ -1,3 +1,6 @@
+import vocab from '../vocab'
+import Phaser from 'phaser'
+
 let minigame = new Phaser.Scene('Minigame')
 
 // let firestore = firebase.firestore()
@@ -75,7 +78,7 @@ minigame.update = function() {
   })
 
   // TODO: time should be based on config values
-  remaining = 60 - this.gameTimer.getElapsedSeconds()
+  let remaining = 60 - this.gameTimer.getElapsedSeconds()
   this.timerValue.text = remaining.toFixed(1)
 
   this.checkZombieAttack()
@@ -142,7 +145,7 @@ minigame.spawnZombie = function() {
 minigame.reserveVocabWord = function() {
   // TODO: error handling for empty pool
   let poolIndex = Phaser.Math.RND.between(0, this.wordPool.length - 1)
-  word = this.wordPool.splice(poolIndex, 1)[0]
+  let word = this.wordPool.splice(poolIndex, 1)[0]
   this.wordsInUse.push(word)
   return word
 }
@@ -169,7 +172,7 @@ minigame.submitAnswer = function() {
 }
 
 minigame.destroyZombieByWord = function(word) {
-  index = this.zombies.findIndex(function(zombie) {
+  let index = this.zombies.findIndex(function(zombie) {
     return zombie.text.text === word
   })
   this.zombies[index].text.destroy()
@@ -185,3 +188,5 @@ minigame.gameTimerFinish = function() {
 function isLetter(keyCode) {
   return keyCode >= 65 && keyCode <= 90
 }
+
+export default minigame
