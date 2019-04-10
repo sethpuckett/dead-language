@@ -10,7 +10,7 @@ let minigame = new Phaser.Scene('Minigame')
 //   })
 // });
 
-minigame.init = () => {
+minigame.init = function() {
   // TODO: Put these in config somewhere
   this.baseFallSpeed = 25
   this.fallRange = 10
@@ -24,12 +24,12 @@ minigame.init = () => {
   this.damage = 0
 }
 
-minigame.preload = () => {
+minigame.preload = function() {
   this.load.image('zombie', 'assets/images/zombie.png')
   this.load.image('grass', 'assets/images/grass.png')
 }
 
-minigame.create = () => {
+minigame.create = function() {
   // TODO: fonts and text location should be in config
   this.textEntry = this.add.text(10, this.cameras.main.height - 40, '', { font: '32px Courier', fill: '#ffff00' })
   this.scoreLabel = this.add.text(10, 10, 'Kills:', { font: '32px Courier', fill: '#ffff00' })
@@ -44,7 +44,7 @@ minigame.create = () => {
   this.gameTimer = this.time.addEvent({ delay: 60000, callback: this.gameTimerFinish, callbackScope: this })
 
   this.keys = this.input.keyboard.addKeys('SPACE, BACKSPACE, ENTER, A,B,C')
-  this.input.keyboard.on('keydown', function (event) {
+  this.input.keyboard.on('keydown', (event) => {
     if (event.keyCode === this.keys.BACKSPACE.keyCode && this.textEntry.text.length > 0) {
       this.textEntry.text = this.textEntry.text.substr(0, this.textEntry.text.length - 1)
     } else if (isLetter(event.keyCode) || event.keyCode === this.keys.SPACE.keyCode) {
@@ -70,7 +70,7 @@ minigame.create = () => {
   this.activateSpawnTimer()
 }
 
-minigame.update = () => {
+minigame.update = function() {
   // TODO: is there a reason to use the Phaser Call loop here?
   this.zombies.forEach((zombie) => {
     zombie.y += zombie.speed
@@ -84,13 +84,12 @@ minigame.update = () => {
   this.checkZombieAttack()
 }
 
-minigame.checkZombieAttack = () => {
-  let mg = this
+minigame.checkZombieAttack = function() {
   this.zombies.forEach((zombie) => {
-    if (Phaser.Geom.Intersects.RectangleToRectangle(zombie.getBounds(), mg.playerHitRect)) {
-      mg.damage++
-      mg.damageValue.text = mg.damage
-      mg.releaseVocabWord(zombie.text.text)
+    if (Phaser.Geom.Intersects.RectangleToRectangle(zombie.getBounds(), this.playerHitRect)) {
+      this.damage++
+      this.damageValue.text = this.damage
+      this.releaseVocabWord(zombie.text.text)
       zombie.text.destroy()
       zombie.destroy()
       zombie.hit = true
@@ -102,7 +101,7 @@ minigame.checkZombieAttack = () => {
   })
 }
 
-minigame.activateSpawnTimer = () => {
+minigame.activateSpawnTimer = function() {
   if (this.spawnTimer != null) {
     this.spawnTimer.reset({ delay: this.getSpawnDelay(), callback: this.spawnZombie, callbackScope: this, repeat: 1 })
   } else {
@@ -110,21 +109,21 @@ minigame.activateSpawnTimer = () => {
   }
 }
 
-minigame.getSpawnLocation = () => {
+minigame.getSpawnLocation = function() {
   // TODO: don't hard code padding
   return Phaser.Math.RND.between(25, this.cameras.main.width - 25)
 }
 
-minigame.getSpawnDelay = () => {
+minigame.getSpawnDelay = function() {
   return this.baseSpawnRate + Phaser.Math.RND.between(-this.spawnRange, this.spawnRange)
 }
 
-minigame.getFallSpeed = () => {
+minigame.getFallSpeed = function() {
   // TODO : don't hard code this equation here
   return (this.baseFallSpeed + Phaser.Math.RND.between(-this.fallRange, this.fallRange)) / 40
 }
 
-minigame.spawnZombie = () => {
+minigame.spawnZombie = function() {
   // TODO: add zombie class to store extra data
   let zombie = this.add.sprite(
     this.getSpawnLocation(),
@@ -142,7 +141,7 @@ minigame.spawnZombie = () => {
   this.activateSpawnTimer()
 }
 
-minigame.reserveVocabWord = () => {
+minigame.reserveVocabWord = function() {
   // TODO: error handling for empty pool
   let poolIndex = Phaser.Math.RND.between(0, this.wordPool.length - 1)
   let word = this.wordPool.splice(poolIndex, 1)[0]
@@ -150,28 +149,27 @@ minigame.reserveVocabWord = () => {
   return word
 }
 
-minigame.releaseVocabWord = (text) => {
+minigame.releaseVocabWord = function(text) {
   let index = this.wordsInUse.findIndex((word) => {
     return word.language1 === text
   })
   this.wordPool.push(this.wordsInUse.splice(index, 1)[0])
 }
 
-minigame.submitAnswer = () => {
-  let mg = this
+minigame.submitAnswer = function() {
   this.wordsInUse.forEach((word) => {
-    if (mg.textEntry.text === word.language2) {
-      mg.destroyZombieByWord(word.language1)
-      mg.releaseVocabWord(word.language1)
-      mg.score++
-      mg.scoreValue.text = mg.score
+    if (this.textEntry.text === word.language2) {
+      this.destroyZombieByWord(word.language1)
+      this.releaseVocabWord(word.language1)
+      this.score++
+      this.scoreValue.text = this.score
     }
   })
 
   this.textEntry.text = ''
 }
 
-minigame.destroyZombieByWord = (word) => {
+minigame.destroyZombieByWord = function(word) {
   let index = this.zombies.findIndex((zombie) => {
     return zombie.text.text === word
   })
@@ -180,7 +178,7 @@ minigame.destroyZombieByWord = (word) => {
   this.zombies.splice(index, 1)
 }
 
-minigame.gameTimerFinish = () => {
+minigame.gameTimerFinish = function() {
 
 }
 
