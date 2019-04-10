@@ -4,6 +4,7 @@ import Phaser from 'phaser'
 
 // TODO: make property of minigame class
 const SPAWN_PADDING_PERCENT = 10
+const SPEED_MODIFIER = 500000
 
 let minigame = new Phaser.Scene('Minigame')
 
@@ -104,7 +105,7 @@ minigame.update = function(_time, delta) {
 minigame.getMovement = function(speed, delta) {
   // TODO: calculate this once upfront
   let totalDistance = this.cameras.main.height - config.minigame.ui.entryHeight
-  return speed * delta * totalDistance / 500000
+  return speed * delta * totalDistance / SPEED_MODIFIER
 }
 
 minigame.checkZombieAttack = function() {
