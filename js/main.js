@@ -6,6 +6,6 @@ let config = {
   width: 800,
   height: 400,
   scene: minigame
-};
+}
 
-let game = new Phaser.Game(config);
+let game = new Phaser.Game(config)

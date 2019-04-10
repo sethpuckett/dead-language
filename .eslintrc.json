@@ -10,5 +10,12 @@
   },
   "globals": {
     "__DEV__": true
+  },
+  "rules": {
+    "space-before-function-paren": ["error", {
+      "anonymous": "always",
+      "named": "never",
+      "asyncArrow": "always"
+    }]
   }
 }

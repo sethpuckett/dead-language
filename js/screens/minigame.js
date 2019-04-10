@@ -10,7 +10,7 @@ let minigame = new Phaser.Scene('Minigame')
 //   })
 // });
 
-minigame.init = function() {
+minigame.init = () => {
   // TODO: Put these in config somewhere
   this.baseFallSpeed = 25
   this.fallRange = 10
@@ -24,12 +24,12 @@ minigame.init = function() {
   this.damage = 0
 }
 
-minigame.preload = function() {
+minigame.preload = () => {
   this.load.image('zombie', 'assets/images/zombie.png')
   this.load.image('grass', 'assets/images/grass.png')
 }
 
-minigame.create = function() {
+minigame.create = () => {
   // TODO: fonts and text location should be in config
   this.textEntry = this.add.text(10, this.cameras.main.height - 40, '', { font: '32px Courier', fill: '#ffff00' })
   this.scoreLabel = this.add.text(10, 10, 'Kills:', { font: '32px Courier', fill: '#ffff00' })
@@ -45,7 +45,7 @@ minigame.create = function() {
 
   this.keys = this.input.keyboard.addKeys('SPACE, BACKSPACE, ENTER, A,B,C')
   this.input.keyboard.on('keydown', function (event) {
-    if (event.keyCode === this.keys.BACKSPACE.keyCode  && this.textEntry.text.length > 0) {
+    if (event.keyCode === this.keys.BACKSPACE.keyCode && this.textEntry.text.length > 0) {
       this.textEntry.text = this.textEntry.text.substr(0, this.textEntry.text.length - 1)
     } else if (isLetter(event.keyCode) || event.keyCode === this.keys.SPACE.keyCode) {
       this.textEntry.text += event.key
@@ -63,16 +63,16 @@ minigame.create = function() {
   // TODO: make configurable way to visual rect for debugging
   this.playerHitRect = new Phaser.Geom.Rectangle(0, this.cameras.main.height - 50, this.cameras.main.width, 10)
 
-  this.background = this.add.tileSprite(0, 0, this.cameras.main.width, this.cameras.main.height - 50, 'grass');
+  this.background = this.add.tileSprite(0, 0, this.cameras.main.width, this.cameras.main.height - 50, 'grass')
   this.background.setOrigin(0, 0)
   this.background.setDepth(-1)
 
   this.activateSpawnTimer()
 }
 
-minigame.update = function() {
+minigame.update = () => {
   // TODO: is there a reason to use the Phaser Call loop here?
-  this.zombies.forEach(function(zombie) {
+  this.zombies.forEach((zombie) => {
     zombie.y += zombie.speed
     zombie.text.y += zombie.speed
   })
@@ -84,10 +84,10 @@ minigame.update = function() {
   this.checkZombieAttack()
 }
 
-minigame.checkZombieAttack = function() {
+minigame.checkZombieAttack = () => {
   let mg = this
-  this.zombies.forEach(function(zombie) {
-    if(Phaser.Geom.Intersects.RectangleToRectangle(zombie.getBounds(), mg.playerHitRect)) {
+  this.zombies.forEach((zombie) => {
+    if (Phaser.Geom.Intersects.RectangleToRectangle(zombie.getBounds(), mg.playerHitRect)) {
       mg.damage++
       mg.damageValue.text = mg.damage
       mg.releaseVocabWord(zombie.text.text)
@@ -97,41 +97,41 @@ minigame.checkZombieAttack = function() {
     }
   })
 
-  this.zombies = this.zombies.filter(function(zombie) {
+  this.zombies = this.zombies.filter((zombie) => {
     return !zombie.hit
   })
 }
 
-minigame.activateSpawnTimer = function() {
+minigame.activateSpawnTimer = () => {
   if (this.spawnTimer != null) {
-    this.spawnTimer.reset({ delay: this.getSpawnDelay() , callback: this.spawnZombie, callbackScope: this, repeat: 1 })
+    this.spawnTimer.reset({ delay: this.getSpawnDelay(), callback: this.spawnZombie, callbackScope: this, repeat: 1 })
   } else {
     this.spawnTimer = this.time.addEvent({ delay: this.getSpawnDelay(), callback: this.spawnZombie, callbackScope: this })
   }
 }
 
-minigame.getSpawnLocation = function() {
+minigame.getSpawnLocation = () => {
   // TODO: don't hard code padding
   return Phaser.Math.RND.between(25, this.cameras.main.width - 25)
 }
 
-minigame.getSpawnDelay = function() {
+minigame.getSpawnDelay = () => {
   return this.baseSpawnRate + Phaser.Math.RND.between(-this.spawnRange, this.spawnRange)
 }
 
-minigame.getFallSpeed = function() {
+minigame.getFallSpeed = () => {
   // TODO : don't hard code this equation here
   return (this.baseFallSpeed + Phaser.Math.RND.between(-this.fallRange, this.fallRange)) / 40
 }
 
-minigame.spawnZombie = function() {
+minigame.spawnZombie = () => {
   // TODO: add zombie class to store extra data
   let zombie = this.add.sprite(
     this.getSpawnLocation(),
     -35, // TODO: don't hard code this here. Should be in config or init
     'zombie'
   )
-  zombie.setScale(.6, .6) // TODO: Don't hard code this
+  zombie.setScale(0.6, 0.6) // TODO: Don't hard code this
   zombie.speed = this.getFallSpeed()
   // TODO: put font in config
   // TODO: don't hard code position (need to calculate center)
@@ -142,7 +142,7 @@ minigame.spawnZombie = function() {
   this.activateSpawnTimer()
 }
 
-minigame.reserveVocabWord = function() {
+minigame.reserveVocabWord = () => {
   // TODO: error handling for empty pool
   let poolIndex = Phaser.Math.RND.between(0, this.wordPool.length - 1)
   let word = this.wordPool.splice(poolIndex, 1)[0]
@@ -150,16 +150,16 @@ minigame.reserveVocabWord = function() {
   return word
 }
 
-minigame.releaseVocabWord = function(text) {
-  let index = this.wordsInUse.findIndex(function(word) {
+minigame.releaseVocabWord = (text) => {
+  let index = this.wordsInUse.findIndex((word) => {
     return word.language1 === text
   })
   this.wordPool.push(this.wordsInUse.splice(index, 1)[0])
 }
 
-minigame.submitAnswer = function() {
+minigame.submitAnswer = () => {
   let mg = this
-  this.wordsInUse.forEach(function(word) {
+  this.wordsInUse.forEach((word) => {
     if (mg.textEntry.text === word.language2) {
       mg.destroyZombieByWord(word.language1)
       mg.releaseVocabWord(word.language1)
@@ -171,8 +171,8 @@ minigame.submitAnswer = function() {
   this.textEntry.text = ''
 }
 
-minigame.destroyZombieByWord = function(word) {
-  let index = this.zombies.findIndex(function(zombie) {
+minigame.destroyZombieByWord = (word) => {
+  let index = this.zombies.findIndex((zombie) => {
     return zombie.text.text === word
   })
   this.zombies[index].text.destroy()
@@ -180,7 +180,7 @@ minigame.destroyZombieByWord = function(word) {
   this.zombies.splice(index, 1)
 }
 
-minigame.gameTimerFinish = function() {
+minigame.gameTimerFinish = () => {
 
 }
 

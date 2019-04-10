@@ -13,6 +13,6 @@ export default {
     { language1: 'learn', language2: 'aprender', gender: '', permitted: [], example: '' },
     { language1: 'help', language2: 'ayudar', gender: '', permitted: [], example: '' },
     { language1: 'dance', language2: 'bailar', gender: '', permitted: [], example: '' },
-    { language1: 'drink', language2: 'beber', gender: '', permitted: [], example: '' },
+    { language1: 'drink', language2: 'beber', gender: '', permitted: [], example: '' }
   ]
 }
