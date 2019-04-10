@@ -3,8 +3,8 @@ import Phaser from 'phaser'
 
 let config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 400,
+  width: 1200,
+  height: 600,
   scene: minigame
 }
 

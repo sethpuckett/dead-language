@@ -1,5 +1,9 @@
 import vocab from '../vocab'
+import config from '../config'
 import Phaser from 'phaser'
+
+// TODO: make property of minigame class
+const SPAWN_PADDING_PERCENT = 10
 
 let minigame = new Phaser.Scene('Minigame')
 
@@ -11,12 +15,6 @@ let minigame = new Phaser.Scene('Minigame')
 // });
 
 minigame.init = function() {
-  // TODO: Put these in config somewhere
-  this.baseFallSpeed = 25
-  this.fallRange = 10
-  this.baseSpawnRate = 1500
-  this.spawnRange = 1000
-
   this.wordPool = [...vocab.words]
   this.wordsInUse = []
   this.zombies = []
@@ -25,24 +23,28 @@ minigame.init = function() {
 }
 
 minigame.preload = function() {
-  this.load.image('zombie', 'assets/images/zombie.png')
-  this.load.image('grass', 'assets/images/grass.png')
+  this.load.image('zombie', config.images.zombie)
+  this.load.image('grass', config.images.grass)
 }
 
 minigame.create = function() {
-  // TODO: fonts and text location should be in config
-  this.textEntry = this.add.text(10, this.cameras.main.height - 40, '', { font: '32px Courier', fill: '#ffff00' })
-  this.scoreLabel = this.add.text(10, 10, 'Kills:', { font: '32px Courier', fill: '#ffff00' })
+  // TODO: text location should be in config
+  this.textEntry = this.add.text(10, this.cameras.main.height - 40, '', config.minigame.fonts.entry)
+  this.scoreLabel = this.add.text(10, 10, 'Kills:', config.minigame.fonts.label)
   // TODO: calculate X value based on width of score label
-  this.scoreValue = this.add.text(125, 10, this.score, { font: '32px Courier', fill: '#ff0000' })
-  this.damageLabel = this.add.text(this.cameras.main.width - 175, 10, 'Misses:', { font: '32px Courier', fill: '#ffff00' })
-  this.damageValue = this.add.text(this.cameras.main.width - 40, 10, this.damage, { font: '32px Courier', fill: '#ff0000' })
-  this.timerLabel = this.add.text(this.cameras.main.width / 2 - 150, 10, 'Time Remaining:', { font: '24px Courier', fill: '#ffff00' })
-  this.timerValue = this.add.text(this.cameras.main.width / 2 + 68, 10, '', { font: '24px Courier', fill: '#ff0000' })
+  this.scoreValue = this.add.text(125, 10, this.score, config.minigame.fonts.value)
+  this.damageLabel = this.add.text(this.cameras.main.width - 175, 10, 'Misses:', config.minigame.fonts.label)
+  this.damageValue = this.add.text(this.cameras.main.width - 40, 10, this.damage, config.minigame.fonts.value)
+  this.timerLabel = this.add.text(this.cameras.main.width / 2 - 200, 10, 'Time Remaining:', config.minigame.fonts.label)
+  this.timerValue = this.add.text(this.cameras.main.width / 2 + 92, 10, '', config.minigame.fonts.value)
 
-  // TODO: delay should be config
-  this.gameTimer = this.time.addEvent({ delay: 60000, callback: this.gameTimerFinish, callbackScope: this })
+  this.gameTimer = this.time.addEvent({
+    delay: config.minigame.gameTime * 1000,
+    callback: this.gameTimerFinish,
+    callbackScope: this
+  })
 
+  // TODO: this key stuff is a mess. Move it or clean it up or something
   this.keys = this.input.keyboard.addKeys('SPACE, BACKSPACE, ENTER, A,B,C')
   this.input.keyboard.on('keydown', (event) => {
     if (event.keyCode === this.keys.BACKSPACE.keyCode && this.textEntry.text.length > 0) {
@@ -54,90 +56,132 @@ minigame.create = function() {
     }
   }, this)
 
-  // TODO: move positions, colors, etc to config
-  this.lineGraphics = this.add.graphics({ lineStyle: { width: 2, color: 0xaa0000 } })
-  this.failLine = new Phaser.Geom.Line(0, this.cameras.main.height - 50, this.cameras.main.width, this.cameras.main.height - 50)
+  this.lineGraphics = this.add.graphics({ lineStyle: config.minigame.ui.failLineStyle })
+  this.failLine = new Phaser.Geom.Line(
+    0,
+    this.cameras.main.height - config.minigame.ui.entryHeight,
+    this.cameras.main.width,
+    this.cameras.main.height - config.minigame.ui.entryHeight
+  )
   this.lineGraphics.strokeLineShape(this.failLine)
 
-  // TODO: position should be in config
-  // TODO: make configurable way to visual rect for debugging
-  this.playerHitRect = new Phaser.Geom.Rectangle(0, this.cameras.main.height - 50, this.cameras.main.width, 10)
+  // TODO: make configurable way to visualize rect for debugging
+  this.playerHitRect = new Phaser.Geom.Rectangle(
+    0,
+    this.cameras.main.height - config.minigame.ui.entryHeight,
+    this.cameras.main.width,
+    config.minigame.ui.entryHeight
+  )
 
-  this.background = this.add.tileSprite(0, 0, this.cameras.main.width, this.cameras.main.height - 50, 'grass')
+  // TODO: will need more sophisticated depth management when more layers are added
+  this.background = this.add.tileSprite(
+    0,
+    0,
+    this.cameras.main.width,
+    this.cameras.main.height - config.minigame.ui.entryHeight,
+    'grass'
+  )
   this.background.setOrigin(0, 0)
   this.background.setDepth(-1)
 
   this.activateSpawnTimer()
 }
 
-minigame.update = function() {
-  // TODO: is there a reason to use the Phaser Call loop here?
+minigame.update = function(_time, delta) {
   this.zombies.forEach((zombie) => {
-    zombie.y += zombie.speed
-    zombie.text.y += zombie.speed
+    let movement = this.getMovement(zombie.speed, delta)
+    zombie.y += movement
+    zombie.text.y += movement
   })
 
-  // TODO: time should be based on config values
-  let remaining = 60 - this.gameTimer.getElapsedSeconds()
+  let remaining = config.minigame.gameTime - this.gameTimer.getElapsedSeconds()
   this.timerValue.text = remaining.toFixed(1)
 
   this.checkZombieAttack()
+  this.destroyDeadZombies()
+}
+
+minigame.getMovement = function(speed, delta) {
+  // TODO: calculate this once upfront
+  let totalDistance = this.cameras.main.height - config.minigame.ui.entryHeight
+  return speed * delta * totalDistance / 500000
 }
 
 minigame.checkZombieAttack = function() {
   this.zombies.forEach((zombie) => {
     if (Phaser.Geom.Intersects.RectangleToRectangle(zombie.getBounds(), this.playerHitRect)) {
-      this.damage++
-      this.damageValue.text = this.damage
-      this.releaseVocabWord(zombie.text.text)
-      zombie.text.destroy()
-      zombie.destroy()
-      zombie.hit = true
+      this.changeDamage(1)
+      zombie.alive = false
     }
   })
+}
 
-  this.zombies = this.zombies.filter((zombie) => {
-    return !zombie.hit
+minigame.changeDamage = function(amount) {
+  this.damage += amount
+  this.damageValue.text = this.damage
+}
+
+minigame.destroyDeadZombies = function() {
+  this.zombies.filter(z => !z.alive).forEach(z => {
+    this.releaseVocabWord(z.text.text)
+    z.text.destroy()
+    z.destroy()
   })
+
+  this.zombies = this.zombies.filter(z => z.alive)
 }
 
 minigame.activateSpawnTimer = function() {
   if (this.spawnTimer != null) {
-    this.spawnTimer.reset({ delay: this.getSpawnDelay(), callback: this.spawnZombie, callbackScope: this, repeat: 1 })
+    this.spawnTimer.reset({
+      delay: this.getSpawnDelay(),
+      callback: this.spawnZombie,
+      callbackScope: this,
+      repeat: 1
+    })
   } else {
-    this.spawnTimer = this.time.addEvent({ delay: this.getSpawnDelay(), callback: this.spawnZombie, callbackScope: this })
+    this.spawnTimer = this.time.addEvent({
+      delay: this.getSpawnDelay(),
+      callback: this.spawnZombie,
+      callbackScope: this
+    })
   }
 }
 
 minigame.getSpawnLocation = function() {
-  // TODO: don't hard code padding
-  return Phaser.Math.RND.between(25, this.cameras.main.width - 25)
+  // TODO: calculate this upfront, not every time
+  let pad = this.cameras.main.width * SPAWN_PADDING_PERCENT / 100
+  return Phaser.Math.RND.between(pad, this.cameras.main.width - pad)
 }
 
 minigame.getSpawnDelay = function() {
-  return this.baseSpawnRate + Phaser.Math.RND.between(-this.spawnRange, this.spawnRange)
+  return config.minigame.baseSpawnRate + Phaser.Math.RND.between(
+    -config.minigame.spawnRange, config.minigame.spawnRange
+  )
 }
 
 minigame.getFallSpeed = function() {
-  // TODO : don't hard code this equation here
-  return (this.baseFallSpeed + Phaser.Math.RND.between(-this.fallRange, this.fallRange)) / 40
+  return (config.minigame.baseFallSpeed + Phaser.Math.RND.between(
+    -config.minigame.fallRange, config.minigame.fallRange
+  ))
 }
 
 minigame.spawnZombie = function() {
   // TODO: add zombie class to store extra data
   let zombie = this.add.sprite(
     this.getSpawnLocation(),
-    -35, // TODO: don't hard code this here. Should be in config or init
+    -35, // TODO: don't hard code this here. Should be const (based on camera size)
     'zombie'
   )
   zombie.setScale(0.6, 0.6) // TODO: Don't hard code this
   zombie.speed = this.getFallSpeed()
-  // TODO: put font in config
   // TODO: don't hard code position (need to calculate center)
   // TODO: pulling language1 off this is ugly. Move to helper class?
-  zombie.text = this.add.text(zombie.x - 15, -10, this.reserveVocabWord().language1, { font: '16px Courier' })
-
+  zombie.text = this.add.text(zombie.x - 15, -10, this.reserveVocabWord().language1, config.minigame.fonts.zombie)
+  zombie.alive = true
   this.zombies.push(zombie)
+
+  // TODO: Wrap spawning in a higher level process. Starting timer should not be here.
   this.activateSpawnTimer()
 }
 
@@ -149,6 +193,7 @@ minigame.reserveVocabWord = function() {
   return word
 }
 
+// TODO: add helper class to manage vocab lists
 minigame.releaseVocabWord = function(text) {
   let index = this.wordsInUse.findIndex((word) => {
     return word.language1 === text
@@ -160,7 +205,6 @@ minigame.submitAnswer = function() {
   this.wordsInUse.forEach((word) => {
     if (this.textEntry.text === word.language2) {
       this.destroyZombieByWord(word.language1)
-      this.releaseVocabWord(word.language1)
       this.score++
       this.scoreValue.text = this.score
     }
@@ -170,16 +214,8 @@ minigame.submitAnswer = function() {
 }
 
 minigame.destroyZombieByWord = function(word) {
-  let index = this.zombies.findIndex((zombie) => {
-    return zombie.text.text === word
-  })
-  this.zombies[index].text.destroy()
-  this.zombies[index].destroy()
-  this.zombies.splice(index, 1)
-}
-
-minigame.gameTimerFinish = function() {
-
+  let zombie = this.zombies.find(z => z.text.text === word)
+  zombie.alive = false
 }
 
 // TODO: move to helper class
