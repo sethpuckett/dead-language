@@ -26,8 +26,13 @@ export default class extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('zombie', config.images.zombie)
     this.load.image('grass', config.images.grass)
+    this.load.spritesheet('zombie', config.images.zombie, {
+      frameWidth: 100,
+      frameHeight: 100,
+      margin: 0,
+      spacing: 0
+    })
   }
 
   create() {
@@ -58,6 +63,15 @@ export default class extends Phaser.Scene {
         this.submitAnswer()
       }
     }, this)
+
+    this.anims.create({
+      key: 'zombie-walk',
+      frames: this.anims.generateFrameNames('zombie', {
+        frames: [0, 1, 0, 2]
+      }),
+      frameRate: 10,
+      repeat: -1
+    })
 
     this.lineGraphics = this.add.graphics({ lineStyle: config.minigame.ui.failLineStyle })
     this.failLine = new Phaser.Geom.Line(
@@ -174,14 +188,16 @@ export default class extends Phaser.Scene {
     let zombie = this.add.sprite(
       this.getSpawnLocation(),
       -35, // TODO: don't hard code this here. Should be const (based on camera size)
-      'zombie'
+      'zombie',
+      0
     )
     zombie.setScale(0.6, 0.6) // TODO: Don't hard code this
     zombie.speed = this.getFallSpeed()
     // TODO: don't hard code position (need to calculate center)
     // TODO: pulling language1 off this is ugly. Move to helper class?
-    zombie.text = this.add.text(zombie.x - 15, -10, this.reserveVocabWord().language1, config.minigame.fonts.zombie)
+    zombie.text = this.add.text(zombie.x - 25, -10, this.reserveVocabWord().language1, config.minigame.fonts.zombie)
     zombie.alive = true
+    zombie.play('zombie-walk')
     this.zombies.push(zombie)
 
     // TODO: Wrap spawning in a higher level process. Starting timer should not be here.

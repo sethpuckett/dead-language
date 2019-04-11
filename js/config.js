@@ -1,8 +1,8 @@
 // TODO: separate user-configurable values
 export default {
   minigame: {
-    baseFallSpeed: 50,
-    fallRange: 20,
+    baseFallSpeed: 40,
+    fallRange: 15,
     baseSpawnRate: 1500,
     spawnRange: 1000,
     gameTime: 60,
