@@ -25,16 +25,6 @@ export default class extends Phaser.Scene {
     this.damage = 0
   }
 
-  preload() {
-    this.load.image('grass', config.images.grass)
-    this.load.spritesheet('zombie', config.images.zombie, {
-      frameWidth: 100,
-      frameHeight: 100,
-      margin: 0,
-      spacing: 0
-    })
-  }
-
   create() {
     // TODO: text location should be in config
     this.textEntry = this.add.text(10, this.cameras.main.height - 40, '', config.minigame.fonts.entry)
@@ -65,8 +55,8 @@ export default class extends Phaser.Scene {
     }, this)
 
     this.anims.create({
-      key: 'zombie-walk',
-      frames: this.anims.generateFrameNames('zombie', {
+      key: config.animations.zombieWalk,
+      frames: this.anims.generateFrameNames(config.images.zombie.key, {
         frames: [0, 1, 0, 2]
       }),
       frameRate: 10,
@@ -197,7 +187,7 @@ export default class extends Phaser.Scene {
     // TODO: pulling language1 off this is ugly. Move to helper class?
     zombie.text = this.add.text(zombie.x - 25, -10, this.reserveVocabWord().language1, config.minigame.fonts.zombie)
     zombie.alive = true
-    zombie.play('zombie-walk')
+    zombie.play(config.animations.zombieWalk)
     this.zombies.push(zombie)
 
     // TODO: Wrap spawning in a higher level process. Starting timer should not be here.

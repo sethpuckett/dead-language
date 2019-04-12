@@ -18,7 +18,22 @@ export default {
     }
   },
   images: {
-    zombie: 'assets/images/zombie.png',
-    grass: 'assets/images/grass.png'
+    zombie: { key: 'zombie', file: 'assets/images/zombie.png' },
+    grass: { key: 'grass', file: 'assets/images/grass.png' },
+    loading: { key: 'loading', file: 'assets/images/loading.png' },
+    start: { key: 'start', file: 'assets/images/start.png' }
+  },
+  animations: {
+    zombieWalk: 'zombie-walk'
+  },
+  screens: {
+    boot: 'Boot',
+    loading: 'Loading',
+    titleMenu: 'TitleMenu',
+    minigame: 'Minigame',
+    endgame: 'Endgame'
+  },
+  debug: {
+    slowLoad: false
   }
 }
