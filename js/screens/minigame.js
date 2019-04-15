@@ -1,5 +1,5 @@
 import vocab from '../vocab'
-import config from '../config'
+import { minigame, animations, images, screens } from '../config'
 import Phaser from 'phaser'
 
 const SPAWN_PADDING_PERCENT = 10
@@ -27,17 +27,17 @@ export default class extends Phaser.Scene {
 
   create() {
     // TODO: text location should be in config
-    this.textEntry = this.add.text(10, this.cameras.main.height - 40, '', config.minigame.fonts.entry)
-    this.scoreLabel = this.add.text(10, 10, 'Kills:', config.minigame.fonts.label)
+    this.textEntry = this.add.text(10, this.cameras.main.height - 40, '', minigame.fonts.entry)
+    this.scoreLabel = this.add.text(10, 10, 'Kills:', minigame.fonts.label)
     // TODO: calculate X value based on width of score label
-    this.scoreValue = this.add.text(125, 10, this.score, config.minigame.fonts.value)
-    this.damageLabel = this.add.text(this.cameras.main.width - 175, 10, 'Misses:', config.minigame.fonts.label)
-    this.damageValue = this.add.text(this.cameras.main.width - 40, 10, this.damage, config.minigame.fonts.value)
-    this.timerLabel = this.add.text(this.cameras.main.width / 2 - 200, 10, 'Time Remaining:', config.minigame.fonts.label)
-    this.timerValue = this.add.text(this.cameras.main.width / 2 + 92, 10, '', config.minigame.fonts.value)
+    this.scoreValue = this.add.text(125, 10, this.score, minigame.fonts.value)
+    this.damageLabel = this.add.text(this.cameras.main.width - 175, 10, 'Misses:', minigame.fonts.label)
+    this.damageValue = this.add.text(this.cameras.main.width - 40, 10, this.damage, minigame.fonts.value)
+    this.timerLabel = this.add.text(this.cameras.main.width / 2 - 200, 10, 'Time Remaining:', minigame.fonts.label)
+    this.timerValue = this.add.text(this.cameras.main.width / 2 + 92, 10, '', minigame.fonts.value)
 
     this.gameTimer = this.time.addEvent({
-      delay: config.minigame.gameTime * 1000,
+      delay: minigame.gameTime * 1000,
       callback: this.gameTimerFinish,
       callbackScope: this
     })
@@ -55,29 +55,29 @@ export default class extends Phaser.Scene {
     }, this)
 
     this.anims.create({
-      key: config.animations.zombieWalk,
-      frames: this.anims.generateFrameNames(config.images.zombie.key, {
+      key: animations.zombieWalk,
+      frames: this.anims.generateFrameNames(images.zombie, {
         frames: [0, 1, 0, 2]
       }),
       frameRate: 10,
       repeat: -1
     })
 
-    this.lineGraphics = this.add.graphics({ lineStyle: config.minigame.ui.failLineStyle })
+    this.lineGraphics = this.add.graphics({ lineStyle: minigame.ui.failLineStyle })
     this.failLine = new Phaser.Geom.Line(
       0,
-      this.cameras.main.height - config.minigame.ui.entryHeight,
+      this.cameras.main.height - minigame.ui.entryHeight,
       this.cameras.main.width,
-      this.cameras.main.height - config.minigame.ui.entryHeight
+      this.cameras.main.height - minigame.ui.entryHeight
     )
     this.lineGraphics.strokeLineShape(this.failLine)
 
     // TODO: make configurable way to visualize rect for debugging
     this.playerHitRect = new Phaser.Geom.Rectangle(
       0,
-      this.cameras.main.height - config.minigame.ui.entryHeight,
+      this.cameras.main.height - minigame.ui.entryHeight,
       this.cameras.main.width,
-      config.minigame.ui.entryHeight
+      minigame.ui.entryHeight
     )
 
     // TODO: will need more sophisticated depth management when more layers are added
@@ -85,7 +85,7 @@ export default class extends Phaser.Scene {
       0,
       0,
       this.cameras.main.width,
-      this.cameras.main.height - config.minigame.ui.entryHeight,
+      this.cameras.main.height - minigame.ui.entryHeight,
       'grass'
     )
     this.background.setOrigin(0, 0)
@@ -103,7 +103,7 @@ export default class extends Phaser.Scene {
       zombie.text.y += movement
     })
 
-    let remaining = config.minigame.gameTime - this.gameTimer.getElapsedSeconds()
+    let remaining = minigame.gameTime - this.gameTimer.getElapsedSeconds()
     this.timerValue.text = remaining.toFixed(1)
 
     this.checkZombieAttack()
@@ -112,17 +112,17 @@ export default class extends Phaser.Scene {
 
   gameTimerFinish() {
     // this.scene.transition({
-    //   target: config.screens.endgame,
+    //   target: screens.endgame,
     //   duration: 0,
     //   remove: true,
     //   data: { kills: this.score, misses: this.damage }
     // })
-    this.scene.start(config.screens.endgame, { kills: this.score, misses: this.damage })
+    this.scene.start(screens.endgame, { kills: this.score, misses: this.damage })
   }
 
   getMovement(speed, delta) {
     // TODO: calculate this once upfront
-    let totalDistance = this.cameras.main.height - config.minigame.ui.entryHeight
+    let totalDistance = this.cameras.main.height - minigame.ui.entryHeight
     return speed * delta * totalDistance / SPEED_MODIFIER
   }
 
@@ -174,14 +174,14 @@ export default class extends Phaser.Scene {
   }
 
   getSpawnDelay() {
-    return config.minigame.baseSpawnRate + Phaser.Math.RND.between(
-      -config.minigame.spawnRange, config.minigame.spawnRange
+    return minigame.baseSpawnRate + Phaser.Math.RND.between(
+      -minigame.spawnRange, minigame.spawnRange
     )
   }
 
   getFallSpeed() {
-    return (config.minigame.baseFallSpeed + Phaser.Math.RND.between(
-      -config.minigame.fallRange, config.minigame.fallRange
+    return (minigame.baseFallSpeed + Phaser.Math.RND.between(
+      -minigame.fallRange, minigame.fallRange
     ))
   }
 
@@ -197,9 +197,9 @@ export default class extends Phaser.Scene {
     zombie.speed = this.getFallSpeed()
     // TODO: don't hard code position (need to calculate center)
     // TODO: pulling language1 off this is ugly. Move to helper class?
-    zombie.text = this.add.text(zombie.x - 25, -10, this.reserveVocabWord().language1, config.minigame.fonts.zombie)
+    zombie.text = this.add.text(zombie.x - 25, -10, this.reserveVocabWord().language1, minigame.fonts.zombie)
     zombie.alive = true
-    zombie.play(config.animations.zombieWalk)
+    zombie.play(animations.zombieWalk)
     this.zombies.push(zombie)
 
     // TODO: Wrap spawning in a higher level process. Starting timer should not be here.

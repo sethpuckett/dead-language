@@ -1,4 +1,4 @@
-import config from '../config'
+import { debug, screens, images } from '../config'
 import Phaser from 'phaser'
 
 export default class extends Phaser.Scene {
@@ -11,21 +11,21 @@ export default class extends Phaser.Scene {
     this.showProgressBar()
     this.loadAssets()
 
-    if (config.debug.slowLoad) {
+    if (debug.slowLoad) {
       this.loadDummyAssets()
     }
   }
 
   create() {
     // this.scene.transition({ target: config.screens.titleMenu, duration: 0, remove: true })
-    this.scene.start(config.screens.titleMenu)
+    this.scene.start(screens.titleMenu)
   }
 
   showBackground() {
     this.add.sprite(
       this.sys.game.config.width / 2,
       this.sys.game.config.height / 2 - this.sys.game.config.height / 4,
-      config.images.loading.key
+      images.loading
     )
   }
 
@@ -55,10 +55,10 @@ export default class extends Phaser.Scene {
   }
 
   loadAssets() {
-    this.load.image(config.images.start.key, config.images.start.file)
-    this.load.image(config.images.return.key, config.images.return.file)
-    this.load.image(config.images.grass.key, config.images.grass.file)
-    this.load.spritesheet(config.images.zombie.key, config.images.zombie.file, {
+    this.load.image(images.start, images.files.start)
+    this.load.image(images.return, images.files.return)
+    this.load.image(images.grass, images.files.grass)
+    this.load.spritesheet(images.zombie, images.files.zombie, {
       frameWidth: 100,
       frameHeight: 100,
       margin: 0,
@@ -68,7 +68,7 @@ export default class extends Phaser.Scene {
 
   loadDummyAssets() {
     for (let i = 0; i < 100; i++) {
-      this.load.image('test' + i, config.images.loading.file)
+      this.load.image('test' + i, images.files.loading)
     }
   }
 }

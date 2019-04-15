@@ -1,4 +1,4 @@
-import config from '../config'
+import { images, screens } from '../config'
 import Phaser from 'phaser'
 
 export default class extends Phaser.Scene {
@@ -7,11 +7,11 @@ export default class extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image(config.images.loading.key, config.images.loading.file)
+    this.load.image(images.loading, images.files.loading)
   }
 
   create() {
     // this.scene.transition({ target: config.screens.loading, duration: 0, remove: true })
-    this.scene.start(config.screens.loading)
+    this.scene.start(screens.loading)
   }
 }

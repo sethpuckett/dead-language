@@ -1,4 +1,4 @@
-import config from '../config'
+import { images, screens } from '../config'
 import Phaser from 'phaser'
 
 export default class extends Phaser.Scene {
@@ -10,7 +10,7 @@ export default class extends Phaser.Scene {
     this.startBtn = this.add.sprite(
       this.sys.game.config.width / 2,
       this.sys.game.config.height / 2,
-      config.images.start.key
+      images.start
     ).setInteractive()
 
     this.startBtn.on('pointerdown', this.startGame, this)
@@ -18,6 +18,6 @@ export default class extends Phaser.Scene {
 
   startGame() {
     // this.scene.transition({ target: config.screens.minigame, duration: 0, remove: true })
-    this.scene.start(config.screens.minigame)
+    this.scene.start(screens.minigame)
   }
 }
