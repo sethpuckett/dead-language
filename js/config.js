@@ -17,11 +17,17 @@ export default {
       failLineStyle: { width: 2, color: 0xaa0000 }
     }
   },
+  endgame: {
+    fonts: {
+      stats: { font: '32px Courier', fill: '#ffff00' }
+    }
+  },
   images: {
     zombie: { key: 'zombie', file: 'assets/images/zombie.png' },
     grass: { key: 'grass', file: 'assets/images/grass.png' },
     loading: { key: 'loading', file: 'assets/images/loading.png' },
-    start: { key: 'start', file: 'assets/images/start.png' }
+    start: { key: 'start', file: 'assets/images/start.png' },
+    return: { key: 'return', file: 'assets/images/return.png' }
   },
   animations: {
     zombieWalk: 'zombie-walk'

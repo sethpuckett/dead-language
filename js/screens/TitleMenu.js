@@ -17,6 +17,7 @@ export default class extends Phaser.Scene {
   }
 
   startGame() {
-    this.scene.transition({ target: config.screens.minigame, duration: 0, remove: true })
+    // this.scene.transition({ target: config.screens.minigame, duration: 0, remove: true })
+    this.scene.start(config.screens.minigame)
   }
 }

@@ -91,6 +91,8 @@ export default class extends Phaser.Scene {
     this.background.setOrigin(0, 0)
     this.background.setDepth(-1)
 
+    // TODO: Understand why this is necessary
+    this.spawnTimer = null
     this.activateSpawnTimer()
   }
 
@@ -106,6 +108,16 @@ export default class extends Phaser.Scene {
 
     this.checkZombieAttack()
     this.destroyDeadZombies()
+  }
+
+  gameTimerFinish() {
+    // this.scene.transition({
+    //   target: config.screens.endgame,
+    //   duration: 0,
+    //   remove: true,
+    //   data: { kills: this.score, misses: this.damage }
+    // })
+    this.scene.start(config.screens.endgame, { kills: this.score, misses: this.damage })
   }
 
   getMovement(speed, delta) {

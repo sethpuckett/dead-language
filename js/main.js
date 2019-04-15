@@ -2,6 +2,7 @@ import Minigame from './screens/Minigame'
 import Boot from './screens/Boot'
 import Loading from './screens/Loading'
 import TitleMenu from './screens/TitleMenu'
+import Endgame from './screens/Endgame'
 import Phaser from 'phaser'
 
 let config = {
@@ -12,7 +13,8 @@ let config = {
     Boot,
     Loading,
     TitleMenu,
-    Minigame
+    Minigame,
+    Endgame
   ]
 }
 

@@ -17,7 +17,8 @@ export default class extends Phaser.Scene {
   }
 
   create() {
-    this.scene.transition({ target: config.screens.titleMenu, duration: 0, remove: true })
+    // this.scene.transition({ target: config.screens.titleMenu, duration: 0, remove: true })
+    this.scene.start(config.screens.titleMenu)
   }
 
   showBackground() {
@@ -55,6 +56,7 @@ export default class extends Phaser.Scene {
 
   loadAssets() {
     this.load.image(config.images.start.key, config.images.start.file)
+    this.load.image(config.images.return.key, config.images.return.file)
     this.load.image(config.images.grass.key, config.images.grass.file)
     this.load.spritesheet(config.images.zombie.key, config.images.zombie.file, {
       frameWidth: 100,

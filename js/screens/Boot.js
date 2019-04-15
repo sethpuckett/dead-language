@@ -11,6 +11,7 @@ export default class extends Phaser.Scene {
   }
 
   create() {
-    this.scene.transition({ target: config.screens.loading, duration: 0, remove: true })
+    // this.scene.transition({ target: config.screens.loading, duration: 0, remove: true })
+    this.scene.start(config.screens.loading)
   }
 }
