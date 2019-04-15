@@ -42,17 +42,8 @@ export default class extends Phaser.Scene {
       callbackScope: this
     })
 
-    // TODO: this key stuff is a mess. Move it or clean it up or something
-    this.keys = this.input.keyboard.addKeys('SPACE, BACKSPACE, ENTER, A,B,C')
-    this.input.keyboard.on('keydown', (event) => {
-      if (event.keyCode === this.keys.BACKSPACE.keyCode && this.textEntry.text.length > 0) {
-        this.textEntry.text = this.textEntry.text.substr(0, this.textEntry.text.length - 1)
-      } else if (this.isLetter(event.keyCode) || event.keyCode === this.keys.SPACE.keyCode) {
-        this.textEntry.text += event.key
-      } else if (event.keyCode === this.keys.ENTER.keyCode) {
-        this.submitAnswer()
-      }
-    }, this)
+    this.keys = this.input.keyboard.addKeys('SPACE, BACKSPACE, ENTER, A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z')
+    this.input.keyboard.on('keydown', this.handleKeyDown, this)
 
     this.anims.create({
       key: animations.zombieWalk,
@@ -108,6 +99,16 @@ export default class extends Phaser.Scene {
 
     this.checkZombieAttack()
     this.destroyDeadZombies()
+  }
+
+  handleKeyDown(event) {
+    if (event.keyCode === this.keys.BACKSPACE.keyCode && this.textEntry.text.length > 0) {
+      this.textEntry.text = this.textEntry.text.substr(0, this.textEntry.text.length - 1)
+    } else if (this.isLetter(event.keyCode) || event.keyCode === this.keys.SPACE.keyCode) {
+      this.textEntry.text += event.key
+    } else if (event.keyCode === this.keys.ENTER.keyCode) {
+      this.submitAnswer()
+    }
   }
 
   gameTimerFinish() {
