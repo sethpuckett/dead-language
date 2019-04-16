@@ -1,4 +1,5 @@
 import { images, screens } from '../config'
+import titleMenuUiHelper from './ui/titleMenuUiHelper'
 import Phaser from 'phaser'
 
 export default class extends Phaser.Scene {
@@ -7,17 +8,14 @@ export default class extends Phaser.Scene {
   }
 
   create() {
-    this.startBtn = this.add.sprite(
-      this.sys.game.config.width / 2,
-      this.sys.game.config.height / 2,
-      images.start
-    ).setInteractive()
+    let ui = titleMenuUiHelper(this.sys.game.config)
 
+    this.startBtn = this.add.sprite(ui.startButtonX, ui.startButtonY, images.start).setInteractive()
+    this.startBtn.setOrigin(ui.startButtonOrigin, ui.startButtonOrigin)
     this.startBtn.on('pointerdown', this.startGame, this)
   }
 
   startGame() {
-    // this.scene.transition({ target: config.screens.minigame, duration: 0, remove: true })
     this.scene.start(screens.minigame)
   }
 }

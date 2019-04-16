@@ -11,7 +11,7 @@ export default {
     zombie: { font: '16px Courier', fill: '#ffffff' }
   },
   ui: {
-    entryHeight: 50,
+    entryHeight: 60,
     failLineStyle: { width: 2, color: 0xaa0000 }
   }
 }

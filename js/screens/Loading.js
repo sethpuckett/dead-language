@@ -1,4 +1,5 @@
-import { debug, screens, images } from '../config'
+import { loading, debug, screens, images } from '../config'
+import loadingUiHelper from './ui/loadingUiHelper'
 import Phaser from 'phaser'
 
 export default class extends Phaser.Scene {
@@ -7,7 +8,6 @@ export default class extends Phaser.Scene {
   }
 
   preload() {
-    this.showBackground()
     this.showProgressBar()
     this.loadAssets()
 
@@ -17,40 +17,26 @@ export default class extends Phaser.Scene {
   }
 
   create() {
-    // this.scene.transition({ target: config.screens.titleMenu, duration: 0, remove: true })
     this.scene.start(screens.titleMenu)
   }
 
-  showBackground() {
-    this.add.sprite(
-      this.sys.game.config.width / 2,
-      this.sys.game.config.height / 2 - this.sys.game.config.height / 4,
-      images.loading
-    )
-  }
-
   showProgressBar() {
-    // TODO: Move all these hard coded values to config
-    let barBgW = this.sys.game.config.width / 4
-    let barBgH = this.sys.game.config.width / 16
+    let ui = loadingUiHelper(this.sys.game.config)
+    let loadingSprite = this.add.sprite(ui.loadingImageX, ui.loadingImageY, images.loading)
+    loadingSprite.setOrigin(ui.loadingImageOrigin, ui.loadingImageOrigin)
+
     let barBg = this.add.graphics()
-    barBg.setPosition(
-      this.sys.game.config.width / 2 - barBgW / 2,
-      this.sys.game.config.height / 2 - barBgH / 2
-    )
-    barBg.fillStyle(0x444444, 1)
-    barBg.fillRect(0, 0, barBgW, barBgH)
+    barBg.setPosition(ui.barBackgroundX, ui.barBackgroundY)
+    barBg.fillStyle(loading.progressBgColor)
+    barBg.fillRect(0, 0, ui.barBackgroundW, ui.barBackgroundH)
 
     let bar = this.add.graphics()
-    bar.setPosition(
-      this.sys.game.config.width / 2 - barBgW / 2 + 5,
-      this.sys.game.config.height / 2 - barBgH / 2 + 5
-    )
+    bar.setPosition(ui.barX, ui.barY)
 
     this.load.on('progress', (value) => {
       bar.clear()
-      bar.fillStyle(0x33aa22, 1)
-      bar.fillRect(0, 0, (barBgW - 10) * value, barBgH - 10)
+      bar.fillStyle(loading.progressFillColor)
+      bar.fillRect(0, 0, (ui.barW) * value, ui.barH)
     })
   }
 
@@ -67,7 +53,7 @@ export default class extends Phaser.Scene {
   }
 
   loadDummyAssets() {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 250; i++) {
       this.load.image('test' + i, images.files.loading)
     }
   }

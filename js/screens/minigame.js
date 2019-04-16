@@ -1,5 +1,6 @@
 import vocab from '../vocab'
 import { minigame, animations, images, screens } from '../config'
+import minigameUiHelper from './ui/minigameUiHelper'
 import Phaser from 'phaser'
 
 const SPAWN_PADDING_PERCENT = 10
@@ -23,19 +24,13 @@ export default class extends Phaser.Scene {
     this.zombies = []
     this.score = 0
     this.damage = 0
+    this.spawnTimer = null
   }
 
   create() {
-    // TODO: text location should be in config
-    this.textEntry = this.add.text(10, this.cameras.main.height - 40, '', minigame.fonts.entry)
-    this.scoreLabel = this.add.text(10, 10, 'Kills:', minigame.fonts.label)
-    // TODO: calculate X value based on width of score label
-    this.scoreValue = this.add.text(125, 10, this.score, minigame.fonts.value)
-    this.damageLabel = this.add.text(this.cameras.main.width - 175, 10, 'Misses:', minigame.fonts.label)
-    this.damageValue = this.add.text(this.cameras.main.width - 40, 10, this.damage, minigame.fonts.value)
-    this.timerLabel = this.add.text(this.cameras.main.width / 2 - 200, 10, 'Time Remaining:', minigame.fonts.label)
-    this.timerValue = this.add.text(this.cameras.main.width / 2 + 92, 10, '', minigame.fonts.value)
+    this.buildUi()
 
+    // TODO: put all this create stuff in functions
     this.gameTimer = this.time.addEvent({
       delay: minigame.gameTime * 1000,
       callback: this.gameTimerFinish,
@@ -82,8 +77,6 @@ export default class extends Phaser.Scene {
     this.background.setOrigin(0, 0)
     this.background.setDepth(-1)
 
-    // TODO: Understand why this is necessary
-    this.spawnTimer = null
     this.activateSpawnTimer()
   }
 
@@ -101,6 +94,27 @@ export default class extends Phaser.Scene {
     this.destroyDeadZombies()
   }
 
+  buildUi() {
+    let ui = minigameUiHelper(this.sys.game.config)
+    this.textEntry = this.add.text(ui.textEntryX, ui.textEntryY, '', minigame.fonts.entry)
+    this.textEntry.setOrigin(ui.textEntryOriginX, ui.textEntryOriginY)
+
+    this.killLabel = this.add.text(ui.killLabelX, ui.killLabelY, 'Kills:', minigame.fonts.label)
+    this.killLabel.setOrigin(ui.killOriginX, ui.killOriginY)
+    this.killValue = this.add.text(ui.killValueX(this.killLabel), ui.killValueY, this.score, minigame.fonts.value)
+    this.killValue.setOrigin(ui.killOriginX, ui.killOriginY)
+
+    this.missLabel = this.add.text(ui.missLabelX, ui.missLabelY, 'Misses:', minigame.fonts.label)
+    this.missLabel.setOrigin(ui.missOriginX, ui.missOriginY)
+    this.missValue = this.add.text(ui.missValueX(this.missLabel), ui.missValueY, this.damage, minigame.fonts.value)
+    this.missValue.setOrigin(ui.missOriginX, ui.missOriginY)
+
+    this.timerLabel = this.add.text(ui.timerLabelX, ui.timerLabelY, 'Time Remaining:', minigame.fonts.label)
+    this.timerLabel.setOrigin(ui.timerLabelOriginX, ui.timerLabelOriginY)
+    this.timerValue = this.add.text(ui.timerValueX(this.timerLabel), ui.timerValueY, '', minigame.fonts.value)
+    this.timerValue.setOrigin(ui.timerValueOriginX, ui.timerValueOriginY)
+  }
+
   handleKeyDown(event) {
     if (event.keyCode === this.keys.BACKSPACE.keyCode && this.textEntry.text.length > 0) {
       this.textEntry.text = this.textEntry.text.substr(0, this.textEntry.text.length - 1)
@@ -112,12 +126,6 @@ export default class extends Phaser.Scene {
   }
 
   gameTimerFinish() {
-    // this.scene.transition({
-    //   target: screens.endgame,
-    //   duration: 0,
-    //   remove: true,
-    //   data: { kills: this.score, misses: this.damage }
-    // })
     this.scene.start(screens.endgame, { kills: this.score, misses: this.damage })
   }
 
@@ -138,7 +146,7 @@ export default class extends Phaser.Scene {
 
   changeDamage(amount) {
     this.damage += amount
-    this.damageValue.text = this.damage
+    this.missValue.text = this.damage
   }
 
   destroyDeadZombies() {
@@ -228,7 +236,7 @@ export default class extends Phaser.Scene {
       if (this.textEntry.text === word.language2) {
         this.destroyZombieByWord(word.language1)
         this.score++
-        this.scoreValue.text = this.score
+        this.killValue.text = this.score
       }
     })
 

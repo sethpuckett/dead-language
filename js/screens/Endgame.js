@@ -37,7 +37,6 @@ export default class extends Phaser.Scene {
   }
 
   returnToTitle() {
-    // this.scene.transition({ target: config.screens.titleMenu, duration: 0, remove: true })
     this.scene.start(screens.titleMenu)
   }
 }
