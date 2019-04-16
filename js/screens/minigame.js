@@ -4,7 +4,7 @@ import minigameUiHelper from './ui/minigameUiHelper'
 import Phaser from 'phaser'
 
 const SPAWN_PADDING_PERCENT = 10
-const SPEED_MODIFIER = 500000
+const SPEED_MODIFIER = 1000000
 
 // let firestore = firebase.firestore()
 // const lessonRef = firestore.collection('lessons').where('name', '==', 'Basic Phrases').get().then((snap) => {
@@ -182,10 +182,32 @@ export default class extends Phaser.Scene {
     return Phaser.Math.RND.between(pad, this.cameras.main.width - pad)
   }
 
+  // TODO: move this wave logic (helper class?)
+  // TODO: no zombies spawn if not in wave (currently errors)
   getSpawnDelay() {
-    return minigame.baseSpawnRate + Phaser.Math.RND.between(
-      -minigame.spawnRange, minigame.spawnRange
+    let wave = this.getCurrentWave()
+    let percentToMax = 1
+    let easedPercent = 1
+    let curTime = this.gameTimer.getElapsedSeconds()
+    if (curTime < wave.maxStart) {
+      percentToMax = (curTime - wave.start) / (wave.maxStart - wave.start)
+      easedPercent = Phaser.Math.Easing.Cubic.InOut(percentToMax)
+    } else if (curTime > wave.maxEnd) {
+      percentToMax = (curTime - wave.maxEnd) / (wave.end - wave.maxEnd)
+      easedPercent = 1 - Phaser.Math.Easing.Cubic.InOut(percentToMax)
+    }
+    // TODO: move base delay value to config
+    let delay = 1000 * (1 - easedPercent)
+
+    return delay + wave.baseSpawnRate + Phaser.Math.RND.between(
+      -wave.spawnRange, wave.spawnRange
     )
+  }
+
+  getCurrentWave() {
+    let waves = minigame.waves
+    let curTime = this.gameTimer.getElapsedSeconds()
+    return waves.find(el => el.start <= curTime && el.end > curTime)
   }
 
   getFallSpeed() {
