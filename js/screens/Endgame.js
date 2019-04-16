@@ -1,4 +1,5 @@
 import { endgame, screens, images } from '../config'
+import endgameUiHelper from './ui/endgameUiHelper'
 import Phaser from 'phaser'
 
 export default class extends Phaser.Scene {
@@ -11,27 +12,30 @@ export default class extends Phaser.Scene {
   }
 
   create() {
-    // TODO: move positions to config
-    // TODO: center labels
+    let ui = endgameUiHelper(this.sys.game.config)
+
     this.killsLabel = this.add.text(
-      this.sys.game.config.width / 2,
-      this.sys.game.config.height / 2 - this.sys.game.config.height / 4,
-      'Kills: ' + this.stats.kills,
+      ui.killLabelX,
+      ui.killLabelY,
+      'Kills:' + this.stats.kills,
       endgame.fonts.stats
     )
+    this.killsLabel.setOrigin(ui.killLabelOriginX, ui.killLabelOriginY)
 
     this.missesLabel = this.add.text(
-      this.sys.game.config.width / 2,
-      this.sys.game.config.height / 2 - this.sys.game.config.height / 4 + this.sys.game.config.height / 8,
-      'Misses: ' + this.stats.misses,
+      ui.missLabelX,
+      ui.missLabelY(this.killsLabel),
+      'Misses:' + this.stats.misses,
       endgame.fonts.stats
     )
+    this.missesLabel.setOrigin(ui.missLabelOriginX, ui.missLabelOriginY)
 
     this.returnBtn = this.add.sprite(
-      this.sys.game.config.width / 2,
-      this.sys.game.config.height / 2 + this.sys.game.config.height / 8,
+      ui.returnButtonX,
+      ui.returnButtonY(this.missesLabel),
       images.return
     ).setInteractive()
+    this.returnBtn.setOrigin(ui.returnButtonOriginX, ui.returnButtonOriginY)
 
     this.returnBtn.on('pointerdown', this.returnToTitle, this)
   }
