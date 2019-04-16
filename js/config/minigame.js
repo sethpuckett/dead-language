@@ -3,7 +3,7 @@ export default {
   fallRange: 15,
   baseSpawnRate: 1500,
   spawnRange: 1000,
-  gameTime: 5,
+  gameTime: 60,
   fonts: {
     entry: { font: '32px Courier', fill: '#ffff00' },
     label: { font: '32px Courier', fill: '#ffff00' },
