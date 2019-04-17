@@ -11,7 +11,7 @@ module.exports = {
   output: {
     pathinfo: true,
     path: path.resolve(__dirname, 'dist'),
-    publicPath: './dist/',
+    publicPath: './dead-language/',
     filename: '[name].js'
   },
   watch: true,

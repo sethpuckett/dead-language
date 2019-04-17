@@ -7,7 +7,7 @@
   "main": "main.js",
   "scripts": {
     "start": "webpack",
-    "deploy": ""
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -23,6 +23,7 @@
     "eslint-plugin-promise": "^4.0.0",
     "eslint-plugin-standard": "^4.0.0",
     "expose-loader": "^0.7.3",
+    "gh-pages": "^2.0.1",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0"
   },
