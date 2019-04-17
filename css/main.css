@@ -1,0 +1,70 @@
+/******************************************
+* Common
+******************************************/
+
+canvas {
+  width: 100%;
+}
+
+/******************************************
+* Header
+******************************************/
+
+header {
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#header-title {
+  padding: 1em;
+  flex-shrink: 0;
+}
+
+header h1 {
+  margin: 0;
+}
+
+/******************************************
+* Game
+******************************************/
+
+#game-row {
+  display: flex;
+  justify-content: center;
+}
+
+#game-container {
+  width: 80%;
+  min-width: 800px;
+}
+
+/******************************************
+* Web Content
+******************************************/
+
+#web-content-container {
+  width: 80%;
+  margin: auto;
+}
+
+#web-content {
+  width: 80%;
+  min-width: 800px;
+  margin: auto;
+  margin-top: 3em;
+}
+
+/******************************************
+* Footer
+******************************************/
+
+footer {
+  height: 2em;
+  display: flex;
+  justify-content: center;
+}
+
+#copyright {
+  margin: auto;
+}
