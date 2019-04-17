@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var BrowserSyncPlugin = require('browser-sync-webpack-plugin')
+var CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -26,7 +27,12 @@ module.exports = {
       server: {
         baseDir: ['./', './build']
       }
-    })
+    }),
+    new CopyPlugin([
+      { from: 'index.html', to: '.' },
+      { from: 'css', to: 'css' },
+      { from: 'assets', to: 'assets' }
+    ])
   ],
   module: {
     rules: [
