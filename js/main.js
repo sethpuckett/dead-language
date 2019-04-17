@@ -7,6 +7,7 @@ import Phaser from 'phaser'
 
 let config = {
   type: Phaser.AUTO,
+  parent: 'game-container',
   width: 1200,
   height: 600,
   scene: [
