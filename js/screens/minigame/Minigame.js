@@ -2,10 +2,10 @@ import vocab from '../../vocab'
 import { minigame, animations, images, screens } from '../../config'
 import minigameUiHelper from '../ui/minigameUiHelper'
 import VocabWordManager from '../../languageContent/VocabWordManager'
+import MinigameZombieManager from './MinigameZombieManager'
 import Phaser from 'phaser'
 
 const SPAWN_PADDING_PERCENT = 10
-const SPEED_MODIFIER = 1000000
 
 // let firestore = firebase.firestore()
 // const lessonRef = firestore.collection('lessons').where('name', '==', 'Basic Phrases').get().then((snap) => {
@@ -21,11 +21,10 @@ export default class extends Phaser.Scene {
 
   init() {
     this.vocab = new VocabWordManager(vocab.words)
-    this.zombies = []
+    this.zombieManager = new MinigameZombieManager(this, this.vocab)
     this.score = 0
     this.damage = 0
 
-    this.totalDistance = this.sys.game.config.height - minigame.ui.entryHeight
     this.spawnPadding = this.sys.game.config.width * SPAWN_PADDING_PERCENT / 100
   }
 
@@ -41,17 +40,13 @@ export default class extends Phaser.Scene {
   }
 
   update(_time, delta) {
-    this.zombies.forEach((zombie) => {
-      let movement = this.getMovement(zombie.speed, delta)
-      zombie.y += movement
-      zombie.text.y += movement
-    })
+    this.zombieManager.moveZombies(delta)
 
     let remaining = minigame.gameTime - this.gameTimer.getElapsedSeconds()
     this.timerValue.text = remaining.toFixed(1)
 
-    this.checkZombieAttack()
-    this.destroyDeadZombies()
+    this.changeDamage(this.zombieManager.checkZombieAttack())
+    this.zombieManager.destroyDeadZombies()
   }
 
   createUi() {
@@ -111,11 +106,13 @@ export default class extends Phaser.Scene {
   }
 
   createCollisions() {
-    this.playerHitRect = new Phaser.Geom.Rectangle(
-      0,
-      this.cameras.main.height - minigame.ui.entryHeight,
-      this.cameras.main.width,
-      minigame.ui.entryHeight
+    this.zombieManager.setHitArea(
+      new Phaser.Geom.Rectangle(
+        0,
+        this.sys.game.config.height - minigame.ui.entryHeight,
+        this.sys.game.config.width,
+        minigame.ui.entryHeight
+      )
     )
   }
 
@@ -165,28 +162,9 @@ export default class extends Phaser.Scene {
     return speed * delta * this.totalDistance / SPEED_MODIFIER
   }
 
-  checkZombieAttack() {
-    this.zombies.forEach((zombie) => {
-      if (Phaser.Geom.Intersects.RectangleToRectangle(zombie.getBounds(), this.playerHitRect)) {
-        this.changeDamage(1)
-        zombie.alive = false
-      }
-    })
-  }
-
   changeDamage(amount) {
     this.damage += amount
     this.missValue.text = this.damage
-  }
-
-  destroyDeadZombies() {
-    this.zombies.filter(z => !z.alive).forEach(z => {
-      this.vocab.releaseWord(z.word)
-      z.text.destroy()
-      z.destroy()
-    })
-
-    this.zombies = this.zombies.filter(z => z.alive)
   }
 
   activateSpawnTimer() {
@@ -235,39 +213,19 @@ export default class extends Phaser.Scene {
   }
 
   spawnZombie() {
-    let zombie = this.add.sprite(
-      this.getSpawnLocation(),
-      -35, // TODO: don't hard code this here. Should be const (based on camera size)
-      'zombie',
-      0
-    )
-    zombie.setScale(0.6, 0.6) // TODO: Don't hard code this
-    zombie.speed = this.getFallSpeed()
-    zombie.word = this.vocab.getRandomWord()
-    zombie.text = this.add.text(zombie.x - 25, -10, zombie.word.language1, minigame.fonts.zombie)
-    zombie.alive = true
-    zombie.play(animations.zombieWalk)
-    this.zombies.push(zombie)
+    let spawnX = this.getSpawnLocation()
+    let speed = this.getFallSpeed()
+    this.zombieManager.spawnZombie(spawnX, speed)
 
     // TODO: Wrap spawning in a higher level process. Starting timer should not be here.
     this.activateSpawnTimer()
   }
 
   submitAnswer() {
-    this.zombies.forEach(z => {
-      if (this.textEntry.text === z.word.language2) {
-        this.destroyZombieByWord(z.word.language1)
-        this.score++
-        this.killValue.text = this.score
-      }
-    })
-
+    let points = this.zombieManager.checkSubmittedAnswer(this.textEntry.text)
+    this.score += points
+    this.killValue.text = this.score
     this.textEntry.text = ''
-  }
-
-  destroyZombieByWord(word) {
-    let zombie = this.zombies.find(z => z.text.text === word)
-    zombie.alive = false
   }
 
   // TODO: move to helper class
