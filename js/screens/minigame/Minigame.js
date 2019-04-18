@@ -41,10 +41,7 @@ export default class extends Phaser.Scene {
 
   update(_time, delta) {
     this.zombieManager.moveZombies(delta)
-
-    let remaining = minigame.gameTime - this.gameTimer.getElapsedSeconds()
-    this.timerValue.text = remaining.toFixed(1)
-
+    this.updateGameTime()
     this.changeDamage(this.zombieManager.checkZombieAttack())
     this.zombieManager.destroyDeadZombies()
   }
@@ -78,9 +75,9 @@ export default class extends Phaser.Scene {
     this.lineGraphics = this.add.graphics({ lineStyle: minigame.ui.failLineStyle })
     this.failLine = new Phaser.Geom.Line(
       0,
-      this.cameras.main.height - minigame.ui.entryHeight,
-      this.cameras.main.width,
-      this.cameras.main.height - minigame.ui.entryHeight
+      this.sys.game.config.height - minigame.ui.entryHeight,
+      this.sys.game.config.width,
+      this.sys.game.config.height - minigame.ui.entryHeight
     )
     this.lineGraphics.strokeLineShape(this.failLine)
   }
@@ -158,13 +155,14 @@ export default class extends Phaser.Scene {
     this.scene.start(screens.endgame, { kills: this.score, misses: this.damage })
   }
 
-  getMovement(speed, delta) {
-    return speed * delta * this.totalDistance / SPEED_MODIFIER
-  }
-
   changeDamage(amount) {
     this.damage += amount
     this.missValue.text = this.damage
+  }
+
+  updateGameTime() {
+    let remaining = minigame.gameTime - this.gameTimer.getElapsedSeconds()
+    this.timerValue.text = remaining.toFixed(1)
   }
 
   activateSpawnTimer() {
@@ -177,7 +175,7 @@ export default class extends Phaser.Scene {
   }
 
   getSpawnLocation() {
-    return Phaser.Math.RND.between(this.spawnPadding, this.cameras.main.width - this.spawnPadding)
+    return Phaser.Math.RND.between(this.spawnPadding, this.sys.game.config.width - this.spawnPadding)
   }
 
   getSpawnDelay() {
