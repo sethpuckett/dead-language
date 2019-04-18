@@ -1,6 +1,7 @@
 import vocab from '../vocab'
 import { minigame, animations, images, screens } from '../config'
 import minigameUiHelper from './ui/minigameUiHelper'
+import VocabWordManager from '../languageContent/VocabWordManager'
 import Phaser from 'phaser'
 
 const SPAWN_PADDING_PERCENT = 10
@@ -19,8 +20,7 @@ export default class extends Phaser.Scene {
   }
 
   init() {
-    this.wordPool = [...vocab.words]
-    this.wordsInUse = []
+    this.vocab = new VocabWordManager(vocab.words)
     this.zombies = []
     this.score = 0
     this.damage = 0
@@ -181,7 +181,7 @@ export default class extends Phaser.Scene {
 
   destroyDeadZombies() {
     this.zombies.filter(z => !z.alive).forEach(z => {
-      this.releaseVocabWord(z.text.text)
+      this.vocab.releaseWord(z.word)
       z.text.destroy()
       z.destroy()
     })
@@ -243,7 +243,8 @@ export default class extends Phaser.Scene {
     )
     zombie.setScale(0.6, 0.6) // TODO: Don't hard code this
     zombie.speed = this.getFallSpeed()
-    zombie.text = this.add.text(zombie.x - 25, -10, this.reserveVocabWord().language1, minigame.fonts.zombie)
+    zombie.word = this.vocab.getRandomWord()
+    zombie.text = this.add.text(zombie.x - 25, -10, zombie.word.language1, minigame.fonts.zombie)
     zombie.alive = true
     zombie.play(animations.zombieWalk)
     this.zombies.push(zombie)
@@ -252,24 +253,10 @@ export default class extends Phaser.Scene {
     this.activateSpawnTimer()
   }
 
-  reserveVocabWord() {
-    let poolIndex = Phaser.Math.RND.between(0, this.wordPool.length - 1)
-    let word = this.wordPool.splice(poolIndex, 1)[0]
-    this.wordsInUse.push(word)
-    return word
-  }
-
-  releaseVocabWord(text) {
-    let index = this.wordsInUse.findIndex((word) => {
-      return word.language1 === text
-    })
-    this.wordPool.push(this.wordsInUse.splice(index, 1)[0])
-  }
-
   submitAnswer() {
-    this.wordsInUse.forEach((word) => {
-      if (this.textEntry.text === word.language2) {
-        this.destroyZombieByWord(word.language1)
+    this.zombies.forEach(z => {
+      if (this.textEntry.text === z.word.language2) {
+        this.destroyZombieByWord(z.word.language1)
         this.score++
         this.killValue.text = this.score
       }
