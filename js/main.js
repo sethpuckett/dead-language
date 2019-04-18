@@ -1,4 +1,4 @@
-import Minigame from './screens/Minigame'
+import Minigame from './screens/minigame/Minigame'
 import Boot from './screens/Boot'
 import Loading from './screens/Loading'
 import TitleMenu from './screens/TitleMenu'
