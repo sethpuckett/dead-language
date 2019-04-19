@@ -3,6 +3,7 @@ import { minigame, animations, images, screens } from '../../config'
 import minigameUiHelper from '../ui/minigameUiHelper'
 import VocabWordManager from '../../languageContent/VocabWordManager'
 import MinigameZombieManager from './MinigameZombieManager'
+import keyboardHelper from '../../util/keyboardHelper'
 import Phaser from 'phaser'
 
 const SPAWN_PADDING_PERCENT = 10
@@ -144,7 +145,7 @@ export default class extends Phaser.Scene {
   handleKeyDown(event) {
     if (event.keyCode === this.keys.BACKSPACE.keyCode && this.textEntry.text.length > 0) {
       this.textEntry.text = this.textEntry.text.substr(0, this.textEntry.text.length - 1)
-    } else if (this.isLetter(event.keyCode) || event.keyCode === this.keys.SPACE.keyCode) {
+    } else if (keyboardHelper.isLetter(event.keyCode) || event.keyCode === this.keys.SPACE.keyCode) {
       this.textEntry.text += event.key
     } else if (event.keyCode === this.keys.ENTER.keyCode) {
       this.submitAnswer()
@@ -224,10 +225,5 @@ export default class extends Phaser.Scene {
     this.score += points
     this.killValue.text = this.score
     this.textEntry.text = ''
-  }
-
-  // TODO: move to helper class
-  isLetter(keyCode) {
-    return keyCode >= 65 && keyCode <= 90
   }
 }
