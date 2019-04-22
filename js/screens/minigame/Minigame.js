@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import vocab from '../../vocab';
-import { minigame, animations, images, screens, } from '../../config';
+import { minigame, animations, images, screens } from '../../config';
 import minigameUiHelper from '../ui/minigameUiHelper';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
@@ -18,7 +18,7 @@ const SPAWN_PADDING_PERCENT = 10;
 
 export default class extends Phaser.Scene {
   constructor() {
-    super({ key: 'Minigame', });
+    super({ key: 'Minigame' });
   }
 
   init() {
@@ -102,7 +102,7 @@ export default class extends Phaser.Scene {
   createAnimations() {
     this.anims.create({
       key: animations.zombieWalk,
-      frames: this.anims.generateFrameNames(images.zombie, { frames: [0, 1, 0, 2,], }),
+      frames: this.anims.generateFrameNames(images.zombie, { frames: [0, 1, 0, 2] }),
       frameRate: 10,
       repeat: -1,
     });
@@ -158,7 +158,7 @@ export default class extends Phaser.Scene {
   }
 
   gameTimerFinish() {
-    this.scene.start(screens.endgame, { kills: this.score, misses: this.damage, });
+    this.scene.start(screens.endgame, { kills: this.score, misses: this.damage });
   }
 
   changeDamage(amount) {
@@ -207,7 +207,7 @@ export default class extends Phaser.Scene {
   }
 
   getCurrentWave() {
-    const { waves, } = minigame;
+    const { waves } = minigame;
     const curTime = this.gameTimer.getElapsedSeconds();
     return waves.find(el => el.start <= curTime && el.end > curTime);
   }
