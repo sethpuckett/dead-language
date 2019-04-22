@@ -44,9 +44,27 @@ export default class extends Phaser.Scene {
     this.load.image(images.start, images.files.start);
     this.load.image(images.return, images.files.return);
     this.load.image(images.grass, images.files.grass);
-    this.load.spritesheet(images.zombie, images.files.zombie, {
-      frameWidth: 100,
-      frameHeight: 100,
+    this.load.spritesheet(images.greenZombie, images.files.greenZombie, {
+      frameWidth: 25,
+      frameHeight: 25,
+      margin: 0,
+      spacing: 0
+    });
+    this.load.spritesheet(images.grayZombie, images.files.grayZombie, {
+      frameWidth: 25,
+      frameHeight: 25,
+      margin: 0,
+      spacing: 0
+    });
+    this.load.spritesheet(images.lightGreenZombie, images.files.lightGreenZombie, {
+      frameWidth: 25,
+      frameHeight: 25,
+      margin: 0,
+      spacing: 0
+    });
+    this.load.spritesheet(images.redZombie, images.files.redZombie, {
+      frameWidth: 25,
+      frameHeight: 25,
       margin: 0,
       spacing: 0
     });

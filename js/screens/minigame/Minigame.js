@@ -5,6 +5,7 @@ import minigameUiHelper from '../ui/minigameUiHelper';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
 import keyboardHelper from '../../util/keyboardHelper';
+import animationHelper from '../../util/animationHelper'
 
 const SPAWN_PADDING_PERCENT = 10;
 
@@ -99,12 +100,33 @@ export default class extends Phaser.Scene {
     this.background.setDepth(-1);
   }
 
-  createAnimations() {
+  zombieAnimation(key, image, frames, frameRate, repeat) {
     this.anims.create({
-      key: animations.zombieWalk,
-      frames: this.anims.generateFrameNames(images.zombie, { frames: [0, 1, 0, 2] }),
-      frameRate: 10,
-      repeat: -1,
+      key: key,
+      frames: this.anims.generateFrameNames(image, { frames: frames }),
+      frameRate: frameRate,
+      repeat: repeat ? -1 : 0
+    })
+  }
+
+  createAnimations() {
+    const im = images;
+    const a = animations;
+    const af = animations.frames;
+    const afr = animations.frameRates;
+    const za = animationHelper.zombieAnimation
+
+    var ims = [im.redZombie, im.grayZombie, im.greenZombie, im.lightGreenZombie];
+
+    ims.forEach( i => {
+      // TODO: add a reusable function to generate these keys, use here & zombie manager
+      this.zombieAnimation(za(i, a.zombieBounce), i, af.zombieBounce, afr.zombieBounce, true);
+      this.zombieAnimation(za(i, a.zombieWalk), i, af.zombieWalk, afr.zombieWalk, true);
+      this.zombieAnimation(za(i, a.zombieRun), i, af.zombieRun, afr.zombieRun, true);
+      this.zombieAnimation(za(i, a.zombieFall), i, af.zombieFall, afr.zombieFall, false);
+      this.zombieAnimation(za(i, a.zombieDamage), i, af.zombieDamage, afr.zombieDamage, false);
+      this.zombieAnimation(za(i, a.zombieStun), i, af.zombieStun, afr.zombieStun, true);
+      this.zombieAnimation(za(i, a.zombieAttack), i, af.zombieAttack, afr.zombieAttack, true);
     });
   }
 
@@ -212,7 +234,7 @@ export default class extends Phaser.Scene {
     return waves.find(el => el.start <= curTime && el.end > curTime);
   }
 
-  static getFallSpeed() {
+  getFallSpeed() {
     return (minigame.baseFallSpeed + Phaser.Math.RND.between(
       -minigame.fallRange, minigame.fallRange
     ));

@@ -1,9 +1,16 @@
 import Phaser from 'phaser';
 import { animations, images, minigame } from '../../config';
+import animationHelper from '../../util/animationHelper'
 
-const ZOMBIE_IMAGE_SCALE = 0.6;
+const ZOMBIE_IMAGE_SCALE = 2.5;
 const SPAWN_Y = -35;
 const SPEED_MODIFIER = 1000000;
+const ZOMBIE_IMAGES = [
+  images.grayZombie,
+  images.redZombie,
+  images.greenZombie,
+  images.lightGreenZombie
+];
 
 export default class {
   constructor(scene, vocabWordManager) {
@@ -48,7 +55,8 @@ export default class {
   }
 
   spawnZombie(spawnX, speed) {
-    const zombie = this.scene.add.sprite(spawnX, SPAWN_Y, images.zombie, 0);
+    const image = Phaser.Math.RND.pick(ZOMBIE_IMAGES)
+    const zombie = this.scene.add.sprite(spawnX, SPAWN_Y, image, 0);
     zombie.setScale(ZOMBIE_IMAGE_SCALE);
     zombie.speed = speed;
     zombie.word = this.vocab.getRandomWord();
@@ -58,7 +66,7 @@ export default class {
       minigame.fonts.zombie
     );
     zombie.alive = true;
-    zombie.play(animations.zombieWalk);
+    zombie.play(animationHelper.zombieAnimation(image, animations.zombieWalk));
     this.zombies.push(zombie);
   }
 

@@ -10,6 +10,7 @@ const config = {
   parent: 'game-container',
   width: 1200,
   height: 600,
+  pixelArt: true,
   scene: [
     Boot,
     Loading,

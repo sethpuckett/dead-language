@@ -22,6 +22,7 @@
       "ImportDeclaration": "never",
       "ExportDeclaration": "never"
     }],
-    "comma-dangle": ["error", "only-multiline"]
+    "comma-dangle": ["error", "only-multiline"],
+    "class-methods-use-this": ["error", "never"]
   }
 }
