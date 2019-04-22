@@ -1,6 +1,6 @@
 {
   "parser": "babel-eslint",
-  "extends": "standard",
+  "extends": "airbnb-base",
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
@@ -16,6 +16,12 @@
       "anonymous": "never",
       "named": "never",
       "asyncArrow": "always"
-    }]
+    }],
+    "no-param-reassign": ["error", { "props": false }],
+    "object-curly-newline": ["error", {
+      "ImportDeclaration": "never",
+      "ExportDeclaration": "never"
+    }],
+    "comma-dangle": ["error", "only-multiline"]
   }
 }

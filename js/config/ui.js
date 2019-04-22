@@ -1,4 +1,4 @@
 export default {
   padding: 10,
-  paddingBig: 25
-}
+  paddingBig: 25,
+};

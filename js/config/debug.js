@@ -1,3 +1,3 @@
 export default {
-  slowLoad: false
-}
+  slowLoad: false,
+};

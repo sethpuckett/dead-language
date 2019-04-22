@@ -1,11 +1,11 @@
-import Minigame from './screens/minigame/Minigame'
-import Boot from './screens/Boot'
-import Loading from './screens/Loading'
-import TitleMenu from './screens/TitleMenu'
-import Endgame from './screens/Endgame'
-import Phaser from 'phaser'
+import Phaser from 'phaser';
+import Minigame from './screens/minigame/Minigame';
+import Boot from './screens/Boot';
+import Loading from './screens/Loading';
+import TitleMenu from './screens/TitleMenu';
+import Endgame from './screens/Endgame';
 
-let config = {
+const config = {
   type: Phaser.AUTO,
   parent: 'game-container',
   width: 1200,
@@ -17,6 +17,6 @@ let config = {
     Minigame,
     Endgame
   ]
-}
+};
 
-let game = new Phaser.Game(config)
+const game = new Phaser.Game(config);

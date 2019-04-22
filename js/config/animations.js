@@ -1,3 +1,3 @@
 export default {
-  zombieWalk: 'zombie-walk'
-}
+  zombieWalk: 'zombie-walk',
+};

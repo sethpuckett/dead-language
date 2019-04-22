@@ -3,5 +3,5 @@ export default {
   loading: 'Loading',
   titleMenu: 'TitleMenu',
   minigame: 'Minigame',
-  endgame: 'Endgame'
-}
+  endgame: 'Endgame',
+};

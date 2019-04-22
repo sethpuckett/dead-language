@@ -6,7 +6,7 @@ export default {
       start: 0,
       maxStart: 20,
       maxEnd: 40,
-      end: 60
+      end: 60,
     },
     {
       baseSpawnRate: 1250,
@@ -14,7 +14,7 @@ export default {
       start: 60,
       maxStart: 80,
       maxEnd: 100,
-      end: 120
+      end: 120,
     },
     {
       baseSpawnRate: 1000,
@@ -22,20 +22,20 @@ export default {
       start: 120,
       maxStart: 140,
       maxEnd: 160,
-      end: 180
-    }
+      end: 180,
+    },
   ],
   baseFallSpeed: 25,
   fallRange: 7,
   gameTime: 180,
   fonts: {
-    entry: { font: '32px Courier', fill: '#ffff00' },
-    label: { font: '32px Courier', fill: '#ffff00' },
-    value: { font: '32px Courier', fill: '#ff0000' },
-    zombie: { font: '16px Courier', fill: '#ffffff' }
+    entry: { font: '32px Courier', fill: '#ffff00', },
+    label: { font: '32px Courier', fill: '#ffff00', },
+    value: { font: '32px Courier', fill: '#ff0000', },
+    zombie: { font: '16px Courier', fill: '#ffffff', },
   },
   ui: {
     entryHeight: 60,
-    failLineStyle: { width: 2, color: 0xaa0000 }
-  }
-}
+    failLineStyle: { width: 2, color: 0xaa0000, },
+  },
+};

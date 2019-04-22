@@ -9,6 +9,6 @@ export default {
     grass: 'assets/images/grass.png',
     loading: 'assets/images/loading.png',
     start: 'assets/images/start.png',
-    return: 'assets/images/return.png'
-  }
-}
+    return: 'assets/images/return.png',
+  },
+};

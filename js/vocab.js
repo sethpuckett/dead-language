@@ -120,4 +120,4 @@ export default {
     { id: 117, language1: 'table', language2: 'mesa' },
     { id: 118, language1: 'program', language2: 'programa' }
   ]
-}
+};
