@@ -27,7 +27,7 @@ export default {
   ],
   maxHealth: 20,
   startHealth: 20,
-  baseFallSpeed: 125,
+  baseFallSpeed: 25,
   fallRange: 7,
   gameTime: 180,
   maxTextEntry: 22,

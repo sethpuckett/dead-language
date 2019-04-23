@@ -130,7 +130,7 @@ export default class extends Phaser.Scene {
       0, 0,
       this.sys.game.config.width,
       this.sys.game.config.height - this.hudHeight,
-      'grass'
+      images.grass,
     );
     this.background.setOrigin(0, 0);
     this.background.setDepth(-1);
