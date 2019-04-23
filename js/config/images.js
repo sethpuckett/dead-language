@@ -29,7 +29,7 @@ export default {
     skull: 'assets/images/skull.png',
     goldCoin: 'assets/images/gold-coin.png',
     watch: 'assets/images/watch.png',
-    health:  'assets/images/health.png',
+    health: 'assets/images/health.png',
   },
   frames: {
     healthFull: 0,

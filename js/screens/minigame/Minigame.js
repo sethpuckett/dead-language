@@ -5,7 +5,7 @@ import minigameUiHelper from '../ui/minigameUiHelper';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
 import keyboardHelper from '../../util/keyboardHelper';
-import animationHelper from '../../util/animationHelper'
+import animationHelper from '../../util/animationHelper';
 
 const SPAWN_PADDING_PERCENT = 10;
 
@@ -57,33 +57,33 @@ export default class extends Phaser.Scene {
     this.hudHeight = ui.hudHeight;
 
     // HUD
-    this.weaponBorder = this.add.sprite(ui.weaponContainerX, ui.weaponContainerY, images.hudItemBorder);
-    this.weaponBorder.displayWidth = ui.weaponContainerWidth;
-    this.weaponBorder.displayHeight = ui.weaponContainerWidth;
-    this.weaponBorder.setOrigin(ui.weaponContainerOriginX, ui.weaponContainerOriginY)
-    this.itemBorder = this.add.sprite(ui.itemContainerX, ui.itemContainerY, images.hudItemBorder);
-    this.itemBorder.displayWidth = ui.itemContainerWidth;
-    this.itemBorder.displayHeight = ui.itemContainerWidth;
-    this.itemBorder.setOrigin(ui.itemContainerOriginX, ui.itemContainerOriginY);
+    this.weaponBorder = this.add.sprite(ui.weaponBorderX, ui.weaponBorderY, images.hudItemBorder);
+    this.weaponBorder.displayWidth = ui.weaponBorderWidth;
+    this.weaponBorder.displayHeight = ui.weaponBorderWidth;
+    this.weaponBorder.setOrigin(ui.weaponBorderOriginX, ui.weaponBorderOriginY);
+    this.itemBorder = this.add.sprite(ui.itemBorderX, ui.itemBorderY, images.hudItemBorder);
+    this.itemBorder.displayWidth = ui.itemBorderWidth;
+    this.itemBorder.displayHeight = ui.itemBorderWidth;
+    this.itemBorder.setOrigin(ui.itemBorderOriginX, ui.itemBorderOriginY);
     this.healthIcon = this.add.sprite(ui.healthIconX, ui.healthIconY, images.heart);
     this.healthIcon.displayWidth = ui.healthIconWidth;
     this.healthIcon.displayHeight = ui.healthIconWidth;
     this.healthIcon.setOrigin(ui.healthIconOriginX, ui.healthIconOriginY);
-    this.healthBars = []
+    this.healthBars = [];
     for (let i = 0; i < minigame.maxHealth; i += 1) {
       const prev = i !== 0 ? this.healthBars[i - 1] : this.healthIcon;
-      let bar = this.add.sprite(ui.healthValueX(prev), ui.healthValueY, images.health, 0);
+      const bar = this.add.sprite(ui.healthValueX(prev), ui.healthValueY, images.health, 0);
       bar.displayWidth = ui.healthValueWidth;
       bar.displayHeight = ui.healthValueHeight;
       bar.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
       this.healthBars.push(bar);
     }
 
-    this.healthIcon.setOrigin(ui.healthIconOriginX, ui.healthIconOriginY)
+    this.healthIcon.setOrigin(ui.healthIconOriginX, ui.healthIconOriginY);
     this.killIcon = this.add.sprite(ui.killIconX, ui.killIconY, images.skull);
     this.killIcon.displayWidth = ui.killIconWidth;
     this.killIcon.displayHeight = ui.killIconWidth;
-    this.killIcon.setOrigin(ui.killIconOriginX, ui.killIconOriginY)
+    this.killIcon.setOrigin(ui.killIconOriginX, ui.killIconOriginY);
     this.killValue = this.add.bitmapText(
       ui.killValueX, ui.killValueY, fonts.blueSkyWhite, '000', minigame.fonts.killSize
     );
@@ -91,7 +91,7 @@ export default class extends Phaser.Scene {
     this.cashIcon = this.add.sprite(ui.cashIconX, ui.cashIconY, images.goldCoin);
     this.cashIcon.displayWidth = ui.cashIconWidth;
     this.cashIcon.displayHeight = ui.cashIconWidth;
-    this.cashIcon.setOrigin(ui.cashIconOriginX, ui.cashIconOriginY)
+    this.cashIcon.setOrigin(ui.cashIconOriginX, ui.cashIconOriginY);
     this.cashValue = this.add.bitmapText(
       ui.cashValueX, ui.cashValueY, fonts.blueSkyWhite, '$100', minigame.fonts.cashSize
     );
@@ -99,15 +99,19 @@ export default class extends Phaser.Scene {
     this.timerIcon = this.add.sprite(ui.timerIconX, ui.timerIconY, images.watch);
     this.timerIcon.displayWidth = ui.timerIconWidth;
     this.timerIcon.displayHeight = ui.timerIconWidth;
-    this.timerIcon.setOrigin(ui.timerIconOriginX, ui.timerIconOriginY)
+    this.timerIcon.setOrigin(ui.timerIconOriginX, ui.timerIconOriginY);
     this.timerValue = this.add.bitmapText(
       ui.timerValueX, ui.timerValueY, fonts.blueSkyWhite, '', minigame.fonts.timerSize
     );
     this.timerValue.setOrigin(ui.timerValueOriginX, ui.timerValueOriginY);
-    this.messageBorder = this.add.sprite(ui.messageContainerX, ui.messageContainerY, images.hudMessageBorder);
-    this.messageBorder.displayWidth = ui.messageContainerWidth;
-    this.messageBorder.displayHeight = ui.messageContainerHeight;
-    this.messageBorder.setOrigin(ui.messageContainerOriginX, ui.messageContainerOriginY)
+    this.messageBorder = this.add.sprite(
+      ui.messageBorderX,
+      ui.messageBorderY,
+      images.hudMessageBorder
+    );
+    this.messageBorder.displayWidth = ui.messageBorderWidth;
+    this.messageBorder.displayHeight = ui.messageBorderHeight;
+    this.messageBorder.setOrigin(ui.messageBorderOriginX, ui.messageBorderOriginY);
 
     // Text Entry
     this.textEntry = this.add.text(ui.textEntryX, ui.textEntryY, '', minigame.fonts.entry);
@@ -137,11 +141,11 @@ export default class extends Phaser.Scene {
 
   zombieAnimation(key, image, frames, frameRate, repeat) {
     this.anims.create({
-      key: key,
-      frames: this.anims.generateFrameNames(image, { frames: frames }),
-      frameRate: frameRate,
-      repeat: repeat ? -1 : 0
-    })
+      key,
+      frames: this.anims.generateFrameNames(image, { frames }),
+      frameRate,
+      repeat: repeat ? -1 : 0,
+    });
   }
 
   createAnimations() {
@@ -149,11 +153,11 @@ export default class extends Phaser.Scene {
     const a = animations;
     const af = animations.frames;
     const afr = animations.frameRates;
-    const za = animationHelper.zombieAnimation
+    const za = animationHelper.zombieAnimation;
 
-    var ims = [im.redZombie, im.grayZombie, im.greenZombie, im.lightGreenZombie];
+    const ims = [im.redZombie, im.grayZombie, im.greenZombie, im.lightGreenZombie];
 
-    ims.forEach( i => {
+    ims.forEach((i) => {
       this.zombieAnimation(za(i, a.zombieBounce), i, af.zombieBounce, afr.zombieBounce, true);
       this.zombieAnimation(za(i, a.zombieWalk), i, af.zombieWalk, afr.zombieWalk, true);
       this.zombieAnimation(za(i, a.zombieRun), i, af.zombieRun, afr.zombieRun, true);
@@ -221,9 +225,9 @@ export default class extends Phaser.Scene {
     this.health += amount;
     for (let i = 0; i < minigame.maxHealth; i += 1) {
       if (i < this.health) {
-        this.healthBars[i].setFrame(images.frames.healthFull)
+        this.healthBars[i].setFrame(images.frames.healthFull);
       } else {
-        this.healthBars[i].setFrame(images.frames.healthEmpty)
+        this.healthBars[i].setFrame(images.frames.healthEmpty);
       }
     }
   }

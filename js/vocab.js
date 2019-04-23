@@ -118,6 +118,6 @@ export default {
     { id: 115, language1: 'process', language2: 'proceso' },
     { id: 116, language1: 'minute', language2: 'minuto' },
     { id: 117, language1: 'table', language2: 'mesa' },
-    { id: 118, language1: 'program', language2: 'programa' }
-  ]
+    { id: 118, language1: 'program', language2: 'programa' },
+  ],
 };

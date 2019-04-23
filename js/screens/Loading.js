@@ -41,20 +41,24 @@ export default class extends Phaser.Scene {
   }
 
   loadAssets() {
-    this.load.bitmapFont(fonts.blueSkyWhite, fonts.files.blueSkyWhitePng, fonts.files.blueSkyWhiteFnt);
-    this.load.bitmapFont(fonts.blueSkyBlack, fonts.files.blueSkyBlackPng, fonts.files.blueSkyBlackFnt);
+    this.load.bitmapFont(
+      fonts.blueSkyWhite, fonts.files.blueSkyWhitePng, fonts.files.blueSkyWhiteFnt
+    );
+    this.load.bitmapFont(
+      fonts.blueSkyBlack, fonts.files.blueSkyBlackPng, fonts.files.blueSkyBlackFnt
+    );
     this.load.spritesheet(images.health, images.files.health, {
       frameWidth: 5,
       frameHeight: 20,
       margin: 0,
-      spacing: 0
+      spacing: 0,
     });
-    this.load.image(images.watch, images.files.watch)
-    this.load.image(images.goldCoin, images.files.goldCoin)
-    this.load.image(images.skull, images.files.skull)
-    this.load.image(images.heart, images.files.heart)
-    this.load.image(images.hudItemBorder, images.files.hudItemBorder)
-    this.load.image(images.hudMessageBorder, images.files.hudMessageBorder)
+    this.load.image(images.watch, images.files.watch);
+    this.load.image(images.goldCoin, images.files.goldCoin);
+    this.load.image(images.skull, images.files.skull);
+    this.load.image(images.heart, images.files.heart);
+    this.load.image(images.hudItemBorder, images.files.hudItemBorder);
+    this.load.image(images.hudMessageBorder, images.files.hudMessageBorder);
     this.load.image(images.start, images.files.start);
     this.load.image(images.return, images.files.return);
     this.load.image(images.grass, images.files.grass);
@@ -62,25 +66,25 @@ export default class extends Phaser.Scene {
       frameWidth: 25,
       frameHeight: 25,
       margin: 0,
-      spacing: 0
+      spacing: 0,
     });
     this.load.spritesheet(images.grayZombie, images.files.grayZombie, {
       frameWidth: 25,
       frameHeight: 25,
       margin: 0,
-      spacing: 0
+      spacing: 0,
     });
     this.load.spritesheet(images.lightGreenZombie, images.files.lightGreenZombie, {
       frameWidth: 25,
       frameHeight: 25,
       margin: 0,
-      spacing: 0
+      spacing: 0,
     });
     this.load.spritesheet(images.redZombie, images.files.redZombie, {
       frameWidth: 25,
       frameHeight: 25,
       margin: 0,
-      spacing: 0
+      spacing: 0,
     });
   }
 

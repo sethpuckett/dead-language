@@ -1,3 +1,3 @@
 export default {
-  zombieAnimation: (image, animation) => `${image}-${animation}`
+  zombieAnimation: (image, animation) => `${image}-${animation}`,
 };

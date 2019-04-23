@@ -12,6 +12,6 @@ export default (config) => {
     returnButtonX: u.w_2,
     returnButtonY: prev => prev.y + prev.height + u.padding,
     returnButtonOriginX: u.center,
-    returnButtonOriginY: u.top
+    returnButtonOriginY: u.top,
   };
 };

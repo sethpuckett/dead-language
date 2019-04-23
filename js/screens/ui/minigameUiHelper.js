@@ -6,32 +6,35 @@ export default (config) => {
 
   return {
     hudHeight: u.h_20p,
-    weaponContainerX: u.padding,
-    get weaponContainerY() { return u.h - this.hudHeight + u.padding },
-    get weaponContainerWidth() { return this.hudHeight / 2 - u.padding * 2; },
-    weaponContainerOriginX: u.left,
-    weaponContainerOriginY: u.Top,
-    itemContainerX: u.padding,
-    get itemContainerWidth() { return this.hudHeight / 2 - u.padding * 2; },
-    get itemContainerY() { return this.weaponContainerY + this.itemContainerWidth + u.padding * 2; },
-    itemContainerOriginX: u.left,
-    itemContainerOriginY: u.top,
+    weaponBorderX: u.padding,
+    get weaponBorderY() { return u.h - this.hudHeight + u.padding; },
+    get weaponBorderWidth() { return this.hudHeight / 2 - u.padding * 2; },
+    weaponBorderOriginX: u.left,
+    weaponBorderOriginY: u.Top,
+    itemBorderX: u.padding,
+    get itemBorderWidth() { return this.hudHeight / 2 - u.padding * 2; },
+    get itemBorderY() { return this.weaponBorderY + this.itemBorderWidth + u.padding * 2; },
+    itemBorderOriginX: u.left,
+    itemBorderOriginY: u.top,
 
-    get healthIconX() { return this.weaponContainerX + this.weaponContainerWidth + u.paddingBig; },
-    get healthIconY() { return u.h - this.hudHeight + u.padding + this.weaponContainerWidth / 2; },
+    get healthIconX() { return this.weaponBorderX + this.weaponBorderWidth + u.paddingBig; },
+    get healthIconY() { return u.h - this.hudHeight + u.padding + this.weaponBorderWidth / 2; },
     healthIconWidth: u.w_5p,
     healthIconOriginX: u.left,
     healthIconOriginY: u.center,
     healthValueX: prev => prev.x + prev.displayWidth + u.w_1p / 2,
-    get healthValueY() { return u.h - this.hudHeight + u.padding + this.weaponContainerWidth / 2; },
+    get healthValueY() { return u.h - this.hudHeight + u.padding + this.weaponBorderWidth / 2; },
     healthValueWidth: u.w_1p * 1.5,
     healthValuePadding: u.w_1p / 2,
     healthValueHeight: u.w_5p,
     healthValueOriginX: u.left,
     healthValueOriginY: u.center,
 
-    get killIconX() { return this.weaponContainerX + this.weaponContainerWidth + u.paddingBig; },
-    get killIconY() { return u.h - this.hudHeight + u.padding * 3 + this.weaponContainerWidth + this.itemContainerWidth / 2; },
+    get killIconX() { return this.weaponBorderX + this.weaponBorderWidth + u.paddingBig; },
+    get killIconY() {
+      return u.h - this.hudHeight + u.padding * 3
+        + this.weaponBorderWidth + this.itemBorderWidth / 2;
+    },
     killIconWidth: u.w_5p,
     killIconOriginX: u.left,
     killIconOriginY: u.center,
@@ -41,8 +44,11 @@ export default (config) => {
     killValueOriginX: u.left,
     killValueOriginY: u.center,
 
-    get cashIconX() { return this.killValueX + u.w_10p },
-    get cashIconY() { return u.h - this.hudHeight + u.padding * 3 + this.weaponContainerWidth + this.itemContainerWidth / 2; },
+    get cashIconX() { return this.killValueX + u.w_10p; },
+    get cashIconY() {
+      return u.h - this.hudHeight + u.padding * 3
+        + this.weaponBorderWidth + this.itemBorderWidth / 2;
+    },
     cashIconWidth: u.w_5p,
     cashIconOriginX: u.left,
     cashIconOriginY: u.center,
@@ -52,8 +58,11 @@ export default (config) => {
     cashValueOriginX: u.left,
     cashValueOriginY: u.center,
 
-    get timerIconX() { return this.cashValueX + u.w_15p },
-    get timerIconY() { return u.h - this.hudHeight + u.padding * 3 + this.weaponContainerWidth + this.itemContainerWidth / 2; },
+    get timerIconX() { return this.cashValueX + u.w_15p; },
+    get timerIconY() {
+      return u.h - this.hudHeight + u.padding * 3
+        + this.weaponBorderWidth + this.itemBorderWidth / 2;
+    },
     timerIconWidth: u.w_5p,
     timerIconOriginX: u.left,
     timerIconOriginY: u.center,
@@ -63,16 +72,16 @@ export default (config) => {
     timerValueOriginX: u.left,
     timerValueOriginY: u.center,
 
-    get messageContainerX() { return this.timerValueX + u.h_20p; },
-    get messageContainerY() { return u.h - this.hudHeight + u.padding },
-    get messageContainerWidth() { return u.w - this.messageContainerX - u.padding; },
-    get messageContainerHeight() { return this.hudHeight - u.padding * 2; },
-    messageContainerOriginX: u.left,
-    messageContainerOriginY: u.Top,
+    get messageBorderX() { return this.timerValueX + u.h_20p; },
+    get messageBorderY() { return u.h - this.hudHeight + u.padding; },
+    get messageBorderWidth() { return u.w - this.messageBorderX - u.padding; },
+    get messageBorderHeight() { return this.hudHeight - u.padding * 2; },
+    messageBorderOriginX: u.left,
+    messageBorderOriginY: u.Top,
 
     textEntryX: u.padding,
     textEntryY: u.h - minigame.ui.entryHeight / 2,
     textEntryOriginX: u.left,
-    textEntryOriginY: u.center
+    textEntryOriginY: u.center,
   };
 };

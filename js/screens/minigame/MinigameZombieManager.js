@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { animations, images, minigame, fonts } from '../../config';
-import animationHelper from '../../util/animationHelper'
+import animationHelper from '../../util/animationHelper';
 
 const ZOMBIE_IMAGE_SCALE = 2.5;
 const SPAWN_Y = -35;
@@ -9,7 +9,7 @@ const ZOMBIE_IMAGES = [
   images.grayZombie,
   images.redZombie,
   images.greenZombie,
-  images.lightGreenZombie
+  images.lightGreenZombie,
 ];
 
 export default class {
@@ -55,7 +55,7 @@ export default class {
   }
 
   spawnZombie(spawnX, speed) {
-    const image = Phaser.Math.RND.pick(ZOMBIE_IMAGES)
+    const image = Phaser.Math.RND.pick(ZOMBIE_IMAGES);
     const zombie = this.scene.add.sprite(spawnX, SPAWN_Y, image, 0);
     zombie.setScale(ZOMBIE_IMAGE_SCALE);
     zombie.speed = speed;

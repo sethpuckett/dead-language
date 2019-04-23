@@ -36,13 +36,13 @@ export default {
     cashFill: '#ffffff',
     timerSize: 22,
     timerFill: '#ffffff',
-    entry: { font: '32px Courier', fill: '#ffff00', },
-    label: { font: '32px Courier', fill: '#ffff00', },
-    value: { font: '32px Courier', fill: '#ff0000', },
-    zombie: { font: '16px Courier', fill: '#ffffff', },
+    entry: { font: '32px Courier', fill: '#ffff00' },
+    label: { font: '32px Courier', fill: '#ffff00' },
+    value: { font: '32px Courier', fill: '#ff0000' },
+    zombie: { font: '16px Courier', fill: '#ffffff' },
   },
   ui: {
     entryHeight: 60,
-    failLineStyle: { width: 2, color: 0xaa0000, },
+    failLineStyle: { width: 2, color: 0xaa0000 },
   },
 };

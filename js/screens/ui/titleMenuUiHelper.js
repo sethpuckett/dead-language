@@ -6,6 +6,6 @@ export default (config) => {
   return {
     startButtonX: u.w_2,
     startButtonY: u.h_2,
-    startButtonOrigin: u.center
+    startButtonOrigin: u.center,
   };
 };

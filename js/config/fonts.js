@@ -6,5 +6,5 @@ export default {
     blueSkyWhiteFnt: 'assets/fonts/blue-sky-white.fnt',
     blueSkyBlackPng: 'assets/fonts/blue-sky-black.png',
     blueSkyBlackFnt: 'assets/fonts/blue-sky-black.fnt',
-  }
+  },
 };

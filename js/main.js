@@ -16,8 +16,8 @@ const config = {
     Loading,
     TitleMenu,
     Minigame,
-    Endgame
-  ]
+    Endgame,
+  ],
 };
 
 const game = new Phaser.Game(config);

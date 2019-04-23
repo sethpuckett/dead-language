@@ -16,6 +16,6 @@ export default (config) => {
     barW: u.w_25p,
     barH: u.w_5p,
     get barX() { return u.w_2 - this.barW / 2; },
-    get barY() { return u.h_2 - this.barH / 2; }
+    get barY() { return u.h_2 - this.barH / 2; },
   };
 };

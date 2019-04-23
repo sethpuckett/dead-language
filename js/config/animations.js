@@ -4,7 +4,7 @@ export default {
   zombieRun: 'zombie-run',
   zombieFall: 'zombie-fall',
   zombieDamage: 'zombie-damage',
-  zombieWalk: 'zombie-stun',
+  zombieStun: 'zombie-stun',
   zombieAttack: 'zombie-attack',
   frames: {
     zombieBounce: [0, 1, 2, 3],
@@ -13,7 +13,7 @@ export default {
     zombieFall: [18, 19, 20, 21],
     zombieDamage: [24, 25, 26],
     zombieStun: [30, 31, 32, 33],
-    zombieAttack: [36, 36, 36, 36, 36, 37, 38]
+    zombieAttack: [36, 36, 36, 36, 36, 37, 38],
   },
   frameRates: {
     zombieBounce: 8,
@@ -22,6 +22,6 @@ export default {
     zombieFall: 8,
     zombieDamage: 10,
     zombieStun: 8,
-    zombieAttack: 10
-  }
+    zombieAttack: 10,
+  },
 };
