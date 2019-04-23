@@ -28,6 +28,7 @@ export default (config) => {
   helper.w_1p = helper.w * 0.01;
   helper.w_5p = helper.w * 0.05;
   helper.w_10p = helper.w * 0.10;
+  helper.w_125p = helper.w * 0.125;
   helper.w_15p = helper.w * 0.15;
   helper.w_20p = helper.w * 0.20;
   helper.w_25p = helper.w * 0.25;
@@ -43,6 +44,7 @@ export default (config) => {
   helper.w_75p = helper.w * 0.75;
   helper.w_80p = helper.w * 0.80;
   helper.w_85p = helper.w * 0.85;
+  helper.w_875p = helper.w * 0.875;
   helper.w_90p = helper.w * 0.90;
   helper.w_95p = helper.w * 0.95;
 

@@ -22,17 +22,9 @@ export default class extends Phaser.Scene {
     );
     this.killsLabel.setOrigin(ui.killLabelOriginX, ui.killLabelOriginY);
 
-    this.missesLabel = this.add.text(
-      ui.missLabelX,
-      ui.missLabelY(this.killsLabel),
-      `Misses:${this.stats.misses}`,
-      endgame.fonts.stats
-    );
-    this.missesLabel.setOrigin(ui.missLabelOriginX, ui.missLabelOriginY);
-
     this.returnBtn = this.add.sprite(
       ui.returnButtonX,
-      ui.returnButtonY(this.missesLabel),
+      ui.returnButtonY(this.killsLabel),
       images.return
     ).setInteractive();
     this.returnBtn.setOrigin(ui.returnButtonOriginX, ui.returnButtonOriginY);

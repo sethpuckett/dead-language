@@ -9,11 +9,6 @@ export default (config) => {
     killLabelOriginX: u.center,
     killLabelOriginY: u.top,
 
-    missLabelX: u.w_2,
-    missLabelY: prev => prev.y + prev.height + u.padding,
-    missLabelOriginX: u.center,
-    missLabelOriginY: u.top,
-
     returnButtonX: u.w_2,
     returnButtonY: prev => prev.y + prev.height + u.padding,
     returnButtonOriginX: u.center,

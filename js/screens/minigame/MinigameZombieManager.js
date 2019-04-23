@@ -41,7 +41,7 @@ export default class {
         z.alive = false;
       }
     });
-    return damage;
+    return -damage;
   }
 
   destroyDeadZombies() {

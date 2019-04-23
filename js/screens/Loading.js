@@ -43,8 +43,12 @@ export default class extends Phaser.Scene {
   loadAssets() {
     this.load.bitmapFont(fonts.blueSkyWhite, fonts.files.blueSkyWhitePng, fonts.files.blueSkyWhiteFnt);
     this.load.bitmapFont(fonts.blueSkyBlack, fonts.files.blueSkyBlackPng, fonts.files.blueSkyBlackFnt);
-    this.load.image(images.healthEmpty, images.files.healthEmpty)
-    this.load.image(images.healthFull, images.files.healthFull)
+    this.load.spritesheet(images.health, images.files.health, {
+      frameWidth: 5,
+      frameHeight: 20,
+      margin: 0,
+      spacing: 0
+    });
     this.load.image(images.watch, images.files.watch)
     this.load.image(images.goldCoin, images.files.goldCoin)
     this.load.image(images.skull, images.files.skull)

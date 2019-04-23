@@ -1,5 +1,5 @@
 export default {
-  padding: 6,
-  paddingBig: 25,
-  paddingSmall: 3,
+  padding: 5,
+  paddingBig: 15,
+  paddingSmall: 2,
 };

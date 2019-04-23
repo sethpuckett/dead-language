@@ -13,8 +13,7 @@ export default {
   skull: 'skull',
   goldCoin: 'gold-coin',
   watch: 'watch',
-  healthFull: 'health-full',
-  healthEmpty: 'health-empty',
+  health: 'health',
   files: {
     grayZombie: 'assets/images/zombie-gray.png',
     greenZombie: 'assets/images/zombie-green.png',
@@ -30,7 +29,10 @@ export default {
     skull: 'assets/images/skull.png',
     goldCoin: 'assets/images/gold-coin.png',
     watch: 'assets/images/watch.png',
-    healthFull: 'assets/images/health-full.png',
-    healthEmpty: 'assets/images/health-empty.png',
+    health:  'assets/images/health.png',
+  },
+  frames: {
+    healthFull: 0,
+    healthEmpty: 1,
   },
 };

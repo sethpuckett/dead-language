@@ -25,7 +25,8 @@ export default {
       end: 180,
     },
   ],
-  baseFallSpeed: 25,
+  maxHealth: 20,
+  baseFallSpeed: 125,
   fallRange: 7,
   gameTime: 180,
   fonts: {

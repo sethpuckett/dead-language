@@ -26,7 +26,7 @@ export default class extends Phaser.Scene {
     this.vocab = new VocabWordManager(vocab.words);
     this.zombieManager = new MinigameZombieManager(this, this.vocab);
     this.score = 0;
-    this.damage = 0;
+    this.health = minigame.maxHealth;
 
     this.spawnPadding = this.sys.game.config.width * SPAWN_PADDING_PERCENT / 100;
   }
@@ -43,10 +43,13 @@ export default class extends Phaser.Scene {
   }
 
   update(_time, delta) {
-    this.zombieManager.moveZombies(delta);
     this.updateGameTime();
-    this.changeDamage(this.zombieManager.checkZombieAttack());
+    this.zombieManager.moveZombies(delta);
     this.zombieManager.destroyDeadZombies();
+    this.changeHealth(this.zombieManager.checkZombieAttack());
+    if (this.health <= 0) {
+      this.loseGame();
+    }
   }
 
   createUi() {
@@ -65,56 +68,16 @@ export default class extends Phaser.Scene {
     this.healthIcon = this.add.sprite(ui.healthIconX, ui.healthIconY, images.heart);
     this.healthIcon.displayWidth = ui.healthIconWidth;
     this.healthIcon.displayHeight = ui.healthIconWidth;
-
-    this.healthValue1 = this.add.sprite(ui.healthValue1X, ui.healthValueY, images.healthFull);
-    this.healthValue1.displayWidth = ui.healthValueWidth;
-    this.healthValue1.displayHeight = ui.healthValueHeight;
-    this.healthValue1.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
-
-    this.healthValue2 = this.add.sprite(ui.healthValue2X, ui.healthValueY, images.healthFull);
-    this.healthValue2.displayWidth = ui.healthValueWidth;
-    this.healthValue2.displayHeight = ui.healthValueHeight;
-    this.healthValue2.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
-
-    this.healthValue3 = this.add.sprite(ui.healthValue3X, ui.healthValueY, images.healthFull);
-    this.healthValue3.displayWidth = ui.healthValueWidth;
-    this.healthValue3.displayHeight = ui.healthValueHeight;
-    this.healthValue3.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
-
-    this.healthValue4 = this.add.sprite(ui.healthValue4X, ui.healthValueY, images.healthFull);
-    this.healthValue4.displayWidth = ui.healthValueWidth;
-    this.healthValue4.displayHeight = ui.healthValueHeight;
-    this.healthValue4.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
-
-    this.healthValue5 = this.add.sprite(ui.healthValue5X, ui.healthValueY, images.healthFull);
-    this.healthValue5.displayWidth = ui.healthValueWidth;
-    this.healthValue5.displayHeight = ui.healthValueHeight;
-    this.healthValue5.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
-
-    this.healthValue6 = this.add.sprite(ui.healthValue6X, ui.healthValueY, images.healthFull);
-    this.healthValue6.displayWidth = ui.healthValueWidth;
-    this.healthValue6.displayHeight = ui.healthValueHeight;
-    this.healthValue6.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
-
-    this.healthValue7 = this.add.sprite(ui.healthValue7X, ui.healthValueY, images.healthFull);
-    this.healthValue7.displayWidth = ui.healthValueWidth;
-    this.healthValue7.displayHeight = ui.healthValueHeight;
-    this.healthValue7.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
-
-    this.healthValue8 = this.add.sprite(ui.healthValue8X, ui.healthValueY, images.healthFull);
-    this.healthValue8.displayWidth = ui.healthValueWidth;
-    this.healthValue8.displayHeight = ui.healthValueHeight;
-    this.healthValue8.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
-
-    this.healthValue9 = this.add.sprite(ui.healthValue9X, ui.healthValueY, images.healthEmpty);
-    this.healthValue9.displayWidth = ui.healthValueWidth;
-    this.healthValue9.displayHeight = ui.healthValueHeight;
-    this.healthValue9.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
-
-    this.healthValue10 = this.add.sprite(ui.healthValue10X, ui.healthValueY, images.healthEmpty);
-    this.healthValue10.displayWidth = ui.healthValueWidth;
-    this.healthValue10.displayHeight = ui.healthValueHeight;
-    this.healthValue10.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
+    this.healthIcon.setOrigin(ui.healthIconOriginX, ui.healthIconOriginY);
+    this.healthBars = []
+    for (let i = 0; i < minigame.maxHealth; i += 1) {
+      const prev = i !== 0 ? this.healthBars[i - 1] : this.healthIcon;
+      let bar = this.add.sprite(ui.healthValueX(prev), ui.healthValueY, images.health, 0);
+      bar.displayWidth = ui.healthValueWidth;
+      bar.displayHeight = ui.healthValueHeight;
+      bar.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
+      this.healthBars.push(bar);
+    }
 
     this.healthIcon.setOrigin(ui.healthIconOriginX, ui.healthIconOriginY)
     this.killIcon = this.add.sprite(ui.killIconX, ui.killIconY, images.skull);
@@ -149,17 +112,6 @@ export default class extends Phaser.Scene {
     // Text Entry
     this.textEntry = this.add.text(ui.textEntryX, ui.textEntryY, '', minigame.fonts.entry);
     this.textEntry.setOrigin(ui.textEntryOriginX, ui.textEntryOriginY);
-
-    // Misses
-    this.missLabel = this.add.text(ui.missLabelX, ui.missLabelY, 'Misses:', minigame.fonts.label);
-    this.missLabel.setOrigin(ui.missOriginX, ui.missOriginY);
-    this.missValue = this.add.text(
-      ui.missValueX(this.missLabel), ui.missValueY, this.damage, minigame.fonts.value
-    );
-    this.missValue.setOrigin(ui.missOriginX, ui.missOriginY);
-
-
-
 
     // Fail Line
     this.lineGraphics = this.add.graphics({ lineStyle: minigame.ui.failLineStyle });
@@ -202,7 +154,6 @@ export default class extends Phaser.Scene {
     var ims = [im.redZombie, im.grayZombie, im.greenZombie, im.lightGreenZombie];
 
     ims.forEach( i => {
-      // TODO: add a reusable function to generate these keys, use here & zombie manager
       this.zombieAnimation(za(i, a.zombieBounce), i, af.zombieBounce, afr.zombieBounce, true);
       this.zombieAnimation(za(i, a.zombieWalk), i, af.zombieWalk, afr.zombieWalk, true);
       this.zombieAnimation(za(i, a.zombieRun), i, af.zombieRun, afr.zombieRun, true);
@@ -263,12 +214,22 @@ export default class extends Phaser.Scene {
   }
 
   gameTimerFinish() {
-    this.scene.start(screens.endgame, { kills: this.score, misses: this.damage });
+    this.scene.start(screens.endgame, { kills: this.score });
   }
 
-  changeDamage(amount) {
-    this.damage += amount;
-    this.missValue.text = this.damage;
+  changeHealth(amount) {
+    this.health += amount;
+    for (let i = 0; i < minigame.maxHealth; i += 1) {
+      if (i < this.health) {
+        this.healthBars[i].setFrame(images.frames.healthFull)
+      } else {
+        this.healthBars[i].setFrame(images.frames.healthEmpty)
+      }
+    }
+  }
+
+  loseGame() {
+    this.scene.start(screens.endgame, { kills: this.score });
   }
 
   updateGameTime() {
