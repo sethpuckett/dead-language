@@ -6,3 +6,4 @@ export { default as loading } from './loading';
 export { default as minigame } from './minigame';
 export { default as screens } from './screens';
 export { default as ui } from './ui';
+export { default as fonts } from './fonts';

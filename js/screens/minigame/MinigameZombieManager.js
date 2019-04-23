@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { animations, images, minigame } from '../../config';
+import { animations, images, minigame, fonts } from '../../config';
 import animationHelper from '../../util/animationHelper'
 
 const ZOMBIE_IMAGE_SCALE = 2.5;
@@ -60,10 +60,10 @@ export default class {
     zombie.setScale(ZOMBIE_IMAGE_SCALE);
     zombie.speed = speed;
     zombie.word = this.vocab.getRandomWord();
-    zombie.text = this.scene.add.text(
-      zombie.x - 25,
-      10, zombie.word.language1,
-      minigame.fonts.zombie
+    zombie.text = this.scene.add.bitmapText(
+      zombie.x - 25, 10,
+      fonts.blueSkyWhite, zombie.word.language1,
+      10
     );
     zombie.alive = true;
     zombie.play(animationHelper.zombieAnimation(image, animations.zombieWalk));

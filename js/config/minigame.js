@@ -29,6 +29,12 @@ export default {
   fallRange: 7,
   gameTime: 180,
   fonts: {
+    killSize: 22,
+    killFill: '#ffffff',
+    cashSize: 22,
+    cashFill: '#ffffff',
+    timerSize: 22,
+    timerFill: '#ffffff',
     entry: { font: '32px Courier', fill: '#ffff00', },
     label: { font: '32px Courier', fill: '#ffff00', },
     value: { font: '32px Courier', fill: '#ff0000', },

@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import vocab from '../../vocab';
-import { minigame, animations, images, screens } from '../../config';
+import { minigame, animations, images, screens, fonts } from '../../config';
 import minigameUiHelper from '../ui/minigameUiHelper';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
@@ -32,8 +32,8 @@ export default class extends Phaser.Scene {
   }
 
   create() {
-    this.createBackground();
     this.createUi();
+    this.createBackground();
     this.createAnimations();
     this.createCollisions();
     this.createInput();
@@ -51,18 +51,104 @@ export default class extends Phaser.Scene {
 
   createUi() {
     const ui = minigameUiHelper(this.sys.game.config);
+    this.hudHeight = ui.hudHeight;
+
+    // HUD
+    this.weaponBorder = this.add.sprite(ui.weaponContainerX, ui.weaponContainerY, images.hudItemBorder);
+    this.weaponBorder.displayWidth = ui.weaponContainerWidth;
+    this.weaponBorder.displayHeight = ui.weaponContainerWidth;
+    this.weaponBorder.setOrigin(ui.weaponContainerOriginX, ui.weaponContainerOriginY)
+    this.itemBorder = this.add.sprite(ui.itemContainerX, ui.itemContainerY, images.hudItemBorder);
+    this.itemBorder.displayWidth = ui.itemContainerWidth;
+    this.itemBorder.displayHeight = ui.itemContainerWidth;
+    this.itemBorder.setOrigin(ui.itemContainerOriginX, ui.itemContainerOriginY);
+    this.healthIcon = this.add.sprite(ui.healthIconX, ui.healthIconY, images.heart);
+    this.healthIcon.displayWidth = ui.healthIconWidth;
+    this.healthIcon.displayHeight = ui.healthIconWidth;
+
+    this.healthValue1 = this.add.sprite(ui.healthValue1X, ui.healthValueY, images.healthFull);
+    this.healthValue1.displayWidth = ui.healthValueWidth;
+    this.healthValue1.displayHeight = ui.healthValueHeight;
+    this.healthValue1.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
+
+    this.healthValue2 = this.add.sprite(ui.healthValue2X, ui.healthValueY, images.healthFull);
+    this.healthValue2.displayWidth = ui.healthValueWidth;
+    this.healthValue2.displayHeight = ui.healthValueHeight;
+    this.healthValue2.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
+
+    this.healthValue3 = this.add.sprite(ui.healthValue3X, ui.healthValueY, images.healthFull);
+    this.healthValue3.displayWidth = ui.healthValueWidth;
+    this.healthValue3.displayHeight = ui.healthValueHeight;
+    this.healthValue3.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
+
+    this.healthValue4 = this.add.sprite(ui.healthValue4X, ui.healthValueY, images.healthFull);
+    this.healthValue4.displayWidth = ui.healthValueWidth;
+    this.healthValue4.displayHeight = ui.healthValueHeight;
+    this.healthValue4.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
+
+    this.healthValue5 = this.add.sprite(ui.healthValue5X, ui.healthValueY, images.healthFull);
+    this.healthValue5.displayWidth = ui.healthValueWidth;
+    this.healthValue5.displayHeight = ui.healthValueHeight;
+    this.healthValue5.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
+
+    this.healthValue6 = this.add.sprite(ui.healthValue6X, ui.healthValueY, images.healthFull);
+    this.healthValue6.displayWidth = ui.healthValueWidth;
+    this.healthValue6.displayHeight = ui.healthValueHeight;
+    this.healthValue6.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
+
+    this.healthValue7 = this.add.sprite(ui.healthValue7X, ui.healthValueY, images.healthFull);
+    this.healthValue7.displayWidth = ui.healthValueWidth;
+    this.healthValue7.displayHeight = ui.healthValueHeight;
+    this.healthValue7.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
+
+    this.healthValue8 = this.add.sprite(ui.healthValue8X, ui.healthValueY, images.healthFull);
+    this.healthValue8.displayWidth = ui.healthValueWidth;
+    this.healthValue8.displayHeight = ui.healthValueHeight;
+    this.healthValue8.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
+
+    this.healthValue9 = this.add.sprite(ui.healthValue9X, ui.healthValueY, images.healthEmpty);
+    this.healthValue9.displayWidth = ui.healthValueWidth;
+    this.healthValue9.displayHeight = ui.healthValueHeight;
+    this.healthValue9.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
+
+    this.healthValue10 = this.add.sprite(ui.healthValue10X, ui.healthValueY, images.healthEmpty);
+    this.healthValue10.displayWidth = ui.healthValueWidth;
+    this.healthValue10.displayHeight = ui.healthValueHeight;
+    this.healthValue10.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
+
+    this.healthIcon.setOrigin(ui.healthIconOriginX, ui.healthIconOriginY)
+    this.killIcon = this.add.sprite(ui.killIconX, ui.killIconY, images.skull);
+    this.killIcon.displayWidth = ui.killIconWidth;
+    this.killIcon.displayHeight = ui.killIconWidth;
+    this.killIcon.setOrigin(ui.killIconOriginX, ui.killIconOriginY)
+    this.killValue = this.add.bitmapText(
+      ui.killValueX, ui.killValueY, fonts.blueSkyWhite, '000', minigame.fonts.killSize
+    );
+    this.killValue.setOrigin(ui.killValueOriginX, ui.killValueOriginY);
+    this.cashIcon = this.add.sprite(ui.cashIconX, ui.cashIconY, images.goldCoin);
+    this.cashIcon.displayWidth = ui.cashIconWidth;
+    this.cashIcon.displayHeight = ui.cashIconWidth;
+    this.cashIcon.setOrigin(ui.cashIconOriginX, ui.cashIconOriginY)
+    this.cashValue = this.add.bitmapText(
+      ui.cashValueX, ui.cashValueY, fonts.blueSkyWhite, '$100', minigame.fonts.cashSize
+    );
+    this.cashValue.setOrigin(ui.cashValueOriginX, ui.cashValueOriginY);
+    this.timerIcon = this.add.sprite(ui.timerIconX, ui.timerIconY, images.watch);
+    this.timerIcon.displayWidth = ui.timerIconWidth;
+    this.timerIcon.displayHeight = ui.timerIconWidth;
+    this.timerIcon.setOrigin(ui.timerIconOriginX, ui.timerIconOriginY)
+    this.timerValue = this.add.bitmapText(
+      ui.timerValueX, ui.timerValueY, fonts.blueSkyWhite, '', minigame.fonts.timerSize
+    );
+    this.timerValue.setOrigin(ui.timerValueOriginX, ui.timerValueOriginY);
+    this.messageBorder = this.add.sprite(ui.messageContainerX, ui.messageContainerY, images.hudMessageBorder);
+    this.messageBorder.displayWidth = ui.messageContainerWidth;
+    this.messageBorder.displayHeight = ui.messageContainerHeight;
+    this.messageBorder.setOrigin(ui.messageContainerOriginX, ui.messageContainerOriginY)
 
     // Text Entry
     this.textEntry = this.add.text(ui.textEntryX, ui.textEntryY, '', minigame.fonts.entry);
     this.textEntry.setOrigin(ui.textEntryOriginX, ui.textEntryOriginY);
-
-    // Kills
-    this.killLabel = this.add.text(ui.killLabelX, ui.killLabelY, 'Kills:', minigame.fonts.label);
-    this.killLabel.setOrigin(ui.killOriginX, ui.killOriginY);
-    this.killValue = this.add.text(
-      ui.killValueX(this.killLabel), ui.killValueY, this.score, minigame.fonts.value
-    );
-    this.killValue.setOrigin(ui.killOriginX, ui.killOriginY);
 
     // Misses
     this.missLabel = this.add.text(ui.missLabelX, ui.missLabelY, 'Misses:', minigame.fonts.label);
@@ -72,19 +158,16 @@ export default class extends Phaser.Scene {
     );
     this.missValue.setOrigin(ui.missOriginX, ui.missOriginY);
 
-    // Timer
-    this.timerLabel = this.add.text(ui.timerLabelX, ui.timerLabelY, 'Time Remaining:', minigame.fonts.label);
-    this.timerLabel.setOrigin(ui.timerLabelOriginX, ui.timerLabelOriginY);
-    this.timerValue = this.add.text(ui.timerValueX(this.timerLabel), ui.timerValueY, '', minigame.fonts.value);
-    this.timerValue.setOrigin(ui.timerValueOriginX, ui.timerValueOriginY);
+
+
 
     // Fail Line
     this.lineGraphics = this.add.graphics({ lineStyle: minigame.ui.failLineStyle });
     this.failLine = new Phaser.Geom.Line(
       0,
-      this.sys.game.config.height - minigame.ui.entryHeight,
+      this.sys.game.config.height - ui.hudHeight,
       this.sys.game.config.width,
-      this.sys.game.config.height - minigame.ui.entryHeight
+      this.sys.game.config.height - ui.hudHeight
     );
     this.lineGraphics.strokeLineShape(this.failLine);
   }
@@ -93,7 +176,7 @@ export default class extends Phaser.Scene {
     this.background = this.add.tileSprite(
       0, 0,
       this.sys.game.config.width,
-      this.sys.game.config.height - minigame.ui.entryHeight,
+      this.sys.game.config.height - this.hudHeight,
       'grass'
     );
     this.background.setOrigin(0, 0);
@@ -134,9 +217,9 @@ export default class extends Phaser.Scene {
     this.zombieManager.setHitArea(
       new Phaser.Geom.Rectangle(
         0,
-        this.sys.game.config.height - minigame.ui.entryHeight,
+        this.sys.game.config.height - this.hudHeight,
         this.sys.game.config.width,
-        minigame.ui.entryHeight
+        this.hudHeight
       )
     );
   }
@@ -252,7 +335,7 @@ export default class extends Phaser.Scene {
   submitAnswer() {
     const points = this.zombieManager.checkSubmittedAnswer(this.textEntry.text);
     this.score += points;
-    this.killValue.text = this.score;
+    this.killValue.text = String(this.score).padStart(3, '0');
     this.textEntry.text = '';
   }
 }
