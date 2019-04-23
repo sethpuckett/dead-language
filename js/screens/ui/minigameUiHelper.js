@@ -5,7 +5,7 @@ export default (config) => {
   const u = uiHelper(config);
 
   return {
-    hudHeight: u.h_20p,
+    hudHeight: minigame.ui.hudHeight,
     weaponBorderX: u.padding,
     get weaponBorderY() { return u.h - this.hudHeight + u.padding; },
     get weaponBorderWidth() { return this.hudHeight / 2 - u.padding * 2; },
@@ -79,9 +79,16 @@ export default (config) => {
     messageBorderOriginX: u.left,
     messageBorderOriginY: u.Top,
 
-    textEntryX: u.padding,
-    textEntryY: u.h - minigame.ui.entryHeight / 2,
+    textEntryAreaX: u.w_25p - u.padding,
+    get textEntryAreaY() { return u.h - this.hudHeight - u.h_5p - u.padding * 3; },
+    textEntryAreaWidth: u.w_50p + u.padding * 2,
+    textEntryAreaHeight: u.h_5p + u.padding * 2,
+
+    textEntryX: u.w_25p,
+    get textEntryY() { return u.h - this.hudHeight - u.h_5p - u.padding; },
+    textEntryWidth: u.w_50p,
+    textEntryHeight: u.h_5p,
     textEntryOriginX: u.left,
-    textEntryOriginY: u.center,
+    textEntryOriginY: u.top,
   };
 };

@@ -17,7 +17,7 @@ export default class {
     this.scene = scene;
     this.vocab = vocabWordManager;
 
-    this.totalDistance = scene.sys.game.config.height - minigame.ui.entryHeight;
+    this.totalDistance = scene.sys.game.config.height - minigame.ui.hudHeight;
     this.zombies = [];
   }
 
@@ -63,7 +63,7 @@ export default class {
     zombie.text = this.scene.add.bitmapText(
       zombie.x - 25, 10,
       fonts.blueSkyWhite, zombie.word.language1,
-      10
+      minigame.fonts.zombieSize
     );
     zombie.alive = true;
     zombie.play(animationHelper.zombieAnimation(image, animations.zombieWalk));

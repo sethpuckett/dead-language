@@ -26,7 +26,7 @@ export default class extends Phaser.Scene {
     this.vocab = new VocabWordManager(vocab.words);
     this.zombieManager = new MinigameZombieManager(this, this.vocab);
     this.score = 0;
-    this.health = minigame.maxHealth;
+    this.health = minigame.startHealth;
 
     this.spawnPadding = this.sys.game.config.width * SPAWN_PADDING_PERCENT / 100;
   }
@@ -114,18 +114,15 @@ export default class extends Phaser.Scene {
     this.messageBorder.setOrigin(ui.messageBorderOriginX, ui.messageBorderOriginY);
 
     // Text Entry
-    this.textEntry = this.add.text(ui.textEntryX, ui.textEntryY, '', minigame.fonts.entry);
-    this.textEntry.setOrigin(ui.textEntryOriginX, ui.textEntryOriginY);
-
-    // Fail Line
-    this.lineGraphics = this.add.graphics({ lineStyle: minigame.ui.failLineStyle });
-    this.failLine = new Phaser.Geom.Line(
-      0,
-      this.sys.game.config.height - ui.hudHeight,
-      this.sys.game.config.width,
-      this.sys.game.config.height - ui.hudHeight
+    this.textEntryGraphics = this.add.graphics({ fillStyle: minigame.ui.textEntryStyle });
+    this.textEntryArea = new Phaser.Geom.Rectangle(
+      ui.textEntryAreaX, ui.textEntryAreaY, ui.textEntryAreaWidth, ui.textEntryAreaHeight
     );
-    this.lineGraphics.strokeLineShape(this.failLine);
+    this.textEntryGraphics.fillRectShape(this.textEntryArea);
+    this.textEntry = this.add.bitmapText(
+      ui.textEntryX, ui.textEntryY, fonts.blueSkyWhite, '', minigame.fonts.textEntrySize
+    );
+    this.textEntry.setOrigin(ui.textEntryOriginX, ui.textEntryOriginY);
   }
 
   createBackground() {
@@ -210,7 +207,9 @@ export default class extends Phaser.Scene {
   handleKeyDown(e) {
     if (e.keyCode === this.keys.BACKSPACE.keyCode && this.textEntry.text.length > 0) {
       this.textEntry.text = this.textEntry.text.substr(0, this.textEntry.text.length - 1);
-    } else if (keyboardHelper.isLetter(e.keyCode) || e.keyCode === this.keys.SPACE.keyCode) {
+    } else if ((keyboardHelper.isLetter(e.keyCode)
+                || e.keyCode === this.keys.SPACE.keyCode)
+                && this.textEntry.text.length < minigame.maxTextEntry) {
       this.textEntry.text += e.key;
     } else if (e.keyCode === this.keys.ENTER.keyCode) {
       this.submitAnswer();
@@ -223,6 +222,8 @@ export default class extends Phaser.Scene {
 
   changeHealth(amount) {
     this.health += amount;
+    this.health = Math.min(this.health, minigame.maxHealth);
+
     for (let i = 0; i < minigame.maxHealth; i += 1) {
       if (i < this.health) {
         this.healthBars[i].setFrame(images.frames.healthFull);
