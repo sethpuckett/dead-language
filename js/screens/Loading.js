@@ -62,6 +62,7 @@ export default class extends Phaser.Scene {
     this.load.image(images.start, images.files.start);
     this.load.image(images.return, images.files.return);
     this.load.image(images.grass, images.files.grass);
+    this.load.image(images.brick, images.files.brick);
     this.load.spritesheet(images.greenZombie, images.files.greenZombie, {
       frameWidth: 25,
       frameHeight: 25,

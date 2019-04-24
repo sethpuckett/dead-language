@@ -14,6 +14,7 @@ export default {
   goldCoin: 'gold-coin',
   watch: 'watch',
   health: 'health',
+  brick: 'brick',
   files: {
     grayZombie: 'assets/images/zombie-gray.png',
     greenZombie: 'assets/images/zombie-green.png',
@@ -30,6 +31,7 @@ export default {
     goldCoin: 'assets/images/gold-coin.png',
     watch: 'assets/images/watch.png',
     health: 'assets/images/health.png',
+    brick: 'assets/images/brick.png',
   },
   frames: {
     healthFull: 0,

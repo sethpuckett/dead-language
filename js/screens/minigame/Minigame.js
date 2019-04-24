@@ -7,8 +7,6 @@ import MinigameZombieManager from './MinigameZombieManager';
 import keyboardHelper from '../../util/keyboardHelper';
 import animationHelper from '../../util/animationHelper';
 
-const SPAWN_PADDING_PERCENT = 10;
-
 // let firestore = firebase.firestore()
 // const lessonRef =
 //   firestore.collection('lessons').where('name', '==', 'Basic Phrases').get().then((snap) => {
@@ -28,7 +26,7 @@ export default class extends Phaser.Scene {
     this.score = 0;
     this.health = minigame.startHealth;
 
-    this.spawnPadding = this.sys.game.config.width * SPAWN_PADDING_PERCENT / 100;
+    this.spawnPadding = this.sys.game.config.width * minigame.sidePaddingPercent / 100;
   }
 
   create() {
@@ -55,6 +53,7 @@ export default class extends Phaser.Scene {
   createUi() {
     const ui = minigameUiHelper(this.sys.game.config);
     this.hudHeight = ui.hudHeight;
+    this.hudBufferHeight = ui.hudBufferHeight;
 
     // HUD
     this.weaponBorder = this.add.sprite(ui.weaponBorderX, ui.weaponBorderY, images.hudItemBorder);
@@ -126,6 +125,8 @@ export default class extends Phaser.Scene {
   }
 
   createBackground() {
+    const ui = minigameUiHelper(this.sys.game.config);
+
     this.background = this.add.tileSprite(
       0, 0,
       this.sys.game.config.width,
@@ -133,7 +134,15 @@ export default class extends Phaser.Scene {
       images.grass,
     );
     this.background.setOrigin(0, 0);
-    this.background.setDepth(-1);
+    this.background.setDepth(-2);
+
+    this.brick = this.add.tileSprite(
+      ui.brickX, ui.brickY,
+      ui.brickWidth, ui.brickHeight,
+      images.brick,
+    );
+    this.brick.setOrigin(0, 0);
+    this.brick.setDepth(-1);
   }
 
   zombieAnimation(key, image, frames, frameRate, repeat) {
@@ -169,7 +178,7 @@ export default class extends Phaser.Scene {
     this.zombieManager.setHitArea(
       new Phaser.Geom.Rectangle(
         0,
-        this.sys.game.config.height - this.hudHeight,
+        this.sys.game.config.height - this.hudHeight - this.hudBufferHeight,
         this.sys.game.config.width,
         this.hudHeight
       )
@@ -252,9 +261,10 @@ export default class extends Phaser.Scene {
   }
 
   getSpawnLocation() {
-    return Phaser.Math.RND.between(
-      this.spawnPadding, this.sys.game.config.width - this.spawnPadding
-    );
+    const column = Phaser.Math.RND.between(0, minigame.zombieColumns - 1);
+    return this.spawnPadding // past the padding
+           + (this.sys.game.config.width - this.spawnPadding * 2) // available area
+           * column / minigame.zombieColumns; // percentage based on column
   }
 
   getSpawnDelay() {
@@ -294,7 +304,6 @@ export default class extends Phaser.Scene {
     const speed = this.getFallSpeed();
     this.zombieManager.spawnZombie(spawnX, speed);
 
-    // TODO: Wrap spawning in a higher level process. Starting timer should not be here.
     this.activateSpawnTimer();
   }
 

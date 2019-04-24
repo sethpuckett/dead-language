@@ -28,8 +28,10 @@ export default {
   maxHealth: 20,
   startHealth: 20,
   baseFallSpeed: 25,
-  fallRange: 7,
+  fallRange: 10,
   gameTime: 180,
+  zombieColumns: 12,
+  sidePaddingPercent: 20,
   maxTextEntry: 22,
   fonts: {
     killSize: 22,
@@ -46,5 +48,6 @@ export default {
   ui: {
     textEntryStyle: { color: '#000000' },
     hudHeight: 120,
+    hudBufferHeight: 70,
   },
 };

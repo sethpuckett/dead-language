@@ -6,6 +6,7 @@ export default (config) => {
 
   return {
     hudHeight: minigame.ui.hudHeight,
+    hudBufferHeight: minigame.ui.hudBufferHeight,
     weaponBorderX: u.padding,
     get weaponBorderY() { return u.h - this.hudHeight + u.padding; },
     get weaponBorderWidth() { return this.hudHeight / 2 - u.padding * 2; },
@@ -90,5 +91,10 @@ export default (config) => {
     textEntryHeight: u.h_5p,
     textEntryOriginX: u.left,
     textEntryOriginY: u.top,
+
+    brickX: 0,
+    get brickY() { return u.h - this.hudHeight - this.hudBufferHeight; },
+    brickWidth: u.w,
+    get brickHeight() { return this.hudBufferHeight; },
   };
 };
