@@ -170,7 +170,7 @@ export default class extends Phaser.Scene {
       this.zombieAnimation(za(i, a.zombieFall), i, af.zombieFall, afr.zombieFall, false);
       this.zombieAnimation(za(i, a.zombieDamage), i, af.zombieDamage, afr.zombieDamage, false);
       this.zombieAnimation(za(i, a.zombieStun), i, af.zombieStun, afr.zombieStun, true);
-      this.zombieAnimation(za(i, a.zombieAttack), i, af.zombieAttack, afr.zombieAttack, true);
+      this.zombieAnimation(za(i, a.zombieAttack), i, af.zombieAttack, afr.zombieAttack, false);
     });
   }
 
