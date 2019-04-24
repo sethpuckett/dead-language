@@ -30,7 +30,7 @@ export default {
   baseFallSpeed: 25,
   fallRange: 10,
   gameTime: 180,
-  zombieColumns: 12,
+  zombieColumns: 18,
   sidePaddingPercent: 20,
   maxTextEntry: 22,
   fonts: {

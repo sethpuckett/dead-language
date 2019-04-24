@@ -86,4 +86,12 @@ export default class {
   getMovement(speed, delta) {
     return speed * delta * this.totalDistance / SPEED_MODIFIER;
   }
+
+  hitAreaCollision() {
+
+  }
+
+  hitAnimationFinish() {
+
+  }
 }

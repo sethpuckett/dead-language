@@ -13,7 +13,7 @@ export default {
     zombieFall: [18, 19, 20, 21],
     zombieDamage: [24, 25, 26],
     zombieStun: [30, 31, 32, 33],
-    zombieAttack: [36, 36, 36, 36, 36, 37, 38],
+    zombieAttack: [36, 36, 36, 36, 36, 37, 38, 38],
   },
   frameRates: {
     zombieBounce: 8,
