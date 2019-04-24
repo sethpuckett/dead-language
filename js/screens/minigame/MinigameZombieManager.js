@@ -11,6 +11,7 @@ const ZOMBIE_IMAGES = [
   images.greenZombie,
   images.lightGreenZombie,
 ];
+const PADDING = minigame.ui.zombieWordBgPadding;
 
 export default class {
   constructor(scene, vocabWordManager) {
@@ -32,7 +33,13 @@ export default class {
         const distance = this.getMovement(z.speed, delta);
         z.y += distance;
         z.text.y += distance;
-
+        z.wordBgGraphics.clear();
+        z.wordBgGraphics.fillRect(
+          z.text.x - PADDING,
+          z.text.y - PADDING,
+          z.text.width + PADDING * 2,
+          z.text.height + PADDING * 2
+        );
         if (Phaser.Geom.Intersects.RectangleToRectangle(z.getBounds(), this.hitArea)) {
           z.moving = false;
           z.attacking = true;
@@ -58,6 +65,7 @@ export default class {
     this.zombies.filter(z => !z.alive).forEach((z) => {
       this.vocab.releaseWord(z.word);
       z.text.destroy();
+      z.wordBgGraphics.destroy();
       z.destroy();
     });
 
@@ -72,13 +80,17 @@ export default class {
     zombie.speed = speed;
     zombie.word = this.vocab.getRandomWord();
     zombie.text = this.scene.add.bitmapText(
-      zombie.x - 25, 10,
+      0, 0,
       fonts.blueSkyWhite, zombie.word.language1,
       minigame.fonts.zombieSize
     );
+    zombie.text.x = spawnX - zombie.text.width / 2;
+    zombie.text.setDepth(2);
     zombie.alive = true;
     zombie.moving = true;
     zombie.attacking = false;
+    zombie.wordBgGraphics = this.scene.add.graphics({ fillStyle: minigame.ui.zombieWordBgStyle });
+    zombie.wordBgGraphics.setDepth(1);
     zombie.play(animationHelper.zombieAnimation(image, animations.zombieWalk));
     this.zombies.push(zombie);
   }

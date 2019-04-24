@@ -47,6 +47,8 @@ export default {
   },
   ui: {
     textEntryStyle: { color: '#000000' },
+    zombieWordBgStyle: { color: '#000000' },
+    zombieWordBgPadding: 2,
     hudHeight: 120,
     hudBufferHeight: 70,
   },
