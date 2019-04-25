@@ -24,7 +24,7 @@ export default {
     { id: 21, language1: 'side', language2: 'lado' },
     { id: 22, language1: 'son', language2: 'hijo' },
     { id: 23, language1: 'problem', language2: 'problema' },
-    { id: 24, language1: 'bill', language2: ',cuenta' },
+    { id: 24, language1: 'bill', language2: 'cuenta' },
     { id: 25, language1: 'middle', language2: 'medio' },
     { id: 26, language1: 'word', language2: 'palabra' },
     { id: 27, language1: 'father', language2: 'padre' },

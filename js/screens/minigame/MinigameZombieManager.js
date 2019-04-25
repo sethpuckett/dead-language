@@ -122,9 +122,20 @@ export default class {
     const shot = this.scene.add.sprite(zombie.x, zombie.y, images.shotBlast);
     shot.on('animationcomplete', (_a, _f, s) => s.destroy(), this);
     shot.play(animations.shotBlastExplode);
+    this.scene.add.sprite(this.getSplatterLocation(zombie.x), zombie.y + 20, this.getSplatterImage()).setDepth(-1).setScale(2);
   }
 
   getMovement(speed, delta) {
     return speed * delta * this.totalDistance / SPEED_MODIFIER;
+  }
+
+  getSplatterImage() {
+    const index = Phaser.Math.RND.between(1, minigame.splatterVarieties);
+    return `${images.bloodSplatter}-${index}`;
+  }
+
+  getSplatterLocation(x) {
+    const base = x + minigame.splatterBase;
+    return Phaser.Math.RND.between(base - minigame.splatterRange, base + minigame.splatterRange);
   }
 }

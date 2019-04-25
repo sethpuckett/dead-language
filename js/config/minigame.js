@@ -33,6 +33,9 @@ export default {
   zombieColumns: 18,
   sidePaddingPercent: 20,
   maxTextEntry: 22,
+  splatterBase: -5,
+  splatterRange: 8,
+  splatterVarieties: 6,
   fonts: {
     killSize: 22,
     killFill: '#ffffff',
