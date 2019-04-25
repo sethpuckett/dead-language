@@ -71,6 +71,12 @@ export default class extends Phaser.Scene {
     this.load.image(images.bloodSplatter4, images.files.bloodSplatter4);
     this.load.image(images.bloodSplatter5, images.files.bloodSplatter5);
     this.load.image(images.bloodSplatter6, images.files.bloodSplatter6);
+    this.load.image(images.bloodSplatterGreen1, images.files.bloodSplatterGreen1);
+    this.load.image(images.bloodSplatterGreen2, images.files.bloodSplatterGreen2);
+    this.load.image(images.bloodSplatterGreen3, images.files.bloodSplatterGreen3);
+    this.load.image(images.bloodSplatterGreen4, images.files.bloodSplatterGreen4);
+    this.load.image(images.bloodSplatterGreen5, images.files.bloodSplatterGreen5);
+    this.load.image(images.bloodSplatterGreen6, images.files.bloodSplatterGreen6);
     this.load.spritesheet(images.greenZombie, images.files.greenZombie, {
       frameWidth: 25,
       frameHeight: 25,
@@ -96,6 +102,12 @@ export default class extends Phaser.Scene {
       spacing: 0,
     });
     this.load.spritesheet(images.shotBlast, images.files.shotBlast, {
+      frameWidth: 32,
+      frameHeight: 32,
+      margin: 0,
+      spacing: 0,
+    });
+    this.load.spritesheet(images.shotBlastGreen, images.files.shotBlastGreen, {
       frameWidth: 32,
       frameHeight: 32,
       margin: 0,
@@ -127,6 +139,13 @@ export default class extends Phaser.Scene {
       key: animations.shotBlastExplode,
       frames: this.anims.generateFrameNames(images.shotBlast, { frames: animations.frames.shotBlastExplode }),
       frameRate: animations.frameRates.shotBlastExplode,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: animations.shotBlastGreenExplode,
+      frames: this.anims.generateFrameNames(images.shotBlastGreen, { frames: animations.frames.shotBlastGreenExplode }),
+      frameRate: animations.frameRates.shotBlastGreenExplode,
       repeat: 0,
     });
   }
