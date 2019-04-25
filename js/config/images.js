@@ -15,6 +15,7 @@ export default {
   watch: 'watch',
   health: 'health',
   brick: 'brick',
+  shotBlast: 'shot-blast',
   files: {
     grayZombie: 'assets/images/zombie-gray.png',
     greenZombie: 'assets/images/zombie-green.png',
@@ -32,6 +33,7 @@ export default {
     watch: 'assets/images/watch.png',
     health: 'assets/images/health.png',
     brick: 'assets/images/brick.png',
+    shotBlast: 'assets/images/shot-blast.png',
   },
   frames: {
     healthFull: 0,

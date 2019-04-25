@@ -44,13 +44,22 @@ export default class {
           z.moving = false;
           z.attacking = true;
           z.play(animationHelper.zombieAnimation(z.image, animations.zombieAttack));
-          z.on('animationcomplete', this.applyZombieDamage, this);
         }
       }
     });
   }
 
-  applyZombieDamage(_animation, _frame, zombie) {
+  zombieAnimationComplete(animation, _frame, zombie) {
+    const attack = animationHelper.zombieAnimation(zombie.image, animations.zombieAttack);
+    const death = animationHelper.zombieAnimation(zombie.image, animations.zombieDie);
+    if (animation.key === attack) {
+      this.applyZombieDamage(zombie);
+    } else if (animation.key === death) {
+      zombie.alive = false;
+    }
+  }
+
+  applyZombieDamage(zombie) {
     this.damage += 1;
     zombie.alive = false;
   }
@@ -92,18 +101,27 @@ export default class {
     zombie.wordBgGraphics = this.scene.add.graphics({ fillStyle: minigame.ui.zombieWordBgStyle });
     zombie.wordBgGraphics.setDepth(1);
     zombie.play(animationHelper.zombieAnimation(image, animations.zombieWalk));
+    zombie.on('animationcomplete', this.zombieAnimationComplete, this);
     this.zombies.push(zombie);
   }
 
-  checkSubmittedAnswer(text) {
+  scoreSubmittedAnswer(text) {
     let points = 0;
     this.zombies.forEach((z) => {
       if (text === z.word.language2) {
-        z.alive = false;
+        this.killShotZombie(z);
         points += 1;
       }
     });
     return points;
+  }
+
+  killShotZombie(zombie) {
+    zombie.moving = false;
+    zombie.play(animationHelper.zombieAnimation(zombie.image, animations.zombieDie));
+    const shot = this.scene.add.sprite(zombie.x, zombie.y, images.shotBlast);
+    shot.on('animationcomplete', (_a, _f, s) => s.destroy(), this);
+    shot.play(animations.shotBlastExplode);
   }
 
   getMovement(speed, delta) {

@@ -1,11 +1,10 @@
 import Phaser from 'phaser';
 import vocab from '../../vocab';
-import { minigame, animations, images, screens, fonts } from '../../config';
+import { minigame, images, screens, fonts } from '../../config';
 import minigameUiHelper from '../ui/minigameUiHelper';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
 import keyboardHelper from '../../util/keyboardHelper';
-import animationHelper from '../../util/animationHelper';
 
 // let firestore = firebase.firestore()
 // const lessonRef =
@@ -32,7 +31,6 @@ export default class extends Phaser.Scene {
   create() {
     this.createUi();
     this.createBackground();
-    this.createAnimations();
     this.createCollisions();
     this.createInput();
     this.createTimers();
@@ -143,35 +141,6 @@ export default class extends Phaser.Scene {
     );
     this.brick.setOrigin(0, 0);
     this.brick.setDepth(-1);
-  }
-
-  zombieAnimation(key, image, frames, frameRate, repeat) {
-    this.anims.create({
-      key,
-      frames: this.anims.generateFrameNames(image, { frames }),
-      frameRate,
-      repeat: repeat ? -1 : 0,
-    });
-  }
-
-  createAnimations() {
-    const im = images;
-    const a = animations;
-    const af = animations.frames;
-    const afr = animations.frameRates;
-    const za = animationHelper.zombieAnimation;
-
-    const ims = [im.redZombie, im.grayZombie, im.greenZombie, im.lightGreenZombie];
-
-    ims.forEach((i) => {
-      this.zombieAnimation(za(i, a.zombieBounce), i, af.zombieBounce, afr.zombieBounce, true);
-      this.zombieAnimation(za(i, a.zombieWalk), i, af.zombieWalk, afr.zombieWalk, true);
-      this.zombieAnimation(za(i, a.zombieRun), i, af.zombieRun, afr.zombieRun, true);
-      this.zombieAnimation(za(i, a.zombieFall), i, af.zombieFall, afr.zombieFall, false);
-      this.zombieAnimation(za(i, a.zombieDamage), i, af.zombieDamage, afr.zombieDamage, false);
-      this.zombieAnimation(za(i, a.zombieStun), i, af.zombieStun, afr.zombieStun, true);
-      this.zombieAnimation(za(i, a.zombieAttack), i, af.zombieAttack, afr.zombieAttack, false);
-    });
   }
 
   createCollisions() {
@@ -308,7 +277,7 @@ export default class extends Phaser.Scene {
   }
 
   submitAnswer() {
-    const points = this.zombieManager.checkSubmittedAnswer(this.textEntry.text);
+    const points = this.zombieManager.scoreSubmittedAnswer(this.textEntry.text);
     this.score += points;
     this.killValue.text = String(this.score).padStart(3, '0');
     this.textEntry.text = '';

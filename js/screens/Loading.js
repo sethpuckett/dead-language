@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
-import { loading, debug, screens, images, fonts } from '../config';
+import { animations, loading, debug, screens, images, fonts } from '../config';
 import loadingUiHelper from './ui/loadingUiHelper';
+import animationHelper from '../util/animationHelper';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -17,6 +18,7 @@ export default class extends Phaser.Scene {
   }
 
   create() {
+    this.createAnimations();
     this.scene.start(screens.titleMenu);
   }
 
@@ -86,6 +88,49 @@ export default class extends Phaser.Scene {
       frameHeight: 25,
       margin: 0,
       spacing: 0,
+    });
+    this.load.spritesheet(images.shotBlast, images.files.shotBlast, {
+      frameWidth: 32,
+      frameHeight: 32,
+      margin: 0,
+      spacing: 0,
+    });
+  }
+
+  createAnimations() {
+    const im = images;
+    const a = animations;
+    const af = animations.frames;
+    const afr = animations.frameRates;
+    const za = animationHelper.zombieAnimation;
+
+    const ims = [im.redZombie, im.grayZombie, im.greenZombie, im.lightGreenZombie];
+
+    ims.forEach((i) => {
+      this.zombieAnimation(za(i, a.zombieBounce), i, af.zombieBounce, afr.zombieBounce, true);
+      this.zombieAnimation(za(i, a.zombieWalk), i, af.zombieWalk, afr.zombieWalk, true);
+      this.zombieAnimation(za(i, a.zombieRun), i, af.zombieRun, afr.zombieRun, true);
+      this.zombieAnimation(za(i, a.zombieFall), i, af.zombieFall, afr.zombieFall, false);
+      this.zombieAnimation(za(i, a.zombieDamage), i, af.zombieDamage, afr.zombieDamage, false);
+      this.zombieAnimation(za(i, a.zombieDie), i, af.zombieDie, afr.zombieDie, false);
+      this.zombieAnimation(za(i, a.zombieStun), i, af.zombieStun, afr.zombieStun, true);
+      this.zombieAnimation(za(i, a.zombieAttack), i, af.zombieAttack, afr.zombieAttack, false);
+    });
+
+    this.anims.create({
+      key: animations.shotBlastExplode,
+      frames: this.anims.generateFrameNames(images.shotBlast, { frames: animations.frames.shotBlastExplode }),
+      frameRate: animations.frameRates.shotBlastExplode,
+      repeat: 0,
+    });
+  }
+
+  zombieAnimation(key, image, frames, frameRate, repeat) {
+    this.anims.create({
+      key,
+      frames: this.anims.generateFrameNames(image, { frames }),
+      frameRate,
+      repeat: repeat ? -1 : 0,
     });
   }
 
