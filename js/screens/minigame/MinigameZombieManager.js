@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { animations, images, minigame, fonts } from '../../config';
+import { animations, depth, images, minigame, fonts } from '../../config';
 import animationHelper from '../../util/animationHelper';
 
 const ZOMBIE_IMAGE_SCALE = 2.5;
@@ -40,6 +40,9 @@ export default class {
           z.text.width + PADDING * 2,
           z.text.height + PADDING * 2
         );
+        z.setDepth(depth.minigame.zombie + z.y);
+        z.wordBgGraphics.setDepth(depth.minigame.zombieTextBackground + z.text.y - PADDING);
+        z.text.setDepth(depth.minigame.zombieText + z.text.y - PADDING);
         if (Phaser.Geom.Intersects.RectangleToRectangle(z.getBounds(), this.hitArea)) {
           z.moving = false;
           z.attacking = true;
@@ -85,8 +88,11 @@ export default class {
     const image = Phaser.Math.RND.pick(ZOMBIE_IMAGES);
     const zombie = this.scene.add.sprite(spawnX, SPAWN_Y, image, 0);
     zombie.setScale(ZOMBIE_IMAGE_SCALE);
+    zombie.setDepth(depth.minigame.zombie);
     zombie.image = image;
     zombie.speed = speed;
+    zombie.wordBgGraphics = this.scene.add.graphics({ fillStyle: minigame.ui.zombieWordBgStyle });
+    zombie.wordBgGraphics.setDepth(depth.minigame.zombieTextBackground);
     zombie.word = this.vocab.getRandomWord();
     zombie.text = this.scene.add.bitmapText(
       0, 0,
@@ -94,12 +100,11 @@ export default class {
       minigame.fonts.zombieSize
     );
     zombie.text.x = spawnX - zombie.text.width / 2;
-    zombie.text.setDepth(2);
+    zombie.text.setDepth(depth.minigame.zombieText);
     zombie.alive = true;
     zombie.moving = true;
     zombie.attacking = false;
-    zombie.wordBgGraphics = this.scene.add.graphics({ fillStyle: minigame.ui.zombieWordBgStyle });
-    zombie.wordBgGraphics.setDepth(1);
+
     zombie.play(animationHelper.zombieAnimation(image, animations.zombieWalk));
     zombie.on('animationcomplete', this.zombieAnimationComplete, this);
     this.zombies.push(zombie);
@@ -120,9 +125,14 @@ export default class {
     zombie.moving = false;
     zombie.play(animationHelper.zombieAnimation(zombie.image, animations.zombieDie));
     const shot = this.scene.add.sprite(zombie.x, zombie.y, images.shotBlast);
+    shot.setDepth(depth.minigame.shotBlast);
     shot.on('animationcomplete', (_a, _f, s) => s.destroy(), this);
     shot.play(animations.shotBlastExplode);
-    this.scene.add.sprite(this.getSplatterLocation(zombie.x), zombie.y + 20, this.getSplatterImage()).setDepth(-1).setScale(2);
+    this.scene.add.sprite(
+      this.getSplatterLocation(zombie.x),
+      zombie.y + 20,
+      this.getSplatterImage()
+    ).setDepth(depth.minigame.splatter).setScale(2);
   }
 
   getMovement(speed, delta) {
