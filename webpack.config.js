@@ -31,7 +31,8 @@ module.exports = {
     new CopyPlugin([
       { from: 'index.html', to: '.' },
       { from: 'css', to: 'css' },
-      { from: 'assets', to: 'assets' }
+      { from: 'assets', to: 'assets' },
+      { from: 'CNAME', to: '.' },
     ])
   ],
   module: {
