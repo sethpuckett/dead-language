@@ -14,9 +14,8 @@ const ZOMBIE_IMAGES = [
 const PADDING = minigame.ui.zombieWordBgPadding;
 
 export default class {
-  constructor(scene, vocabWordManager) {
+  constructor(scene) {
     this.scene = scene;
-    this.vocab = vocabWordManager;
 
     this.totalDistance = scene.sys.game.config.height - minigame.ui.hudHeight;
     this.zombies = [];
@@ -74,32 +73,33 @@ export default class {
   }
 
   destroyDeadZombies() {
+    const releasedWords = [];
     this.zombies.filter(z => !z.alive).forEach((z) => {
-      this.vocab.releaseWord(z.word);
+      releasedWords.push(z.word);
       z.text.destroy();
       z.wordBgGraphics.destroy();
       z.destroy();
     });
-
     this.zombies = this.zombies.filter(z => z.alive);
+    return releasedWords;
   }
 
-  spawnZombie(spawnX, speed) {
+  spawnZombie(spawnConfig) {
     const image = Phaser.Math.RND.pick(ZOMBIE_IMAGES);
-    const zombie = this.scene.add.sprite(spawnX, SPAWN_Y, image, 0);
+    const zombie = this.scene.add.sprite(spawnConfig.xPosition, SPAWN_Y, image, 0);
     zombie.setScale(ZOMBIE_IMAGE_SCALE);
     zombie.setDepth(depth.minigame.zombie);
     zombie.image = image;
-    zombie.speed = speed;
+    zombie.speed = spawnConfig.speed;
     zombie.wordBgGraphics = this.scene.add.graphics({ fillStyle: minigame.ui.zombieWordBgStyle });
     zombie.wordBgGraphics.setDepth(depth.minigame.zombieTextBackground);
-    zombie.word = this.vocab.getRandomWord();
+    zombie.word = spawnConfig.word;
     zombie.text = this.scene.add.bitmapText(
       0, 0,
       fonts.blueSkyWhite, zombie.word.language1,
       minigame.fonts.zombieSize
     );
-    zombie.text.x = spawnX - zombie.text.width / 2;
+    zombie.text.x = spawnConfig.xPosition - zombie.text.width / 2;
     zombie.text.setDepth(depth.minigame.zombieText);
     zombie.alive = true;
     zombie.moving = true;

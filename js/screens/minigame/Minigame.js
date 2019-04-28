@@ -4,6 +4,7 @@ import { depth, minigame, images, screens, fonts } from '../../config';
 import minigameUiHelper from '../ui/minigameUiHelper';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
+import MinigameSpawnManager from './MinigameSpawnManager';
 import keyboardHelper from '../../util/keyboardHelper';
 
 // let firestore = firebase.firestore()
@@ -22,10 +23,9 @@ export default class extends Phaser.Scene {
   init() {
     this.vocab = new VocabWordManager(vocab.words);
     this.zombieManager = new MinigameZombieManager(this, this.vocab);
+    this.spawnManager = new MinigameSpawnManager(this, minigame.waves, this.vocab);
     this.score = 0;
     this.health = minigame.startHealth;
-
-    this.spawnPadding = this.sys.game.config.width * minigame.sidePaddingPercent / 100;
   }
 
   create() {
@@ -40,8 +40,13 @@ export default class extends Phaser.Scene {
 
   update(_time, delta) {
     this.updateGameTime();
+    const spawn = this.spawnManager.getSpawn(this.gameTimer.getElapsedSeconds());
+    if (spawn.canSpawn) {
+      this.zombieManager.spawnZombie(spawn);
+    }
     this.zombieManager.moveZombies(delta);
-    this.zombieManager.destroyDeadZombies();
+    const releasedWords = this.zombieManager.destroyDeadZombies();
+    releasedWords.forEach(w => this.vocab.releaseWord(w));
     this.changeHealth(this.zombieManager.checkZombieAttack());
     if (this.health <= 0) {
       this.loseGame();
@@ -182,18 +187,10 @@ export default class extends Phaser.Scene {
       callbackScope: this,
       paused: true,
     });
-
-    this.spawnTimer = this.time.addEvent({
-      delay: this.getSpawnDelay(),
-      callback: this.spawnZombie,
-      callbackScope: this,
-      paused: true,
-    });
   }
 
   startGame() {
     this.gameTimer.paused = false;
-    this.spawnTimer.paused = false;
   }
 
   handleKeyDown(e) {
@@ -232,62 +229,6 @@ export default class extends Phaser.Scene {
   updateGameTime() {
     const remaining = minigame.gameTime - this.gameTimer.getElapsedSeconds();
     this.timerValue.text = remaining.toFixed(1);
-  }
-
-  activateSpawnTimer() {
-    this.spawnTimer.reset({
-      delay: this.getSpawnDelay(),
-      callback: this.spawnZombie,
-      callbackScope: this,
-      repeat: 1,
-    });
-  }
-
-  getSpawnLocation() {
-    const column = Phaser.Math.RND.between(0, minigame.zombieColumns - 1);
-    return this.spawnPadding // past the padding
-           + (this.sys.game.config.width - this.spawnPadding * 2) // available area
-           * column / minigame.zombieColumns; // percentage based on column
-  }
-
-  getSpawnDelay() {
-    const wave = this.getCurrentWave();
-    let percentToMax = 1;
-    let easedPercent = 1;
-    const curTime = this.gameTimer.getElapsedSeconds();
-    if (curTime < wave.maxStart) {
-      percentToMax = (curTime - wave.start) / (wave.maxStart - wave.start);
-      easedPercent = Phaser.Math.Easing.Cubic.InOut(percentToMax);
-    } else if (curTime > wave.maxEnd) {
-      percentToMax = (curTime - wave.maxEnd) / (wave.end - wave.maxEnd);
-      easedPercent = 1 - Phaser.Math.Easing.Cubic.InOut(percentToMax);
-    }
-
-    const delay = 1000 * (1 - easedPercent);
-
-    return delay + wave.baseSpawnRate + Phaser.Math.RND.between(
-      -wave.spawnRange, wave.spawnRange
-    );
-  }
-
-  getCurrentWave() {
-    const { waves } = minigame;
-    const curTime = this.gameTimer.getElapsedSeconds();
-    return waves.find(el => el.start <= curTime && el.end > curTime);
-  }
-
-  getFallSpeed() {
-    return (minigame.baseFallSpeed + Phaser.Math.RND.between(
-      -minigame.fallRange, minigame.fallRange
-    ));
-  }
-
-  spawnZombie() {
-    const spawnX = this.getSpawnLocation();
-    const speed = this.getFallSpeed();
-    this.zombieManager.spawnZombie(spawnX, speed);
-
-    this.activateSpawnTimer();
   }
 
   submitAnswer() {
