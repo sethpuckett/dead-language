@@ -77,6 +77,7 @@ export default class extends Phaser.Scene {
     this.load.image(images.bloodSplatterGreen4, images.files.bloodSplatterGreen4);
     this.load.image(images.bloodSplatterGreen5, images.files.bloodSplatterGreen5);
     this.load.image(images.bloodSplatterGreen6, images.files.bloodSplatterGreen6);
+    this.load.image(images.zombieFace, images.files.zombieFace);
     this.load.spritesheet(images.greenZombie, images.files.greenZombie, {
       frameWidth: 25,
       frameHeight: 25,

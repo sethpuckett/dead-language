@@ -31,6 +31,7 @@ export default {
   bloodSplatterGreen4: 'blood-splatter-green-4',
   bloodSplatterGreen5: 'blood-splatter-green-5',
   bloodSplatterGreen6: 'blood-splatter-green-6',
+  zombieFace: 'zombie-face',
   files: {
     grayZombie: 'assets/images/zombie-gray.png',
     greenZombie: 'assets/images/zombie-green.png',
@@ -62,6 +63,7 @@ export default {
     bloodSplatterGreen4: 'assets/images/blood-splatter-green-4.png',
     bloodSplatterGreen5: 'assets/images/blood-splatter-green-5.png',
     bloodSplatterGreen6: 'assets/images/blood-splatter-green-6.png',
+    zombieFace: 'assets/images/zombie-face.png',
   },
   frames: {
     healthFull: 0,

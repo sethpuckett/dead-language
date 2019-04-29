@@ -1,11 +1,11 @@
 export default {
   waves: [
     {
-      baseSpawnRate: 1500,
+      baseSpawnRate: 1000,
       spawnRange: 250,
       start: 0,
-      maxStart: 20,
-      maxEnd: 40,
+      maxStart: 15,
+      maxEnd: 60,
       end: 60,
     },
     {
@@ -27,7 +27,7 @@ export default {
   ],
   maxHealth: 20,
   startHealth: 20,
-  baseFallSpeed: 25,
+  baseFallSpeed: 225,
   fallRange: 10,
   gameTime: 180,
   zombieColumns: 18,
@@ -36,6 +36,11 @@ export default {
   splatterBase: -5,
   splatterRange: 8,
   splatterVarieties: 6,
+  damageFlashDuration: 100,
+  damageFlashColor: { red: 180, green: 15, blue: 15 },
+  damageShakeDuration: 200,
+  damageShakeIntensity: 0.005,
+  statusTime: 1500,
   fonts: {
     killSize: 22,
     killFill: '#ffffff',
@@ -47,6 +52,8 @@ export default {
     zombieFill: '#ffffff',
     textEntrySize: 18,
     textEntryFill: '#ffffff',
+    statusSize: 14,
+    statusEntryFill: '#ffffff',
   },
   ui: {
     textEntryStyle: { color: '#000000' },
@@ -54,5 +61,8 @@ export default {
     zombieWordBgPadding: 2,
     hudHeight: 120,
     hudBufferHeight: 70,
+  },
+  statusMessages: {
+    damage: 'Cerebros\nricos!',
   },
 };

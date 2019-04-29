@@ -5,6 +5,7 @@ import minigameUiHelper from '../ui/minigameUiHelper';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
 import MinigameSpawnManager from './MinigameSpawnManager';
+import MinigameStatusManager from './MinigameStatusManager';
 import keyboardHelper from '../../util/keyboardHelper';
 
 // let firestore = firebase.firestore()
@@ -24,6 +25,7 @@ export default class extends Phaser.Scene {
     this.vocab = new VocabWordManager(vocab.words);
     this.zombieManager = new MinigameZombieManager(this, this.vocab);
     this.spawnManager = new MinigameSpawnManager(this, minigame.waves, this.vocab);
+    this.statusManager = new MinigameStatusManager(this);
     this.score = 0;
     this.health = minigame.startHealth;
   }
@@ -210,6 +212,11 @@ export default class extends Phaser.Scene {
   }
 
   changeHealth(amount) {
+    if (amount < 0) {
+      this.cameraDamageEffect();
+      this.statusManager.damageStatus();
+    }
+
     this.health += amount;
     this.health = Math.min(this.health, minigame.maxHealth);
 
@@ -220,6 +227,17 @@ export default class extends Phaser.Scene {
         this.healthBars[i].setFrame(images.frames.healthEmpty);
       }
     }
+  }
+
+  cameraDamageEffect() {
+    this.cameras.main.flash(
+      minigame.damageFlashDuration,
+      minigame.damageFlashColor.red,
+      minigame.damageFlashColor.green,
+      minigame.damageFlashColor.blue,
+      true
+    );
+    this.cameras.main.shake(minigame.damageShakeDuration, minigame.damageShakeIntensity);
   }
 
   loseGame() {
