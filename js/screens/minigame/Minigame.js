@@ -7,7 +7,6 @@ import MinigameZombieManager from './MinigameZombieManager';
 import MinigameSpawnManager from './MinigameSpawnManager';
 import MinigameStatusManager from './MinigameStatusManager';
 import MinigameHudManager from './MinigameHudManager';
-import keyboardHelper from '../../util/keyboardHelper';
 
 // let firestore = firebase.firestore()
 // const lessonRef =
@@ -34,9 +33,9 @@ export default class extends Phaser.Scene {
 
   create() {
     this.hudManager.createHud();
+    this.hudManager.setSubmitCallback(this.submitAnswer);
     this.createBackground();
     this.createCollisions();
-    this.createInput();
     this.createTimers();
 
     this.startGame();
@@ -91,13 +90,6 @@ export default class extends Phaser.Scene {
     );
   }
 
-  createInput() {
-    this.keys = this.input.keyboard.addKeys(
-      'SPACE,BACKSPACE, ENTER, A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z'
-    );
-    this.input.keyboard.on('keydown', this.handleKeyDown, this);
-  }
-
   createTimers() {
     this.gameTimer = this.time.addEvent({
       delay: minigame.gameTime * 1000,
@@ -109,18 +101,6 @@ export default class extends Phaser.Scene {
 
   startGame() {
     this.gameTimer.paused = false;
-  }
-
-  handleKeyDown(e) {
-    if (e.keyCode === this.keys.BACKSPACE.keyCode && this.textEntry.text.length > 0) {
-      this.textEntry.text = this.textEntry.text.substr(0, this.textEntry.text.length - 1);
-    } else if ((keyboardHelper.isLetter(e.keyCode)
-                || e.keyCode === this.keys.SPACE.keyCode)
-                && this.textEntry.text.length < minigame.maxTextEntry) {
-      this.textEntry.text += e.key;
-    } else if (e.keyCode === this.keys.ENTER.keyCode) {
-      this.submitAnswer();
-    }
   }
 
   gameTimerFinish() {
@@ -135,14 +115,7 @@ export default class extends Phaser.Scene {
 
     this.health += amount;
     this.health = Math.min(this.health, minigame.maxHealth);
-
-    for (let i = 0; i < minigame.maxHealth; i += 1) {
-      if (i < this.health) {
-        this.healthBars[i].setFrame(images.frames.healthFull);
-      } else {
-        this.healthBars[i].setFrame(images.frames.healthEmpty);
-      }
-    }
+    this.hudManager.setHealth(this.health);
   }
 
   cameraDamageEffect() {
@@ -162,13 +135,13 @@ export default class extends Phaser.Scene {
 
   updateGameTime() {
     const remaining = minigame.gameTime - this.gameTimer.getElapsedSeconds();
-    this.timerValue.text = remaining.toFixed(1);
+    this.hudManager.setGameTime(remaining);
   }
 
   submitAnswer() {
-    const points = this.zombieManager.scoreSubmittedAnswer(this.textEntry.text);
+    const points = this.zombieManager.scoreSubmittedAnswer(this.hudManager.getTextEntry());
     this.score += points;
-    this.killValue.text = String(this.score).padStart(3, '0');
-    this.textEntry.text = '';
+    this.hudManager.setKillValue(this.score);
+    this.hudManager.clearTextEntry();
   }
 }
