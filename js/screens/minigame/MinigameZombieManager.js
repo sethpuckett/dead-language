@@ -111,13 +111,29 @@ export default class {
   }
 
   scoreSubmittedAnswer(text) {
+    const guess = text.toLowerCase().trim();
     let points = 0;
-    this.zombies.forEach((z) => {
-      if (text === z.word.language2) {
+
+    // stop checking when find a correct answer
+    this.zombies.some((z) => {
+      if (guess === z.word.language2) {
         this.killShotZombie(z);
         points += 1;
       }
+      return points > 0;
     });
+
+    // only check alternatives if no match found in main answer
+    if (points === 0) {
+      this.zombies.some((z) => {
+        if (z.word.alternatives != null && z.word.alternatives.includes(guess)) {
+          this.killShotZombie(z);
+          points += 1;
+        }
+        return points > 0;
+      });
+    }
+
     return points;
   }
 

@@ -27,7 +27,7 @@ export default {
   ],
   maxHealth: 20,
   startHealth: 20,
-  baseFallSpeed: 225,
+  baseFallSpeed: 125,
   fallRange: 10,
   gameTime: 180,
   zombieColumns: 18,
