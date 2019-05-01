@@ -1,7 +1,7 @@
 export default {
   waves: [
     {
-      baseSpawnRate: 1000,
+      baseSpawnRate: 500,
       spawnRange: 250,
       start: 0,
       maxStart: 15,
@@ -27,7 +27,7 @@ export default {
   ],
   maxHealth: 20,
   startHealth: 20,
-  baseFallSpeed: 125,
+  baseFallSpeed: 225,
   fallRange: 10,
   gameTime: 180,
   zombieColumns: 18,

@@ -9,6 +9,8 @@ export default class extends Phaser.Scene {
   }
 
   preload() {
+    this.ui = loadingUiHelper(this.sys.game.config);
+    this.showBackground();
     this.showProgressBar();
     this.loadAssets();
 
@@ -22,33 +24,43 @@ export default class extends Phaser.Scene {
     this.scene.start(screens.titleMenu);
   }
 
+  showBackground() {
+    this.background = this.add.sprite(
+      this.ui.backgroundImageX,
+      this.ui.backgroundImageY,
+      images.titleScreenBackground
+    );
+    this.background.displayWidth = this.ui.backgroundImageWidth;
+    this.background.displayHeight = this.ui.backgroundImageHeight;
+    this.background.setOrigin(this.ui.backgroundImageOriginX, this.ui.backgroundImageOriginY);
+  }
+
   showProgressBar() {
-    const ui = loadingUiHelper(this.sys.game.config);
-    const loadingSprite = this.add.sprite(ui.loadingImageX, ui.loadingImageY, images.loading);
-    loadingSprite.setOrigin(ui.loadingImageOrigin, ui.loadingImageOrigin);
+    const loadingText = this.add.bitmapText(
+      this.ui.loadingTextX,
+      this.ui.loadingTextY,
+      fonts.blueSkyWhite,
+      'LOADING',
+      loading.fonts.loadingTextSize
+    );
+    loadingText.setOrigin(this.ui.loadingTextOrigin);
 
     const barBg = this.add.graphics();
-    barBg.setPosition(ui.barBackgroundX, ui.barBackgroundY);
+    barBg.setPosition(this.ui.barBackgroundX, this.ui.barBackgroundY);
     barBg.fillStyle(loading.progressBgColor);
-    barBg.fillRect(0, 0, ui.barBackgroundW, ui.barBackgroundH);
+    barBg.fillRect(0, 0, this.ui.barBackgroundW, this.ui.barBackgroundH);
 
     const bar = this.add.graphics();
-    bar.setPosition(ui.barX, ui.barY);
+    bar.setPosition(this.ui.barX, this.ui.barY);
 
     this.load.on('progress', (value) => {
       bar.clear();
       bar.fillStyle(loading.progressFillColor);
-      bar.fillRect(0, 0, (ui.barW) * value, ui.barH);
+      bar.fillRect(0, 0, (this.ui.barW) * value, this.ui.barH);
     });
   }
 
   loadAssets() {
-    this.load.bitmapFont(
-      fonts.blueSkyWhite, fonts.files.blueSkyWhitePng, fonts.files.blueSkyWhiteFnt
-    );
-    this.load.bitmapFont(
-      fonts.blueSkyBlack, fonts.files.blueSkyBlackPng, fonts.files.blueSkyBlackFnt
-    );
     this.load.spritesheet(images.health, images.files.health, {
       frameWidth: 5,
       frameHeight: 20,
@@ -61,8 +73,6 @@ export default class extends Phaser.Scene {
     this.load.image(images.heart, images.files.heart);
     this.load.image(images.hudItemBorder, images.files.hudItemBorder);
     this.load.image(images.hudMessageBorder, images.files.hudMessageBorder);
-    this.load.image(images.start, images.files.start);
-    this.load.image(images.return, images.files.return);
     this.load.image(images.grass, images.files.grass);
     this.load.image(images.brick, images.files.brick);
     this.load.image(images.bloodSplatter1, images.files.bloodSplatter1);
@@ -138,14 +148,18 @@ export default class extends Phaser.Scene {
 
     this.anims.create({
       key: animations.shotBlastExplode,
-      frames: this.anims.generateFrameNames(images.shotBlast, { frames: animations.frames.shotBlastExplode }),
+      frames: this.anims.generateFrameNames(
+        images.shotBlast, { frames: animations.frames.shotBlastExplode }
+      ),
       frameRate: animations.frameRates.shotBlastExplode,
       repeat: 0,
     });
 
     this.anims.create({
       key: animations.shotBlastGreenExplode,
-      frames: this.anims.generateFrameNames(images.shotBlastGreen, { frames: animations.frames.shotBlastGreenExplode }),
+      frames: this.anims.generateFrameNames(
+        images.shotBlastGreen, { frames: animations.frames.shotBlastGreenExplode }
+      ),
       frameRate: animations.frameRates.shotBlastGreenExplode,
       repeat: 0,
     });

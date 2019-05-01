@@ -1,5 +1,7 @@
 export default {
+  displayTime: 4000,
   fonts: {
-    stats: { font: '32px Courier', fill: '#ffff00' },
+    statsSize: 22,
+    statsFill: '#ffffff',
   },
 };

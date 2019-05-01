@@ -4,9 +4,16 @@ export default (config) => {
   const u = uiHelper(config);
 
   return {
-    loadingImageX: u.w_2,
-    loadingImageY: u.h_30p,
-    loadingImageOrigin: u.center,
+    backgroundImageX: 0,
+    backgroundImageY: 0,
+    backgroundImageWidth: u.w,
+    backgroundImageHeight: u.h,
+    backgroundImageOriginX: u.left,
+    backgroundImageOriginY: u.top,
+
+    loadingTextX: u.w_2,
+    loadingTextY: u.h_40p,
+    loadingTextOrigin: u.center,
 
     barBackgroundW: u.w_25p + u.padding,
     barBackgroundH: u.w_5p + u.padding,

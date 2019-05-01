@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { images, screens } from '../config';
+import { images, fonts, screens } from '../config';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -7,7 +7,13 @@ export default class extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image(images.loading, images.files.loading);
+    this.load.bitmapFont(
+      fonts.blueSkyWhite, fonts.files.blueSkyWhitePng, fonts.files.blueSkyWhiteFnt
+    );
+    this.load.bitmapFont(
+      fonts.blueSkyBlack, fonts.files.blueSkyBlackPng, fonts.files.blueSkyBlackFnt
+    );
+    this.load.image(images.titleScreenBackground, images.files.titleScreenBackground);
   }
 
   create() {

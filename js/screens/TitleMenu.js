@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { images, screens } from '../config';
+import { images, titleMenu, fonts, screens } from '../config';
 import titleMenuUiHelper from './ui/titleMenuUiHelper';
 
 export default class extends Phaser.Scene {
@@ -8,13 +8,33 @@ export default class extends Phaser.Scene {
   }
 
   create() {
-    const ui = titleMenuUiHelper(this.sys.game.config);
+    this.ui = titleMenuUiHelper(this.sys.game.config);
+    this.showBackground();
+    this.showStartText();
 
-    this.startBtn = this.add.sprite(
-      ui.startButtonX, ui.startButtonY, images.start
-    ).setInteractive();
-    this.startBtn.setOrigin(ui.startButtonOrigin, ui.startButtonOrigin);
-    this.startBtn.on('pointerdown', this.startGame, this);
+    this.input.keyboard.on('keydown', this.startGame, this);
+  }
+
+  showBackground() {
+    this.background = this.add.sprite(
+      this.ui.backgroundImageX,
+      this.ui.backgroundImageY,
+      images.titleScreenBackground
+    );
+    this.background.displayWidth = this.ui.backgroundImageWidth;
+    this.background.displayHeight = this.ui.backgroundImageHeight;
+    this.background.setOrigin(this.ui.backgroundImageOriginX, this.ui.backgroundImageOriginY);
+  }
+
+  showStartText() {
+    const startText = this.add.bitmapText(
+      this.ui.startTextX,
+      this.ui.startTextY,
+      fonts.blueSkyWhite,
+      'PRESS ANY KEY TO START',
+      titleMenu.fonts.startTextSize
+    );
+    startText.setOrigin(this.ui.startTextOrigin);
   }
 
   startGame() {

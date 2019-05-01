@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { endgame, screens, images } from '../config';
+import { fonts, endgame, screens, images } from '../config';
 import endgameUiHelper from './ui/endgameUiHelper';
 
 export default class extends Phaser.Scene {
@@ -12,24 +12,37 @@ export default class extends Phaser.Scene {
   }
 
   create() {
-    const ui = endgameUiHelper(this.sys.game.config);
+    this.ui = endgameUiHelper(this.sys.game.config);
+    this.showBackground();
+    this.showKills();
 
-    this.killsLabel = this.add.text(
-      ui.killLabelX,
-      ui.killLabelY,
-      `Kills:${this.stats.kills}`,
-      endgame.fonts.stats
+    this.time.addEvent({
+      delay: endgame.displayTime,
+      callback: this.returnToTitle,
+      callbackScope: this,
+    });
+  }
+
+  showBackground() {
+    this.background = this.add.sprite(
+      this.ui.backgroundImageX,
+      this.ui.backgroundImageY,
+      images.titleScreenBackground
     );
-    this.killsLabel.setOrigin(ui.killLabelOriginX, ui.killLabelOriginY);
+    this.background.displayWidth = this.ui.backgroundImageWidth;
+    this.background.displayHeight = this.ui.backgroundImageHeight;
+    this.background.setOrigin(this.ui.backgroundImageOriginX, this.ui.backgroundImageOriginY);
+  }
 
-    this.returnBtn = this.add.sprite(
-      ui.returnButtonX,
-      ui.returnButtonY(this.killsLabel),
-      images.return
-    ).setInteractive();
-    this.returnBtn.setOrigin(ui.returnButtonOriginX, ui.returnButtonOriginY);
-
-    this.returnBtn.on('pointerdown', this.returnToTitle, this);
+  showKills() {
+    const killsLabel = this.add.bitmapText(
+      this.ui.killLabelX,
+      this.ui.killLabelY,
+      fonts.blueSkyWhite,
+      `Kills: ${this.stats.kills}`,
+      endgame.fonts.statsSize
+    );
+    killsLabel.setOrigin(this.ui.startTextOrigin);
   }
 
   returnToTitle() {
