@@ -8,6 +8,8 @@ export default class {
   }
 
   damageStatus() {
+    this.clearCurrentStatus();
+
     this.scene.statusImage = this.scene.add.sprite(
       this.ui.statusImageX,
       this.ui.statusImageY,
@@ -26,7 +28,7 @@ export default class {
     this.scene.statusText.setOrigin(this.ui.statusMessageOriginX, this.ui.statusMessageOriginY);
     this.scene.statusText.setCenterAlign();
 
-    this.scene.time.addEvent({
+    this.scene.statusTimer = this.scene.time.addEvent({
       delay: minigame.statusTime,
       callback: () => {
         this.scene.statusImage.destroy();
@@ -34,5 +36,20 @@ export default class {
       },
       callbackScope: this,
     });
+  }
+
+  clearCurrentStatus() {
+    if (this.scene.statusImage != null) {
+      this.scene.statusImage.destroy();
+      this.scene.statusImage = null;
+    }
+    if (this.scene.statusText != null) {
+      this.scene.statusText.destroy();
+      this.scene.statusText = null;
+    }
+    if (this.scene.statusTimer != null) {
+      this.scene.statusTimer.remove();
+      this.scene.statusTimer = null;
+    }
   }
 }

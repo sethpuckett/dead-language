@@ -51,10 +51,10 @@ export default class {
     });
   }
 
-  zombieAnimationComplete(animation, _frame, zombie) {
+  zombieAnimationComplete(animation, frame, zombie) {
     const attack = animationHelper.zombieAnimation(zombie.image, animations.zombieAttack);
     const death = animationHelper.zombieAnimation(zombie.image, animations.zombieDie);
-    if (animation.key === attack) {
+    if (animation.key === attack && frame.isLast) {
       this.applyZombieDamage(zombie);
     } else if (animation.key === death) {
       zombie.alive = false;
