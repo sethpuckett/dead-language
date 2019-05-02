@@ -11,4 +11,13 @@ export default {
     zombie: 2000,
     shotBlast: 4000,
   },
+  titleMenu: {
+    sky: 0,
+    backGrass: 1,
+    backZombies: 2,
+    trees: 3,
+    frontZombies: 4,
+    frontGrass: 5,
+    text: 6,
+  },
 };

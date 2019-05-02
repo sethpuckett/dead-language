@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import Minigame from './screens/minigame/Minigame';
 import Boot from './screens/Boot';
 import Loading from './screens/Loading';
-import TitleMenu from './screens/TitleMenu';
+import TitleMenu from './screens/titleMenu/TitleMenu';
 import Endgame from './screens/Endgame';
 
 const config = {

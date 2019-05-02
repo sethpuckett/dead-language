@@ -29,7 +29,10 @@ export default {
   bloodSplatterGreen5: 'blood-splatter-green-5',
   bloodSplatterGreen6: 'blood-splatter-green-6',
   zombieFace: 'zombie-face',
-  titleScreenBackground: 'title-screen-background',
+  titleScreenBgFrontGrass: 'title-screen-bg-front-grass',
+  titleScreenBgTrees: 'title-screen-bg-trees',
+  titleScreenBgBackGrass: 'title-screen-bg-back-grass',
+  titleScreenBgSky: 'title-screen-bg-sky',
   files: {
     grayZombie: 'assets/images/zombie-gray.png',
     greenZombie: 'assets/images/zombie-green.png',
@@ -59,7 +62,10 @@ export default {
     bloodSplatterGreen5: 'assets/images/blood-splatter-green-5.png',
     bloodSplatterGreen6: 'assets/images/blood-splatter-green-6.png',
     zombieFace: 'assets/images/zombie-face.png',
-    titleScreenBackground: 'assets/images/title-screen-background.png',
+    titleScreenBgFrontGrass: 'assets/images/title-screen-bg-front-grass.png',
+    titleScreenBgTrees: 'assets/images/title-screen-bg-trees.png',
+    titleScreenBgBackGrass: 'assets/images/title-screen-bg-back-grass.png',
+    titleScreenBgSky: 'assets/images/title-screen-bg-sky.png',
   },
   frames: {
     healthFull: 0,
