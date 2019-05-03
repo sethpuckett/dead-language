@@ -94,8 +94,8 @@ export default class {
   }
 
   getFallSpeed() {
-    return (minigame.baseFallSpeed + Phaser.Math.RND.between(
-      -minigame.fallRange, minigame.fallRange
+    return (this.scene.currentLevel.baseFallSpeed + Phaser.Math.RND.between(
+      -this.scene.currentLevel.fallRange, this.scene.currentLevel.fallRange
     ));
   }
 }

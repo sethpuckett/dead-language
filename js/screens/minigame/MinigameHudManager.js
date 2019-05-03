@@ -36,7 +36,7 @@ export default class {
     this.scene.healthIcon.setOrigin(ui.healthIconOriginX, ui.healthIconOriginY);
     this.scene.healthIcon.setDepth(depth.minigame.hud);
     this.scene.healthBars = [];
-    for (let i = 0; i < minigame.maxHealth; i += 1) {
+    for (let i = 0; i < this.scene.currentLevel.maxHealth; i += 1) {
       const prev = i !== 0 ? this.scene.healthBars[i - 1] : this.scene.healthIcon;
       const bar = this.scene.add.sprite(ui.healthValueX(prev), ui.healthValueY, images.health, 0);
       bar.displayWidth = ui.healthValueWidth;
@@ -132,7 +132,7 @@ export default class {
   }
 
   setHealth(value) {
-    for (let i = 0; i < minigame.maxHealth; i += 1) {
+    for (let i = 0; i < this.scene.currentLevel.maxHealth; i += 1) {
       if (i < value) {
         this.scene.healthBars[i].setFrame(images.frames.healthFull);
       } else {

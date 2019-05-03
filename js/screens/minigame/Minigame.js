@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import vocab from '../../vocab';
-import { depth, minigame, images, screens } from '../../config';
+import { depth, minigame, levels, images, screens } from '../../config';
 import minigameUiHelper from '../ui/minigameUiHelper';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
@@ -22,13 +22,14 @@ export default class extends Phaser.Scene {
   }
 
   init() {
+    this.currentLevel = levels.find(l => l.id === 1); // Only 1 level for now
     this.vocab = new VocabWordManager(vocab.words);
     this.zombieManager = new MinigameZombieManager(this, this.vocab);
-    this.spawnManager = new MinigameSpawnManager(this, minigame.waves, this.vocab);
+    this.spawnManager = new MinigameSpawnManager(this, this.currentLevel.waves, this.vocab);
     this.statusManager = new MinigameStatusManager(this);
     this.hudManager = new MinigameHudManager(this);
     this.score = 0;
-    this.health = minigame.startHealth;
+    this.health = this.currentLevel.startHealth;
   }
 
   create() {
@@ -92,7 +93,7 @@ export default class extends Phaser.Scene {
 
   createTimers() {
     this.gameTimer = this.time.addEvent({
-      delay: minigame.gameTime * 1000,
+      delay: this.currentLevel.gameTime * 1000,
       callback: this.gameTimerFinish,
       callbackScope: this,
       paused: true,
@@ -114,7 +115,7 @@ export default class extends Phaser.Scene {
     }
 
     this.health += amount;
-    this.health = Math.min(this.health, minigame.maxHealth);
+    this.health = Math.min(this.health, this.currentLevel.maxHealth);
     this.hudManager.setHealth(this.health);
   }
 
@@ -134,7 +135,7 @@ export default class extends Phaser.Scene {
   }
 
   updateGameTime() {
-    const remaining = minigame.gameTime - this.gameTimer.getElapsedSeconds();
+    const remaining = this.currentLevel.gameTime - this.gameTimer.getElapsedSeconds();
     this.hudManager.setGameTime(remaining);
   }
 
