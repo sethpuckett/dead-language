@@ -105,7 +105,7 @@ export default class extends Phaser.Scene {
   }
 
   gameTimerFinish() {
-    this.scene.start(screens.endgame, { kills: this.score });
+    this.scene.start(screens.endgame, { kills: this.score, status: 'You Win!' });
   }
 
   changeHealth(amount) {
@@ -131,7 +131,7 @@ export default class extends Phaser.Scene {
   }
 
   loseGame() {
-    this.scene.start(screens.endgame, { kills: this.score });
+    this.scene.start(screens.endgame, { kills: this.score, status: 'You Lose!' });
   }
 
   updateGameTime() {

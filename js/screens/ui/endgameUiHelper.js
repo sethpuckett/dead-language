@@ -11,8 +11,12 @@ export default (config) => {
     backgroundImageOriginX: u.left,
     backgroundImageOriginY: u.top,
 
+    statusLabelX: u.w_2,
+    statusLabelY: u.h_50p,
+    statusLabelOrigin: u.center,
+
     killLabelX: u.w_2,
-    killLabelY: u.h_50p,
+    get killLabelY() { return this.statusLabelY + u.h_10p; },
     killLabelOrigin: u.center,
   };
 };

@@ -14,6 +14,7 @@ export default class extends Phaser.Scene {
   create() {
     this.ui = endgameUiHelper(this.sys.game.config);
     this.showBackground();
+    this.showStatus();
     this.showKills();
 
     this.time.addEvent({
@@ -34,6 +35,17 @@ export default class extends Phaser.Scene {
     this.background.setOrigin(this.ui.backgroundImageOriginX, this.ui.backgroundImageOriginY);
   }
 
+  showStatus() {
+    const statusLabel = this.add.bitmapText(
+      this.ui.statusLabelX,
+      this.ui.statusLabelY,
+      fonts.blueSkyWhite,
+      this.stats.status,
+      endgame.fonts.statsSize
+    );
+    statusLabel.setOrigin(this.ui.statusLabelOrigin);
+  }
+
   showKills() {
     const killsLabel = this.add.bitmapText(
       this.ui.killLabelX,
@@ -42,7 +54,7 @@ export default class extends Phaser.Scene {
       `Kills: ${this.stats.kills}`,
       endgame.fonts.statsSize
     );
-    killsLabel.setOrigin(this.ui.startTextOrigin);
+    killsLabel.setOrigin(this.ui.killLabelOrigin);
   }
 
   returnToTitle() {
