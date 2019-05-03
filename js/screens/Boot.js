@@ -14,10 +14,7 @@ export default class extends Phaser.Scene {
       fonts.blueSkyBlack, fonts.files.blueSkyBlackPng, fonts.files.blueSkyBlackFnt
     );
 
-    this.load.image(images.titleScreenBgFrontGrass, images.files.titleScreenBgFrontGrass);
-    this.load.image(images.titleScreenBgTrees, images.files.titleScreenBgTrees);
-    this.load.image(images.titleScreenBgBackGrass, images.files.titleScreenBgBackGrass);
-    this.load.image(images.titleScreenBgSky, images.files.titleScreenBgSky);
+    this.load.image(images.titleScreenBackground, images.files.titleScreenBackground);
   }
 
   create() {

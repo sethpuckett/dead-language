@@ -19,6 +19,7 @@ export default class {
   return:
   {
     canSpawn: bool
+    row: int
     yPosition: int
     speed: int
   }
@@ -28,7 +29,9 @@ export default class {
     if (gameTime >= this.nextSpawnTime) {
       spawnConfig.canSpawn = true;
       spawnConfig.isFront = Phaser.Math.RND.pick([true, false]);
-      spawnConfig.yPosition = this.getSpawnLocation(spawnConfig.isFront);
+      const loc = this.getSpawnLocation(spawnConfig.isFront);
+      spawnConfig.row = loc.row;
+      spawnConfig.yPosition = loc.yPosition;
       spawnConfig.speed = this.getRunSpeed(spawnConfig.isFront);
       this.nextSpawnTime = gameTime + this.getSpawnDelay(gameTime);
     }
@@ -42,9 +45,11 @@ export default class {
     const row = Phaser.Math.RND.between(0, titleMenu.spawnRows - 1);
     const min = isFront ? this.ui.minFrontSpawnY : this.ui.minBackSpawnY;
     const max = isFront ? this.ui.maxFrontSpawnY : this.ui.maxBackSpawnY;
-    return min// past the min
+    const yPosition = min // past the min
       + (max - min) // available area
       * row / titleMenu.spawnRows; // percentage based on column
+
+    return { row, yPosition };
   }
 
   getSpawnDelay() {

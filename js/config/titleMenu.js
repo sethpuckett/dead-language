@@ -1,7 +1,7 @@
 export default {
   spawnRows: 3,
   baseSpawnRate: 3000,
-  spawnRange: 500,
+  spawnRange: 1500,
   baseFrontRunSpeed: 60,
   frontRunRange: 4,
   baseBackRunSpeed: 35,

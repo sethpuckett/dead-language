@@ -40,9 +40,8 @@ export default class {
     const image = Phaser.Math.RND.pick(ZOMBIE_IMAGES);
     const zombie = this.scene.add.sprite(SPAWN_X, spawnConfig.yPosition, image, 0);
     zombie.setScale(spawnConfig.isFront ? ZOMBIE_FRONT_IMAGE_SCALE : ZOMBIE_BACK_IMAGE_SCALE);
-    zombie.setDepth(
-      spawnConfig.isFront ? depth.titleMenu.frontZombies : depth.titleMenu.backZombies
-    );
+    const bDepth = spawnConfig.isFront ? depth.titleMenu.frontZombies : depth.titleMenu.backZombies;
+    zombie.setDepth(bDepth + spawnConfig.row);
     zombie.image = image;
     zombie.speed = spawnConfig.speed;
     zombie.alive = true;

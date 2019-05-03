@@ -14,10 +14,12 @@ export default {
   titleMenu: {
     sky: 0,
     backGrass: 1,
+    // 2 - 10 reserved for back zombies
     backZombies: 2,
-    trees: 3,
-    frontZombies: 4,
-    frontGrass: 5,
-    text: 6,
+    trees: 11,
+    // 12 - 20 reserved for front zombies
+    frontZombies: 12,
+    frontGrass: 21,
+    text: 22,
   },
 };
