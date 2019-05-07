@@ -5,6 +5,9 @@ import vocabStudyUiHelper from './ui/vocabStudyUiHelper';
 import VocabWordManager from '../languageContent/VocabWordManager';
 import keyboardHelper from '../util/keyboardHelper';
 
+const BIG_FONT_MAX_LENGTH = 24;
+const DOT_COUNT_MODIFIER = 30;
+
 export default class extends Phaser.Scene {
   constructor() {
     super({ key: 'VocabStudy' });
@@ -23,8 +26,9 @@ export default class extends Phaser.Scene {
   drawVocab() {
     this.vocab.content.forEach((c, i) => {
       const textLength = c.language1.length + c.language2.length;
-      const fontSize = textLength <= 24 ? vocabStudy.fonts.vocabSize : vocabStudy.fonts.vocabSizeSmall;
-      const dotCount = Math.ceil(Math.max(30 - textLength, 0) / 6);
+      const fontSize = textLength <= BIG_FONT_MAX_LENGTH
+        ? vocabStudy.fonts.vocabSize : vocabStudy.fonts.vocabSizeSmall;
+      const dotCount = Math.ceil(Math.max(DOT_COUNT_MODIFIER - textLength, 0) / 6);
 
       let vocab1X = 0;
       let vocab2X = 0;
@@ -41,15 +45,27 @@ export default class extends Phaser.Scene {
       }
 
       const l1 = this.add.bitmapText(
-        vocab1X, this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset), fonts.blueSkyWhite, c.language1, fontSize
+        vocab1X,
+        this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset),
+        fonts.blueSkyWhite,
+        c.language1,
+        fontSize
       );
       l1.setOrigin(this.ui.vocab1OriginX, this.ui.vocab1OriginY);
       const l2 = this.add.bitmapText(
-        vocab2X, this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset), fonts.blueSkyWhite, c.language2, fontSize
+        vocab2X,
+        this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset),
+        fonts.blueSkyWhite,
+        c.language2,
+        fontSize
       );
       l2.setOrigin(this.ui.vocab2OriginX, this.ui.vocab2OriginY);
       const dots = this.add.bitmapText(
-        (vocab1X + l1.width + vocab2X - l2.width) / 2, this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset), fonts.blueSkyWhite, ' . '.repeat(dotCount), fontSize
+        (vocab1X + l1.width + vocab2X - l2.width) / 2,
+        this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset),
+        fonts.blueSkyWhite,
+        ' . '.repeat(dotCount),
+        fontSize
       );
       dots.setOrigin(this.ui.dotsOriginX, this.ui.dotsOriginY);
     });
@@ -83,7 +99,10 @@ export default class extends Phaser.Scene {
       fillStyle: vocabStudy.ui.textEntryStyle,
     });
     this.textEntryArea = new Phaser.Geom.Rectangle(
-      this.ui.textEntryAreaX, this.ui.textEntryAreaY, this.ui.textEntryAreaWidth, this.ui.textEntryAreaHeight
+      this.ui.textEntryAreaX,
+      this.ui.textEntryAreaY,
+      this.ui.textEntryAreaWidth,
+      this.ui.textEntryAreaHeight
     );
     this.textEntryGraphics.fillRectShape(this.textEntryArea);
     this.textEntryGraphics.setDepth(depth.minigame.hud);
