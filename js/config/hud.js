@@ -1,0 +1,20 @@
+export default {
+  height: 120,
+  bufferHeight: 70,
+  maxTextEntry: 18,
+  fonts: {
+    killSize: 22,
+    killFill: '#ffffff',
+    cashSize: 22,
+    cashFill: '#ffffff',
+    timerSize: 22,
+    timerFill: '#ffffff',
+    textEntrySize: 18,
+    textEntryFill: '#ffffff',
+    statusSize: 14,
+    statusEntryFill: '#ffffff',
+  },
+  ui: {
+    textEntryStyle: { color: '#000000' },
+  },
+};

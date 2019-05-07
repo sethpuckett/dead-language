@@ -1,10 +1,10 @@
-import minigameUiHelper from '../ui/minigameUiHelper';
-import { minigame, images, fonts } from '../../config';
+import hudUiHelper from '../ui/hudUiHelper';
+import { hud, minigame, images, fonts } from '../../config';
 
 export default class {
   constructor(scene) {
     this.scene = scene;
-    this.ui = minigameUiHelper(this.scene.sys.game.config);
+    this.ui = hudUiHelper(this.scene.sys.game.config);
   }
 
   damageStatus() {
@@ -23,7 +23,7 @@ export default class {
       this.ui.statusMessageY,
       fonts.blueSkyWhite,
       minigame.statusMessages.damage,
-      minigame.fonts.statusSize
+      hud.fonts.statusSize
     );
     this.scene.statusText.setOrigin(this.ui.statusMessageOriginX, this.ui.statusMessageOriginY);
     this.scene.statusText.setCenterAlign();

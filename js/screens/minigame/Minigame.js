@@ -1,12 +1,11 @@
 import Phaser from 'phaser';
 import vocab from '../../vocab';
 import { depth, minigame, levels, images, screens } from '../../config';
-import minigameUiHelper from '../ui/minigameUiHelper';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
 import MinigameSpawnManager from './MinigameSpawnManager';
 import MinigameStatusManager from './MinigameStatusManager';
-import MinigameHudManager from './MinigameHudManager';
+import HudManager from '../HudManager';
 
 // let firestore = firebase.firestore()
 // const lessonRef =
@@ -27,13 +26,17 @@ export default class extends Phaser.Scene {
     this.zombieManager = new MinigameZombieManager(this, this.vocab);
     this.spawnManager = new MinigameSpawnManager(this, this.currentLevel.waves, this.vocab);
     this.statusManager = new MinigameStatusManager(this);
-    this.hudManager = new MinigameHudManager(this);
+    this.hudManager = new HudManager(this);
     this.score = 0;
     this.health = this.currentLevel.startHealth;
   }
 
   create() {
-    this.hudManager.createHud();
+    this.hudManager.createHud({
+      ...minigame.ui.hudConfig,
+      startHealth: this.currentLevel.startHealth,
+      maxHealth: this.currentLevel.maxHealth,
+    });
     this.hudManager.setSubmitCallback(this.submitAnswer);
     this.createBackground();
     this.createCollisions();
@@ -58,8 +61,6 @@ export default class extends Phaser.Scene {
   }
 
   createBackground() {
-    const ui = minigameUiHelper(this.sys.game.config);
-
     this.background = this.add.tileSprite(
       0, 0,
       this.sys.game.config.width,
@@ -68,14 +69,6 @@ export default class extends Phaser.Scene {
     );
     this.background.setOrigin(0, 0);
     this.background.setDepth(depth.minigame.background);
-
-    this.brick = this.add.tileSprite(
-      ui.brickX, ui.brickY,
-      ui.brickWidth, ui.brickHeight,
-      images.brick,
-    );
-    this.brick.setOrigin(0, 0);
-    this.brick.setDepth(depth.minigame.wall);
   }
 
   createCollisions() {

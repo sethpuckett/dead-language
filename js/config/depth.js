@@ -2,9 +2,6 @@ export default {
   minigame: {
     background: 0,
     splatter: 1,
-    wall: 2,
-    hud: 3,
-    entryText: 4,
     // 1000 - 3999 reserved for zombies & zombie text
     zombieTextBackground: 1000,
     zombieText: 1001,
@@ -22,4 +19,9 @@ export default {
     frontGrass: 21,
     text: 22,
   },
+  hud: {
+    buffer: 900,
+    ui: 901,
+    entryText: 902,
+  }
 };

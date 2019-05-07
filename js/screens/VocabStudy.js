@@ -1,9 +1,9 @@
 import Phaser from 'phaser';
 import vocab from '../vocab';
-import { depth, fonts, minigame, images, vocabStudy } from '../config';
+import { fonts, images, vocabStudy } from '../config';
 import vocabStudyUiHelper from './ui/vocabStudyUiHelper';
 import VocabWordManager from '../languageContent/VocabWordManager';
-import keyboardHelper from '../util/keyboardHelper';
+import HudManager from './HudManager';
 
 const BIG_FONT_MAX_LENGTH = 24;
 const DOT_COUNT_MODIFIER = 30;
@@ -16,14 +16,43 @@ export default class extends Phaser.Scene {
   init() {
     this.ui = vocabStudyUiHelper(this.sys.game.config);
     this.vocab = new VocabWordManager(vocab.words);
+    this.hudManager = new HudManager(this);
   }
 
   create() {
-    this.createHud();
-    this.drawVocab();
+    this.hudManager.createHud(vocabStudy.ui.hudConfig);
+    this.hudManager.setSubmitCallback(this.submitAnswer);
+    this.createBackground();
+    this.createVocab();
   }
 
-  drawVocab() {
+  createBackground() {
+    this.background = this.add.tileSprite(
+      this.ui.grassX, this.ui.grassY,
+      this.ui.grassWidth,
+      this.ui.grassHeight,
+      images.grass,
+    );
+    this.background.setOrigin(this.ui.grassOriginX, this.ui.grassOriginY);
+
+    this.crate = this.add.sprite(
+      this.ui.crateX,
+      this.ui.crateY,
+      images.crate
+    );
+    this.crate.setOrigin(this.ui.crateOriginX, this.ui.crateOriginY);
+    this.crate.setScale(images.scales.crate);
+
+    this.bottle = this.add.sprite(
+      this.ui.bottleX,
+      this.ui.bottleY,
+      images.bottle1
+    );
+    this.bottle.setOrigin(this.ui.bottleOriginX, this.ui.bottleOriginY);
+    this.bottle.setScale(images.scales.bottle1);
+  }
+
+  createVocab() {
     this.vocab.content.forEach((c, i) => {
       const textLength = c.language1.length + c.language2.length;
       const fontSize = textLength <= BIG_FONT_MAX_LENGTH
@@ -71,90 +100,7 @@ export default class extends Phaser.Scene {
     });
   }
 
-  createHud() {
-    this.createInput();
+  submitAnswer() {
 
-    this.brick = this.add.tileSprite(
-      this.ui.brickX, this.ui.brickY,
-      this.ui.brickWidth, this.ui.brickHeight,
-      images.brick,
-    );
-    this.brick.setOrigin(0, 0);
-    this.brick.setDepth(depth.minigame.wall);
-
-    this.hudHeight = this.ui.hudHeight;
-    this.hudBufferHeight = this.ui.hudBufferHeight;
-
-    this.messageBorder = this.add.sprite(
-      this.ui.messageBorderX,
-      this.ui.messageBorderY,
-      images.hudMessageBorder
-    );
-    this.messageBorder.displayWidth = this.ui.messageBorderWidth;
-    this.messageBorder.displayHeight = this.ui.messageBorderHeight;
-    this.messageBorder.setOrigin(this.ui.messageBorderOriginX, this.ui.messageBorderOriginY);
-    this.messageBorder.setDepth(depth.minigame.hud);
-
-    this.textEntryGraphics = this.add.graphics({
-      fillStyle: vocabStudy.ui.textEntryStyle,
-    });
-    this.textEntryArea = new Phaser.Geom.Rectangle(
-      this.ui.textEntryAreaX,
-      this.ui.textEntryAreaY,
-      this.ui.textEntryAreaWidth,
-      this.ui.textEntryAreaHeight
-    );
-    this.textEntryGraphics.fillRectShape(this.textEntryArea);
-    this.textEntryGraphics.setDepth(depth.minigame.hud);
-    this.textEntry = this.add.bitmapText(
-      this.ui.textEntryX, this.ui.textEntryY, fonts.blueSkyWhite, '', minigame.fonts.textEntrySize
-    );
-    this.textEntry.setOrigin(this.ui.textEntryOriginX, this.ui.textEntryOriginY);
-    this.textEntry.setDepth(depth.minigame.entryText);
-
-    this.background = this.add.tileSprite(
-      this.ui.grassX, this.ui.grassY,
-      this.ui.grassWidth,
-      this.ui.grassHeight,
-      images.grass,
-    );
-    this.background.setOrigin(this.ui.grassOriginX, this.ui.grassOriginY);
-
-    this.crate = this.add.sprite(
-      this.ui.crateX,
-      this.ui.crateY,
-      images.crate
-    );
-    this.crate.setOrigin(this.ui.crateOriginX, this.ui.crateOriginY);
-    this.crate.setScale(images.scales.crate);
-
-    this.bottle = this.add.sprite(
-      this.ui.bottleX,
-      this.ui.bottleY,
-      images.bottle1
-    );
-    this.bottle.setOrigin(this.ui.bottleOriginX, this.ui.bottleOriginY);
-    this.bottle.setScale(images.scales.bottle1);
-  }
-
-  createInput() {
-    this.keys = this.input.keyboard.addKeys(
-      'SPACE,BACKSPACE, ENTER, A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z'
-    );
-    this.input.keyboard.on('keydown', this.handleKeyDown, this);
-  }
-
-  handleKeyDown(e) {
-    if (e.keyCode === this.keys.BACKSPACE.keyCode && this.textEntry.text.length > 0) {
-      this.textEntry.text = this.textEntry.text.substr(
-        0, this.textEntry.text.length - 1
-      );
-    } else if ((keyboardHelper.isLetter(e.keyCode)
-                || e.keyCode === this.keys.SPACE.keyCode)
-                && this.textEntry.text.length < minigame.maxTextEntry) {
-      this.textEntry.text += e.key;
-    } else if (e.keyCode === this.keys.ENTER.keyCode) {
-      this.submitCallback();
-    }
   }
 }

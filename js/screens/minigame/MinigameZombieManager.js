@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { animations, depth, images, minigame, fonts } from '../../config';
+import { animations, depth, images, minigame, fonts, hud } from '../../config';
 import animationHelper from '../../util/animationHelper';
 
 const ZOMBIE_IMAGE_SCALE = 2.5;
@@ -17,7 +17,7 @@ export default class {
   constructor(scene) {
     this.scene = scene;
 
-    this.totalDistance = scene.sys.game.config.height - minigame.ui.hudHeight;
+    this.totalDistance = scene.sys.game.config.height - hud.height;
     this.zombies = [];
     this.damage = 0;
   }

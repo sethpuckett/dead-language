@@ -1,12 +1,12 @@
 import uiHelper from './uiHelper';
-import { minigame } from '../../config';
+import { hud } from '../../config';
 
 export default (config) => {
   const u = uiHelper(config);
 
   return {
-    hudHeight: minigame.ui.hudHeight,
-    hudBufferHeight: minigame.ui.hudBufferHeight,
+    hudHeight: hud.height,
+    hudBufferHeight: hud.bufferHeight,
     weaponBorderX: u.padding,
     get weaponBorderY() { return u.h - this.hudHeight + u.padding; },
     get weaponBorderWidth() { return this.hudHeight / 2 - u.padding * 2; },
