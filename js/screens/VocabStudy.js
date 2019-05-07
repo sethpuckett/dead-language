@@ -100,6 +100,22 @@ export default class extends Phaser.Scene {
       images.grass,
     );
     this.background.setOrigin(this.ui.grassOriginX, this.ui.grassOriginY);
+
+    this.crate = this.add.sprite(
+      this.ui.crateX,
+      this.ui.crateY,
+      images.crate
+    );
+    this.crate.setOrigin(this.ui.crateOriginX, this.ui.crateOriginY);
+    this.crate.setScale(images.scales.crate);
+
+    this.bottle = this.add.sprite(
+      this.ui.bottleX,
+      this.ui.bottleY,
+      images.bottle1
+    );
+    this.bottle.setOrigin(this.ui.bottleOriginX, this.ui.bottleOriginY);
+    this.bottle.setScale(images.scales.bottle1);
   }
 
   createInput() {

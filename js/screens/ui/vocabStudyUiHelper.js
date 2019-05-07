@@ -65,5 +65,15 @@ export default (config) => {
     get grassHeight() { return (u.h - this.hudHeight - this.hudBufferHeight); },
     grassOriginX: u.left,
     grassOriginY: u.top,
+
+    crateX: u.w_2,
+    crateY: u.h_15p,
+    crateOriginX: u.center,
+    crateOriginY: u.center,
+
+    bottleX: u.w_2,
+    get bottleY() { return this.crateY - (u.h * 0.0425); },
+    bottleOriginX: u.center,
+    bottleOriginY: u.center,
   };
 };
