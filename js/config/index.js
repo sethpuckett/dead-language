@@ -6,6 +6,7 @@ export { default as titleMenu } from './titleMenu';
 export { default as images } from './images';
 export { default as loading } from './loading';
 export { default as minigame } from './minigame';
+export { default as vocabStudy } from './vocabStudy';
 export { default as levels } from './levels';
 export { default as screens } from './screens';
 export { default as ui } from './ui';

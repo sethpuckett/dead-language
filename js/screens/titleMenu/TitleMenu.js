@@ -86,6 +86,6 @@ export default class extends Phaser.Scene {
   }
 
   startGame() {
-    this.scene.start(screens.minigame);
+    this.scene.start(screens.vocabStudy);
   }
 }

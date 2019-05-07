@@ -7,6 +7,7 @@ export default {
     { id: 4, language1: 'life', language2: 'vida' },
     { id: 5, language1: 'moment', language2: 'momento', alternatives: ['instante'] },
     { id: 6, language1: 'form', language2: 'forma', alternatives: ['formulario'] },
+    /* { id: 6, language1: 'unfortunately', language2: 'desafortunatamente' }, */
     { id: 7, language1: 'house', language2: 'casa' },
     { id: 8, language1: 'world', language2: 'mundo' },
     { id: 9, language1: 'woman', language2: 'mujer', alternatives: ['señora', 'senora'] },
@@ -20,7 +21,7 @@ export default {
     { id: 17, language1: 'end', language2: 'fin', alternatives: ['final', 'extremo'] },
     { id: 18, language1: 'type', language2: 'tipo' },
     { id: 19, language1: 'people', language2: 'gente', alternatives: ['personas'] },
-    { id: 20, language1: 'example', language2: 'ejemplo', alternatives: ['muestra'] },
+    /* { id: 20, language1: 'example', language2: 'ejemplo', alternatives: ['muestra'] },
     { id: 21, language1: 'side', language2: 'lado', alternatives: ['margen'] },
     { id: 22, language1: 'son', language2: 'hijo' },
     { id: 23, language1: 'problem', language2: 'problema' },
@@ -30,6 +31,7 @@ export default {
     { id: 27, language1: 'father', language2: 'padre' },
     { id: 28, language1: 'change', language2: 'cambio', alternatives: ['variación', 'variacion'] },
     { id: 29, language1: 'history', language2: 'historia' },
+    { id: 29, language1: 'history', language2: 'historia' }, */
     /* { id: 30, language1: 'idea', language2: 'idea' },
     { id: 31, language1: 'water', language2: 'agua' },
     { id: 32, language1: 'night', language2: 'noche' },

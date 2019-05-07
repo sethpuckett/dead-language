@@ -4,6 +4,7 @@ import Boot from './screens/Boot';
 import Loading from './screens/Loading';
 import TitleMenu from './screens/titleMenu/TitleMenu';
 import Endgame from './screens/Endgame';
+import VocabStudy from './screens/VocabStudy';
 
 const config = {
   type: Phaser.AUTO,
@@ -17,6 +18,7 @@ const config = {
     TitleMenu,
     Minigame,
     Endgame,
+    VocabStudy,
   ],
 };
 

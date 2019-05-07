@@ -4,4 +4,5 @@ export default {
   titleMenu: 'TitleMenu',
   minigame: 'Minigame',
   endgame: 'Endgame',
+  vocabStudy: 'VocabStudy',
 };
