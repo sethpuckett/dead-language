@@ -7,7 +7,7 @@ export default {
     { id: 4, language1: 'life', language2: 'vida' },
     { id: 5, language1: 'moment', language2: 'momento', alternatives: ['instante'] },
     { id: 6, language1: 'form', language2: 'forma', alternatives: ['formulario'] },
-    /* { id: 6, language1: 'unfortunately', language2: 'desafortunatamente' }, */
+    // { id: 6, language1: 'unfortunately', language2: 'desafortunatamente' },
     { id: 7, language1: 'house', language2: 'casa' },
     { id: 8, language1: 'world', language2: 'mundo' },
     { id: 9, language1: 'woman', language2: 'mujer', alternatives: ['señora', 'senora'] },

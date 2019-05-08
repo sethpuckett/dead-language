@@ -12,3 +12,4 @@ export { default as screens } from './screens';
 export { default as ui } from './ui';
 export { default as fonts } from './fonts';
 export { default as hud } from './hud';
+export { default as game } from './game';

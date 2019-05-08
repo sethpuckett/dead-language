@@ -53,7 +53,7 @@ export default class extends Phaser.Scene {
     } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
       this.selectedOption = this.menuOptions[this.currentSelection].key;
       this.selector.setFrame(1);
-      this.cameras.main.fade(titleMenu.fadeTime, 0, 0, 0, false, this.fadeCallback);
+      this.cameras.main.fade(titleMenu.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
     }
   }
 

@@ -136,6 +136,12 @@ export default class extends Phaser.Scene {
       margin: 0,
       spacing: 0,
     });
+    this.load.spritesheet(images.hudMenuBorder, images.files.hudMenuBorder, {
+      frameWidth: 66,
+      frameHeight: 20,
+      margin: 0,
+      spacing: 0,
+    });
   }
 
   createAnimations() {

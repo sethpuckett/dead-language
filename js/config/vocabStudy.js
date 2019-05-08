@@ -1,8 +1,12 @@
 export default {
+  screenFadeTime: 750,
   fonts: {
     vocabSize: 11,
     vocabSizeSmall: 7,
+    dotSize: 9,
     vocabFill: '#ffffff',
+    menuOptionSize: 11,
+    menuOptionFill: '#ffffff',
   },
   ui: {
     textEntryStyle: { color: '#000000' },
