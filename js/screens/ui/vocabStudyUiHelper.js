@@ -64,5 +64,13 @@ export default (config) => {
     get menuOption5TextX() { return this.menuOption5X + this.menuOptionWidth / 2; },
     get menuOption5TextY() { return this.menuOption5Y + this.menuOptionHeight / 2; },
     menuOptionTextOrigin: u.center,
+
+    // TODO: get rid of all of this and add a generic status manager class
+    statusMessageX: hudUi.messageBorderX + hudUi.messageBorderWidth / 2,
+    statusMessageY: hudUi.messageBorderY + hudUi.messageBorderHeight / 2,
+    statusMessageWidth: hudUi.messageBorderWidth,
+    statusMessageHeight: u.hudHeight,
+    statusMessageOriginX: u.center,
+    statusMessageOriginY: u.center,
   };
 };

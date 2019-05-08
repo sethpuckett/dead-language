@@ -20,6 +20,7 @@ export default class {
     timer: bool,
     message: bool,
     textInput: bool,
+    hudBuffer: bool,
   }
   */
   createHud(config) {
@@ -119,7 +120,7 @@ export default class {
       this.scene.messageBorder.setDepth(depth.hud.ui);
     }
 
-    if (config.textInput) {
+    if (config.hudBuffer) {
       this.scene.brick = this.scene.add.tileSprite(
         ui.brickX, ui.brickY,
         ui.brickWidth, ui.brickHeight,
@@ -127,6 +128,9 @@ export default class {
       );
       this.scene.brick.setOrigin(0, 0);
       this.scene.brick.setDepth(depth.hud.buffer);
+    }
+
+    if (config.textInput) {
       this.scene.textEntryGraphics = this.scene.add.graphics({
         fillStyle: hud.ui.textEntryStyle,
       });

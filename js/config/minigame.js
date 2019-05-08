@@ -25,6 +25,7 @@ export default {
       timer: true,
       message: true,
       textInput: true,
+      hudBuffer: true,
     },
   },
   statusMessages: {

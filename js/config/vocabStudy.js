@@ -18,7 +18,8 @@ export default {
       cash: false,
       timer: false,
       message: true,
-      textInput: true,
+      textInput: false,
+      hudBuffer: true,
     },
   },
 };

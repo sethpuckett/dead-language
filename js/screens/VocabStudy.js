@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import vocab from '../vocab';
-import { fonts, images, vocabStudy, game, screens } from '../config';
+import { fonts, images, vocabStudy, game, screens, hud } from '../config';
 import vocabStudyUiHelper from './ui/vocabStudyUiHelper';
 import VocabWordManager from '../languageContent/VocabWordManager';
 import HudManager from './HudManager';
@@ -33,6 +33,7 @@ export default class extends Phaser.Scene {
     this.createVocab();
     this.createUi();
     this.createInput();
+    this.createStatus();
     this.updateSelection();
   }
 
@@ -208,6 +209,18 @@ export default class extends Phaser.Scene {
       vocabStudy.fonts.menuOptionSize
     );
     this.option5Text.setOrigin(this.ui.menuOptionTextOrigin);
+  }
+
+  createStatus() {
+    this.statusText = this.add.bitmapText(
+      this.ui.statusMessageX,
+      this.ui.statusMessageY,
+      fonts.blueSkyWhite,
+      ['Arrows to move', 'Space/Enter to choose'],
+      hud.fonts.statusSizeSmall
+    );
+    this.statusText.setOrigin(this.ui.statusMessageOriginX, this.ui.statusMessageOriginY);
+    this.statusText.setCenterAlign();
   }
 
   updateSelection() {

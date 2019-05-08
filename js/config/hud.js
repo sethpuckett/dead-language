@@ -12,6 +12,7 @@ export default {
     textEntrySize: 18,
     textEntryFill: '#ffffff',
     statusSize: 14,
+    statusSizeSmall: 11,
     statusEntryFill: '#ffffff',
   },
   ui: {
