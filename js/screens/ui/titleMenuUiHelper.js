@@ -11,9 +11,17 @@ export default (config) => {
     backgroundImageOriginX: u.left,
     backgroundImageOriginY: u.top,
 
-    startTextX: u.w_2,
-    startTextY: u.h_50p,
-    startTextOrigin: u.center,
+    textX: u.w_40p,
+    textY: u.h_40p,
+    textOriginX: u.left,
+    textOriginY: u.top,
+    textVerticalPadding: u.h_10p,
+
+    selectX: u.w_40p,
+    get selectY() { return this.textY - u.h * 0.01; },
+    selectOriginX: u.right,
+    selectOriginY: u.top,
+    get selectVerticalPadding() { return this.textVerticalPadding; },
 
     minBackSpawnY: u.h * 0.75,
     maxBackSpawnY: u.h * 0.84,

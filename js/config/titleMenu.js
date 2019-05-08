@@ -6,8 +6,9 @@ export default {
   frontRunRange: 4,
   baseBackRunSpeed: 35,
   backRunRange: 2,
+  fadeTime: 750,
   fonts: {
-    startTextSize: 22,
-    startTextFill: '#ffffff',
+    textSize: 22,
+    textFill: '#ffffff',
   },
 };

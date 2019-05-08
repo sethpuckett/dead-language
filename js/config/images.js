@@ -36,6 +36,7 @@ export default {
   titleScreenBgSky: 'title-screen-bg-sky',
   crate: 'crate',
   bottle1: 'bottle1',
+  shotgun: 'shotgun',
   files: {
     grayZombie: 'assets/images/zombie-gray.png',
     greenZombie: 'assets/images/zombie-green.png',
@@ -72,13 +73,17 @@ export default {
     titleScreenBgSky: 'assets/images/title-screen-bg-sky.png',
     crate: 'assets/images/crate.png',
     bottle1: 'assets/images/bottle1.png',
+    shotgun: 'assets/images/shotgun.png',
   },
   frames: {
     healthFull: 0,
     healthEmpty: 1,
+    shotgunNormal: 0,
+    shotgunFiring: 1,
   },
   scales: {
     crate: 1.5,
     bottle1: 1.5,
+    shotgun: 4,
   },
 };

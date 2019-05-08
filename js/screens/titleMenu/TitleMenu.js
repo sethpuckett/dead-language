@@ -12,14 +12,20 @@ export default class extends Phaser.Scene {
   init() {
     this.zombieManager = new TitleZombieManager(this);
     this.spawnManager = new TitleSpawnManager(this);
+    this.menuOptions = [
+      { text: 'Start Game', key: 'start' },
+      { text: 'Target Practice', key: 'practice' },
+    ];
+    this.currentSelection = 0;
+    this.selectedOption = '';
   }
 
   create() {
     this.ui = titleMenuUiHelper(this.sys.game.config);
-    this.showBackground();
-    this.showStartText();
-
-    this.input.keyboard.on('keydown', this.startGame, this);
+    this.createBackground();
+    this.createMenu();
+    this.createInput();
+    this.updateMenuSelection();
   }
 
   update(time, delta) {
@@ -31,7 +37,73 @@ export default class extends Phaser.Scene {
     this.zombieManager.destroyDeadZombies();
   }
 
-  showBackground() {
+  createInput() {
+    this.keys = this.input.keyboard.addKeys(
+      'SPACE,ENTER,UP,DOWN,TAB'
+    );
+    this.input.keyboard.on('keydown', this.handleKeyDown, this);
+  }
+
+  handleKeyDown(e) {
+    if (e.keyCode === this.keys.UP.keyCode
+        || e.keyCode === this.keys.DOWN.keyCode
+        || e.keyCode === this.keys.TAB.keyCode) {
+      this.currentSelection = this.currentSelection === 0 ? 1 : 0;
+      this.updateMenuSelection();
+    } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
+      this.selectedOption = this.menuOptions[this.currentSelection].key;
+      this.selector.setFrame(1);
+      this.cameras.main.fade(titleMenu.fadeTime, 0, 0, 0, false, this.fadeCallback);
+    }
+  }
+
+  updateMenuSelection() {
+    this.selector.y = this.ui.selectY + (this.ui.selectVerticalPadding * this.currentSelection);
+  }
+
+  fadeCallback(_camera, progress) {
+    if (progress === 1) {
+      if (this.selectedOption === 'start') {
+        this.startGame();
+      } else if (this.selectedOption === 'practice') {
+        this.startPractice();
+      }
+    }
+  }
+
+  createMenu() {
+    this.menuOptions.forEach((o, i) => {
+      const text = this.add.bitmapText(
+        this.ui.textX,
+        this.ui.textY + (this.ui.textVerticalPadding * i),
+        fonts.blueSkyWhite,
+        o.text,
+        titleMenu.fonts.textSize
+      );
+      text.setOrigin(this.ui.textOriginX, this.ui.textOriginY);
+      text.setDepth(depth.titleMenu.text);
+    });
+
+    this.selector = this.add.sprite(
+      this.ui.selectX,
+      this.ui.selectY,
+      images.shotgun,
+      images.frames.shotgunNormal
+    );
+    this.selector.setScale(images.scales.shotgun);
+    this.selector.flipX = true;
+    this.selector.setOrigin(this.ui.selectOriginX, this.ui.selectOriginY);
+  }
+
+  startGame() {
+    this.scene.start(screens.minigame);
+  }
+
+  startPractice() {
+    this.scene.start(screens.vocabStudy);
+  }
+
+  createBackground() {
     this.bgFrontGrass = this.add.sprite(
       this.ui.backgroundImageX,
       this.ui.backgroundImageY,
@@ -71,21 +143,5 @@ export default class extends Phaser.Scene {
     this.bgSky.displayHeight = this.ui.backgroundImageHeight;
     this.bgSky.setOrigin(this.ui.backgroundImageOriginX, this.ui.backgroundImageOriginY);
     this.bgSky.setDepth(depth.titleMenu.sky);
-  }
-
-  showStartText() {
-    const startText = this.add.bitmapText(
-      this.ui.startTextX,
-      this.ui.startTextY,
-      fonts.blueSkyWhite,
-      'PRESS ANY KEY TO START',
-      titleMenu.fonts.startTextSize
-    );
-    startText.setOrigin(this.ui.startTextOrigin);
-    startText.setDepth(depth.titleMenu.text);
-  }
-
-  startGame() {
-    this.scene.start(screens.minigame);
   }
 }

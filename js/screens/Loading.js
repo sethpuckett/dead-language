@@ -130,6 +130,12 @@ export default class extends Phaser.Scene {
       margin: 0,
       spacing: 0,
     });
+    this.load.spritesheet(images.shotgun, images.files.shotgun, {
+      frameWidth: 21,
+      frameHeight: 10,
+      margin: 0,
+      spacing: 0,
+    });
   }
 
   createAnimations() {
