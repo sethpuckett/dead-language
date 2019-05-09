@@ -95,50 +95,50 @@ export default class extends Phaser.Scene {
     this.load.image(images.crate, images.files.crate);
     this.load.image(images.bottle1, images.files.bottle1);
     this.load.spritesheet(images.greenZombie, images.files.greenZombie, {
-      frameWidth: 25,
-      frameHeight: 25,
+      frameWidth: images.frameSizes.zombie.width,
+      frameHeight: images.frameSizes.zombie.height,
       margin: 0,
       spacing: 0,
     });
     this.load.spritesheet(images.grayZombie, images.files.grayZombie, {
-      frameWidth: 25,
-      frameHeight: 25,
+      frameWidth: images.frameSizes.zombie.width,
+      frameHeight: images.frameSizes.zombie.height,
       margin: 0,
       spacing: 0,
     });
     this.load.spritesheet(images.lightGreenZombie, images.files.lightGreenZombie, {
-      frameWidth: 25,
-      frameHeight: 25,
+      frameWidth: images.frameSizes.zombie.width,
+      frameHeight: images.frameSizes.zombie.height,
       margin: 0,
       spacing: 0,
     });
     this.load.spritesheet(images.redZombie, images.files.redZombie, {
-      frameWidth: 25,
-      frameHeight: 25,
+      frameWidth: images.frameSizes.zombie.width,
+      frameHeight: images.frameSizes.zombie.height,
       margin: 0,
       spacing: 0,
     });
     this.load.spritesheet(images.shotBlast, images.files.shotBlast, {
-      frameWidth: 32,
-      frameHeight: 32,
+      frameWidth: images.frameSizes.shotBlast.width,
+      frameHeight: images.frameSizes.shotBlast.height,
       margin: 0,
       spacing: 0,
     });
     this.load.spritesheet(images.shotBlastGreen, images.files.shotBlastGreen, {
-      frameWidth: 32,
-      frameHeight: 32,
+      frameWidth: images.frameSizes.shotBlast.width,
+      frameHeight: images.frameSizes.shotBlast.height,
       margin: 0,
       spacing: 0,
     });
     this.load.spritesheet(images.shotgun, images.files.shotgun, {
-      frameWidth: 21,
-      frameHeight: 10,
+      frameWidth: images.frameSizes.shotgun.width,
+      frameHeight: images.frameSizes.shotgun.height,
       margin: 0,
       spacing: 0,
     });
     this.load.spritesheet(images.hudMenuBorder, images.files.hudMenuBorder, {
-      frameWidth: 66,
-      frameHeight: 20,
+      frameWidth: images.frameSizes.hudMenuBorder.width,
+      frameHeight: images.frameSizes.hudMenuBorder.height,
       margin: 0,
       spacing: 0,
     });

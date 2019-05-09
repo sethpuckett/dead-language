@@ -90,4 +90,22 @@ export default {
     bottle1: 1.5,
     shotgun: 4,
   },
+  frameSizes: {
+    zombie: {
+      width: 25,
+      height: 25,
+    },
+    shotBlast: {
+      width: 32,
+      height: 32,
+    },
+    shotgun: {
+      width: 21,
+      height: 10,
+    },
+    hudMenuBorder: {
+      width: 66,
+      height: 20,
+    },
+  },
 };
