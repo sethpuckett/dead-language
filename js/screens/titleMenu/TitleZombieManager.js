@@ -4,7 +4,7 @@ import { animationHelper } from '../../util';
 
 const ZOMBIE_FRONT_IMAGE_SCALE = 3;
 const ZOMBIE_BACK_IMAGE_SCALE = 1.7;
-const SPAWN_X = -35;
+const SPAWN_X = -200;
 const SPEED_MODIFIER = 1000000;
 const ZOMBIE_IMAGES = [
   images.grayZombie,
