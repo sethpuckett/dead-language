@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { animations, loading, debug, screens, images, fonts } from '../config';
 import loadingUiHelper from './ui/loadingUiHelper';
-import animationHelper from '../util/animationHelper';
+import { animationHelper } from '../util';
 
 export default class extends Phaser.Scene {
   constructor() {

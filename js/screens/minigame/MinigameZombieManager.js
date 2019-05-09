@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { animations, depth, images, minigame, fonts, hud } from '../../config';
-import animationHelper from '../../util/animationHelper';
+import { animationHelper } from '../../util';
 
 const ZOMBIE_IMAGE_SCALE = 2.5;
 const SPAWN_Y = -35;

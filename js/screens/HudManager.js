@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import hudUiHelper from './ui/hudUiHelper';
-import { depth, minigame, images, fonts, hud } from '../config';
-import keyboardHelper from '../util/keyboardHelper';
+import { depth, images, fonts, hud } from '../config';
+import { keyboardHelper } from '../util';
 
 export default class {
   constructor(scene) {

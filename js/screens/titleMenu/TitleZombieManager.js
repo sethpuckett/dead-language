@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { animations, depth, images } from '../../config';
-import animationHelper from '../../util/animationHelper';
+import { animationHelper } from '../../util';
 
 const ZOMBIE_FRONT_IMAGE_SCALE = 3;
 const ZOMBIE_BACK_IMAGE_SCALE = 1.7;

@@ -4,6 +4,7 @@ import { fonts, images, vocabStudy, game, screens, hud } from '../config';
 import vocabStudyUiHelper from './ui/vocabStudyUiHelper';
 import VocabWordManager from '../languageContent/VocabWordManager';
 import HudManager from './HudManager';
+import { util } from '../util';
 
 const BIG_FONT_MAX_LENGTH = 24;
 const DOT_COUNT_MODIFIER = 33;
@@ -67,8 +68,9 @@ export default class extends Phaser.Scene {
     this.language1Group = this.add.group();
     this.language2Group = this.add.group();
     this.dotsGroup = this.add.group();
-
-    this.vocab.content.forEach((c, i) => {
+    const vocabContent = [...this.vocab.content];
+    util.shuffleArray(vocabContent);
+    vocabContent.forEach((c, i) => {
       const textLength = c.language1.length + c.language2.length;
       const fontSize = textLength <= BIG_FONT_MAX_LENGTH
         ? vocabStudy.fonts.vocabSize : vocabStudy.fonts.vocabSizeSmall;
