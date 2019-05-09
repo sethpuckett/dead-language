@@ -29,6 +29,6 @@ export default {
     },
   },
   statusMessages: {
-    damage: 'Cerebros\nricos!',
+    damage: ['Cerebros', 'ricos!'],
   },
 };

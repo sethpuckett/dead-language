@@ -4,7 +4,7 @@ import { depth, minigame, levels, images, screens } from '../../config';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
 import MinigameSpawnManager from './MinigameSpawnManager';
-import MinigameStatusManager from './MinigameStatusManager';
+import HudStatusManager from '../HudStatusManager';
 import HudManager from '../HudManager';
 
 // let firestore = firebase.firestore()
@@ -25,7 +25,7 @@ export default class extends Phaser.Scene {
     this.vocab = new VocabWordManager(vocab.words);
     this.zombieManager = new MinigameZombieManager(this, this.vocab);
     this.spawnManager = new MinigameSpawnManager(this, this.currentLevel.waves, this.vocab);
-    this.statusManager = new MinigameStatusManager(this);
+    this.statusManager = new HudStatusManager(this);
     this.hudManager = new HudManager(this);
     this.score = 0;
     this.health = this.currentLevel.startHealth;
@@ -104,7 +104,11 @@ export default class extends Phaser.Scene {
   changeHealth(amount) {
     if (amount < 0) {
       this.cameraDamageEffect();
-      this.statusManager.damageStatus();
+      this.statusManager.setStatus({
+        image: images.zombieFace,
+        message: minigame.statusMessages.damage,
+        displayTime: minigame.statusTime,
+      });
     }
 
     this.health += amount;

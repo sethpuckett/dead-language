@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
 import vocab from '../vocab';
-import { fonts, images, vocabStudy, game, screens, hud } from '../config';
+import { fonts, images, vocabStudy, game, screens } from '../config';
 import vocabStudyUiHelper from './ui/vocabStudyUiHelper';
 import VocabWordManager from '../languageContent/VocabWordManager';
 import HudManager from './HudManager';
+import HudStatusManager from './HudStatusManager';
 import { util } from '../util';
 
 const BIG_FONT_MAX_LENGTH = 24;
@@ -24,6 +25,7 @@ export default class extends Phaser.Scene {
     this.ui = vocabStudyUiHelper(this.sys.game.config);
     this.vocab = new VocabWordManager(vocab.words);
     this.hudManager = new HudManager(this);
+    this.statusManager = new HudStatusManager(this);
     this.selectedOption = RETURN_TO_TITLE;
   }
 
@@ -214,15 +216,7 @@ export default class extends Phaser.Scene {
   }
 
   createStatus() {
-    this.statusText = this.add.bitmapText(
-      this.ui.statusMessageX,
-      this.ui.statusMessageY,
-      fonts.blueSkyWhite,
-      ['Arrows to move', 'Space/Enter to choose'],
-      hud.fonts.statusSizeSmall
-    );
-    this.statusText.setOrigin(this.ui.statusMessageOriginX, this.ui.statusMessageOriginY);
-    this.statusText.setCenterAlign();
+    this.statusManager.setStatus({ message: ['Arrows to move', 'Space/Enter to choose'] });
   }
 
   updateSelection() {

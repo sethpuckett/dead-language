@@ -105,16 +105,21 @@ export default (config) => {
     statusImageHeight: u.w_10p,
     statusImageOriginX: u.center,
     statusImageOriginY: u.center,
+
     get statusMessageX() {
       const imgRight = this.statusImageX + this.statusImageWidth / 2;
       return imgRight + (u.w - imgRight) / 2;
     },
     get statusMessageY() { return u.h - this.hudHeight / 2; },
-    get statusMessageWidth() {
-      return this.statusImageX + this.statusImageWidth / 2 + u.paddingBig;
+    get statusMessageMaxWidth() {
+      return this.messageBorderWidth - this.statusImageWidth - u.padding * 3;
     },
     statusMessageHeight: u.hudHeight,
     statusMessageOriginX: u.center,
     statusMessageOriginY: u.center,
+
+    get statusMessageNoImageX() { return this.messageBorderX + this.messageBorderWidth / 2; },
+    get statusMessageNoImageY() { return this.messageBorderY + this.messageBorderHeight / 2; },
+    get statusMessageNoImageMaxWidth() { return this.messageBorderWidth - u.padding * 2; },
   };
 };

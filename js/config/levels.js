@@ -29,7 +29,7 @@ export default [
     ],
     maxHealth: 20,
     startHealth: 20,
-    baseFallSpeed: 75,
+    baseFallSpeed: 175,
     fallRange: 10,
     gameTime: 180,
   },
