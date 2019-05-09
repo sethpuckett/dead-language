@@ -8,7 +8,7 @@ import HudStatusManager from './HudStatusManager';
 import { util } from '../util';
 
 const BIG_FONT_MAX_LENGTH = 24;
-const DOT_COUNT_MODIFIER = 33;
+const DOT_COUNT_MODIFIER = 27;
 
 const HIDE_LANGUAGE_1 = 1;
 const HIDE_LANGUAGE_2 = 2;
@@ -73,7 +73,7 @@ export default class extends Phaser.Scene {
     const vocabContent = [...this.vocab.content];
     util.shuffleArray(vocabContent);
     vocabContent.forEach((c, i) => {
-      const textLength = c.language1.length + c.language2.length;
+      const textLength = c.language1.length + this.vocab.l2WithGender(c).length;
       const fontSize = textLength <= BIG_FONT_MAX_LENGTH
         ? vocabStudy.fonts.vocabSize : vocabStudy.fonts.vocabSizeSmall;
       const dotCount = Math.ceil(Math.max(DOT_COUNT_MODIFIER - textLength, 0) / 5);
@@ -104,7 +104,7 @@ export default class extends Phaser.Scene {
         vocab2X,
         this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset),
         fonts.blueSkyWhite,
-        c.language2,
+        this.vocab.l2WithGender(c),
         fontSize
       );
       l2.setOrigin(this.ui.vocab2OriginX, this.ui.vocab2OriginY);

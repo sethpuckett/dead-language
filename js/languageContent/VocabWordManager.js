@@ -30,6 +30,14 @@ export default class {
     this.returnedContent.push(this.reservedContent.splice(index, 1)[0]);
   }
 
+  // word with gender in parenthesis
+  l2WithGender(word) {
+    if (word.gender != null) {
+      return `${word.language2}(${word.gender})`;
+    }
+    return word.language2;
+  }
+
   // Private
 
   // Move returned content to available content
