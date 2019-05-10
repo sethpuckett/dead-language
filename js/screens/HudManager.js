@@ -21,11 +21,10 @@ export default class {
     message: bool,
     textInput: bool,
     hudBuffer: bool,
+    handleInput: bool,
   }
   */
   createHud(config) {
-    this.createInput();
-
     const ui = hudUiHelper(this.scene.sys.game.config);
     this.hudHeight = ui.hudHeight;
     this.hudBufferHeight = ui.hudBufferHeight;
@@ -145,6 +144,13 @@ export default class {
       this.scene.textEntry.setOrigin(ui.textEntryOriginX, ui.textEntryOriginY);
       this.scene.textEntry.setDepth(depth.hud.entryText);
     }
+
+    if (config.handleInput) {
+      this.inputHandled = true;
+      this.createInput();
+    } else {
+      this.inputHandled = false;
+    }
   }
 
   getHudHeight() {
@@ -182,6 +188,21 @@ export default class {
       } else {
         this.scene.healthBars[i].setFrame(images.frames.healthEmpty);
       }
+    }
+  }
+
+  enableInputHandling() {
+    if (!this.inputHandled) {
+      this.inputHandled = true;
+      this.createInput();
+    }
+  }
+
+  disableInputHandling() {
+    if (this.inputHandled) {
+      this.inputHandled = false;
+      this.keys = null;
+      this.scene.input.keyboard.off('keydown', this.handleKeyDown);
     }
   }
 

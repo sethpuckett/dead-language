@@ -26,6 +26,7 @@ export default {
       message: true,
       textInput: true,
       hudBuffer: true,
+      handleInput: true,
     },
   },
   statusMessages: {

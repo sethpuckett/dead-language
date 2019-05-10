@@ -4,7 +4,7 @@ import Boot from './screens/Boot';
 import Loading from './screens/Loading';
 import TitleMenu from './screens/titleMenu/TitleMenu';
 import Endgame from './screens/Endgame';
-import VocabStudy from './screens/VocabStudy';
+import VocabStudy from './screens/vocabStudy/VocabStudy';
 
 const config = {
   type: Phaser.AUTO,

@@ -20,6 +20,7 @@ export default {
       message: true,
       textInput: false,
       hudBuffer: true,
+      handleInput: false,
     },
   },
 };
