@@ -24,6 +24,7 @@ export default class {
     this.showAll = callbackConfig.showAll;
     this.startTargetPractice = callbackConfig.startTargetPractice;
     this.returnToTitle = callbackConfig.returnToTitle;
+    this.inputHandled = true;
 
     this.ui = vocabStudyUiHelper(this.scene.sys.game.config);
     this.selectedOption = RETURN_TO_TITLE;
@@ -31,6 +32,8 @@ export default class {
 
   createMenu() {
     this.createInput();
+
+    this.menuSprites = this.scene.add.group();
 
     this.option1 = this.scene.add.sprite(
       this.ui.menuOption1X,
@@ -40,6 +43,7 @@ export default class {
     this.option1.displayWidth = this.ui.menuOptionWidth;
     this.option1.displayHeight = this.ui.menuOptionHeight;
     this.option1.setOrigin(this.ui.menuOptionOriginX, this.ui.menuOptionOriginY);
+    this.menuSprites.add(this.option1);
 
     this.option2 = this.scene.add.sprite(
       this.ui.menuOption2X,
@@ -49,6 +53,7 @@ export default class {
     this.option2.displayWidth = this.ui.menuOptionWidth;
     this.option2.displayHeight = this.ui.menuOptionHeight;
     this.option2.setOrigin(this.ui.menuOptionOriginX, this.ui.menuOptionOriginY);
+    this.menuSprites.add(this.option2);
 
     this.option3 = this.scene.add.sprite(
       this.ui.menuOption3X,
@@ -58,6 +63,7 @@ export default class {
     this.option3.displayWidth = this.ui.menuOptionWidth;
     this.option3.displayHeight = this.ui.menuOptionHeight;
     this.option3.setOrigin(this.ui.menuOptionOriginX, this.ui.menuOptionOriginY);
+    this.menuSprites.add(this.option3);
 
     this.option4 = this.scene.add.sprite(
       this.ui.menuOption4X,
@@ -67,6 +73,7 @@ export default class {
     this.option4.displayWidth = this.ui.menuOptionWidth;
     this.option4.displayHeight = this.ui.menuOptionHeight;
     this.option4.setOrigin(this.ui.menuOptionOriginX, this.ui.menuOptionOriginY);
+    this.menuSprites.add(this.option4);
 
     this.option5 = this.scene.add.sprite(
       this.ui.menuOption5X,
@@ -76,6 +83,7 @@ export default class {
     this.option5.displayWidth = this.ui.menuOptionWidth;
     this.option5.displayHeight = this.ui.menuOptionHeight;
     this.option5.setOrigin(this.ui.menuOptionOriginX, this.ui.menuOptionOriginY);
+    this.menuSprites.add(this.option5);
 
     this.option1Text = this.scene.add.bitmapText(
       this.ui.menuOption1TextX,
@@ -85,6 +93,7 @@ export default class {
       vocabStudy.fonts.menuOptionSize
     );
     this.option1Text.setOrigin(this.ui.menuOptionTextOrigin);
+    this.menuSprites.add(this.option1Text);
 
     this.option2Text = this.scene.add.bitmapText(
       this.ui.menuOption2TextX,
@@ -94,6 +103,7 @@ export default class {
       vocabStudy.fonts.menuOptionSize
     );
     this.option2Text.setOrigin(this.ui.menuOptionTextOrigin);
+    this.menuSprites.add(this.option2Text);
 
     this.option3Text = this.scene.add.bitmapText(
       this.ui.menuOption3TextX,
@@ -103,6 +113,7 @@ export default class {
       vocabStudy.fonts.menuOptionSize
     );
     this.option3Text.setOrigin(this.ui.menuOptionTextOrigin);
+    this.menuSprites.add(this.option3Text);
 
     this.option4Text = this.scene.add.bitmapText(
       this.ui.menuOption4TextX,
@@ -112,6 +123,7 @@ export default class {
       vocabStudy.fonts.menuOptionSize
     );
     this.option4Text.setOrigin(this.ui.menuOptionTextOrigin);
+    this.menuSprites.add(this.option4Text);
 
     this.option5Text = this.scene.add.bitmapText(
       this.ui.menuOption5TextX,
@@ -121,6 +133,7 @@ export default class {
       vocabStudy.fonts.menuOptionSize
     );
     this.option5Text.setOrigin(this.ui.menuOptionTextOrigin);
+    this.menuSprites.add(this.option5Text);
 
     this.updateSelection();
   }
@@ -158,6 +171,31 @@ export default class {
       this.startTargetPractice.call(this.scene);
     }
   }
+
+  enableInputHandling() {
+    if (!this.inputHandled) {
+      this.inputHandled = true;
+      this.createInput();
+    }
+  }
+
+  disableInputHandling() {
+    if (this.inputHandled) {
+      this.inputHandled = false;
+      this.keys = null;
+      this.scene.input.keyboard.off('keydown', this.handleKeyDown);
+    }
+  }
+
+  showMenu() {
+    this.menuSprites.getChildren().forEach((s) => { s.visible = true; });
+  }
+
+  hideMenu() {
+    this.menuSprites.getChildren().forEach((s) => { s.visible = false; });
+  }
+
+  // Private
 
   createInput() {
     this.keys = this.scene.input.keyboard.addKeys(

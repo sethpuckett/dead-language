@@ -6,6 +6,9 @@ import { keyboardHelper } from '../util';
 export default class {
   constructor(scene) {
     this.scene = scene;
+
+    this.ui = hudUiHelper(this.scene.sys.game.config);
+    this.textInputShown = false;
   }
 
   /*
@@ -25,104 +28,115 @@ export default class {
   }
   */
   createHud(config) {
-    const ui = hudUiHelper(this.scene.sys.game.config);
-    this.hudHeight = ui.hudHeight;
-    this.hudBufferHeight = ui.hudBufferHeight;
+    this.hudHeight = this.ui.hudHeight;
+    this.hudBufferHeight = this.ui.hudBufferHeight;
     this.maxHealth = config.maxHealth;
 
     if (config.weapon) {
       this.scene.weaponBorder = this.scene.add.sprite(
-        ui.weaponBorderX, ui.weaponBorderY, images.hudItemBorder
+        this.ui.weaponBorderX, this.ui.weaponBorderY, images.hudItemBorder
       );
-      this.scene.weaponBorder.displayWidth = ui.weaponBorderWidth;
-      this.scene.weaponBorder.displayHeight = ui.weaponBorderWidth;
-      this.scene.weaponBorder.setOrigin(ui.weaponBorderOriginX, ui.weaponBorderOriginY);
+      this.scene.weaponBorder.displayWidth = this.ui.weaponBorderWidth;
+      this.scene.weaponBorder.displayHeight = this.ui.weaponBorderWidth;
+      this.scene.weaponBorder.setOrigin(this.ui.weaponBorderOriginX, this.ui.weaponBorderOriginY);
       this.scene.weaponBorder.setDepth(depth.hud.ui);
     }
 
     if (config.item) {
       this.scene.itemBorder = this.scene.add.sprite(
-        ui.itemBorderX, ui.itemBorderY, images.hudItemBorder
+        this.ui.itemBorderX, this.ui.itemBorderY, images.hudItemBorder
       );
-      this.scene.itemBorder.displayWidth = ui.itemBorderWidth;
-      this.scene.itemBorder.displayHeight = ui.itemBorderWidth;
-      this.scene.itemBorder.setOrigin(ui.itemBorderOriginX, ui.itemBorderOriginY);
+      this.scene.itemBorder.displayWidth = this.ui.itemBorderWidth;
+      this.scene.itemBorder.displayHeight = this.ui.itemBorderWidth;
+      this.scene.itemBorder.setOrigin(this.ui.itemBorderOriginX, this.ui.itemBorderOriginY);
       this.scene.itemBorder.setDepth(depth.hud.ui);
     }
 
     if (config.health) {
-      this.scene.healthIcon = this.scene.add.sprite(ui.healthIconX, ui.healthIconY, images.heart);
-      this.scene.healthIcon.displayWidth = ui.healthIconWidth;
-      this.scene.healthIcon.displayHeight = ui.healthIconWidth;
-      this.scene.healthIcon.setOrigin(ui.healthIconOriginX, ui.healthIconOriginY);
+      this.scene.healthIcon = this.scene.add.sprite(
+        this.ui.healthIconX, this.ui.healthIconY, images.heart
+      );
+      this.scene.healthIcon.displayWidth = this.ui.healthIconWidth;
+      this.scene.healthIcon.displayHeight = this.ui.healthIconWidth;
+      this.scene.healthIcon.setOrigin(this.ui.healthIconOriginX, this.ui.healthIconOriginY);
       this.scene.healthIcon.setDepth(depth.hud.ui);
       this.scene.healthBars = [];
       for (let i = 0; i < config.maxHealth; i += 1) {
         const prev = i !== 0 ? this.scene.healthBars[i - 1] : this.scene.healthIcon;
-        const bar = this.scene.add.sprite(ui.healthValueX(prev), ui.healthValueY, images.health, 0);
-        bar.displayWidth = ui.healthValueWidth;
-        bar.displayHeight = ui.healthValueHeight;
-        bar.setOrigin(ui.healthValueOriginX, ui.healthValueOriginY);
+        const bar = this.scene.add.sprite(
+          this.ui.healthValueX(prev), this.ui.healthValueY, images.health, 0
+        );
+        bar.displayWidth = this.ui.healthValueWidth;
+        bar.displayHeight = this.ui.healthValueHeight;
+        bar.setOrigin(this.ui.healthValueOriginX, this.ui.healthValueOriginY);
         bar.setDepth(depth.hud.ui);
         this.scene.healthBars.push(bar);
       }
     }
 
     if (config.kills) {
-      this.scene.killIcon = this.scene.add.sprite(ui.killIconX, ui.killIconY, images.skull);
-      this.scene.killIcon.displayWidth = ui.killIconWidth;
-      this.scene.killIcon.displayHeight = ui.killIconWidth;
-      this.scene.killIcon.setOrigin(ui.killIconOriginX, ui.killIconOriginY);
+      this.scene.killIcon = this.scene.add.sprite(
+        this.ui.killIconX, this.ui.killIconY, images.skull
+      );
+      this.scene.killIcon.displayWidth = this.ui.killIconWidth;
+      this.scene.killIcon.displayHeight = this.ui.killIconWidth;
+      this.scene.killIcon.setOrigin(this.ui.killIconOriginX, this.ui.killIconOriginY);
       this.scene.killIcon.setDepth(depth.hud.ui);
       this.scene.killValue = this.scene.add.bitmapText(
-        ui.killValueX, ui.killValueY, fonts.blueSkyWhite, '000', hud.fonts.killSize
+        this.ui.killValueX, this.ui.killValueY, fonts.blueSkyWhite, '000', hud.fonts.killSize
       );
-      this.scene.killValue.setOrigin(ui.killValueOriginX, ui.killValueOriginY);
+      this.scene.killValue.setOrigin(this.ui.killValueOriginX, this.ui.killValueOriginY);
       this.scene.killValue.setDepth(depth.hud.ui);
     }
 
     if (config.cash) {
-      this.scene.cashIcon = this.scene.add.sprite(ui.cashIconX, ui.cashIconY, images.goldCoin);
-      this.scene.cashIcon.displayWidth = ui.cashIconWidth;
-      this.scene.cashIcon.displayHeight = ui.cashIconWidth;
-      this.scene.cashIcon.setOrigin(ui.cashIconOriginX, ui.cashIconOriginY);
+      this.scene.cashIcon = this.scene.add.sprite(
+        this.ui.cashIconX, this.ui.cashIconY, images.goldCoin
+      );
+      this.scene.cashIcon.displayWidth = this.ui.cashIconWidth;
+      this.scene.cashIcon.displayHeight = this.ui.cashIconWidth;
+      this.scene.cashIcon.setOrigin(this.ui.cashIconOriginX, this.ui.cashIconOriginY);
       this.scene.cashIcon.setDepth(depth.hud.ui);
       this.scene.cashValue = this.scene.add.bitmapText(
-        ui.cashValueX, ui.cashValueY, fonts.blueSkyWhite, '$100', hud.fonts.cashSize
+        this.ui.cashValueX, this.ui.cashValueY, fonts.blueSkyWhite, '$100', hud.fonts.cashSize
       );
-      this.scene.cashValue.setOrigin(ui.cashValueOriginX, ui.cashValueOriginY);
+      this.scene.cashValue.setOrigin(this.ui.cashValueOriginX, this.ui.cashValueOriginY);
       this.scene.cashValue.setDepth(depth.hud.ui);
     }
 
     if (config.timer) {
-      this.scene.timerIcon = this.scene.add.sprite(ui.timerIconX, ui.timerIconY, images.watch);
-      this.scene.timerIcon.displayWidth = ui.timerIconWidth;
-      this.scene.timerIcon.displayHeight = ui.timerIconWidth;
-      this.scene.timerIcon.setOrigin(ui.timerIconOriginX, ui.timerIconOriginY);
+      this.scene.timerIcon = this.scene.add.sprite(
+        this.ui.timerIconX, this.ui.timerIconY, images.watch
+      );
+      this.scene.timerIcon.displayWidth = this.ui.timerIconWidth;
+      this.scene.timerIcon.displayHeight = this.ui.timerIconWidth;
+      this.scene.timerIcon.setOrigin(this.ui.timerIconOriginX, this.ui.timerIconOriginY);
       this.scene.timerIcon.setDepth(depth.hud.ui);
       this.scene.timerValue = this.scene.add.bitmapText(
-        ui.timerValueX, ui.timerValueY, fonts.blueSkyWhite, '', hud.fonts.timerSize
+        this.ui.timerValueX, this.ui.timerValueY, fonts.blueSkyWhite, '', hud.fonts.timerSize
       );
-      this.scene.timerValue.setOrigin(ui.timerValueOriginX, ui.timerValueOriginY);
+      this.scene.timerValue.setOrigin(this.ui.timerValueOriginX, this.ui.timerValueOriginY);
       this.scene.timerValue.setDepth(depth.hud.ui);
     }
 
     if (config.message) {
       this.scene.messageBorder = this.scene.add.sprite(
-        ui.messageBorderX,
-        ui.messageBorderY,
+        this.ui.messageBorderX,
+        this.ui.messageBorderY,
         images.hudMessageBorder
       );
-      this.scene.messageBorder.displayWidth = ui.messageBorderWidth;
-      this.scene.messageBorder.displayHeight = ui.messageBorderHeight;
-      this.scene.messageBorder.setOrigin(ui.messageBorderOriginX, ui.messageBorderOriginY);
+      this.scene.messageBorder.displayWidth = this.ui.messageBorderWidth;
+      this.scene.messageBorder.displayHeight = this.ui.messageBorderHeight;
+      this.scene.messageBorder.setOrigin(
+        this.ui.messageBorderOriginX, this.ui.messageBorderOriginY
+      );
       this.scene.messageBorder.setDepth(depth.hud.ui);
     }
 
     if (config.hudBuffer) {
       this.scene.brick = this.scene.add.tileSprite(
-        ui.brickX, ui.brickY,
-        ui.brickWidth, ui.brickHeight,
+        this.ui.brickX, this.ui.brickY,
+        this.ui.brickWidth, this.ui.brickHeight,
         images.brick,
       );
       this.scene.brick.setOrigin(0, 0);
@@ -130,19 +144,7 @@ export default class {
     }
 
     if (config.textInput) {
-      this.scene.textEntryGraphics = this.scene.add.graphics({
-        fillStyle: hud.ui.textEntryStyle,
-      });
-      this.scene.textEntryArea = new Phaser.Geom.Rectangle(
-        ui.textEntryAreaX, ui.textEntryAreaY, ui.textEntryAreaWidth, ui.textEntryAreaHeight
-      );
-      this.scene.textEntryGraphics.fillRectShape(this.scene.textEntryArea);
-      this.scene.textEntryGraphics.setDepth(depth.hud.ui);
-      this.scene.textEntry = this.scene.add.bitmapText(
-        ui.textEntryX, ui.textEntryY, fonts.blueSkyWhite, '', hud.fonts.textEntrySize
-      );
-      this.scene.textEntry.setOrigin(ui.textEntryOriginX, ui.textEntryOriginY);
-      this.scene.textEntry.setDepth(depth.hud.entryText);
+      this.showTextInput();
     }
 
     if (config.handleInput) {
@@ -203,6 +205,40 @@ export default class {
       this.inputHandled = false;
       this.keys = null;
       this.scene.input.keyboard.off('keydown', this.handleKeyDown);
+    }
+  }
+
+  showTextInput() {
+    if (!this.textInputShown) {
+      this.textInputShown = true;
+      this.scene.textEntryGraphics = this.scene.add.graphics({
+        fillStyle: hud.ui.textEntryStyle,
+      });
+      this.scene.textEntryArea = new Phaser.Geom.Rectangle(
+        this.ui.textEntryAreaX,
+        this.ui.textEntryAreaY,
+        this.ui.textEntryAreaWidth,
+        this.ui.textEntryAreaHeight
+      );
+      this.scene.textEntryGraphics.fillRectShape(this.scene.textEntryArea);
+      this.scene.textEntryGraphics.setDepth(depth.hud.ui);
+      this.scene.textEntry = this.scene.add.bitmapText(
+        this.ui.textEntryX, this.ui.textEntryY, fonts.blueSkyWhite, '', hud.fonts.textEntrySize
+      );
+      this.scene.textEntry.setOrigin(this.ui.textEntryOriginX, this.ui.textEntryOriginY);
+      this.scene.textEntry.setDepth(depth.hud.entryText);
+    }
+  }
+
+  hideTextInput() {
+    if (this.textInputShown) {
+      this.textInputShown = false;
+      this.scene.textEntryGraphics.destroy();
+      this.scene.textEntryGraphics = null;
+      this.scene.textEntryArea.destroy();
+      this.scene.textEntryArea = null;
+      this.scene.textEntry.destroy();
+      this.scene.textEntry = null;
     }
   }
 

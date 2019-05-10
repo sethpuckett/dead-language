@@ -10,7 +10,7 @@ const DOT_COUNT_MODIFIER = 27;
 export default class {
   constructor(scene) {
     this.scene = scene;
-    this.vocab = new VocabWordManager(vocab.words);
+    this.vocab = new VocabWordManager(vocab.words); // TODO: words should be passed in to constructor
     this.ui = vocabStudyUiHelper(this.scene.sys.game.config);
   }
 

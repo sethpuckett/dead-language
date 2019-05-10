@@ -5,6 +5,8 @@ import HudManager from '../HudManager';
 import HudStatusManager from '../HudStatusManager';
 import VocabStudyVocabManager from './VocabStudyVocabManager';
 import VocabStudyMenuManager from './VocabStudyMenuManager';
+import VocabWordManager from '../../languageContent/VocabWordManager';
+import vocab from '../../vocab';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -16,6 +18,7 @@ export default class extends Phaser.Scene {
     this.hudManager = new HudManager(this);
     this.statusManager = new HudStatusManager(this);
     this.vocabManager = new VocabStudyVocabManager(this);
+    this.vocabWordManager = new VocabWordManager(vocab.words);
     this.menuManager = new VocabStudyMenuManager(this, {
       hideLanguage1() { this.vocabManager.hideLanguage1(); },
       hideLanguage2() { this.vocabManager.hideLanguage2(); },
@@ -68,6 +71,11 @@ export default class extends Phaser.Scene {
 
   startTargetPractice() {
     this.vocabManager.hideAll();
+    this.menuManager.disableInputHandling();
+    this.menuManager.hideMenu();
+    this.hudManager.showTextInput();
+    this.hudManager.enableInputHandling();
+    this.hudManager.setSubmitCallback(this.submitAnswer);
     this.showBottle();
     this.statusManager.setStatus({ message: ['Take your time', '', 'Don\'t worry', 'about missing'] });
   }
@@ -81,6 +89,6 @@ export default class extends Phaser.Scene {
   }
 
   submitAnswer() {
-
+    this.hudManager.clearTextEntry();
   }
 }
