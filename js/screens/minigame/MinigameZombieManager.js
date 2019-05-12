@@ -11,7 +11,6 @@ const ZOMBIE_IMAGES = [
   images.greenZombie,
   images.lightGreenZombie,
 ];
-const PADDING = minigame.ui.zombieWordBgPadding;
 
 export default class {
   constructor(scene) {
@@ -34,14 +33,16 @@ export default class {
         z.text.y += distance;
         z.wordBgGraphics.clear();
         z.wordBgGraphics.fillRect(
-          z.text.x - PADDING,
-          z.text.y - PADDING,
-          z.text.width + PADDING * 2,
-          z.text.height + PADDING * 2
+          z.text.x - minigame.ui.zombieWordBgPadding,
+          z.text.y - minigame.ui.zombieWordBgPadding,
+          z.text.width + minigame.ui.zombieWordBgPadding * 2,
+          z.text.height + minigame.ui.zombieWordBgPadding * 2
         );
         z.setDepth(depth.minigame.zombie + z.y);
-        z.wordBgGraphics.setDepth(depth.minigame.zombieTextBackground + z.text.y - PADDING);
-        z.text.setDepth(depth.minigame.zombieText + z.text.y - PADDING);
+        z.wordBgGraphics.setDepth(
+          depth.minigame.zombieTextBackground + z.text.y - minigame.ui.zombieWordBgPadding
+        );
+        z.text.setDepth(depth.minigame.zombieText + z.text.y - minigame.ui.zombieWordBgPadding);
         if (Phaser.Geom.Intersects.RectangleToRectangle(z.getBounds(), this.hitArea)) {
           z.moving = false;
           z.attacking = true;
@@ -99,6 +100,7 @@ export default class {
       fonts.blueSkyWhite, zombie.word.language1,
       minigame.fonts.zombieSize
     );
+    // TODO: set center origin rather than doing the math
     zombie.text.x = spawnConfig.xPosition - zombie.text.width / 2;
     zombie.text.setDepth(depth.minigame.zombieText);
     zombie.alive = true;

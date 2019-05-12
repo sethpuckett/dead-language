@@ -23,5 +23,12 @@ export default {
     buffer: 900,
     ui: 901,
     entryText: 902,
-  }
+  },
+  vocabStudy: {
+    background: 0,
+    objects: 1,
+    bottle: 2,
+    wordBackground: 3,
+    word: 4,
+  },
 };

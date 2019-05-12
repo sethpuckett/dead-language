@@ -30,6 +30,15 @@ export default class {
     this.returnedContent.push(this.reservedContent.splice(index, 1)[0]);
   }
 
+  // move all reserved & returned content to available content
+  resetContent() {
+    this.availableContent = this.availableContent.concat(this.returnedContent);
+    this.availableContent = this.availableContent.concat(this.reservedContent);
+    this.returnedContent = [];
+    this.reservedContent = [];
+    this.availableContent.sort((w1, w2) => w1.id - w2.id);
+  }
+
   // word with gender in parenthesis
   l2WithGender(word) {
     if (word.gender != null) {

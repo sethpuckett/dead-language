@@ -29,6 +29,8 @@ export default (config) => {
 
     crateX: u.w_2,
     crateY: u.h_15p,
+    crateWidth: u.w_5p,
+    crateHeight: u.w_5p,
     crateOriginX: u.center,
     crateOriginY: u.center,
 
@@ -64,5 +66,10 @@ export default (config) => {
     get menuOption5TextX() { return this.menuOption5X + this.menuOptionWidth / 2; },
     get menuOption5TextY() { return this.menuOption5Y + this.menuOptionHeight / 2; },
     menuOptionTextOrigin: u.center,
+
+    get practiceVocabX() { return this.crateX; },
+    get practiceVocabY() { return this.crateY + this.crateHeight / 2 + u.padding; },
+    practiceVocabOriginX: u.center,
+    practiceVocabOriginY: u.top,
   };
 };

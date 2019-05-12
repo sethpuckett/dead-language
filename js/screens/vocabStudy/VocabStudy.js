@@ -1,11 +1,12 @@
 import Phaser from 'phaser';
-import { images, vocabStudy, screens } from '../../config';
+import { images, vocabStudy, screens, fonts, depth } from '../../config';
 import vocabStudyUiHelper from '../ui/vocabStudyUiHelper';
 import HudManager from '../HudManager';
 import HudStatusManager from '../HudStatusManager';
 import VocabStudyVocabManager from './VocabStudyVocabManager';
 import VocabStudyMenuManager from './VocabStudyMenuManager';
 import VocabWordManager from '../../languageContent/VocabWordManager';
+import VocabStudyTargetPracticeManager from './VocabStudyTargetPracticeManager';
 import vocab from '../../vocab';
 
 export default class extends Phaser.Scene {
@@ -16,6 +17,7 @@ export default class extends Phaser.Scene {
   init() {
     this.ui = vocabStudyUiHelper(this.sys.game.config);
     this.hudManager = new HudManager(this);
+    this.hudManager.setSubmitCallback(this.submitAnswer);
     this.statusManager = new HudStatusManager(this);
     this.vocabManager = new VocabStudyVocabManager(this);
     this.vocabWordManager = new VocabWordManager(vocab.words);
@@ -26,6 +28,8 @@ export default class extends Phaser.Scene {
       returnToTitle() { this.returnToTitle(); },
       startTargetPractice() { this.startTargetPractice(); },
     });
+    this.targetPracticeManager = new VocabStudyTargetPracticeManager(this);
+    this.inPracticeMode = false;
   }
 
   create() {
@@ -51,8 +55,81 @@ export default class extends Phaser.Scene {
       this.ui.crateY,
       images.crate
     );
+    this.crate.displayWidth = this.ui.crateWidth;
+    this.crate.displayHeight = this.ui.crateHeight;
     this.crate.setOrigin(this.ui.crateOriginX, this.ui.crateOriginY);
     this.crate.setScale(images.scales.crate);
+  }
+
+  createStatus() {
+    this.statusManager.setStatus({ message: ['Arrows to move', '', 'Space/Enter', 'to choose'] });
+  }
+
+  startTargetPractice() {
+    this.inPracticeMode = true;
+    this.vocabManager.hideAll();
+    this.menuManager.disableInputHandling();
+    this.menuManager.hideMenu();
+    this.hudManager.showTextInput();
+    this.hudManager.enableInputHandling();
+    this.enableInputHandling();
+    this.showBottle();
+    this.statusManager.setStatus({ message: ['Take your time', '', 'Don\'t worry', 'about missing'] });
+
+    this.showPracticeWord();
+  }
+
+  endTargetPractice() {
+    // TODO: something is wrong here. Still checking answer on 'enter'. Throwing error
+    this.inPracticeMode = false;
+    this.clearPracticeWord();
+    this.vocabWordManager.resetContent();
+    this.vocabManager.showAll();
+    this.menuManager.enableInputHandling();
+    this.menuManager.showMenu();
+    this.hudManager.hideTextInput();
+    this.hudManager.disableInputHandling();
+    this.disableInputHandling();
+    this.hideBottle();
+  }
+
+  clearPracticeWord() {
+    this.practiceWord = null;
+    if (this.practiceWordText != null) {
+      this.practiceWordText.destroy();
+      this.practiceWordText = null;
+    }
+    if (this.practiceWordBg != null) {
+      this.practiceWordBg.destroy();
+      this.practiceWordBg = null;
+    }
+  }
+
+  showPracticeWord() {
+    this.clearPracticeWord();
+    this.practiceWord = this.vocabWordManager.getRandomWord();
+    if (this.practiceWord == null) {
+      this.endTargetPractice();
+      return;
+    }
+    this.practiceWordText = this.add.bitmapText(
+      this.ui.practiceVocabX,
+      this.ui.practiceVocabY,
+      fonts.blueSkyWhite,
+      this.practiceWord.language1,
+      vocabStudy.fonts.practiceWordSize
+    );
+    this.practiceWordText.setOrigin(this.ui.practiceVocabOriginX, this.ui.practiceVocabOriginY);
+    this.practiceWordText.setDepth(depth.vocabStudy.word);
+    this.practiceWordBg = this.add.graphics({ fillStyle: vocabStudy.ui.practiceWordBgStyle });
+    this.practiceWordBg.setDepth(depth.vocabStudy.wordBackground);
+    this.practiceWordBg.fillRect(
+      this.practiceWordText.x
+        - (this.practiceWordText.width / 2) - vocabStudy.ui.practiceWordBgPadding,
+      this.practiceWordText.y - vocabStudy.ui.practiceWordBgPadding,
+      this.practiceWordText.width + vocabStudy.ui.practiceWordBgPadding * 2,
+      this.practiceWordText.height + vocabStudy.ui.practiceWordBgPadding * 2
+    );
   }
 
   showBottle() {
@@ -65,19 +142,11 @@ export default class extends Phaser.Scene {
     this.bottle.setScale(images.scales.bottle1);
   }
 
-  createStatus() {
-    this.statusManager.setStatus({ message: ['Arrows to move', '', 'Space/Enter', 'to choose'] });
-  }
-
-  startTargetPractice() {
-    this.vocabManager.hideAll();
-    this.menuManager.disableInputHandling();
-    this.menuManager.hideMenu();
-    this.hudManager.showTextInput();
-    this.hudManager.enableInputHandling();
-    this.hudManager.setSubmitCallback(this.submitAnswer);
-    this.showBottle();
-    this.statusManager.setStatus({ message: ['Take your time', '', 'Don\'t worry', 'about missing'] });
+  hideBottle() {
+    if (this.bottle != null) {
+      this.bottle.destroy();
+      this.bottle = null;
+    }
   }
 
   returnToTitle() {
@@ -89,6 +158,56 @@ export default class extends Phaser.Scene {
   }
 
   submitAnswer() {
+    const correct = this.isGuessCorrect();
+    if (correct) {
+      this.vocabManager.showEntryCorrect(this.practiceWord);
+      this.statusManager.setStatus({
+        message: vocabStudy.statusMessages.hit,
+        displayTime: vocabStudy.statusTime,
+      });
+    } else {
+      this.vocabManager.showEntryWrong(this.practiceWord);
+      this.statusManager.setStatus({
+        message: vocabStudy.statusMessages.miss,
+        displayTime: vocabStudy.statusTime,
+      });
+    }
     this.hudManager.clearTextEntry();
+    this.showPracticeWord();
+  }
+
+  isGuessCorrect() {
+    const guess = this.hudManager.getTextEntry().toLowerCase().trim();
+    return (guess === this.practiceWord.language2
+      || (this.practiceWord.alternatives != null
+      && this.practiceWord.alternatives.includes(guess)));
+  }
+
+  enableInputHandling() {
+    if (!this.inputHandled) {
+      this.inputHandled = true;
+      this.createInput();
+    }
+  }
+
+  disableInputHandling() {
+    if (this.inputHandled) {
+      this.inputHandled = false;
+      this.keys = null;
+      this.scene.input.keyboard.off('keydown', this.handleKeyDown);
+    }
+  }
+
+  createInput() {
+    this.keys = this.input.keyboard.addKeys(
+      'ESC'
+    );
+    this.input.keyboard.on('keydown', this.handleKeyDown, this);
+  }
+
+  handleKeyDown(e) {
+    if (e.keyCode === this.keys.ESC.keyCode && this.inPracticeMode) {
+      this.endTargetPractice();
+    }
   }
 }

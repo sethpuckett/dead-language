@@ -1,5 +1,6 @@
 export default {
   screenFadeTime: 750,
+  statusTime: 1500,
   fonts: {
     vocabSize: 11,
     vocabSizeSmall: 7,
@@ -7,8 +8,14 @@ export default {
     vocabFill: '#ffffff',
     menuOptionSize: 11,
     menuOptionFill: '#ffffff',
+    practiceWordSize: 10,
+    practiceWordFill: '#ffffff',
+    practiceWordCorrectFill: '0x22dd22',
+    practiceWordWrongFill: '0xdd2222',
   },
   ui: {
+    practiceWordBgStyle: { color: '#000000' },
+    practiceWordBgPadding: 2,
     textEntryStyle: { color: '#000000' },
     hudConfig: {
       weapon: false,
@@ -22,5 +29,9 @@ export default {
       hudBuffer: true,
       handleInput: false,
     },
+  },
+  statusMessages: {
+    hit: 'Nice shot!',
+    miss: 'Keep trying!',
   },
 };

@@ -199,7 +199,7 @@ export default class {
 
   createInput() {
     this.keys = this.scene.input.keyboard.addKeys(
-      'SPACE,ENTER,UP,DOWN,LEFT,RIGHT,TAB'
+      'SPACE,ENTER,UP,DOWN,LEFT,RIGHT,TAB,ESC'
     );
     this.scene.input.keyboard.on('keydown', this.handleKeyDown, this);
   }

@@ -18,6 +18,7 @@ export default class {
     this.language1Group = this.scene.add.group();
     this.language2Group = this.scene.add.group();
     this.dotsGroup = this.scene.add.group();
+    this.entries = [];
     const vocabContent = [...this.vocab.content];
     util.shuffleArray(vocabContent);
     vocabContent.forEach((c, i) => {
@@ -65,9 +66,47 @@ export default class {
       );
       dots.setOrigin(this.ui.dotsOriginX, this.ui.dotsOriginY);
 
+      const entry = {
+        word: c,
+        language1: l1,
+        language2: l2,
+        dots,
+      };
+
       this.language1Group.add(l1);
       this.language2Group.add(l2);
       this.dotsGroup.add(dots);
+      this.entries.push(entry);
+    });
+  }
+
+  showEntryCorrect(word) {
+    this.entries.some((entry) => {
+      if (word.id === entry.word.id) {
+        entry.language1.setTint(vocabStudy.fonts.practiceWordCorrectFill);
+        entry.language1.visible = true;
+        entry.language2.setTint(vocabStudy.fonts.practiceWordCorrectFill);
+        entry.language2.visible = true;
+        entry.dots.setTint(vocabStudy.fonts.practiceWordCorrectFill);
+        entry.dots.visible = true;
+        return true;
+      }
+      return false;
+    });
+  }
+
+  showEntryWrong(word) {
+    this.entries.some((entry) => {
+      if (word.id === entry.word.id) {
+        entry.language1.setTint(vocabStudy.fonts.practiceWordWrongFill);
+        entry.language1.visible = true;
+        entry.language2.setTint(vocabStudy.fonts.practiceWordWrongFill);
+        entry.language2.visible = true;
+        entry.dots.setTint(vocabStudy.fonts.practiceWordWrongFill);
+        entry.dots.visible = true;
+        return true;
+      }
+      return false;
     });
   }
 
