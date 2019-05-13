@@ -15,6 +15,7 @@ export default {
   brick: 'brick',
   shotBlast: 'shot-blast',
   shotBlastGreen: 'shot-blast-green',
+  shotBlastBottle: 'shot-blast-bottle',
   bloodSplatter: 'blood-splatter',
   bloodSplatter1: 'blood-splatter-1',
   bloodSplatter2: 'blood-splatter-2',
@@ -37,6 +38,11 @@ export default {
   titleScreenBgSky: 'title-screen-bg-sky',
   crate: 'crate',
   bottle1: 'bottle1',
+  bottle1Base: 'bottle1-base',
+  bottle1Piece1: 'bottle1-piece1',
+  bottle1Piece2: 'bottle1-piece2',
+  bottle1Piece3: 'bottle1-piece3',
+  bottle1Explode: 'bottle1-explode',
   shotgun: 'shotgun',
   files: {
     grayZombie: 'assets/images/zombie-gray.png',
@@ -55,6 +61,7 @@ export default {
     brick: 'assets/images/brick.png',
     shotBlast: 'assets/images/shot-blast.png',
     shotBlastGreen: 'assets/images/shot-blast-green.png',
+    shotBlastBottle: 'assets/images/shot-blast-bottle.png',
     bloodSplatter1: 'assets/images/blood-splatter-1.png',
     bloodSplatter2: 'assets/images/blood-splatter-2.png',
     bloodSplatter3: 'assets/images/blood-splatter-3.png',
@@ -75,6 +82,11 @@ export default {
     titleScreenBgSky: 'assets/images/title-screen-bg-sky.png',
     crate: 'assets/images/crate.png',
     bottle1: 'assets/images/bottle1.png',
+    bottle1Base: 'assets/images/bottle1-base.png',
+    bottle1Piece1: 'assets/images/bottle1-piece1.png',
+    bottle1Piece2: 'assets/images/bottle1-piece2.png',
+    bottle1Piece3: 'assets/images/bottle1-piece3.png',
+    bottle1Explode: 'assets/images/bottle1-explode.png',
     shotgun: 'assets/images/shotgun.png',
   },
   frames: {
@@ -106,6 +118,10 @@ export default {
     hudMenuBorder: {
       width: 66,
       height: 20,
+    },
+    bottle1Explode: {
+      width: 64,
+      height: 64,
     },
   },
 };

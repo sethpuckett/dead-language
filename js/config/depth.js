@@ -28,6 +28,7 @@ export default {
     background: 0,
     objects: 1,
     bottle: 2,
+    shotBlast: 3,
     wordBackground: 3,
     word: 4,
   },

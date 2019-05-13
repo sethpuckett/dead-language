@@ -80,6 +80,14 @@ export default class {
     });
   }
 
+  clearAllTint() {
+    this.entries.forEach((e) => {
+      e.language1.clearTint();
+      e.language2.clearTint();
+      e.dots.clearTint();
+    });
+  }
+
   showEntryCorrect(word) {
     this.entries.some((entry) => {
       if (word.id === entry.word.id) {

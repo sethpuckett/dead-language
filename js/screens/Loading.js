@@ -130,6 +130,12 @@ export default class extends Phaser.Scene {
       margin: 0,
       spacing: 0,
     });
+    this.load.spritesheet(images.shotBlastBottle, images.files.shotBlastBottle, {
+      frameWidth: images.frameSizes.shotBlast.width,
+      frameHeight: images.frameSizes.shotBlast.height,
+      margin: 0,
+      spacing: 0,
+    });
     this.load.spritesheet(images.shotgun, images.files.shotgun, {
       frameWidth: images.frameSizes.shotgun.width,
       frameHeight: images.frameSizes.shotgun.height,
@@ -139,6 +145,12 @@ export default class extends Phaser.Scene {
     this.load.spritesheet(images.hudMenuBorder, images.files.hudMenuBorder, {
       frameWidth: images.frameSizes.hudMenuBorder.width,
       frameHeight: images.frameSizes.hudMenuBorder.height,
+      margin: 0,
+      spacing: 0,
+    });
+    this.load.spritesheet(images.bottle1Explode, images.files.bottle1Explode, {
+      frameWidth: images.frameSizes.bottle1Explode.width,
+      frameHeight: images.frameSizes.bottle1Explode.height,
       margin: 0,
       spacing: 0,
     });
@@ -179,6 +191,24 @@ export default class extends Phaser.Scene {
         images.shotBlastGreen, { frames: animations.frames.shotBlastGreenExplode }
       ),
       frameRate: animations.frameRates.shotBlastGreenExplode,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: animations.shotBlastBottleExplode,
+      frames: this.anims.generateFrameNames(
+        images.shotBlastBottle, { frames: animations.frames.shotBlastBottleExplode }
+      ),
+      frameRate: animations.frameRates.shotBlastBottleExplode,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: animations.bottle1Explode,
+      frames: this.anims.generateFrameNames(
+        images.bottle1Explode, { frames: animations.frames.bottle1Explode }
+      ),
+      frameRate: animations.frameRates.bottle1Explode,
       repeat: 0,
     });
   }

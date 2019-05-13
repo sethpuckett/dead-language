@@ -35,9 +35,9 @@ export default (config) => {
     crateOriginY: u.center,
 
     bottleX: u.w_2,
-    get bottleY() { return this.crateY - (u.h * 0.0425); },
+    get bottleY() { return this.crateY - (u.h * 0.01); },
     bottleOriginX: u.center,
-    bottleOriginY: u.center,
+    bottleOriginY: u.bottom,
 
     menuOption1X: u.padding,
     menuOption1Y: u.h - hud.height + u.padding,

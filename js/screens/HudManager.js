@@ -235,7 +235,6 @@ export default class {
       this.textInputShown = false;
       this.scene.textEntryGraphics.destroy();
       this.scene.textEntryGraphics = null;
-      this.scene.textEntryArea.destroy();
       this.scene.textEntryArea = null;
       this.scene.textEntry.destroy();
       this.scene.textEntry = null;

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { images, vocabStudy, screens, fonts, depth } from '../../config';
+import { images, vocabStudy, screens, fonts, depth, animations } from '../../config';
 import vocabStudyUiHelper from '../ui/vocabStudyUiHelper';
 import HudManager from '../HudManager';
 import HudStatusManager from '../HudStatusManager';
@@ -67,6 +67,7 @@ export default class extends Phaser.Scene {
 
   startTargetPractice() {
     this.inPracticeMode = true;
+    this.vocabManager.clearAllTint();
     this.vocabManager.hideAll();
     this.menuManager.disableInputHandling();
     this.menuManager.hideMenu();
@@ -80,7 +81,6 @@ export default class extends Phaser.Scene {
   }
 
   endTargetPractice() {
-    // TODO: something is wrong here. Still checking answer on 'enter'. Throwing error
     this.inPracticeMode = false;
     this.clearPracticeWord();
     this.vocabWordManager.resetContent();
@@ -149,6 +149,34 @@ export default class extends Phaser.Scene {
     }
   }
 
+  showBottleExplode() {
+    this.explodingBottle = this.add.sprite(
+      this.ui.bottleX,
+      this.ui.bottleY,
+      images.bottle1Explode
+    );
+    this.explodingBottle.setOrigin(this.ui.bottleOriginX, this.ui.bottleOriginY);
+    this.explodingBottle.setScale(images.scales.bottle1);
+    this.explodingBottle.play(animations.bottle1Explode);
+    this.explodingBottle.on('animationcomplete', (_a, _f, s) => {
+      this.time.addEvent({ // TODO: don't nest this in animation complete
+        delay: 300, // TODO: don't hardcode this
+        callback: () => {
+          this.showPracticeWord();
+          this.showBottle();
+          s.destroy();
+        },
+        callbackScope: this,
+      });
+    }, this);
+
+    const shot = this.add.sprite(this.explodingBottle.x, this.explodingBottle.y, images.shotBlastBottleExplode);
+    shot.setDepth(depth.vocabStudy.shotBlastBottleExplode);
+    shot.setOrigin(0.5, 1);
+    shot.on('animationcomplete', (_a, _f, s) => s.destroy(), this);
+    shot.play(animations.shotBlastBottleExplode);
+  }
+
   returnToTitle() {
     this.cameras.main.fade(vocabStudy.screenFadeTime, 0, 0, 0, false, (_c, progress) => {
       if (progress === 1) {
@@ -158,6 +186,7 @@ export default class extends Phaser.Scene {
   }
 
   submitAnswer() {
+    // TODO: status message should line up with new question in timing
     const correct = this.isGuessCorrect();
     if (correct) {
       this.vocabManager.showEntryCorrect(this.practiceWord);
@@ -165,15 +194,25 @@ export default class extends Phaser.Scene {
         message: vocabStudy.statusMessages.hit,
         displayTime: vocabStudy.statusTime,
       });
+      this.clearPracticeWord();
+      this.hideBottle();
+      this.showBottleExplode();
     } else {
       this.vocabManager.showEntryWrong(this.practiceWord);
       this.statusManager.setStatus({
         message: vocabStudy.statusMessages.miss,
         displayTime: vocabStudy.statusTime,
       });
+      this.clearPracticeWord();
+      this.time.addEvent({
+        delay: 1000, // TODO: Don't hardcode
+        callback: () => {
+          this.showPracticeWord();
+        },
+        callbackScope: this,
+      });
     }
     this.hudManager.clearTextEntry();
-    this.showPracticeWord();
   }
 
   isGuessCorrect() {
@@ -194,7 +233,7 @@ export default class extends Phaser.Scene {
     if (this.inputHandled) {
       this.inputHandled = false;
       this.keys = null;
-      this.scene.input.keyboard.off('keydown', this.handleKeyDown);
+      this.input.keyboard.off('keydown', this.handleKeyDown);
     }
   }
 

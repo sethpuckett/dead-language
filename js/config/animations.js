@@ -9,6 +9,8 @@ export default {
   zombieAttack: 'zombie-attack',
   shotBlastExplode: 'shot-blast-explode',
   shotBlastGreenExplode: 'shot-blast-green-explode',
+  shotBlastBottleExplode: 'shot-blast-bottle-explode',
+  bottle1Explode: 'bottle1-explode',
   frames: {
     zombieBounce: [0, 1, 2, 3],
     zombieWalk: [6, 7, 8, 9],
@@ -20,6 +22,8 @@ export default {
     zombieAttack: [36, 36, 36, 36, 36, 37, 38],
     shotBlastExplode: [0, 1, 1, 2, 2, 3],
     shotBlastGreenExplode: [0, 1, 1, 2, 2, 3],
+    shotBlastBottleExplode: [0, 1, 1, 2, 2, 3],
+    bottle1Explode: [0, 1, 2, 3, 4, 5, 6],
   },
   frameRates: {
     zombieBounce: 8,
@@ -32,5 +36,7 @@ export default {
     zombieAttack: 10,
     shotBlastExplode: 20,
     shotBlastGreenExplode: 20,
+    shotBlastBottleExplode: 20,
+    bottle1Explode: 13,
   },
 };
