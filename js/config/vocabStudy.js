@@ -1,6 +1,6 @@
 export default {
   screenFadeTime: 750,
-  statusTime: 1500,
+  practiceWordBuffer: 1250,
   fonts: {
     vocabSize: 11,
     vocabSizeSmall: 7,

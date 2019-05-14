@@ -36,7 +36,7 @@ export default {
     zombieAttack: 10,
     shotBlastExplode: 20,
     shotBlastGreenExplode: 20,
-    shotBlastBottleExplode: 20,
+    shotBlastBottleExplode: 15,
     bottle1Explode: 13,
   },
 };

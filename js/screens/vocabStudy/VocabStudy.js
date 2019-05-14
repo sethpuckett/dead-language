@@ -112,6 +112,7 @@ export default class extends Phaser.Scene {
       this.endTargetPractice();
       return;
     }
+    this.showBottle();
     this.practiceWordText = this.add.bitmapText(
       this.ui.practiceVocabX,
       this.ui.practiceVocabY,
@@ -133,6 +134,7 @@ export default class extends Phaser.Scene {
   }
 
   showBottle() {
+    this.hideBottle();
     this.bottle = this.add.sprite(
       this.ui.bottleX,
       this.ui.bottleY,
@@ -147,9 +149,14 @@ export default class extends Phaser.Scene {
       this.bottle.destroy();
       this.bottle = null;
     }
+    if (this.explodingBottle != null) {
+      this.explodingBottle.destroy();
+      this.explodingBottle = null;
+    }
   }
 
   showBottleExplode() {
+    this.hideBottle();
     this.explodingBottle = this.add.sprite(
       this.ui.bottleX,
       this.ui.bottleY,
@@ -158,19 +165,12 @@ export default class extends Phaser.Scene {
     this.explodingBottle.setOrigin(this.ui.bottleOriginX, this.ui.bottleOriginY);
     this.explodingBottle.setScale(images.scales.bottle1);
     this.explodingBottle.play(animations.bottle1Explode);
-    this.explodingBottle.on('animationcomplete', (_a, _f, s) => {
-      this.time.addEvent({ // TODO: don't nest this in animation complete
-        delay: 300, // TODO: don't hardcode this
-        callback: () => {
-          this.showPracticeWord();
-          this.showBottle();
-          s.destroy();
-        },
-        callbackScope: this,
-      });
-    }, this);
 
-    const shot = this.add.sprite(this.explodingBottle.x, this.explodingBottle.y, images.shotBlastBottleExplode);
+    const shot = this.add.sprite(
+      this.explodingBottle.x,
+      this.explodingBottle.y,
+      images.shotBlastBottleExplode
+    );
     shot.setDepth(depth.vocabStudy.shotBlastBottleExplode);
     shot.setOrigin(0.5, 1);
     shot.on('animationcomplete', (_a, _f, s) => s.destroy(), this);
@@ -186,33 +186,32 @@ export default class extends Phaser.Scene {
   }
 
   submitAnswer() {
-    // TODO: status message should line up with new question in timing
+    if (this.practiceWord == null) {
+      return;
+    }
     const correct = this.isGuessCorrect();
     if (correct) {
       this.vocabManager.showEntryCorrect(this.practiceWord);
       this.statusManager.setStatus({
         message: vocabStudy.statusMessages.hit,
-        displayTime: vocabStudy.statusTime,
+        displayTime: vocabStudy.practiceWordBuffer,
       });
-      this.clearPracticeWord();
-      this.hideBottle();
       this.showBottleExplode();
     } else {
       this.vocabManager.showEntryWrong(this.practiceWord);
       this.statusManager.setStatus({
         message: vocabStudy.statusMessages.miss,
-        displayTime: vocabStudy.statusTime,
-      });
-      this.clearPracticeWord();
-      this.time.addEvent({
-        delay: 1000, // TODO: Don't hardcode
-        callback: () => {
-          this.showPracticeWord();
-        },
-        callbackScope: this,
+        displayTime: vocabStudy.practiceWordBuffer,
       });
     }
+
     this.hudManager.clearTextEntry();
+    this.clearPracticeWord();
+    this.time.addEvent({
+      delay: vocabStudy.practiceWordBuffer,
+      callback: () => this.showPracticeWord(),
+      callbackScope: this,
+    });
   }
 
   isGuessCorrect() {
