@@ -13,3 +13,4 @@ export { default as ui } from './ui';
 export { default as fonts } from './fonts';
 export { default as hud } from './hud';
 export { default as game } from './game';
+export { default as modal } from './modal';

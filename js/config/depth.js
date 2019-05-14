@@ -32,4 +32,10 @@ export default {
     wordBackground: 3,
     word: 4,
   },
+  modal: {
+    fade: 10000,
+    bg: 10001,
+    border: 10002,
+    text: 10003,
+  },
 };
