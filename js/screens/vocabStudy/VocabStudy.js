@@ -27,7 +27,7 @@ export default class extends Phaser.Scene {
       hideLanguage2() { this.vocabManager.hideLanguage2(); },
       showAll() { this.vocabManager.showAll(); },
       returnToTitle() { this.returnToTitle(); },
-      startTargetPractice() { this.startTargetPractice(); },
+      startTargetPractice() { this.createPracticeModal(); },
     });
     this.targetPracticeManager = new VocabStudyTargetPracticeManager(this);
     this.inPracticeMode = false;
@@ -56,6 +56,23 @@ export default class extends Phaser.Scene {
     this.modal.setCloseCallback(() => {
       this.modal.disableInputHandling();
       this.menuManager.enableInputHandling();
+    });
+  }
+
+  createPracticeModal() {
+    this.menuManager.disableInputHandling();
+    this.practiceModal = new Modal(
+      this,
+      vocabStudy.modals.practice.width,
+      vocabStudy.modals.practice.height,
+      vocabStudy.modals.practice.text
+    );
+    this.practiceModal.draw();
+    this.practiceModal.enableInputClose();
+    this.practiceModal.setCloseCallback(() => {
+      this.practiceModal.disableInputHandling();
+      this.menuManager.enableInputHandling();
+      this.startTargetPractice();
     });
   }
 
@@ -93,7 +110,7 @@ export default class extends Phaser.Scene {
     this.hudManager.enableInputHandling();
     this.enableInputHandling();
     this.showBottle();
-    this.statusManager.setStatus({ message: ['Take your time', '', 'Don\'t worry', 'about missing'] });
+    this.statusManager.setStatus({ message: vocabStudy.statusMessages.practice });
 
     this.showPracticeWord();
   }

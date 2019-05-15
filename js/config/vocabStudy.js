@@ -31,6 +31,12 @@ export default {
     },
   },
   statusMessages: {
+    practice: [
+      'Type the translation',
+      '',
+      'Enter to shoot',
+      'Esc to quit',
+    ],
     hit: 'Nice shot!',
     miss: 'Keep trying!',
   },
@@ -62,6 +68,14 @@ export default {
       ],
       width: 0.82,
       height: 0.9,
+    },
+    practice: {
+      text: [
+        'I\'ll set up the bottles, then.',
+        'Take yer time. And good luck.',
+      ],
+      width: 0.60,
+      height: 0.35,
     },
   },
 };
