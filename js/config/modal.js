@@ -6,4 +6,5 @@ export default {
   textColor: 0xffff22,
   fontSize: 12,
   flashDelay: 500,
+  pressAnyKeyText: 'PRESS ANY KEY TO CONTINUE',
 };

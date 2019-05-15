@@ -40,46 +40,23 @@ export default class extends Phaser.Scene {
     this.menuManager.createMenu();
     this.createBackground();
     this.createStatus();
+    this.createTutorialModal();
+  }
 
-    // TODO: move this
+  createTutorialModal() {
     this.menuManager.disableInputHandling();
     this.modal = new Modal(
       this,
-      this.sys.game.config.width * 0.82,
-      this.sys.game.config.height * 0.90,
-      [
-        'Welcome to target practice, friend.',
-        'You need to be prepared if yer gonna',
-        'take on those zombies.',
-        '',
-        'Here\'s how it works: The words on the sides',
-        'of the screen are the new vocab fer',
-        'this stage. Memorize \'em!',
-        '',
-        'You can use the controls at the bottom',
-        'to hide one language or the other',
-        'if it helps you study.',
-        '',
-        'When yer ready to put yer skills to the test',
-        'select \'Practice\'. I\'ll set up the bottles',
-        'and you do yer best to shoot \'em down.',
-        '',
-        'Just type the translation fer the word under',
-        'the bottle and press \'Enter\'. Don\'t worry',
-        'about time and don\'t worry about missin\'.',
-        '',
-        'And if you get tired you can stop at',
-        'any time by pressin\' \'Esc\'.',
-      ]
+      vocabStudy.modals.tutorial.width,
+      vocabStudy.modals.tutorial.height,
+      vocabStudy.modals.tutorial.text
     );
     this.modal.draw();
     this.modal.enableInputClose();
-    this.modal.setCloseCallback(this.modalClose);
-  }
-
-  modalClose() {
-    this.modal.disableInputHandling();
-    this.menuManager.enableInputHandling();
+    this.modal.setCloseCallback(() => {
+      this.modal.disableInputHandling();
+      this.menuManager.enableInputHandling();
+    });
   }
 
   createBackground() {

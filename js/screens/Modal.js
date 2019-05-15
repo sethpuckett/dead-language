@@ -2,13 +2,12 @@ import { modal, fonts, depth } from '../config';
 import modalUiHelper from './ui/modalUiHelper';
 
 export default class {
-  constructor(scene, width, height, text) {
+  constructor(scene, widthPercentage, heightPercentage, text) {
     this.scene = scene;
-    this.width = width;
-    this.height = height;
     this.text = text;
-
     this.ui = modalUiHelper(this.scene.sys.game.config);
+    this.width = this.ui.w * widthPercentage;
+    this.height = this.ui.h * heightPercentage;
   }
 
   draw() {
@@ -68,19 +67,18 @@ export default class {
       this.ui.h / 2 + this.height / 2 - this.ui.padding
         - this.ui.paddingBig - this.ui.cornerSquareWidth,
       fonts.blueSkyWhite,
-      'PRESS ANY KEY TO CONTINUE',
+      modal.pressAnyKeyText,
       modal.fontSize
     );
-    this.anyKeyText.setOrigin(0.5, 0); // TODO: move to cnofig
-    this.anyKeyText.setCenterAlign();
+    this.anyKeyText.setOrigin(this.ui.anyKeyTextOriginX, this.ui.anyKeyTextOriginY);
     this.anyKeyText.setDepth(depth.modal.text);
     this.anyKeyText.setTint(modal.textColor);
-    this.pressShown = true;
+    this.pressAnyKeyShown = true;
     this.flashTimer = this.scene.time.addEvent({
       delay: modal.flashDelay,
       callback: () => {
-        this.pressShown = !this.pressShown;
-        this.anyKeyText.visible = this.pressShown;
+        this.pressAnyKeyShown = !this.pressAnyKeyShown;
+        this.anyKeyText.visible = this.pressAnyKeyShown;
       },
       callbackScope: this,
       repeat: -1,
@@ -90,9 +88,7 @@ export default class {
   createFade() {
     this.fade = this.scene.add.graphics();
     this.fade.fillStyle(modal.fadeColor, modal.fadeAlpha);
-    this.fade.fillRect(
-      0, 0, this.ui.w, this.ui.h
-    );
+    this.fade.fillRect(0, 0, this.ui.w, this.ui.h);
     this.fade.setDepth(depth.modal.fade);
   }
 
@@ -102,8 +98,7 @@ export default class {
     this.backgroundGraphics.fillRect(
       this.ui.w / 2 - this.width / 2,
       this.ui.h / 2 - this.height / 2,
-      this.width,
-      this.height
+      this.width, this.height
     );
     this.backgroundGraphics.setDepth(depth.modal.bg);
   }
@@ -116,26 +111,22 @@ export default class {
     this.borderGraphics.fillRect(
       this.ui.w / 2 - this.width / 2 + this.ui.padding,
       this.ui.h / 2 - this.height / 2 + this.ui.padding,
-      this.ui.cornerSquareWidth,
-      this.ui.cornerSquareWidth
+      this.ui.cornerSquareWidth, this.ui.cornerSquareWidth
     );
     this.borderGraphics.fillRect(
       this.ui.w / 2 + this.width / 2 - this.ui.cornerSquareWidth - this.ui.padding,
       this.ui.h / 2 - this.height / 2 + this.ui.padding,
-      this.ui.cornerSquareWidth,
-      this.ui.cornerSquareWidth
+      this.ui.cornerSquareWidth, this.ui.cornerSquareWidth
     );
     this.borderGraphics.fillRect(
       this.ui.w / 2 - this.width / 2 + this.ui.padding,
       this.ui.h / 2 + this.height / 2 - this.ui.cornerSquareWidth - this.ui.padding,
-      this.ui.cornerSquareWidth,
-      this.ui.cornerSquareWidth
+      this.ui.cornerSquareWidth, this.ui.cornerSquareWidth
     );
     this.borderGraphics.fillRect(
       this.ui.w / 2 + this.width / 2 - this.ui.cornerSquareWidth - this.ui.padding,
       this.ui.h / 2 + this.height / 2 - this.ui.cornerSquareWidth - this.ui.padding,
-      this.ui.cornerSquareWidth,
-      this.ui.cornerSquareWidth
+      this.ui.cornerSquareWidth, this.ui.cornerSquareWidth
     );
 
     this.borderGraphics.fillRect(
@@ -172,7 +163,7 @@ export default class {
     this.text = this.scene.add.bitmapText(
       this.ui.w / 2, this.ui.h / 2, fonts.blueSkyWhite, this.text, modal.fontSize
     );
-    this.text.setOrigin(0.5);
+    this.text.setOrigin(this.ui.textOrigin);
     this.text.setCenterAlign();
     this.text.setDepth(depth.modal.text);
     this.text.setTint(modal.textColor);

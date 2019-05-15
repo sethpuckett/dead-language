@@ -10,5 +10,8 @@ export default (config) => {
     paddingBig: u.paddingBig,
     cornerSquareWidth: u.w_5p,
     borderWidth: u.w * 0.02,
+    textOrigin: u.center,
+    anyKeyTextOriginX: u.center,
+    anyKeyTextOriginY: u.top,
   };
 };
