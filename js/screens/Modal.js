@@ -1,20 +1,19 @@
+import Phaser from 'phaser';
 import { modal, fonts, depth } from '../config';
 import modalUiHelper from './ui/modalUiHelper';
 
 export default class {
-  constructor(scene, widthPercentage, heightPercentage, text) {
+  constructor(scene, text) {
     this.scene = scene;
     this.text = text;
     this.ui = modalUiHelper(this.scene.sys.game.config);
-    this.width = this.ui.w * widthPercentage;
-    this.height = this.ui.h * heightPercentage;
   }
 
   draw() {
+    this.createText();
     this.createFade();
     this.createBackground();
     this.createBorder();
-    this.createText();
   }
 
   close() {
@@ -64,8 +63,7 @@ export default class {
   createPressAnyKey() {
     this.anyKeyText = this.scene.add.bitmapText(
       this.ui.w / 2,
-      this.ui.h / 2 + this.height / 2 - this.ui.padding
-        - this.ui.paddingBig - this.ui.cornerSquareWidth,
+      this.bgRect.y + this.bgRect.height - this.ui.cornerSquareWidth,
       fonts.blueSkyWhite,
       modal.pressAnyKeyText,
       modal.fontSize
@@ -95,11 +93,14 @@ export default class {
   createBackground() {
     this.backgroundGraphics = this.scene.add.graphics();
     this.backgroundGraphics.fillStyle(modal.backgroundColor);
-    this.backgroundGraphics.fillRect(
-      this.ui.w / 2 - this.width / 2,
-      this.ui.h / 2 - this.height / 2,
-      this.width, this.height
+    const bounds = this.text.getTextBounds().global;
+    this.bgRect = new Phaser.Geom.Rectangle(
+      bounds.x - this.ui.textMargin,
+      bounds.y - this.ui.textMargin,
+      bounds.width + this.ui.textMargin * 2,
+      bounds.height + this.ui.textMargin * 2 + this.ui.bottomBuffer
     );
+    this.backgroundGraphics.fillRectShape(this.bgRect);
     this.backgroundGraphics.setDepth(depth.modal.bg);
   }
 
@@ -109,53 +110,51 @@ export default class {
     this.borderGraphics.setDepth(depth.modal.border);
 
     this.borderGraphics.fillRect(
-      this.ui.w / 2 - this.width / 2 + this.ui.padding,
-      this.ui.h / 2 - this.height / 2 + this.ui.padding,
+      this.bgRect.x + this.ui.padding,
+      this.bgRect.y + this.ui.padding,
       this.ui.cornerSquareWidth, this.ui.cornerSquareWidth
     );
     this.borderGraphics.fillRect(
-      this.ui.w / 2 + this.width / 2 - this.ui.cornerSquareWidth - this.ui.padding,
-      this.ui.h / 2 - this.height / 2 + this.ui.padding,
+      this.bgRect.x + this.bgRect.width - this.ui.cornerSquareWidth - this.ui.padding,
+      this.bgRect.y + this.ui.padding,
       this.ui.cornerSquareWidth, this.ui.cornerSquareWidth
     );
     this.borderGraphics.fillRect(
-      this.ui.w / 2 - this.width / 2 + this.ui.padding,
-      this.ui.h / 2 + this.height / 2 - this.ui.cornerSquareWidth - this.ui.padding,
+      this.bgRect.x + this.ui.padding,
+      this.bgRect.y + this.bgRect.height - this.ui.cornerSquareWidth - this.ui.padding,
       this.ui.cornerSquareWidth, this.ui.cornerSquareWidth
     );
     this.borderGraphics.fillRect(
-      this.ui.w / 2 + this.width / 2 - this.ui.cornerSquareWidth - this.ui.padding,
-      this.ui.h / 2 + this.height / 2 - this.ui.cornerSquareWidth - this.ui.padding,
+      this.bgRect.x + this.bgRect.width - this.ui.cornerSquareWidth - this.ui.padding,
+      this.bgRect.y + this.bgRect.height - this.ui.cornerSquareWidth - this.ui.padding,
       this.ui.cornerSquareWidth, this.ui.cornerSquareWidth
     );
 
     this.borderGraphics.fillRect(
-      this.ui.w / 2 - this.width / 2 + this.ui.cornerSquareWidth + this.ui.padding * 2,
-      this.ui.h / 2 - this.height / 2 + this.ui.padding
-        + this.ui.cornerSquareWidth / 2 - this.ui.borderWidth / 2,
-      this.width - this.ui.cornerSquareWidth * 2 - this.ui.padding * 4,
+      this.bgRect.x + this.ui.cornerSquareWidth + this.ui.padding * 2,
+      this.bgRect.y + this.ui.padding + this.ui.cornerSquareWidth / 2 - this.ui.borderWidth / 2,
+      this.bgRect.width - this.ui.cornerSquareWidth * 2 - this.ui.padding * 4,
       this.ui.borderWidth
     );
     this.borderGraphics.fillRect(
-      this.ui.w / 2 - this.width / 2 + this.ui.cornerSquareWidth + this.ui.padding * 2,
-      this.ui.h / 2 + this.height / 2 - this.ui.padding
+      this.bgRect.x + this.ui.cornerSquareWidth + this.ui.padding * 2,
+      this.bgRect.y + this.bgRect.height - this.ui.padding
         - this.ui.cornerSquareWidth / 2 - this.ui.borderWidth / 2,
-      this.width - this.ui.cornerSquareWidth * 2 - this.ui.padding * 4,
+      this.bgRect.width - this.ui.cornerSquareWidth * 2 - this.ui.padding * 4,
       this.ui.borderWidth
     );
     this.borderGraphics.fillRect(
-      this.ui.w / 2 - this.width / 2 + this.ui.padding
-        + this.ui.cornerSquareWidth / 2 - this.ui.borderWidth / 2,
-      this.ui.h / 2 - this.height / 2 + this.ui.cornerSquareWidth + this.ui.padding * 2,
+      this.bgRect.x + this.ui.padding + this.ui.cornerSquareWidth / 2 - this.ui.borderWidth / 2,
+      this.bgRect.y + this.ui.cornerSquareWidth + this.ui.padding * 2,
       this.ui.borderWidth,
-      this.height - this.ui.cornerSquareWidth * 2 - this.ui.padding * 4
+      this.bgRect.height - this.ui.cornerSquareWidth * 2 - this.ui.padding * 4
     );
     this.borderGraphics.fillRect(
-      this.ui.w / 2 + this.width / 2 - this.ui.padding
+      this.bgRect.x + this.bgRect.width - this.ui.padding
         - this.ui.cornerSquareWidth / 2 - this.ui.borderWidth / 2,
-      this.ui.h / 2 - this.height / 2 + this.ui.cornerSquareWidth + this.ui.padding * 2,
+      this.bgRect.y + this.ui.cornerSquareWidth + this.ui.padding * 2,
       this.ui.borderWidth,
-      this.height - this.ui.cornerSquareWidth * 2 - this.ui.padding * 4
+      this.bgRect.height - this.ui.cornerSquareWidth * 2 - this.ui.padding * 4
     );
   }
 

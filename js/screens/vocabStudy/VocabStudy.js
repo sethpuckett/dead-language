@@ -45,12 +45,7 @@ export default class extends Phaser.Scene {
 
   createTutorialModal() {
     this.menuManager.disableInputHandling();
-    this.modal = new Modal(
-      this,
-      vocabStudy.modals.tutorial.width,
-      vocabStudy.modals.tutorial.height,
-      vocabStudy.modals.tutorial.text
-    );
+    this.modal = new Modal(this, vocabStudy.modals.tutorial.text);
     this.modal.draw();
     this.modal.enableInputClose();
     this.modal.setCloseCallback(() => {
@@ -61,12 +56,7 @@ export default class extends Phaser.Scene {
 
   createPracticeModal() {
     this.menuManager.disableInputHandling();
-    this.practiceModal = new Modal(
-      this,
-      vocabStudy.modals.practice.width,
-      vocabStudy.modals.practice.height,
-      vocabStudy.modals.practice.text
-    );
+    this.practiceModal = new Modal(this, vocabStudy.modals.practice.text);
     this.practiceModal.draw();
     this.practiceModal.enableInputClose();
     this.practiceModal.setCloseCallback(() => {

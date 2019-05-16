@@ -95,12 +95,7 @@ export default class extends Phaser.Scene {
 
   createStartModal() {
     this.hudManager.disableInputHandling();
-    this.modal = new Modal(
-      this,
-      minigame.modals.start.width,
-      minigame.modals.start.height,
-      minigame.modals.start.text
-    );
+    this.modal = new Modal(this, minigame.modals.start.text);
     this.modal.draw();
     this.modal.enableInputClose();
     this.modal.setCloseCallback(() => {
