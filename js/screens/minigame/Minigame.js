@@ -6,6 +6,7 @@ import MinigameZombieManager from './MinigameZombieManager';
 import MinigameSpawnManager from './MinigameSpawnManager';
 import HudStatusManager from '../HudStatusManager';
 import HudManager from '../HudManager';
+import Modal from '../Modal';
 
 // let firestore = firebase.firestore()
 // const lessonRef =
@@ -41,8 +42,7 @@ export default class extends Phaser.Scene {
     this.createBackground();
     this.createCollisions();
     this.createTimers();
-
-    this.startGame();
+    this.createStartModal();
   }
 
   update(_time, delta) {
@@ -90,6 +90,23 @@ export default class extends Phaser.Scene {
       callback: this.gameTimerFinish,
       callbackScope: this,
       paused: true,
+    });
+  }
+
+  createStartModal() {
+    this.hudManager.disableInputHandling();
+    this.modal = new Modal(
+      this,
+      minigame.modals.start.width,
+      minigame.modals.start.height,
+      minigame.modals.start.text
+    );
+    this.modal.draw();
+    this.modal.enableInputClose();
+    this.modal.setCloseCallback(() => {
+      this.modal.disableInputHandling();
+      this.hudManager.enableInputHandling();
+      this.startGame();
     });
   }
 

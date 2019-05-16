@@ -32,4 +32,25 @@ export default {
   statusMessages: {
     damage: ['Cerebros', 'ricos!'],
   },
+  modals: {
+    start: {
+      text: [
+        'Those zombies will be here any second!',
+        '',
+        'Try to stay calm when you see \'em.',
+        'Just focus on the vocab next to each one.',
+        'Type the translation and press \'Enter\'',
+        'to take \'em out.',
+        '',
+        'But don\'t dawdle! If a zombie gets through',
+        'they\'ll attack. Take too many hits and',
+        'yer toast. You just need to survive until',
+        'the timer reaches 0.',
+        '',
+        'Uh oh! Here they come! Look out!',
+      ],
+      width: 0.8,
+      height: 0.65,
+    },
+  },
 };
