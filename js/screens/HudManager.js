@@ -34,7 +34,10 @@ export default class {
 
     if (config.weapon) {
       this.scene.weaponBorder = this.scene.add.sprite(
-        this.ui.weaponBorderX, this.ui.weaponBorderY, images.hudItemBorder
+        this.ui.weaponBorderX,
+        this.ui.weaponBorderY,
+        images.hudItemBorder,
+        images.frames.hudItemDark
       );
       this.scene.weaponBorder.displayWidth = this.ui.weaponBorderWidth;
       this.scene.weaponBorder.displayHeight = this.ui.weaponBorderWidth;
@@ -44,7 +47,7 @@ export default class {
 
     if (config.item) {
       this.scene.itemBorder = this.scene.add.sprite(
-        this.ui.itemBorderX, this.ui.itemBorderY, images.hudItemBorder
+        this.ui.itemBorderX, this.ui.itemBorderY, images.hudItemBorder, images.frames.hudItemDark
       );
       this.scene.itemBorder.displayWidth = this.ui.itemBorderWidth;
       this.scene.itemBorder.displayHeight = this.ui.itemBorderWidth;
@@ -123,7 +126,8 @@ export default class {
       this.scene.messageBorder = this.scene.add.sprite(
         this.ui.messageBorderX,
         this.ui.messageBorderY,
-        images.hudMessageBorder
+        images.hudMessageBorder,
+        images.frames.hudMessageDark
       );
       this.scene.messageBorder.displayWidth = this.ui.messageBorderWidth;
       this.scene.messageBorder.displayHeight = this.ui.messageBorderHeight;

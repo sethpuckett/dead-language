@@ -71,8 +71,6 @@ export default class extends Phaser.Scene {
     this.load.image(images.goldCoin, images.files.goldCoin);
     this.load.image(images.skull, images.files.skull);
     this.load.image(images.heart, images.files.heart);
-    this.load.image(images.hudItemBorder, images.files.hudItemBorder);
-    this.load.image(images.hudMessageBorder, images.files.hudMessageBorder);
     this.load.image(images.grass, images.files.grass);
     this.load.image(images.brick, images.files.brick);
     this.load.image(images.bloodSplatter1, images.files.bloodSplatter1);
@@ -145,6 +143,18 @@ export default class extends Phaser.Scene {
     this.load.spritesheet(images.hudMenuBorder, images.files.hudMenuBorder, {
       frameWidth: images.frameSizes.hudMenuBorder.width,
       frameHeight: images.frameSizes.hudMenuBorder.height,
+      margin: 0,
+      spacing: 0,
+    });
+    this.load.spritesheet(images.hudItemBorder, images.files.hudItemBorder, {
+      frameWidth: images.frameSizes.hudItemBorder.width,
+      frameHeight: images.frameSizes.hudItemBorder.height,
+      margin: 0,
+      spacing: 0,
+    });
+    this.load.spritesheet(images.hudMessageBorder, images.files.hudMessageBorder, {
+      frameWidth: images.frameSizes.hudMessageBorder.width,
+      frameHeight: images.frameSizes.hudMessageBorder.height,
       margin: 0,
       spacing: 0,
     });

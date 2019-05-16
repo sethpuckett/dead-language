@@ -1,5 +1,5 @@
 import hudUiHelper from './ui/hudUiHelper';
-import { hud, fonts } from '../config';
+import { hud, fonts, images } from '../config';
 
 export default class {
   constructor(scene) {
@@ -17,6 +17,7 @@ export default class {
   setStatus(config) {
     this.clearCurrentStatus();
 
+    this.scene.messageBorder.setFrame(images.frames.hudMessageLight);
     if (config.image != null) {
       this.scene.statusImage = this.scene.add.sprite(
         this.ui.statusImageX,
@@ -57,6 +58,8 @@ export default class {
   }
 
   clearCurrentStatus() {
+    // TODO: messageBorder is defined in HudManager. using it here is messy
+    this.scene.messageBorder.setFrame(images.frames.hudMessageDark);
     if (this.scene.statusImage != null) {
       this.scene.statusImage.destroy();
       this.scene.statusImage = null;

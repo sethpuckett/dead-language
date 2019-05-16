@@ -96,6 +96,10 @@ export default {
     shotgunFiring: 1,
     hudMenuLight: 0,
     hudMenuDark: 1,
+    hudItemLight: 0,
+    hudItemDark: 1,
+    hudMessageLight: 0,
+    hudMessageDark: 1,
   },
   scales: {
     crate: 1.5,
@@ -118,6 +122,14 @@ export default {
     hudMenuBorder: {
       width: 66,
       height: 20,
+    },
+    hudItemBorder: {
+      width: 20,
+      height: 20,
+    },
+    hudMessageBorder: {
+      width: 80,
+      height: 40,
     },
     bottle1Explode: {
       width: 64,
