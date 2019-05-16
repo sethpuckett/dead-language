@@ -17,6 +17,10 @@ export default (config) => {
     textOriginY: u.top,
     textVerticalPadding: u.h_10p,
 
+    instructionsX: u.w_2,
+    instructionsY: u.h_95p,
+    instructionsOrigin: u.center,
+
     selectX: u.w_40p,
     get selectY() { return this.textY - u.h * 0.01; },
     selectOriginX: u.right,

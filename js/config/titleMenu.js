@@ -10,5 +10,8 @@ export default {
   fonts: {
     textSize: 22,
     textFill: '#ffffff',
+    instructionsSize: 12,
+    instructionsFill: '#ffffff',
   },
+  instructions: 'Use arrow keys and Spacebar to choose',
 };

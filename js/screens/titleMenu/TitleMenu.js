@@ -24,6 +24,7 @@ export default class extends Phaser.Scene {
     this.ui = titleMenuUiHelper(this.sys.game.config);
     this.createBackground();
     this.createMenu();
+    this.createInstructions();
     this.createInput();
     this.updateMenuSelection();
   }
@@ -69,6 +70,18 @@ export default class extends Phaser.Scene {
         this.startPractice();
       }
     }
+  }
+
+  createInstructions() {
+    this.instructionText = this.add.bitmapText(
+      this.ui.instructionsX,
+      this.ui.instructionsY,
+      fonts.blueSkyWhite,
+      titleMenu.instructions,
+      titleMenu.fonts.instructionsSize
+    );
+    this.instructionText.setOrigin(this.ui.instructionsOrigin);
+    this.instructionText.setDepth(depth.titleMenu.text);
   }
 
   createMenu() {
