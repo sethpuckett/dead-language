@@ -13,7 +13,7 @@ export default class extends Phaser.Scene {
     this.zombieManager = new TitleZombieManager(this);
     this.spawnManager = new TitleSpawnManager(this);
     this.menuOptions = [
-      { text: 'Start Game', key: 'start' },
+      { text: 'Start Demo', key: 'start' },
       { text: 'Target Practice', key: 'practice' },
     ];
     this.currentSelection = 0;
