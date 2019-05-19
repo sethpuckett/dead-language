@@ -16,6 +16,7 @@ export default {
   shotBlast: 'shot-blast',
   shotBlastGreen: 'shot-blast-green',
   shotBlastBottle: 'shot-blast-bottle',
+  shotBlastDirt: 'shot-blast-dirt',
   bloodSplatter: 'blood-splatter',
   bloodSplatter1: 'blood-splatter-1',
   bloodSplatter2: 'blood-splatter-2',
@@ -44,6 +45,7 @@ export default {
   bottle1Piece3: 'bottle1-piece3',
   bottle1Explode: 'bottle1-explode',
   shotgun: 'shotgun',
+  dirtPile: 'dirt-pile',
   files: {
     grayZombie: 'assets/images/zombie-gray.png',
     greenZombie: 'assets/images/zombie-green.png',
@@ -62,6 +64,7 @@ export default {
     shotBlast: 'assets/images/shot-blast.png',
     shotBlastGreen: 'assets/images/shot-blast-green.png',
     shotBlastBottle: 'assets/images/shot-blast-bottle.png',
+    shotBlastDirt: 'assets/images/shot-blast-dirt.png',
     bloodSplatter1: 'assets/images/blood-splatter-1.png',
     bloodSplatter2: 'assets/images/blood-splatter-2.png',
     bloodSplatter3: 'assets/images/blood-splatter-3.png',
@@ -88,6 +91,7 @@ export default {
     bottle1Piece3: 'assets/images/bottle1-piece3.png',
     bottle1Explode: 'assets/images/bottle1-explode.png',
     shotgun: 'assets/images/shotgun.png',
+    dirtPile: 'assets/images/dirt-pile.png',
   },
   frames: {
     healthFull: 0,
@@ -105,6 +109,7 @@ export default {
     crate: 1.5,
     bottle1: 1.5,
     shotgun: 4,
+    dirtPile: 1.5,
   },
   frameSizes: {
     zombie: {

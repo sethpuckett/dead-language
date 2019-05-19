@@ -71,5 +71,18 @@ export default (config) => {
     get practiceVocabY() { return this.crateY + this.crateHeight / 2 + u.padding; },
     practiceVocabOriginX: u.center,
     practiceVocabOriginY: u.top,
+
+    shotBlastBottleOriginX: u.center,
+    shotBlastBottleOriginY: u.bottom,
+
+    missBlastLeftMinX: u.w_35p,
+    missBlastLeftMinY: u.padding,
+    missBlastLeftMaxX: u.w_2 - u.w_5p,
+    missBlastLeftMaxY: u.h_25p,
+    missBlastRightMinX: u.w_2 + u.w_5p,
+    missBlastRightMinY: u.padding,
+    missBlastRightMaxX: u.w * 0.64,
+    missBlastRightMaxY: u.h_25p,
+    missBlastOrigin: u.center,
   };
 };

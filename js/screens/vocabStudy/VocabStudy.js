@@ -197,9 +197,30 @@ export default class extends Phaser.Scene {
       images.shotBlastBottleExplode
     );
     shot.setDepth(depth.vocabStudy.shotBlastBottleExplode);
-    shot.setOrigin(0.5, 1);
+    shot.setOrigin(this.ui.shotBlastBottleOriginX, this.ui.shotBlastBottleOriginY);
     shot.on('animationcomplete', (_a, _f, s) => s.destroy(), this);
     shot.play(animations.shotBlastBottleExplode);
+  }
+
+  showMissedShot() {
+    const left = Phaser.Math.RND.pick([true, false]);
+    let x = 0;
+    let y = 0;
+    if (left) {
+      x = Phaser.Math.RND.between(this.ui.missBlastLeftMinX, this.ui.missBlastLeftMaxX);
+      y = Phaser.Math.RND.between(this.ui.missBlastLeftMinY, this.ui.missBlastLeftMaxY);
+    } else {
+      x = Phaser.Math.RND.between(this.ui.missBlastRightMinX, this.ui.missBlastRightMaxX);
+      y = Phaser.Math.RND.between(this.ui.missBlastRightMinY, this.ui.missBlastRightMaxY);
+    }
+    const missedShot = this.add.sprite(x, y, images.shotBlastDirt);
+    missedShot.setDepth(depth.vocabStudy.shotBlast);
+    missedShot.setOrigin(this.ui.missBlastOrigin);
+    missedShot.on('animationcomplete', (_a, _f, s) => s.destroy(), this);
+    missedShot.play(animations.shotBlastDirtExplode);
+
+    // TODO: handle depth
+    this.add.sprite(x, y, images.dirtPile).setScale(images.scales.dirtPile);
   }
 
   returnToTitle() {
@@ -228,6 +249,7 @@ export default class extends Phaser.Scene {
         message: vocabStudy.statusMessages.miss,
         displayTime: vocabStudy.practiceWordBuffer,
       });
+      this.showMissedShot();
     }
 
     this.hudManager.clearTextEntry();

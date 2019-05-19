@@ -38,7 +38,10 @@ export default {
       'Esc to quit',
     ],
     hit: 'Nice shot!',
-    miss: 'Keep trying!',
+    miss: [
+      'Missed!',
+      'Try again!',
+    ],
   },
   modals: {
     tutorial: {

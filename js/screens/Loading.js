@@ -92,6 +92,7 @@ export default class extends Phaser.Scene {
     this.load.image(images.titleScreenBgSky, images.files.titleScreenBgSky);
     this.load.image(images.crate, images.files.crate);
     this.load.image(images.bottle1, images.files.bottle1);
+    this.load.image(images.dirtPile, images.files.dirtPile);
     this.load.spritesheet(images.greenZombie, images.files.greenZombie, {
       frameWidth: images.frameSizes.zombie.width,
       frameHeight: images.frameSizes.zombie.height,
@@ -129,6 +130,12 @@ export default class extends Phaser.Scene {
       spacing: 0,
     });
     this.load.spritesheet(images.shotBlastBottle, images.files.shotBlastBottle, {
+      frameWidth: images.frameSizes.shotBlast.width,
+      frameHeight: images.frameSizes.shotBlast.height,
+      margin: 0,
+      spacing: 0,
+    });
+    this.load.spritesheet(images.shotBlastDirt, images.files.shotBlastDirt, {
       frameWidth: images.frameSizes.shotBlast.width,
       frameHeight: images.frameSizes.shotBlast.height,
       margin: 0,
@@ -210,6 +217,15 @@ export default class extends Phaser.Scene {
         images.shotBlastBottle, { frames: animations.frames.shotBlastBottleExplode }
       ),
       frameRate: animations.frameRates.shotBlastBottleExplode,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: animations.shotBlastDirtExplode,
+      frames: this.anims.generateFrameNames(
+        images.shotBlastDirt, { frames: animations.frames.shotBlastDirtExplode }
+      ),
+      frameRate: animations.frameRates.shotBlastDirtExplode,
       repeat: 0,
     });
 
