@@ -1,5 +1,4 @@
 import { util } from '../../util';
-import vocab from '../../vocab';
 import { vocabStudy, fonts } from '../../config';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import vocabStudyUiHelper from '../ui/vocabStudyUiHelper';
@@ -8,9 +7,9 @@ const BIG_FONT_MAX_LENGTH = 24;
 const DOT_COUNT_MODIFIER = 27;
 
 export default class {
-  constructor(scene) {
+  constructor(scene, vocab) {
     this.scene = scene;
-    this.vocab = new VocabWordManager(vocab.words); // TODO: words should be passed in to constructor
+    this.vocab = new VocabWordManager(vocab);
     this.ui = vocabStudyUiHelper(this.scene.sys.game.config);
   }
 

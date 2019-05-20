@@ -5,6 +5,7 @@ import Loading from './screens/Loading';
 import TitleMenu from './screens/titleMenu/TitleMenu';
 import Endgame from './screens/Endgame';
 import VocabStudy from './screens/vocabStudy/VocabStudy';
+import DatabaseManager from './data/DatabaseManager';
 
 const config = {
   type: Phaser.AUTO,
@@ -23,3 +24,4 @@ const config = {
 };
 
 const game = new Phaser.Game(config);
+game.db = new DatabaseManager();

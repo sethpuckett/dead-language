@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import vocab from '../../vocab';
 import { depth, minigame, levels, images, screens } from '../../config';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
@@ -23,7 +22,7 @@ export default class extends Phaser.Scene {
 
   init() {
     this.currentLevel = levels.find(l => l.id === 1); // Only 1 level for now
-    this.vocab = new VocabWordManager(vocab.words);
+    this.vocab = new VocabWordManager(this.sys.game.db.getLesson('demo-01').vocab);
     this.zombieManager = new MinigameZombieManager(this, this.vocab);
     this.spawnManager = new MinigameSpawnManager(this, this.currentLevel.waves, this.vocab);
     this.statusManager = new HudStatusManager(this);

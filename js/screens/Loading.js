@@ -9,6 +9,8 @@ export default class extends Phaser.Scene {
   }
 
   preload() {
+    this.fullyLoaded = false;
+    this.sys.game.db.loadLessons(this.tryStart, this);
     this.ui = loadingUiHelper(this.sys.game.config);
     this.showBackground();
     this.showProgressBar();
@@ -21,7 +23,14 @@ export default class extends Phaser.Scene {
 
   create() {
     this.createAnimations();
-    this.scene.start(screens.titleMenu);
+    this.fullyLoaded = true;
+    this.tryStart();
+  }
+
+  tryStart() {
+    if (this.fullyLoaded && this.sys.game.db.lessonsLoaded) {
+      this.scene.start(screens.titleMenu);
+    }
   }
 
   showBackground() {
