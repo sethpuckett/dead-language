@@ -23,6 +23,7 @@
       "ExportDeclaration": "never"
     }],
     "comma-dangle": ["error", "always-multiline"],
-    "class-methods-use-this": 0
+    "class-methods-use-this": 0,
+    "func-names": 0
   }
 }

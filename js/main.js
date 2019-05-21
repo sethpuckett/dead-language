@@ -73,6 +73,14 @@ document.getElementById('sign-out-button').addEventListener('click', () => {
   });
 });
 
+document.getElementById('modal-toggle').addEventListener('change', function() {
+  if (this.checked) {
+    window.game.input.keyboard.enabled = false;
+  } else {
+    window.game.input.keyboard.enabled = true;
+  }
+});
+
 const uiConfig = {
   callbacks: {
     signInSuccessWithAuthResult(_authResult, _redirectUrl) {
