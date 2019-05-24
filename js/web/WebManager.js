@@ -40,6 +40,7 @@ export default class WebManager {
     // disable game input when the auth modal has focus
     document.getElementById('modal-toggle').addEventListener('change', function() {
       if (this.checked) {
+        document.getElementsByName('email')[0].focus();
         window.game.input.keyboard.enabled = false;
       } else {
         window.game.input.keyboard.enabled = true;
