@@ -28,4 +28,3 @@ const phaserConfig = {
 const web = new WebManager(phaserConfig);
 web.initializeFirebase();
 web.setupCallbacks();
-web.createGame();

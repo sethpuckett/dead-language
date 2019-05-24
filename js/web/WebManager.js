@@ -21,15 +21,12 @@ export default class WebManager {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.showUserProfileUi(user);
-        this.restartGame();
         this.authUi.reset();
       } else {
         this.showLoginUi();
-        if (window.game != null) {
-          this.restartGame();
-        }
         this.authUi.start('#firebaseui-auth-container', firebaseConfig.ui);
       }
+      this.restartGame();
     });
 
     // sign out the user and update the auth ui
@@ -55,8 +52,12 @@ export default class WebManager {
   }
 
   restartGame() {
-    window.game.events.addListener('destroy', () => this.createGame());
-    window.game.destroy(true);
+    if (window.game != null) {
+      window.game.events.addListener('destroy', () => this.createGame());
+      window.game.destroy(true);
+    } else {
+      this.createGame();
+    }
   }
 
   // Private
