@@ -49,19 +49,13 @@ firebase.auth().onAuthStateChanged((user) => {
     document.getElementById('sign-in-modal').style.display = 'none';
     document.getElementById('user-info').style.display = 'inline-block';
     document.getElementById('username').innerHTML = user.email;
-    // User is signed in.
-    // const displayName = user.displayName;
-    // const email = user.email;
-    // const emailVerified = user.emailVerified;
-    // const photoURL = user.photoURL;
-    // const isAnonymous = user.isAnonymous;
-    // const uid = user.uid;
-    // const providerData = user.providerData;
     restartGame();
+    ui.reset();
   } else {
     document.getElementById('sign-in-modal').style.display = 'inline-block';
     document.getElementById('user-info').style.display = 'none';
     restartGame();
+    ui.start('#firebaseui-auth-container', uiConfig);
   }
 });
 
