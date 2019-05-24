@@ -5,4 +5,5 @@ export default {
   minigame: 'Minigame',
   endgame: 'Endgame',
   vocabStudy: 'VocabStudy',
+  townMap: 'TownMap',
 };

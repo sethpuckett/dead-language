@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 import { modal, fonts, depth } from '../config';
 import modalUiHelper from './ui/modalUiHelper';
 
+const MIN_WIDTH = 450;
+
 export default class {
   constructor(scene, text) {
     this.scene = scene;
@@ -94,10 +96,11 @@ export default class {
     this.backgroundGraphics = this.scene.add.graphics();
     this.backgroundGraphics.fillStyle(modal.backgroundColor);
     const bounds = this.text.getTextBounds().global;
+    const width = Math.max(bounds.width + this.ui.textMargin * 2, MIN_WIDTH);
     this.bgRect = new Phaser.Geom.Rectangle(
-      bounds.x - this.ui.textMargin,
+      this.ui.w / 2 - width / 2,
       bounds.y - this.ui.textMargin,
-      bounds.width + this.ui.textMargin * 2,
+      width,
       bounds.height + this.ui.textMargin * 2 + this.ui.bottomBuffer
     );
     this.backgroundGraphics.fillRectShape(this.bgRect);
