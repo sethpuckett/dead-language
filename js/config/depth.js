@@ -38,4 +38,7 @@ export default {
     border: 10002,
     text: 10003,
   },
+  townMap: {
+    border: 10,
+  },
 };
