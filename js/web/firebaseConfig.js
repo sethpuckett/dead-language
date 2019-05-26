@@ -15,12 +15,12 @@ export default {
   },
 
   firestore: {
-    apiKey: 'AIzaSyDNT9QuLFOikb9floGWNqqw6fo31pNgMts',
-    authDomain: 'dead-langauge.firebaseapp.com',
-    databaseURL: 'https://dead-langauge.firebaseio.com',
-    projectId: 'dead-langauge',
-    storageBucket: 'dead-langauge.appspot.com',
-    messagingSenderId: '956438051996',
-    appId: '1:956438051996:web:65ffd257977394ad',
+    apiKey: "AIzaSyBKU1fuptRd7xOx0UQAITKDtztQUhpyVD0",
+    authDomain: "dead-language.firebaseapp.com",
+    databaseURL: "https://dead-language.firebaseio.com",
+    projectId: "dead-language",
+    storageBucket: "dead-language.appspot.com",
+    messagingSenderId: "352281236042",
+    appId: "1:352281236042:web:85411d0ca6d5ae39"
   },
 };
