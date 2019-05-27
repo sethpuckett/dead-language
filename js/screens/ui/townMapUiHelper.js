@@ -119,5 +119,10 @@ export default (config) => {
     get instructionsSquareBRY() {
       return this.instructionsY + this.instructionsHeight - townMap.ui.squareWidth;
     },
+
+    get instructionsTextX() { return this.instructionsX + this.instructionsWidth / 2; },
+    get instructionsTextY() { return this.instructionsY + this.instructionsHeight / 2; },
+    instructionsTextOriginX: u.center,
+    instructionsTextOriginY: u.center,
   };
 };

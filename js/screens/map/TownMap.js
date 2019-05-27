@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { townMap, depth } from '../../config';
+import { townMap, depth, fonts } from '../../config';
 import HudStatusManager from '../HudStatusManager';
 import Modal from '../Modal';
 import townMapUiHelper from '../ui/townMapUiHelper';
@@ -94,6 +94,18 @@ export default class extends Phaser.Scene {
       [this.ui.instructionsSquareBLX, this.ui.instructionsSquareBLY],
       [this.ui.instructionsSquareBRX, this.ui.instructionsSquareBRY],
     ]);
+
+    this.instructionsText = this.add.bitmapText(
+      this.ui.instructionsTextX,
+      this.ui.instructionsTextY,
+      fonts.blueSkyWhite,
+      townMap.statusMessages.instructions,
+      townMap.fonts.instructionsSize
+    );
+    this.instructionsText.setOrigin(
+      this.ui.instructionsTextOriginX, this.ui.instructionsTextOriginY
+    );
+    this.instructionsText.setCenterAlign();
   }
 
   createStartModal() {
