@@ -86,7 +86,7 @@ export default class extends Phaser.Scene {
   }
 
   createStatus() {
-    this.statusManager.setStatus({ message: ['Arrows to move', '', 'Space/Enter', 'to choose'] });
+    this.statusManager.setStatus({ message: vocabStudy.statusMessages.start });
   }
 
   startTargetPractice() {
@@ -115,6 +115,7 @@ export default class extends Phaser.Scene {
     this.hudManager.disableInputHandling();
     this.disableInputHandling();
     this.hideBottle();
+    this.statusManager.setStatus({ message: vocabStudy.statusMessages.start });
   }
 
   clearPracticeWord() {

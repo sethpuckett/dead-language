@@ -4,7 +4,8 @@ import VocabWordManager from '../../languageContent/VocabWordManager';
 import vocabStudyUiHelper from '../ui/vocabStudyUiHelper';
 
 const BIG_FONT_MAX_LENGTH = 22;
-const DOT_COUNT_MODIFIER = 30;
+const DOT_COUNT_MODIFIER = 29;
+
 
 export default class {
   constructor(scene, vocab) {

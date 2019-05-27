@@ -31,6 +31,12 @@ export default {
     },
   },
   statusMessages: {
+    start: [
+      'Arrows to move',
+      '',
+      'Space/Enter',
+      'to choose',
+    ],
     practice: [
       'Type the translation',
       '',
