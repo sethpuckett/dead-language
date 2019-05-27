@@ -18,7 +18,11 @@ export default class {
 
   getLesson(id) {
     if (this.lessonsLoaded) {
-      return this.lessons.docs.find(d => d.id === id).data();
+      const lesson = this.lessons.docs.find(d => d.id === id);
+      if (lesson != null) {
+        return lesson.data();
+      }
+      throw Error(`lesson with id ${id} was not found in the database.`);
     }
     throw Error('lessons have not been loaded. Call loadLessons() first');
   }

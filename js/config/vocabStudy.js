@@ -3,7 +3,7 @@ export default {
   practiceWordBuffer: 1250,
   fonts: {
     vocabSize: 11,
-    vocabSizeSmall: 7,
+    vocabSizeSmall: 8,
     dotSize: 9,
     vocabFill: '#ffffff',
     menuOptionSize: 11,
