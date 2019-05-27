@@ -50,6 +50,16 @@ export default (config) => {
       return this.lessonInfoY + this.lessonInfoHeight - townMap.ui.squareWidth;
     },
 
+    get lessonInfoTitleX() { return this.lessonInfoX + this.lessonInfoWidth / 2; },
+    get lessonInfoTitleY() { return this.lessonInfoY + u.paddingBig; },
+    lessonInfoTitleOriginX: u.center,
+    lessonInfoTitleOriginY: u.top,
+
+    get lessonInfoTextX() { return this.lessonInfoX + u.paddingBig; },
+    get lessonInfoTextY() { return this.lessonInfoY + u.h * 0.075; },
+    lessonInfoTextOriginX: u.left,
+    lessonInfoTextOriginY: u.top,
+
     // Stage Select
 
     get stageX() { return this.mapX + this.mapWidth + u.paddingBig; },
@@ -93,6 +103,28 @@ export default (config) => {
     get stageInfoSquareBRY() {
       return this.stageInfoY + this.stageInfoHeight - townMap.ui.squareWidth;
     },
+
+    get stageInfoTitleX() { return this.stageInfoX + this.stageInfoWidth / 2; },
+    get stageInfoTitleY() { return this.stageInfoY + u.paddingBig; },
+    stageInfoTitleOriginX: u.center,
+    stageInfoTitleOriginY: u.top,
+
+    get stageInfoTypeX() { return this.stageInfoX + this.stageInfoWidth / 2; },
+    get stageInfoTypeY() { return this.stageInfoY + u.h * 0.075; },
+    stageInfoTypeOriginX: u.center,
+    stageInfoTypeOriginY: u.top,
+
+    get stageInfoSubtitleX() { return this.stageInfoX + this.stageInfoWidth / 2; },
+    get stageInfoSubtitleY() { return this.stageInfoY + u.h * 0.14; },
+    stageInfoSubtitleOriginX: u.center,
+    stageInfoSubtitleOriginY: u.top,
+
+    get stageInfoZombie1X() { return this.stageInfoX + this.stageInfoWidth / 2; },
+    get stageInfoZombie1Y() { return this.stageInfoY + this.stageInfoHeight * 0.80; },
+    get stageInfoZombie2X() { return this.stageInfoX + this.stageInfoWidth * 0.20; },
+    get stageInfoZombie2Y() { return this.stageInfoY + this.stageInfoHeight * 0.64; },
+    get stageInfoZombie3X() { return this.stageInfoX + this.stageInfoWidth * 0.80; },
+    get stageInfoZombie3Y() { return this.stageInfoY + this.stageInfoHeight * 0.72; },
 
     // Instructions
 

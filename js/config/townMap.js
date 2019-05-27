@@ -21,5 +21,15 @@ export default {
   fonts: {
     instructionsSize: 11,
     instructionsFill: '#ffffff',
+    lessonInfoTitleSize: 16,
+    lessonInfoTitleColor: 0xffff22,
+    lessonInfoTextSize: 11,
+    lessonInfoTextFill: '#ffffff',
+    stageInfoTitleSize: 14,
+    stageInfoTitleFill: '#ffffff',
+    stageInfoTypeSize: 18,
+    stageInfoTypeColor: 0xffff22,
+    stageInfoSubtitleSize: 11,
+    stageInfoSubtitleFill: '#ffffff',
   },
 };

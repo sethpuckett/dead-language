@@ -1,8 +1,11 @@
 import Phaser from 'phaser';
-import { townMap, depth, fonts } from '../../config';
+import { townMap, depth, fonts, images, animations } from '../../config';
 import HudStatusManager from '../HudStatusManager';
 import Modal from '../Modal';
 import townMapUiHelper from '../ui/townMapUiHelper';
+import animationHelper from '../../util/animationHelper';
+
+const ZOMBIE_IMAGE_SCALE = 2.5;
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -52,6 +55,39 @@ export default class extends Phaser.Scene {
       [this.ui.lessonInfoSquareBLX, this.ui.lessonInfoSquareBLY],
       [this.ui.lessonInfoSquareBRX, this.ui.lessonInfoSquareBRY],
     ]);
+
+    this.lessonInfoTitle = this.add.bitmapText(
+      this.ui.lessonInfoTitleX,
+      this.ui.lessonInfoTitleY,
+      fonts.blueSkyWhite,
+      'Nouns: Level 1',
+      townMap.fonts.lessonInfoTitleSize
+    );
+    this.lessonInfoTitle.setOrigin(
+      this.ui.lessonInfoTitleOriginX, this.ui.lessonInfoTitleOriginY
+    );
+    this.lessonInfoTitle.setCenterAlign();
+    this.lessonInfoTitle.setTint(townMap.fonts.lessonInfoTitleColor);
+
+    this.lessonInfoText = this.add.bitmapText(
+      this.ui.lessonInfoTextX,
+      this.ui.lessonInfoTextY,
+      fonts.blueSkyWhite,
+      [
+        'Nouns represent people, places, and',
+        'things.',
+        '',
+        'In Spanish all nouns have a gender,',
+        'either masculine or feminine.',
+        '',
+        'Articles and adjectives must match',
+        'the gender of the noun they modify.',
+      ],
+      townMap.fonts.lessonInfoTextSize
+    );
+    this.lessonInfoText.setOrigin(
+      this.ui.lessonInfoTextOriginX, this.ui.lessonInfoTextOriginY
+    );
   }
 
   createStageSelect() {
@@ -78,6 +114,71 @@ export default class extends Phaser.Scene {
       [this.ui.stageInfoSquareBLX, this.ui.stageInfoSquareBLY],
       [this.ui.stageInfoSquareBRX, this.ui.stageInfoSquareBRY],
     ]);
+
+    this.stageInfoTitle = this.add.bitmapText(
+      this.ui.stageInfoTitleX,
+      this.ui.stageInfoTitleY,
+      fonts.blueSkyWhite,
+      'Game Type',
+      townMap.fonts.stageInfoTitleSize
+    );
+    this.stageInfoTitle.setOrigin(
+      this.ui.stageInfoTitleOriginX, this.ui.stageInfoTitleOriginY
+    );
+    this.stageInfoTitle.setCenterAlign();
+
+    this.stageInfoType = this.add.bitmapText(
+      this.ui.stageInfoTypeX,
+      this.ui.stageInfoTypeY,
+      fonts.blueSkyWhite,
+      'Zombie Assault',
+      townMap.fonts.stageInfoTypeSize
+    );
+    this.stageInfoType.setOrigin(
+      this.ui.stageInfoTypeOriginX, this.ui.stageInfoTypeOriginY
+    );
+    this.stageInfoType.setCenterAlign();
+    this.stageInfoType.setTint(townMap.fonts.stageInfoTypeColor);
+
+
+    this.stageInfoSubtitle = this.add.bitmapText(
+      this.ui.stageInfoSubtitleX,
+      this.ui.stageInfoSubtitleY,
+      fonts.blueSkyWhite,
+      'Vocab Mastery Mayhem',
+      townMap.fonts.stageInfoSubtitleSize
+    );
+    this.stageInfoSubtitle.setOrigin(
+      this.ui.stageInfoSubtitleOriginX, this.ui.stageInfoSubtitleOriginY
+    );
+    this.stageInfoSubtitle.setCenterAlign();
+
+    this.stageInfoZombie1 = this.add.sprite(
+      this.ui.stageInfoZombie1X, this.ui.stageInfoZombie1Y, images.grayZombie
+    );
+    this.stageInfoZombie1.play(
+      animationHelper.zombieAnimation(images.grayZombie, animations.zombieWalk),
+    );
+    this.stageInfoZombie1.setScale(ZOMBIE_IMAGE_SCALE);
+    this.stageInfoZombie1.anims.msPerFrame = 200;
+
+    this.stageInfoZombie2 = this.add.sprite(
+      this.ui.stageInfoZombie2X, this.ui.stageInfoZombie2Y, images.lightGreenZombie
+    );
+    this.stageInfoZombie2.play(
+      animationHelper.zombieAnimation(images.lightGreenZombie, animations.zombieWalk),
+    );
+    this.stageInfoZombie2.setScale(ZOMBIE_IMAGE_SCALE);
+    this.stageInfoZombie2.anims.msPerFrame = 225;
+
+    this.stageInfoZombie3 = this.add.sprite(
+      this.ui.stageInfoZombie3X, this.ui.stageInfoZombie3Y, images.greenZombie
+    );
+    this.stageInfoZombie3.play(
+      animationHelper.zombieAnimation(images.greenZombie, animations.zombieWalk)
+    );
+    this.stageInfoZombie3.setScale(ZOMBIE_IMAGE_SCALE);
+    this.stageInfoZombie3.anims.msPerFrame = 175;
   }
 
   createInstructions() {
