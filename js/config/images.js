@@ -46,6 +46,7 @@ export default {
   bottle1Explode: 'bottle1-explode',
   shotgun: 'shotgun',
   dirtPile: 'dirt-pile',
+  yellowBubble: 'yellow-bubble',
   files: {
     grayZombie: 'assets/images/zombie-gray.png',
     greenZombie: 'assets/images/zombie-green.png',
@@ -92,6 +93,7 @@ export default {
     bottle1Explode: 'assets/images/bottle1-explode.png',
     shotgun: 'assets/images/shotgun.png',
     dirtPile: 'assets/images/dirt-pile.png',
+    yellowBubble: 'assets/images/yellow-bubble.png',
   },
   frames: {
     healthFull: 0,
@@ -104,6 +106,8 @@ export default {
     hudItemDark: 1,
     hudMessageLight: 0,
     hudMessageDark: 1,
+    yellowBubbleEmpty: 0,
+    yellowBubbleFull: 1,
   },
   scales: {
     crate: 1.5,
@@ -139,6 +143,10 @@ export default {
     bottle1Explode: {
       width: 64,
       height: 64,
+    },
+    yellowBubble: {
+      width: 16,
+      height: 16,
     },
   },
 };

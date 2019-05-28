@@ -78,6 +78,11 @@ export default (config) => {
     get stageSquareBRX() { return this.stageX + this.stageWidth - townMap.ui.squareWidth; },
     get stageSquareBRY() { return this.stageY + this.stageHeight - townMap.ui.squareWidth; },
 
+    get stageTitleX() { return this.stageX + this.stageWidth / 2; },
+    get stageTitleY() { return this.stageY + u.paddingBig; },
+    stageTitleOriginX: u.center,
+    stageTitleOriginY: u.top,
+
     // Stage Info
 
     get stageInfoX() { return this.mapX + this.mapWidth + u.paddingBig; },

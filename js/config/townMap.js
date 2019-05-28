@@ -25,6 +25,8 @@ export default {
     lessonInfoTitleColor: 0xffff22,
     lessonInfoTextSize: 11,
     lessonInfoTextFill: '#ffffff',
+    stageTitleSize: 14,
+    stageTitleFill: '#ffffff',
     stageInfoTitleSize: 14,
     stageInfoTitleFill: '#ffffff',
     stageInfoTypeSize: 18,

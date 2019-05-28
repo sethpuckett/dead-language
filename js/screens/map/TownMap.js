@@ -42,6 +42,15 @@ export default class extends Phaser.Scene {
       [this.ui.mapSquareTLX, this.ui.mapSquareTLY], [this.ui.mapSquareTRX, this.ui.mapSquareTRY],
       [this.ui.mapSquareBLX, this.ui.mapSquareBLY], [this.ui.mapSquareBRX, this.ui.mapSquareBRY],
     ]);
+
+    this.mapText = this.add.bitmapText(
+      this.ui.mapX + this.ui.mapWidth / 2,
+      this.ui.mapY + this.ui.mapHeight / 2,
+      fonts.blueSkyWhite,
+      'TODO: ADD MAP',
+      18
+    );
+    this.mapText.setOrigin(0.5);
   }
 
   createLessonInfo() {
@@ -69,6 +78,7 @@ export default class extends Phaser.Scene {
     this.lessonInfoTitle.setCenterAlign();
     this.lessonInfoTitle.setTint(townMap.fonts.lessonInfoTitleColor);
 
+    // TODO: move text to config
     this.lessonInfoText = this.add.bitmapText(
       this.ui.lessonInfoTextX,
       this.ui.lessonInfoTextY,
@@ -101,6 +111,63 @@ export default class extends Phaser.Scene {
       [this.ui.stageSquareBLX, this.ui.stageSquareBLY],
       [this.ui.stageSquareBRX, this.ui.stageSquareBRY],
     ]);
+
+    this.stageTitle = this.add.bitmapText(
+      this.ui.stageTitleX,
+      this.ui.stageTitleY,
+      fonts.blueSkyWhite,
+      'Choose a stage',
+      townMap.fonts.stageTitleSize
+    );
+    this.stageTitle.setOrigin(
+      this.ui.stageTitleOriginX, this.ui.stageTitleOriginY
+    );
+    this.stageTitle.setCenterAlign();
+
+    // TODO: Put these in an array.
+    //       Don't hard code positions
+    //       Add a way to determine if the stage has been completed
+    this.stage1Bubble = this.add.sprite(
+      510, 90, images.yellowBubble
+    );
+    this.stage1Bubble.setFrame(images.frames.yellowBubbleFull);
+    this.stage1Bubble.setScale(2.75);
+
+    this.stage2Bubble = this.add.sprite(
+      555, 90, images.yellowBubble
+    );
+    this.stage2Bubble.setFrame(images.frames.yellowBubbleFull);
+    this.stage2Bubble.setScale(2.75);
+
+    this.stage3Bubble = this.add.sprite(
+      600, 90, images.yellowBubble
+    );
+    this.stage3Bubble.setFrame(images.frames.yellowBubbleEmpty);
+    this.stage3Bubble.setScale(2.75);
+
+    this.stage4Bubble = this.add.sprite(
+      645, 90, images.yellowBubble
+    );
+    this.stage4Bubble.setFrame(images.frames.yellowBubbleEmpty);
+    this.stage4Bubble.setScale(2.75);
+
+    this.stage5Bubble = this.add.sprite(
+      690, 90, images.yellowBubble
+    );
+    this.stage5Bubble.setFrame(images.frames.yellowBubbleEmpty);
+    this.stage5Bubble.setScale(2.75);
+
+    this.stage6Bubble = this.add.sprite(
+      745, 90, images.yellowBubble
+    );
+    this.stage6Bubble.setFrame(images.frames.yellowBubbleEmpty);
+    this.stage6Bubble.setScale(4);
+
+    this.stageSelector = this.add.sprite(
+      600, 90, images.hudItemBorder
+    );
+    this.stageSelector.setFrame(images.frames.hudItemLight);
+    this.stageSelector.setScale(2.4);
   }
 
   createStageInfo() {
@@ -115,6 +182,7 @@ export default class extends Phaser.Scene {
       [this.ui.stageInfoSquareBRX, this.ui.stageInfoSquareBRY],
     ]);
 
+    // TODO: move text to config
     this.stageInfoTitle = this.add.bitmapText(
       this.ui.stageInfoTitleX,
       this.ui.stageInfoTitleY,
@@ -127,6 +195,7 @@ export default class extends Phaser.Scene {
     );
     this.stageInfoTitle.setCenterAlign();
 
+    // TODO: move text to config
     this.stageInfoType = this.add.bitmapText(
       this.ui.stageInfoTypeX,
       this.ui.stageInfoTypeY,
@@ -140,7 +209,7 @@ export default class extends Phaser.Scene {
     this.stageInfoType.setCenterAlign();
     this.stageInfoType.setTint(townMap.fonts.stageInfoTypeColor);
 
-
+    // TODO: move text to config
     this.stageInfoSubtitle = this.add.bitmapText(
       this.ui.stageInfoSubtitleX,
       this.ui.stageInfoSubtitleY,
@@ -153,6 +222,7 @@ export default class extends Phaser.Scene {
     );
     this.stageInfoSubtitle.setCenterAlign();
 
+    // TODO: move hard coded values to config. Clean all this up
     this.stageInfoZombie1 = this.add.sprite(
       this.ui.stageInfoZombie1X, this.ui.stageInfoZombie1Y, images.grayZombie
     );
