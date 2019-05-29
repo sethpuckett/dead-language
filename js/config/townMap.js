@@ -1,4 +1,5 @@
 export default {
+  gameTypeText: 'Game Type',
   ui: {
     borderColor: 0xffffff,
     borderWidth: 5,

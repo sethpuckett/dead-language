@@ -15,3 +15,4 @@ export { default as hud } from './hud';
 export { default as game } from './game';
 export { default as modal } from './modal';
 export { default as townMap } from './townMap';
+export { default as gameTypes } from './gameTypes';

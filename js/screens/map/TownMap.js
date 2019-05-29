@@ -4,6 +4,7 @@ import HudStatusManager from '../HudStatusManager';
 import Modal from '../Modal';
 import townMapUiHelper from '../ui/townMapUiHelper';
 import animationHelper from '../../util/animationHelper';
+import { gameTypeHelper } from '../../util';
 
 const ZOMBIE_IMAGE_SCALE = 2.5;
 
@@ -14,6 +15,8 @@ export default class extends Phaser.Scene {
 
   init() {
     this.lesson = this.sys.game.db.getLesson('lesson-basic-vocab-01');
+    // TODO this should be based on current lesson & selection
+    this.stage = this.sys.game.db.getStage('intro-01');
     this.ui = townMapUiHelper(this.sys.game.config);
     this.statusManager = new HudStatusManager(this);
 
@@ -173,12 +176,11 @@ export default class extends Phaser.Scene {
       [this.ui.stageInfoSquareBRX, this.ui.stageInfoSquareBRY],
     ]);
 
-    // TODO: move text to config
     this.stageInfoTitle = this.add.bitmapText(
       this.ui.stageInfoTitleX,
       this.ui.stageInfoTitleY,
       fonts.blueSkyWhite,
-      'Game Type',
+      townMap.gameTypeText,
       townMap.fonts.stageInfoTitleSize
     );
     this.stageInfoTitle.setOrigin(
@@ -186,12 +188,11 @@ export default class extends Phaser.Scene {
     );
     this.stageInfoTitle.setCenterAlign();
 
-    // TODO: move text to config
     this.stageInfoType = this.add.bitmapText(
       this.ui.stageInfoTypeX,
       this.ui.stageInfoTypeY,
       fonts.blueSkyWhite,
-      'Zombie Assault',
+      gameTypeHelper.getName(this.stage.type),
       townMap.fonts.stageInfoTypeSize
     );
     this.stageInfoType.setOrigin(
@@ -200,12 +201,11 @@ export default class extends Phaser.Scene {
     this.stageInfoType.setCenterAlign();
     this.stageInfoType.setTint(townMap.fonts.stageInfoTypeColor);
 
-    // TODO: move text to config
     this.stageInfoSubtitle = this.add.bitmapText(
       this.ui.stageInfoSubtitleX,
       this.ui.stageInfoSubtitleY,
       fonts.blueSkyWhite,
-      'Vocab Mastery Mayhem',
+      gameTypeHelper.getDescription(this.stage.type),
       townMap.fonts.stageInfoSubtitleSize
     );
     this.stageInfoSubtitle.setOrigin(
