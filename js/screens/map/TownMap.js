@@ -118,50 +118,79 @@ export default class extends Phaser.Scene {
     );
     this.stageTitle.setCenterAlign();
 
-    // TODO: Put these in an array.
-    //       Don't hard code positions
-    //       Add a way to determine if the stage has been completed
-    this.stage1Bubble = this.add.sprite(
-      510, 90, images.yellowBubble
-    );
-    this.stage1Bubble.setFrame(images.frames.yellowBubbleFull);
-    this.stage1Bubble.setScale(2.75);
+    // evenly space stage dots in stage select section
+    this.stageDots = [];
+    const stageCount = this.lesson.stages.length;
+    const totalDotWidth = stageCount * this.ui.stageDotWidth + this.ui.stageReviewDotWidth;
+    const baseX = this.ui.stageX + this.ui.stageWidth / 2 - totalDotWidth / 2;
+    this.lesson.stages.forEach((stage, index) => {
+      const percentX = index / (this.lesson.stages.length + 1);
+      const dot = this.add.sprite(
+        baseX + totalDotWidth * percentX, this.ui.stageDotY, images.yellowBubble
+      );
+      // TODO: set this based on completion status of stage
+      dot.setFrame(images.frames.yellowBubbleEmpty);
+      dot.setOrigin(this.ui.stageDotOriginX, this.ui.stageDotOriginY);
+      dot.displayWidth = this.ui.stageDotWidth;
+      dot.displayHeight = this.ui.stageDotWidth;
+    });
 
-    this.stage2Bubble = this.add.sprite(
-      555, 90, images.yellowBubble
+    // draw review stage dot
+    const reviewPercentX = stageCount / (stageCount + 1);
+    const dot = this.add.sprite(
+      baseX + totalDotWidth * reviewPercentX, this.ui.stageDotY, images.yellowBubble
     );
-    this.stage2Bubble.setFrame(images.frames.yellowBubbleFull);
-    this.stage2Bubble.setScale(2.75);
 
-    this.stage3Bubble = this.add.sprite(
-      600, 90, images.yellowBubble
-    );
-    this.stage3Bubble.setFrame(images.frames.yellowBubbleEmpty);
-    this.stage3Bubble.setScale(2.75);
+    // TODO: set this based on completion status of stage
+    dot.setFrame(images.frames.yellowBubbleEmpty);
+    dot.setOrigin(this.ui.stageDotOriginX, this.ui.stageDotOriginY);
+    dot.displayWidth = this.ui.stageReviewDotWidth;
+    dot.displayHeight = this.ui.stageReviewDotWidth;
 
-    this.stage4Bubble = this.add.sprite(
-      645, 90, images.yellowBubble
-    );
-    this.stage4Bubble.setFrame(images.frames.yellowBubbleEmpty);
-    this.stage4Bubble.setScale(2.75);
+    // // TODO: Put these in an array.
+    // //       Don't hard code positions
+    // //       Add a way to determine if the stage has been completed
+    // this.stage1Bubble = this.add.sprite(
+    //   510, 90, images.yellowBubble
+    // );
+    // this.stage1Bubble.setFrame(images.frames.yellowBubbleFull);
+    // this.stage1Bubble.setScale(2.75);
 
-    this.stage5Bubble = this.add.sprite(
-      690, 90, images.yellowBubble
-    );
-    this.stage5Bubble.setFrame(images.frames.yellowBubbleEmpty);
-    this.stage5Bubble.setScale(2.75);
+    // this.stage2Bubble = this.add.sprite(
+    //   555, 90, images.yellowBubble
+    // );
+    // this.stage2Bubble.setFrame(images.frames.yellowBubbleFull);
+    // this.stage2Bubble.setScale(2.75);
 
-    this.stage6Bubble = this.add.sprite(
-      745, 90, images.yellowBubble
-    );
-    this.stage6Bubble.setFrame(images.frames.yellowBubbleEmpty);
-    this.stage6Bubble.setScale(4);
+    // this.stage3Bubble = this.add.sprite(
+    //   600, 90, images.yellowBubble
+    // );
+    // this.stage3Bubble.setFrame(images.frames.yellowBubbleEmpty);
+    // this.stage3Bubble.setScale(2.75);
 
-    this.stageSelector = this.add.sprite(
-      600, 90, images.hudItemBorder
-    );
-    this.stageSelector.setFrame(images.frames.hudItemLight);
-    this.stageSelector.setScale(2.4);
+    // this.stage4Bubble = this.add.sprite(
+    //   645, 90, images.yellowBubble
+    // );
+    // this.stage4Bubble.setFrame(images.frames.yellowBubbleEmpty);
+    // this.stage4Bubble.setScale(2.75);
+
+    // this.stage5Bubble = this.add.sprite(
+    //   690, 90, images.yellowBubble
+    // );
+    // this.stage5Bubble.setFrame(images.frames.yellowBubbleEmpty);
+    // this.stage5Bubble.setScale(2.75);
+
+    // this.stage6Bubble = this.add.sprite(
+    //   745, 90, images.yellowBubble
+    // );
+    // this.stage6Bubble.setFrame(images.frames.yellowBubbleEmpty);
+    // this.stage6Bubble.setScale(4);
+
+    // this.stageSelector = this.add.sprite(
+    //   600, 90, images.hudItemBorder
+    // );
+    // this.stageSelector.setFrame(images.frames.hudItemLight);
+    // this.stageSelector.setScale(2.4);
   }
 
   createStageInfo() {

@@ -83,6 +83,12 @@ export default (config) => {
     stageTitleOriginX: u.center,
     stageTitleOriginY: u.top,
 
+    get stageDotY() { return this.stageY + this.stageHeight * 0.66; },
+    stageDotWidth: u.w_5p,
+    stageReviewDotWidth: u.w * 0.065,
+    stageDotOriginX: u.left,
+    stageDotOriginY: u.center,
+
     // Stage Info
 
     get stageInfoX() { return this.mapX + this.mapWidth + u.paddingBig; },
