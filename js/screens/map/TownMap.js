@@ -13,6 +13,7 @@ export default class extends Phaser.Scene {
   }
 
   init() {
+    this.lesson = this.sys.game.db.getLesson('lesson-basic-vocab-01');
     this.ui = townMapUiHelper(this.sys.game.config);
     this.statusManager = new HudStatusManager(this);
 
@@ -69,7 +70,7 @@ export default class extends Phaser.Scene {
       this.ui.lessonInfoTitleX,
       this.ui.lessonInfoTitleY,
       fonts.blueSkyWhite,
-      'Nouns: Level 1',
+      this.lesson.name,
       townMap.fonts.lessonInfoTitleSize
     );
     this.lessonInfoTitle.setOrigin(
@@ -78,21 +79,11 @@ export default class extends Phaser.Scene {
     this.lessonInfoTitle.setCenterAlign();
     this.lessonInfoTitle.setTint(townMap.fonts.lessonInfoTitleColor);
 
-    // TODO: move text to config
     this.lessonInfoText = this.add.bitmapText(
       this.ui.lessonInfoTextX,
       this.ui.lessonInfoTextY,
       fonts.blueSkyWhite,
-      [
-        'Nouns represent people, places, and',
-        'things.',
-        '',
-        'In Spanish all nouns have a gender,',
-        'either masculine or feminine.',
-        '',
-        'Articles and adjectives must match',
-        'the gender of the noun they modify.',
-      ],
+      this.lesson.info,
       townMap.fonts.lessonInfoTextSize
     );
     this.lessonInfoText.setOrigin(
