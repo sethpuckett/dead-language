@@ -14,7 +14,7 @@ export default class extends Phaser.Scene {
 
   init() {
     this.currentLevel = levels.find(l => l.id === 1); // Only 1 level for now
-    this.vocab = new VocabWordManager(this.sys.game.db.getLesson('intro-01').vocab);
+    this.vocab = new VocabWordManager(this.sys.game.db.getStage('intro-01').vocab);
     this.zombieManager = new MinigameZombieManager(this, this.vocab);
     this.spawnManager = new MinigameSpawnManager(this, this.currentLevel.waves, this.vocab);
     this.statusManager = new HudStatusManager(this);
