@@ -20,6 +20,9 @@ export default class extends Phaser.Scene {
     this.ui = townMapUiHelper(this.sys.game.config);
     this.statusManager = new HudStatusManager(this);
 
+    this.selectedStage = 0;
+    this.inputHandled = true;
+
     this.borderGraphics = this.add.graphics();
     this.borderGraphics.fillStyle(townMap.ui.borderColor);
     this.borderGraphics.lineStyle(townMap.ui.borderWidth, townMap.ui.borderColor);
@@ -32,6 +35,7 @@ export default class extends Phaser.Scene {
     this.createStageSelect();
     this.createStageInfo();
     this.createInstructions();
+    this.createInput();
     this.createStartModal();
   }
 
@@ -120,13 +124,9 @@ export default class extends Phaser.Scene {
 
     // evenly space stage dots in stage select section
     this.stageDots = [];
-    const stageCount = this.lesson.stages.length;
-    const totalDotWidth = stageCount * this.ui.stageDotWidth + this.ui.stageReviewDotWidth;
-    const baseX = this.ui.stageX + this.ui.stageWidth / 2 - totalDotWidth / 2;
     this.lesson.stages.forEach((stage, index) => {
-      const percentX = index / (this.lesson.stages.length + 1);
       const dot = this.add.sprite(
-        baseX + totalDotWidth * percentX, this.ui.stageDotY, images.yellowBubble
+        this.getStageXPosition(index), this.ui.stageDotY, images.yellowBubble
       );
       // TODO: set this based on completion status of stage
       dot.setFrame(images.frames.yellowBubbleEmpty);
@@ -136,61 +136,42 @@ export default class extends Phaser.Scene {
     });
 
     // draw review stage dot
-    const reviewPercentX = stageCount / (stageCount + 1);
-    const dot = this.add.sprite(
-      baseX + totalDotWidth * reviewPercentX, this.ui.stageDotY, images.yellowBubble
+    const reviewDot = this.add.sprite(
+      this.getStageXPosition(this.lesson.stages.length), this.ui.stageDotY, images.yellowBubble
     );
-
     // TODO: set this based on completion status of stage
-    dot.setFrame(images.frames.yellowBubbleEmpty);
-    dot.setOrigin(this.ui.stageDotOriginX, this.ui.stageDotOriginY);
-    dot.displayWidth = this.ui.stageReviewDotWidth;
-    dot.displayHeight = this.ui.stageReviewDotWidth;
+    reviewDot.setFrame(images.frames.yellowBubbleEmpty);
+    reviewDot.setOrigin(this.ui.stageDotOriginX, this.ui.stageDotOriginY);
+    reviewDot.displayWidth = this.ui.stageReviewDotWidth;
+    reviewDot.displayHeight = this.ui.stageReviewDotWidth;
 
-    // // TODO: Put these in an array.
-    // //       Don't hard code positions
-    // //       Add a way to determine if the stage has been completed
-    // this.stage1Bubble = this.add.sprite(
-    //   510, 90, images.yellowBubble
-    // );
-    // this.stage1Bubble.setFrame(images.frames.yellowBubbleFull);
-    // this.stage1Bubble.setScale(2.75);
+    this.stageSelector = this.add.sprite(
+      this.getStageXPosition(this.selectedStage) - this.ui.stageSelectorXBuffer,
+      this.ui.stageDotY, images.hudItemBorder
+    );
+    this.stageSelector.displayWidth = this.ui.stageSelectorWidth;
+    this.stageSelector.displayHeight = this.ui.stageSelectorWidth;
+    this.stageSelector.setOrigin(this.ui.stageDotOriginX, this.ui.stageDotOriginY);
+  }
 
-    // this.stage2Bubble = this.add.sprite(
-    //   555, 90, images.yellowBubble
-    // );
-    // this.stage2Bubble.setFrame(images.frames.yellowBubbleFull);
-    // this.stage2Bubble.setScale(2.75);
+  updateStageSelector() {
+    this.stageSelector.x = this.getStageXPosition(this.selectedStage)
+      - this.ui.stageSelectorXBuffer;
+    if (this.selectedStage === this.lesson.stages.length) { // review stage selected
+      this.stageSelector.displayWidth = this.ui.stageSelectorReviewWidth;
+      this.stageSelector.displayHeight = this.ui.stageSelectorReviewWidth;
+    } else {
+      this.stageSelector.displayWidth = this.ui.stageSelectorWidth;
+      this.stageSelector.displayHeight = this.ui.stageSelectorWidth;
+    }
+  }
 
-    // this.stage3Bubble = this.add.sprite(
-    //   600, 90, images.yellowBubble
-    // );
-    // this.stage3Bubble.setFrame(images.frames.yellowBubbleEmpty);
-    // this.stage3Bubble.setScale(2.75);
-
-    // this.stage4Bubble = this.add.sprite(
-    //   645, 90, images.yellowBubble
-    // );
-    // this.stage4Bubble.setFrame(images.frames.yellowBubbleEmpty);
-    // this.stage4Bubble.setScale(2.75);
-
-    // this.stage5Bubble = this.add.sprite(
-    //   690, 90, images.yellowBubble
-    // );
-    // this.stage5Bubble.setFrame(images.frames.yellowBubbleEmpty);
-    // this.stage5Bubble.setScale(2.75);
-
-    // this.stage6Bubble = this.add.sprite(
-    //   745, 90, images.yellowBubble
-    // );
-    // this.stage6Bubble.setFrame(images.frames.yellowBubbleEmpty);
-    // this.stage6Bubble.setScale(4);
-
-    // this.stageSelector = this.add.sprite(
-    //   600, 90, images.hudItemBorder
-    // );
-    // this.stageSelector.setFrame(images.frames.hudItemLight);
-    // this.stageSelector.setScale(2.4);
+  getStageXPosition(index) {
+    const stageCount = this.lesson.stages.length;
+    const totalDotWidth = stageCount * this.ui.stageDotWidth + this.ui.stageReviewDotWidth;
+    const baseX = this.ui.stageX + this.ui.stageWidth / 2 - totalDotWidth / 2;
+    const percentX = index / (this.lesson.stages.length + 1);
+    return baseX + totalDotWidth * percentX;
   }
 
   createStageInfo() {
@@ -300,13 +281,13 @@ export default class extends Phaser.Scene {
   }
 
   createStartModal() {
-    // TODO: disable map input handling
+    this.disableInputHandling();
     this.modal = new Modal(this, townMap.modals.start);
     this.modal.draw();
     this.modal.enableInputClose();
     this.modal.setCloseCallback(() => {
       this.modal.disableInputHandling();
-      // TODO: enable map input handling
+      this.enableInputHandling();
     });
   }
 
@@ -314,5 +295,45 @@ export default class extends Phaser.Scene {
     squareCoords.forEach((s) => {
       this.borderGraphics.fillRect(s[0], s[1], townMap.ui.squareWidth, townMap.ui.squareWidth);
     });
+  }
+
+  enableInputHandling() {
+    if (!this.inputHandled) {
+      this.inputHandled = true;
+      this.createInput();
+    }
+  }
+
+  disableInputHandling() {
+    if (this.inputHandled) {
+      this.inputHandled = false;
+      this.keys = null;
+      this.input.keyboard.off('keydown', this.handleKeyDown);
+    }
+  }
+
+  createInput() {
+    this.keys = this.input.keyboard.addKeys(
+      'SPACE,ENTER,UP,DOWN,LEFT,RIGHT,ESC'
+    );
+    this.input.keyboard.on('keydown', this.handleKeyDown, this);
+  }
+
+  handleKeyDown(e) {
+    if (e.keyCode === this.keys.LEFT.keyCode) {
+      this.decrementSelectedStage();
+    } else if (e.keyCode === this.keys.RIGHT.keyCode) {
+      this.incrementSelectedStage();
+    }
+  }
+
+  decrementSelectedStage() {
+    this.selectedStage = Math.max(this.selectedStage - 1, 0);
+    this.updateStageSelector();
+  }
+
+  incrementSelectedStage() {
+    this.selectedStage = Math.min(this.selectedStage + 1, this.lesson.stages.length);
+    this.updateStageSelector();
   }
 }

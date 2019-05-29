@@ -89,6 +89,11 @@ export default (config) => {
     stageDotOriginX: u.left,
     stageDotOriginY: u.center,
 
+    get stageSelectorWidth() { return u.w * 0.06; },
+    get stageSelectorReviewWidth() { return u.w * 0.075; },
+
+    get stageSelectorXBuffer() { return (this.stageSelectorWidth - this.stageDotWidth) / 2; },
+
     // Stage Info
 
     get stageInfoX() { return this.mapX + this.mapWidth + u.paddingBig; },
