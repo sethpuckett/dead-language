@@ -5,6 +5,10 @@ import Modal from '../Modal';
 import townMapUiHelper from '../ui/townMapUiHelper';
 import animationHelper from '../../util/animationHelper';
 import { gameTypeHelper } from '../../util';
+import TownMapMapManager from './TownMapMapManager';
+import TownMapHelper from './TownMapHelper';
+import TownMapLessonInfoManager from './TownMapLessonInfoManager';
+import TownMapStageSelectManager from './TownMapStageSelectManager';
 
 const ZOMBIE_IMAGE_SCALE = 2.5;
 
@@ -14,19 +18,23 @@ export default class extends Phaser.Scene {
   }
 
   init() {
+    this.mapHelper = new TownMapHelper();
     this.lesson = this.sys.game.db.getLesson('lesson-basic-vocab-01');
     // TODO this should be based on current lesson & selection
     this.stage = this.sys.game.db.getStage('intro-01');
     this.ui = townMapUiHelper(this.sys.game.config);
     this.statusManager = new HudStatusManager(this);
 
-    this.selectedStage = 0;
     this.inputHandled = true;
 
     this.borderGraphics = this.add.graphics();
     this.borderGraphics.fillStyle(townMap.ui.borderColor);
     this.borderGraphics.lineStyle(townMap.ui.borderWidth, townMap.ui.borderColor);
     this.borderGraphics.setDepth(depth.townMap.border);
+
+    this.mapManager = new TownMapMapManager(this, this.borderGraphics);
+    this.lessonInfoManager = new TownMapLessonInfoManager(this, this.borderGraphics, this.lesson);
+    this.stageSelectManager = new TownMapStageSelectManager(this, this.borderGraphics, this.lesson);
   }
 
   create() {
@@ -44,134 +52,19 @@ export default class extends Phaser.Scene {
   }
 
   createMap() {
-    this.borderGraphics.strokeRect(this.ui.mapX, this.ui.mapY, this.ui.mapWidth, this.ui.mapHeight);
-
-    this.drawSquares([
-      [this.ui.mapSquareTLX, this.ui.mapSquareTLY], [this.ui.mapSquareTRX, this.ui.mapSquareTRY],
-      [this.ui.mapSquareBLX, this.ui.mapSquareBLY], [this.ui.mapSquareBRX, this.ui.mapSquareBRY],
-    ]);
-
-    this.mapText = this.add.bitmapText(
-      this.ui.mapX + this.ui.mapWidth / 2,
-      this.ui.mapY + this.ui.mapHeight / 2,
-      fonts.blueSkyWhite,
-      'TODO: ADD MAP',
-      18
-    );
-    this.mapText.setOrigin(0.5);
+    this.mapManager.drawBorder();
   }
 
   createLessonInfo() {
-    this.borderGraphics.strokeRect(
-      this.ui.lessonInfoX, this.ui.lessonInfoY, this.ui.lessonInfoWidth, this.ui.lessonInfoHeight
-    );
-
-    this.drawSquares([
-      [this.ui.lessonInfoSquareTLX, this.ui.lessonInfoSquareTLY],
-      [this.ui.lessonInfoSquareTRX, this.ui.lessonInfoSquareTRY],
-      [this.ui.lessonInfoSquareBLX, this.ui.lessonInfoSquareBLY],
-      [this.ui.lessonInfoSquareBRX, this.ui.lessonInfoSquareBRY],
-    ]);
-
-    this.lessonInfoTitle = this.add.bitmapText(
-      this.ui.lessonInfoTitleX,
-      this.ui.lessonInfoTitleY,
-      fonts.blueSkyWhite,
-      this.lesson.name,
-      townMap.fonts.lessonInfoTitleSize
-    );
-    this.lessonInfoTitle.setOrigin(
-      this.ui.lessonInfoTitleOriginX, this.ui.lessonInfoTitleOriginY
-    );
-    this.lessonInfoTitle.setCenterAlign();
-    this.lessonInfoTitle.setTint(townMap.fonts.lessonInfoTitleColor);
-
-    this.lessonInfoText = this.add.bitmapText(
-      this.ui.lessonInfoTextX,
-      this.ui.lessonInfoTextY,
-      fonts.blueSkyWhite,
-      this.lesson.info,
-      townMap.fonts.lessonInfoTextSize
-    );
-    this.lessonInfoText.setOrigin(
-      this.ui.lessonInfoTextOriginX, this.ui.lessonInfoTextOriginY
-    );
+    this.lessonInfoManager.drawBorder();
+    this.lessonInfoManager.createLessonInfo();
   }
 
   createStageSelect() {
-    this.borderGraphics.strokeRect(
-      this.ui.stageX, this.ui.stageY, this.ui.stageWidth, this.ui.stageHeight
-    );
-
-    this.drawSquares([
-      [this.ui.stageSquareTLX, this.ui.stageSquareTLY],
-      [this.ui.stageSquareTRX, this.ui.stageSquareTRY],
-      [this.ui.stageSquareBLX, this.ui.stageSquareBLY],
-      [this.ui.stageSquareBRX, this.ui.stageSquareBRY],
-    ]);
-
-    this.stageTitle = this.add.bitmapText(
-      this.ui.stageTitleX,
-      this.ui.stageTitleY,
-      fonts.blueSkyWhite,
-      'Choose a stage',
-      townMap.fonts.stageTitleSize
-    );
-    this.stageTitle.setOrigin(
-      this.ui.stageTitleOriginX, this.ui.stageTitleOriginY
-    );
-    this.stageTitle.setCenterAlign();
-
-    // evenly space stage dots in stage select section
-    this.stageDots = [];
-    this.lesson.stages.forEach((stage, index) => {
-      const dot = this.add.sprite(
-        this.getStageXPosition(index), this.ui.stageDotY, images.yellowBubble
-      );
-      // TODO: set this based on completion status of stage
-      dot.setFrame(images.frames.yellowBubbleEmpty);
-      dot.setOrigin(this.ui.stageDotOriginX, this.ui.stageDotOriginY);
-      dot.displayWidth = this.ui.stageDotWidth;
-      dot.displayHeight = this.ui.stageDotWidth;
-    });
-
-    // draw review stage dot
-    const reviewDot = this.add.sprite(
-      this.getStageXPosition(this.lesson.stages.length), this.ui.stageDotY, images.yellowBubble
-    );
-    // TODO: set this based on completion status of stage
-    reviewDot.setFrame(images.frames.yellowBubbleEmpty);
-    reviewDot.setOrigin(this.ui.stageDotOriginX, this.ui.stageDotOriginY);
-    reviewDot.displayWidth = this.ui.stageReviewDotWidth;
-    reviewDot.displayHeight = this.ui.stageReviewDotWidth;
-
-    this.stageSelector = this.add.sprite(
-      this.getStageXPosition(this.selectedStage) - this.ui.stageSelectorXBuffer,
-      this.ui.stageDotY, images.hudItemBorder
-    );
-    this.stageSelector.displayWidth = this.ui.stageSelectorWidth;
-    this.stageSelector.displayHeight = this.ui.stageSelectorWidth;
-    this.stageSelector.setOrigin(this.ui.stageDotOriginX, this.ui.stageDotOriginY);
-  }
-
-  updateStageSelector() {
-    this.stageSelector.x = this.getStageXPosition(this.selectedStage)
-      - this.ui.stageSelectorXBuffer;
-    if (this.selectedStage === this.lesson.stages.length) { // review stage selected
-      this.stageSelector.displayWidth = this.ui.stageSelectorReviewWidth;
-      this.stageSelector.displayHeight = this.ui.stageSelectorReviewWidth;
-    } else {
-      this.stageSelector.displayWidth = this.ui.stageSelectorWidth;
-      this.stageSelector.displayHeight = this.ui.stageSelectorWidth;
-    }
-  }
-
-  getStageXPosition(index) {
-    const stageCount = this.lesson.stages.length;
-    const totalDotWidth = stageCount * this.ui.stageDotWidth + this.ui.stageReviewDotWidth;
-    const baseX = this.ui.stageX + this.ui.stageWidth / 2 - totalDotWidth / 2;
-    const percentX = index / (this.lesson.stages.length + 1);
-    return baseX + totalDotWidth * percentX;
+    this.stageSelectManager.drawBorder();
+    this.stageSelectManager.createTitle();
+    this.stageSelectManager.createStageIcons();
+    this.stageSelectManager.createStageSelector();
   }
 
   createStageInfo() {
@@ -179,7 +72,7 @@ export default class extends Phaser.Scene {
       this.ui.stageInfoX, this.ui.stageInfoY, this.ui.stageInfoWidth, this.ui.stageInfoHeight
     );
 
-    this.drawSquares([
+    this.mapHelper.drawSquares(this.borderGraphics, [
       [this.ui.stageInfoSquareTLX, this.ui.stageInfoSquareTLY],
       [this.ui.stageInfoSquareTRX, this.ui.stageInfoSquareTRY],
       [this.ui.stageInfoSquareBLX, this.ui.stageInfoSquareBLY],
@@ -260,7 +153,7 @@ export default class extends Phaser.Scene {
       this.ui.instructionsHeight
     );
 
-    this.drawSquares([
+    this.mapHelper.drawSquares(this.borderGraphics, [
       [this.ui.instructionsSquareTLX, this.ui.instructionsSquareTLY],
       [this.ui.instructionsSquareTRX, this.ui.instructionsSquareTRY],
       [this.ui.instructionsSquareBLX, this.ui.instructionsSquareBLY],
@@ -291,12 +184,6 @@ export default class extends Phaser.Scene {
     });
   }
 
-  drawSquares(squareCoords) {
-    squareCoords.forEach((s) => {
-      this.borderGraphics.fillRect(s[0], s[1], townMap.ui.squareWidth, townMap.ui.squareWidth);
-    });
-  }
-
   enableInputHandling() {
     if (!this.inputHandled) {
       this.inputHandled = true;
@@ -321,19 +208,9 @@ export default class extends Phaser.Scene {
 
   handleKeyDown(e) {
     if (e.keyCode === this.keys.LEFT.keyCode) {
-      this.decrementSelectedStage();
+      this.stageSelectManager.decrementSelectedStage();
     } else if (e.keyCode === this.keys.RIGHT.keyCode) {
-      this.incrementSelectedStage();
+      this.stageSelectManager.incrementSelectedStage();
     }
-  }
-
-  decrementSelectedStage() {
-    this.selectedStage = Math.max(this.selectedStage - 1, 0);
-    this.updateStageSelector();
-  }
-
-  incrementSelectedStage() {
-    this.selectedStage = Math.min(this.selectedStage + 1, this.lesson.stages.length);
-    this.updateStageSelector();
   }
 }

@@ -5,7 +5,7 @@ import Loading from './screens/Loading';
 import TitleMenu from './screens/titleMenu/TitleMenu';
 import Endgame from './screens/Endgame';
 import VocabStudy from './screens/vocabStudy/VocabStudy';
-import TownMap from './screens/map/TownMap';
+import TownMap from './screens/townMap/TownMap';
 import WebManager from './web/WebManager';
 
 const phaserConfig = {
