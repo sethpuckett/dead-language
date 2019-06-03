@@ -9,6 +9,9 @@ import TownMapLessonInfoManager from './TownMapLessonInfoManager';
 import TownMapStageSelectManager from './TownMapStageSelectManager';
 import TownMapStageInfoManager from './TownMapStageInfoManager';
 
+const LESSON_SELECT = 'lesson-select';
+const STAGE_SELECT = 'stage-select';
+
 export default class extends Phaser.Scene {
   constructor() {
     super({ key: 'TownMap' });
@@ -20,8 +23,6 @@ export default class extends Phaser.Scene {
     this.stage = this.sys.game.db.getStage('intro-01');
     this.ui = townMapUiHelper(this.sys.game.config);
     this.statusManager = new HudStatusManager(this);
-
-    this.inputHandled = true;
 
     this.borderGraphics = this.add.graphics();
     this.borderGraphics.fillStyle(townMap.ui.borderColor);
@@ -41,12 +42,9 @@ export default class extends Phaser.Scene {
     this.createStageSelect();
     this.createStageInfo();
     this.createInstructions();
-    this.createInput();
     this.createStartModal();
-  }
 
-  update() {
-
+    this.stageSelectManager.enableInputHandling();
   }
 
   createMap() {
@@ -68,6 +66,19 @@ export default class extends Phaser.Scene {
   createStageInfo() {
     this.stageInfoManager.drawBorder();
     this.stageInfoManager.createStageInfo();
+  }
+
+  disableInputHandling() {
+    this.stageSelectManager.disableInputHandling();
+  }
+
+  assignInputControl(component) {
+    this.disableInputHandling();
+    if (component === LESSON_SELECT) {
+      // TODO: lesson input
+    } else if (component === STAGE_SELECT) {
+      this.stageSelectManager.enableInputHandling();
+    }
   }
 
   createInstructions() {
@@ -105,37 +116,7 @@ export default class extends Phaser.Scene {
     this.modal.enableInputClose();
     this.modal.setCloseCallback(() => {
       this.modal.disableInputHandling();
-      this.enableInputHandling();
+      this.assignInputControl(STAGE_SELECT);
     });
-  }
-
-  enableInputHandling() {
-    if (!this.inputHandled) {
-      this.inputHandled = true;
-      this.createInput();
-    }
-  }
-
-  disableInputHandling() {
-    if (this.inputHandled) {
-      this.inputHandled = false;
-      this.keys = null;
-      this.input.keyboard.off('keydown', this.handleKeyDown);
-    }
-  }
-
-  createInput() {
-    this.keys = this.input.keyboard.addKeys(
-      'SPACE,ENTER,UP,DOWN,LEFT,RIGHT,ESC'
-    );
-    this.input.keyboard.on('keydown', this.handleKeyDown, this);
-  }
-
-  handleKeyDown(e) {
-    if (e.keyCode === this.keys.LEFT.keyCode) {
-      this.stageSelectManager.decrementSelectedStage();
-    } else if (e.keyCode === this.keys.RIGHT.keyCode) {
-      this.stageSelectManager.incrementSelectedStage();
-    }
   }
 }

@@ -8,6 +8,7 @@ export default class {
     this.lesson = lesson;
     this.mapHelper = new TownMapHelper();
     this.selectedStage = 0;
+    this.inputHandled = false;
   }
 
   drawBorder() {
@@ -89,14 +90,19 @@ export default class {
     }
   }
 
-  decrementSelectedStage() {
-    this.selectedStage = Math.max(this.selectedStage - 1, 0);
-    this.updateStageSelector();
+  enableInputHandling() {
+    if (!this.inputHandled) {
+      this.inputHandled = true;
+      this.createInput();
+    }
   }
 
-  incrementSelectedStage() {
-    this.selectedStage = Math.min(this.selectedStage + 1, this.lesson.stages.length);
-    this.updateStageSelector();
+  disableInputHandling() {
+    if (this.inputHandled) {
+      this.inputHandled = false;
+      this.keys = null;
+      this.scene.input.keyboard.off('keydown', this.handleKeyDown);
+    }
   }
 
   // Private
@@ -108,5 +114,30 @@ export default class {
     const baseX = this.scene.ui.stageX + this.scene.ui.stageWidth / 2 - totalDotWidth / 2;
     const percentX = index / (this.lesson.stages.length + 1);
     return baseX + totalDotWidth * percentX;
+  }
+
+  createInput() {
+    this.keys = this.scene.input.keyboard.addKeys(
+      'SPACE,ENTER,LEFT,RIGHT,ESC'
+    );
+    this.scene.input.keyboard.on('keydown', this.handleKeyDown, this);
+  }
+
+  handleKeyDown(e) {
+    if (e.keyCode === this.keys.LEFT.keyCode) {
+      this.decrementSelectedStage();
+    } else if (e.keyCode === this.keys.RIGHT.keyCode) {
+      this.incrementSelectedStage();
+    }
+  }
+
+  decrementSelectedStage() {
+    this.selectedStage = Math.max(this.selectedStage - 1, 0);
+    this.updateStageSelector();
+  }
+
+  incrementSelectedStage() {
+    this.selectedStage = Math.min(this.selectedStage + 1, this.lesson.stages.length);
+    this.updateStageSelector();
   }
 }
