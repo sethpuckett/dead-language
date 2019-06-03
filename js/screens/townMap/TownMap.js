@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
-import { townMap, depth, fonts } from '../../config';
+import { townMap, depth, fonts, screens } from '../../config';
 import HudStatusManager from '../HudStatusManager';
 import Modal from '../Modal';
+import ChoiceModal from '../ChoiceModal';
 import townMapUiHelper from '../ui/townMapUiHelper';
 import TownMapMapManager from './TownMapMapManager';
 import TownMapHelper from './TownMapHelper';
@@ -32,7 +33,6 @@ export default class extends Phaser.Scene {
     this.mapManager = new TownMapMapManager(this, this.borderGraphics);
     this.lessonInfoManager = new TownMapLessonInfoManager(this, this.borderGraphics, this.lesson);
     this.stageSelectManager = new TownMapStageSelectManager(this, this.borderGraphics, this.lesson);
-    this.stageSelectManager = new TownMapStageSelectManager(this, this.borderGraphics, this.lesson);
     this.stageInfoManager = new TownMapStageInfoManager(this, this.borderGraphics, this.stage);
   }
 
@@ -42,9 +42,10 @@ export default class extends Phaser.Scene {
     this.createStageSelect();
     this.createStageInfo();
     this.createInstructions();
-    this.createStartModal();
 
     this.stageSelectManager.enableInputHandling();
+
+    this.createStartModal();
   }
 
   createMap() {
@@ -61,6 +62,7 @@ export default class extends Phaser.Scene {
     this.stageSelectManager.createTitle();
     this.stageSelectManager.createStageIcons();
     this.stageSelectManager.createStageSelector();
+    this.stageSelectManager.setStageSelectedCallback(this.stageSelected);
   }
 
   createStageInfo() {
@@ -118,5 +120,33 @@ export default class extends Phaser.Scene {
       this.modal.disableInputHandling();
       this.assignInputControl(STAGE_SELECT);
     });
+  }
+
+  createStageSelectedModal() {
+    this.disableInputHandling();
+    this.stageModal = new ChoiceModal(this, townMap.choiceModals.stageSelected);
+    this.stageModal.draw();
+    this.stageModal.enableInputHandling();
+    this.stageModal.setCloseCallback((index) => {
+      this.stageModal.disableInputHandling();
+      // TODO: move these index values to config or something
+      if (index === 0) { // start game
+        this.nextScreen = screens.minigame;
+      } else if (index === 1) { // target practice
+        this.nextScreen = screens.vocabStudy;
+      }
+      this.cameras.main.fade(townMap.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
+    });
+  }
+
+  stageSelected(index) {
+    this.selectedStageId = this.lesson.stages[index];
+    this.createStageSelectedModal();
+  }
+
+  fadeCallback(_camera, progress) {
+    if (progress === 1) {
+      this.scene.start(this.nextScreen, this.selectedStageId);
+    }
   }
 }

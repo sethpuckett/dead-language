@@ -1,5 +1,6 @@
 export default {
   gameTypeText: 'Game Type',
+  screenFadeTime: 750,
   ui: {
     borderColor: 0xffffff,
     borderWidth: 5,
@@ -7,6 +8,12 @@ export default {
   },
   modals: {
     start: ['Welcome to the map!'],
+  },
+  choiceModals: {
+    stageSelected: [
+      'Start Game',
+      'Target Practice',
+    ],
   },
   statusMessages: {
     instructions: [

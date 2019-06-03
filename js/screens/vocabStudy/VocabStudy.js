@@ -14,13 +14,13 @@ export default class extends Phaser.Scene {
     super({ key: 'VocabStudy' });
   }
 
-  init() {
+  init(stageId) {
     this.ui = vocabStudyUiHelper(this.sys.game.config);
     this.hudManager = new HudManager(this);
     this.hudManager.setSubmitCallback(this.submitAnswer);
     this.statusManager = new HudStatusManager(this);
-    this.vocabManager = new VocabStudyVocabManager(this, this.sys.game.db.getStage('intro-01').vocab);
-    this.vocabWordManager = new VocabWordManager(this.sys.game.db.getStage('intro-01').vocab);
+    this.vocabManager = new VocabStudyVocabManager(this, this.sys.game.db.getStage(stageId).vocab);
+    this.vocabWordManager = new VocabWordManager(this.sys.game.db.getStage(stageId).vocab);
     this.menuManager = new VocabStudyMenuManager(this, {
       hideLanguage1() { this.vocabManager.hideLanguage1(); },
       hideLanguage2() { this.vocabManager.hideLanguage2(); },

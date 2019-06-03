@@ -13,7 +13,6 @@ export default class extends Phaser.Scene {
     this.zombieManager = new TitleZombieManager(this);
     this.spawnManager = new TitleSpawnManager(this);
     this.menuOptions = [
-      { text: 'Target Practice', key: 'practice' },
       { text: 'Start Demo', key: 'start' },
     ];
     this.currentSelection = 0;
@@ -46,16 +45,25 @@ export default class extends Phaser.Scene {
   }
 
   handleKeyDown(e) {
-    if (e.keyCode === this.keys.UP.keyCode
-        || e.keyCode === this.keys.DOWN.keyCode
-        || e.keyCode === this.keys.TAB.keyCode) {
-      this.currentSelection = this.currentSelection === 0 ? 1 : 0;
-      this.updateMenuSelection();
+    if (e.keyCode === this.keys.UP.keyCode) {
+      this.decrementMenuSelection();
+    } else if (e.keyCode === this.keys.DOWN.keyCode) {
+      this.incrementMenuSelection();
     } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
       this.selectedOption = this.menuOptions[this.currentSelection].key;
       this.selector.setFrame(1);
       this.cameras.main.fade(titleMenu.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
     }
+  }
+
+  decrementMenuSelection() {
+    this.currentSelection = Math.max(this.currentSelection - 1, 0);
+    this.updateMenuSelection();
+  }
+
+  incrementMenuSelection() {
+    this.currentSelection = Math.min(this.currentSelection + 1, this.menuOptions.length - 1);
+    this.updateMenuSelection();
   }
 
   updateMenuSelection() {
@@ -66,8 +74,6 @@ export default class extends Phaser.Scene {
     if (progress === 1) {
       if (this.selectedOption === 'start') {
         this.startGame();
-      } else if (this.selectedOption === 'practice') {
-        this.startPractice();
       }
     }
   }
@@ -110,10 +116,6 @@ export default class extends Phaser.Scene {
 
   startGame() {
     this.scene.start(screens.townMap);
-  }
-
-  startPractice() {
-    this.scene.start(screens.vocabStudy);
   }
 
   createBackground() {

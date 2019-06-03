@@ -78,18 +78,6 @@ export default class {
     this.stageSelector.setOrigin(this.scene.ui.stageDotOriginX, this.scene.ui.stageDotOriginY);
   }
 
-  updateStageSelector() {
-    this.stageSelector.x = this.getStageXPosition(this.selectedStage)
-      - this.scene.ui.stageSelectorXBuffer;
-    if (this.selectedStage === this.lesson.stages.length) { // review stage selected
-      this.stageSelector.displayWidth = this.scene.ui.stageSelectorReviewWidth;
-      this.stageSelector.displayHeight = this.scene.ui.stageSelectorReviewWidth;
-    } else {
-      this.stageSelector.displayWidth = this.scene.ui.stageSelectorWidth;
-      this.stageSelector.displayHeight = this.scene.ui.stageSelectorWidth;
-    }
-  }
-
   enableInputHandling() {
     if (!this.inputHandled) {
       this.inputHandled = true;
@@ -105,7 +93,24 @@ export default class {
     }
   }
 
+  // This will be called with the index of the selected stage for this lesson
+  setStageSelectedCallback(callback) {
+    this.stageSelectedCallback = callback.bind(this.scene);
+  }
+
   // Private
+
+  updateStageSelector() {
+    this.stageSelector.x = this.getStageXPosition(this.selectedStage)
+      - this.scene.ui.stageSelectorXBuffer;
+    if (this.selectedStage === this.lesson.stages.length) { // review stage selected
+      this.stageSelector.displayWidth = this.scene.ui.stageSelectorReviewWidth;
+      this.stageSelector.displayHeight = this.scene.ui.stageSelectorReviewWidth;
+    } else {
+      this.stageSelector.displayWidth = this.scene.ui.stageSelectorWidth;
+      this.stageSelector.displayHeight = this.scene.ui.stageSelectorWidth;
+    }
+  }
 
   getStageXPosition(index) {
     const stageCount = this.lesson.stages.length;
@@ -128,6 +133,12 @@ export default class {
       this.decrementSelectedStage();
     } else if (e.keyCode === this.keys.RIGHT.keyCode) {
       this.incrementSelectedStage();
+    } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
+      if (this.selectedStage < this.lesson.stages.length) {
+        this.stageSelectedCallback(this.selectedStage);
+      } else {
+        // TODO: add review stage
+      }
     }
   }
 

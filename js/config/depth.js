@@ -38,6 +38,13 @@ export default {
     border: 10002,
     text: 10003,
   },
+  choiceModal: {
+    fade: 10000,
+    bg: 10001,
+    border: 10002,
+    text: 10003,
+    selector: 10003,
+  },
   townMap: {
     border: 10,
   },
