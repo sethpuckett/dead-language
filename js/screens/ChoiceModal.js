@@ -36,6 +36,14 @@ export default class {
       this.borderGraphics.destroy();
       this.borderGraphics = null;
     }
+    if (this.choiceTexts != null) {
+      this.choiceTexts.forEach(t => t.destroy());
+      this.choiceTexts = null;
+    }
+    if (this.selector != null) {
+      this.selector.destroy();
+      this.selector = null;
+    }
     if (this.text != null) {
       this.text.destroy();
       this.text = null;
@@ -60,6 +68,10 @@ export default class {
   // Callback will be called with the index of the option selected
   setCloseCallback(callback) {
     this.closeCallback = callback.bind(this.scene);
+  }
+
+  setCancelCallback(callback) {
+    this.cancelCallback = callback.bind(this.scene);
   }
 
   // private
@@ -233,7 +245,7 @@ export default class {
       this.selector.setFrame(images.frames.shotgunFiring);
       this.closeCallback(this.selectedIndex);
     } else if (e.keyCode === this.keys.ESC.keyCode) {
-      // TODO: handle back out
+      this.cancelCallback();
     }
   }
 

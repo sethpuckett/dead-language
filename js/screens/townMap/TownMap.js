@@ -139,6 +139,11 @@ export default class extends Phaser.Scene {
       }
       this.cameras.main.fade(townMap.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
     });
+    this.stageModal.setCancelCallback(() => {
+      this.stageModal.disableInputHandling();
+      this.stageModal.close();
+      this.stageSelectManager.enableInputHandling();
+    });
   }
 
   stageSelected(index) {
