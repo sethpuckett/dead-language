@@ -5,7 +5,7 @@ const HIDE_LANGUAGE_1 = 1;
 const HIDE_LANGUAGE_2 = 2;
 const SHOW_ALL = 3;
 const TARGET_PRACTICE = 4;
-const RETURN_TO_TITLE = 5;
+const RETURN_TO_MAP = 5;
 
 export default class {
   /*
@@ -14,7 +14,7 @@ export default class {
     hideLanguage2: function
     showAll: function
     startTargetPractice: function
-    returnToTitle: function
+    returnToMap: function
   }
   */
   constructor(scene, callbackConfig) {
@@ -23,11 +23,11 @@ export default class {
     this.hideLanguage2 = callbackConfig.hideLanguage2;
     this.showAll = callbackConfig.showAll;
     this.startTargetPractice = callbackConfig.startTargetPractice;
-    this.returnToTitle = callbackConfig.returnToTitle;
+    this.returnToMap = callbackConfig.returnToMap;
     this.inputHandled = true;
 
     this.ui = vocabStudyUiHelper(this.scene.sys.game.config);
-    this.selectedOption = RETURN_TO_TITLE;
+    this.selectedOption = RETURN_TO_MAP;
   }
 
   createMenu() {
@@ -129,7 +129,7 @@ export default class {
       this.ui.menuOption5TextX,
       this.ui.menuOption5TextY,
       fonts.blueSkyWhite,
-      'Back to Title',
+      'Back to Map',
       vocabStudy.fonts.menuOptionSize
     );
     this.option5Text.setOrigin(this.ui.menuOptionTextOrigin);
@@ -153,7 +153,7 @@ export default class {
       this.option3.setFrame(images.frames.hudMenuLight);
     } else if (this.selectedOption === TARGET_PRACTICE) {
       this.option4.setFrame(images.frames.hudMenuLight);
-    } else if (this.selectedOption === RETURN_TO_TITLE) {
+    } else if (this.selectedOption === RETURN_TO_MAP) {
       this.option5.setFrame(images.frames.hudMenuLight);
     }
   }
@@ -165,8 +165,8 @@ export default class {
       this.hideLanguage2.call(this.scene);
     } else if (this.selectedOption === SHOW_ALL) {
       this.showAll.call(this.scene);
-    } else if (this.selectedOption === RETURN_TO_TITLE) {
-      this.returnToTitle.call(this.scene);
+    } else if (this.selectedOption === RETURN_TO_MAP) {
+      this.returnToMap.call(this.scene);
     } else if (this.selectedOption === TARGET_PRACTICE) {
       this.startTargetPractice.call(this.scene);
     }

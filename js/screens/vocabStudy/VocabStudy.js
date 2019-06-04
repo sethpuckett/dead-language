@@ -25,7 +25,7 @@ export default class extends Phaser.Scene {
       hideLanguage1() { this.vocabManager.hideLanguage1(); },
       hideLanguage2() { this.vocabManager.hideLanguage2(); },
       showAll() { this.vocabManager.showAll(); },
-      returnToTitle() { this.returnToTitle(); },
+      returnToMap() { this.returnToMap(); },
       startTargetPractice() { this.createPracticeModal(); },
     });
     this.targetPracticeManager = new VocabStudyTargetPracticeManager(this);
@@ -223,10 +223,10 @@ export default class extends Phaser.Scene {
     this.add.sprite(x, y, images.dirtPile).setScale(images.scales.dirtPile);
   }
 
-  returnToTitle() {
+  returnToMap() {
     this.cameras.main.fade(vocabStudy.screenFadeTime, 0, 0, 0, false, (_c, progress) => {
       if (progress === 1) {
-        this.scene.start(screens.titleMenu);
+        this.scene.start(screens.townMap);
       }
     });
   }
