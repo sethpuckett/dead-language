@@ -124,7 +124,9 @@ export default class extends Phaser.Scene {
 
   createStageSelectedModal() {
     this.disableInputHandling();
-    this.stageModal = new ChoiceModal(this, townMap.choiceModals.stageSelected);
+    this.stageModal = new ChoiceModal(
+      this, townMap.choiceModals.stageSelected.text, townMap.choiceModals.stageSelected.choices
+    );
     this.stageModal.draw();
     this.stageModal.enableInputHandling();
     this.stageModal.setCloseCallback((index) => {

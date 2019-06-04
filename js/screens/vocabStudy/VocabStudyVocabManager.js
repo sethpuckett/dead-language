@@ -4,7 +4,7 @@ import VocabWordManager from '../../languageContent/VocabWordManager';
 import vocabStudyUiHelper from '../ui/vocabStudyUiHelper';
 
 const BIG_FONT_MAX_LENGTH = 22;
-const DOT_COUNT_MODIFIER = 29;
+const DOT_COUNT_MODIFIER = 26;
 
 
 export default class {
@@ -25,7 +25,7 @@ export default class {
       const textLength = c.language1.length + this.vocab.l2WithGender(c).length;
       const fontSize = textLength <= BIG_FONT_MAX_LENGTH
         ? vocabStudy.fonts.vocabSize : vocabStudy.fonts.vocabSizeSmall;
-      const dotCount = Math.ceil(Math.max(DOT_COUNT_MODIFIER - textLength, 0));
+      const dotCount = Math.ceil(Math.max((DOT_COUNT_MODIFIER - textLength) / 4, 0));
 
       let vocab1X = 0;
       let vocab2X = 0;
@@ -61,7 +61,7 @@ export default class {
         (vocab1X + l1.width + vocab2X - l2.width) / 2,
         this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset),
         fonts.blueSkyWhite,
-        '.'.repeat(dotCount),
+        ' . '.repeat(dotCount),
         vocabStudy.fonts.dotSize
       );
       dots.setOrigin(this.ui.dotsOriginX, this.ui.dotsOriginY);

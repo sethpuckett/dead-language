@@ -9,11 +9,19 @@ export default (config) => {
     padding: u.padding,
     paddingBig: u.paddingBig,
     textMargin: u.w * 0.07,
-    bottomBuffer: u.h * 0.03,
     cornerSquareWidth: u.w * 0.04,
     borderWidth: u.w * 0.015,
-    textOrigin: u.center,
-    anyKeyTextOriginX: u.center,
-    anyKeyTextOriginY: u.bottom,
+
+    choiceTextX: u.w_2,
+    choiceTextOriginX: u.left,
+    choiceTextOriginY: u.center,
+    choiceTextVerticalPadding: u.h * 0.075,
+
+    textOriginX: u.center,
+    textOriginY: u.bottom,
+
+    selectX: u.w_2 - u.paddingBig,
+    selectOriginX: u.right,
+    selectOriginY: u.center,
   };
 };

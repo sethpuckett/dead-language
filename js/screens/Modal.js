@@ -5,9 +5,9 @@ import modalUiHelper from './ui/modalUiHelper';
 const MIN_WIDTH = 450;
 
 export default class {
-  constructor(scene, text) {
+  constructor(scene, textContent) {
     this.scene = scene;
-    this.text = text;
+    this.textContent = textContent;
     this.ui = modalUiHelper(this.scene.sys.game.config);
   }
 
@@ -65,7 +65,7 @@ export default class {
   createPressAnyKey() {
     this.anyKeyText = this.scene.add.bitmapText(
       this.ui.w / 2,
-      this.bgRect.y + this.bgRect.height - this.ui.cornerSquareWidth,
+      this.bgRect.y + this.bgRect.height - this.ui.cornerSquareWidth - this.ui.padding,
       fonts.blueSkyWhite,
       modal.pressAnyKeyText,
       modal.fontSize
@@ -163,7 +163,7 @@ export default class {
 
   createText() {
     this.text = this.scene.add.bitmapText(
-      this.ui.w / 2, this.ui.h / 2, fonts.blueSkyWhite, this.text, modal.fontSize
+      this.ui.w / 2, this.ui.h / 2, fonts.blueSkyWhite, this.textContent, modal.fontSize
     );
     this.text.setOrigin(this.ui.textOrigin);
     this.text.setCenterAlign();

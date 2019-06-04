@@ -10,10 +10,13 @@ export default {
     start: ['Welcome to the map!'],
   },
   choiceModals: {
-    stageSelected: [
-      'Start Game',
-      'Target Practice',
-    ],
+    stageSelected: {
+      text: ['Are you ready to start?', '', 'Or do you need some target practice first?'],
+      choices: [
+        'Start Game',
+        'Target Practice',
+      ],
+    },
   },
   statusMessages: {
     instructions: [
