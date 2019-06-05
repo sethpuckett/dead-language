@@ -7,6 +7,7 @@ export default {
     squareWidth: 10,
     mapGridWidth: 3,
     mapGridColor: 0x222222,
+    borderDisableColor: 0x222222,
     mapPinCellWidth: 0.25,
   },
   modals: {

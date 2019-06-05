@@ -2,10 +2,9 @@ import { fonts, townMap, images } from '../../config';
 import TownMapHelper from './TownMapHelper';
 
 export default class {
-  constructor(scene, borderGraphics, lesson) {
+  constructor(scene, borderGraphics) {
     this.scene = scene;
     this.borderGraphics = borderGraphics;
-    this.lesson = lesson;
     this.mapHelper = new TownMapHelper();
     this.selectedStage = 0;
     this.inputHandled = false;
@@ -28,6 +27,8 @@ export default class {
   }
 
   createTitle() {
+    this.clearTitle();
+
     this.stageTitle = this.scene.add.bitmapText(
       this.scene.ui.stageTitleX,
       this.scene.ui.stageTitleY,
@@ -41,7 +42,44 @@ export default class {
     this.stageTitle.setCenterAlign();
   }
 
+  setLesson(lesson) {
+    this.lesson = lesson;
+    this.selectedStage = 0;
+    // this.createTitle();
+    this.createStageIcons();
+    // this.createStageSelector();
+  }
+
+  clearAll() {
+    this.clearTitle();
+    this.clearStageIcons();
+    this.clearStageSelector();
+  }
+
+  clearTitle() {
+    if (this.stageTitle != null) {
+      this.stageTitle.destroy();
+      this.stageTitle = null;
+    }
+  }
+
+  clearStageIcons() {
+    if (this.stageDots != null) {
+      this.stageDots.forEach(d => d.destroy());
+      this.stageDots = null;
+    }
+  }
+
+  clearStageSelector() {
+    if (this.stageSelector != null) {
+      this.stageSelector.destroy();
+      this.stageSelector = null;
+    }
+  }
+
   createStageIcons() {
+    this.clearStageIcons();
+
     // evenly space stage dots in stage select section
     this.stageDots = [];
     this.lesson.stages.forEach((stage, index) => {
@@ -53,6 +91,7 @@ export default class {
       dot.setOrigin(this.scene.ui.stageDotOriginX, this.scene.ui.stageDotOriginY);
       dot.displayWidth = this.scene.ui.stageDotWidth;
       dot.displayHeight = this.scene.ui.stageDotWidth;
+      this.stageDots.push(dot);
     });
 
     // draw review stage dot
@@ -66,9 +105,12 @@ export default class {
     reviewDot.setOrigin(this.scene.ui.stageDotOriginX, this.scene.ui.stageDotOriginY);
     reviewDot.displayWidth = this.scene.ui.stageReviewDotWidth;
     reviewDot.displayHeight = this.scene.ui.stageReviewDotWidth;
+    this.stageDots.push(reviewDot);
   }
 
   createStageSelector() {
+    this.clearStageSelector();
+
     this.stageSelector = this.scene.add.sprite(
       this.getStageXPosition(this.selectedStage) - this.scene.ui.stageSelectorXBuffer,
       this.scene.ui.stageDotY, images.hudItemBorder

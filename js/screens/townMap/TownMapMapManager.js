@@ -131,7 +131,10 @@ export default class {
     } else if (e.keyCode === this.keys.DOWN.keyCode) {
       this.moveSelectedCellDown();
     } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
-      // TODO: Lesson selected
+      const lessonId = this.getSelectedLessonId();
+      if (lessonId != null) {
+        this.lessonSelectedCallback(lessonId);
+      }
     } else if (e.keyCode === this.keys.ESC.keyCode) {
       // TODO: Back to title
     }

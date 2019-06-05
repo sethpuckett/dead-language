@@ -53,6 +53,7 @@ export default class extends Phaser.Scene {
     this.mapManager.createLessonPins();
     this.mapManager.createLessonSelector();
     this.mapManager.setLessonChangedCallback(this.lessonChanged);
+    this.mapManager.setLessonSelectedCallback(this.lessonSelected);
   }
 
   createLessonInfo() {
@@ -67,10 +68,13 @@ export default class extends Phaser.Scene {
 
   createStageSelect() {
     this.stageSelectManager.drawBorder();
-    this.stageSelectManager.createTitle();
-    this.stageSelectManager.createStageIcons();
-    this.stageSelectManager.createStageSelector();
     this.stageSelectManager.setStageSelectedCallback(this.stageSelected);
+
+    const lessonId = this.mapManager.getSelectedLessonId();
+    if (lessonId != null) {
+      const lesson = this.sys.game.db.getLesson(lessonId);
+      this.stageSelectManager.setLesson(lesson);
+    }
   }
 
   createStageInfo() {
@@ -164,8 +168,23 @@ export default class extends Phaser.Scene {
     if (lessonId != null) {
       const lesson = this.sys.game.db.getLesson(lessonId);
       this.lessonInfoManager.createLessonInfo(lesson);
+      this.stageSelectManager.setLesson(lesson);
     } else {
       this.lessonInfoManager.clearLessonInfo();
+      this.stageSelectManager.clearAll();
+    }
+  }
+
+  lessonSelected(lessonId) {
+    if (lessonId != null) {
+      const lesson = this.sys.game.db.getLesson(lessonId);
+      this.lessonInfoManager.createLessonInfo(lesson);
+      this.stageSelectManager.setLesson(lesson);
+      this.stageSelectManager.createTitle();
+      this.stageSelectManager.createStageSelector();
+
+      this.mapManager.disableInputHandling();
+      this.stageSelectManager.enableInputHandling();
     }
   }
 
