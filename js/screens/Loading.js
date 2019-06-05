@@ -186,6 +186,12 @@ export default class extends Phaser.Scene {
       margin: 0,
       spacing: 0,
     });
+    this.load.spritesheet(images.colorSquare, images.files.colorSquare, {
+      frameWidth: images.frameSizes.colorSquare.width,
+      frameHeight: images.frameSizes.colorSquare.height,
+      margin: 0,
+      spacing: 0,
+    });
   }
 
   createAnimations() {

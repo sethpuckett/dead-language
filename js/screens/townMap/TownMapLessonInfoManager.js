@@ -2,10 +2,9 @@ import { fonts, townMap } from '../../config';
 import TownMapHelper from './TownMapHelper';
 
 export default class {
-  constructor(scene, borderGraphics, lesson) {
+  constructor(scene, borderGraphics) {
     this.scene = scene;
     this.borderGraphics = borderGraphics;
-    this.lesson = lesson;
     this.mapHelper = new TownMapHelper();
   }
 
@@ -25,12 +24,14 @@ export default class {
     ]);
   }
 
-  createLessonInfo() {
+  createLessonInfo(lesson) {
+    this.clearLessonInfo();
+
     this.lessonInfoTitle = this.scene.add.bitmapText(
       this.scene.ui.lessonInfoTitleX,
       this.scene.ui.lessonInfoTitleY,
       fonts.blueSkyWhite,
-      this.lesson.name,
+      lesson.name,
       townMap.fonts.lessonInfoTitleSize
     );
     this.lessonInfoTitle.setOrigin(
@@ -43,11 +44,23 @@ export default class {
       this.scene.ui.lessonInfoTextX,
       this.scene.ui.lessonInfoTextY,
       fonts.blueSkyWhite,
-      this.lesson.info,
+      lesson.info,
       townMap.fonts.lessonInfoTextSize
     );
     this.lessonInfoText.setOrigin(
       this.scene.ui.lessonInfoTextOriginX, this.scene.ui.lessonInfoTextOriginY
     );
+  }
+
+  clearLessonInfo() {
+    if (this.lessonInfoTitle != null) {
+      this.lessonInfoTitle.destroy();
+      this.lessonInfoTitle = null;
+    }
+
+    if (this.lessonInfoText != null) {
+      this.lessonInfoText.destroy();
+      this.lessonInfoText = null;
+    }
   }
 }

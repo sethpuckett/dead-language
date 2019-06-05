@@ -47,5 +47,6 @@ export default {
   },
   townMap: {
     border: 10,
+    mapGrid: 10,
   },
 };

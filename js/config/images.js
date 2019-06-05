@@ -47,6 +47,7 @@ export default {
   shotgun: 'shotgun',
   dirtPile: 'dirt-pile',
   yellowBubble: 'yellow-bubble',
+  colorSquare: 'color-square',
   files: {
     grayZombie: 'assets/images/zombie-gray.png',
     greenZombie: 'assets/images/zombie-green.png',
@@ -94,6 +95,7 @@ export default {
     shotgun: 'assets/images/shotgun.png',
     dirtPile: 'assets/images/dirt-pile.png',
     yellowBubble: 'assets/images/yellow-bubble.png',
+    colorSquare: 'assets/images/color-square.png',
   },
   frames: {
     healthFull: 0,
@@ -108,6 +110,9 @@ export default {
     hudMessageDark: 1,
     yellowBubbleEmpty: 0,
     yellowBubbleFull: 1,
+    colorSquareGreen: 0,
+    colorSquareYellow: 1,
+    colorSquareRed: 2,
   },
   scales: {
     crate: 1.5,
@@ -145,6 +150,10 @@ export default {
       height: 64,
     },
     yellowBubble: {
+      width: 16,
+      height: 16,
+    },
+    colorSquare: {
       width: 16,
       height: 16,
     },

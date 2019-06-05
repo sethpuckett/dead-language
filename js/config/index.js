@@ -17,3 +17,4 @@ export { default as modal } from './modal';
 export { default as choiceModal } from './choiceModal';
 export { default as townMap } from './townMap';
 export { default as gameTypes } from './gameTypes';
+export { default as lessonMap } from './lessonMap';

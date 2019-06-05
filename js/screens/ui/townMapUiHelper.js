@@ -6,6 +6,8 @@ export default (config) => {
 
   return {
 
+    padding: u.padding,
+
     // Map
 
     mapX: u.paddingBig,
@@ -23,6 +25,9 @@ export default (config) => {
     get mapSquareBLY() { return this.mapY + this.mapHeight - townMap.ui.squareWidth; },
     get mapSquareBRX() { return this.mapX + this.mapWidth - townMap.ui.squareWidth; },
     get mapSquareBRY() { return this.mapY + this.mapHeight - townMap.ui.squareWidth; },
+
+    mapPinOrigin: u.center,
+    mapSelectorOrigin: u.center,
 
     // Lesson Info
 

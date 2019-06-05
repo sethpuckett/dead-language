@@ -26,7 +26,6 @@ export default class extends Phaser.Scene {
     this.statusManager = new HudStatusManager(this);
 
     this.borderGraphics = this.add.graphics();
-    this.borderGraphics.fillStyle(townMap.ui.borderColor);
     this.borderGraphics.lineStyle(townMap.ui.borderWidth, townMap.ui.borderColor);
     this.borderGraphics.setDepth(depth.townMap.border);
 
@@ -43,18 +42,27 @@ export default class extends Phaser.Scene {
     this.createStageInfo();
     this.createInstructions();
 
-    this.stageSelectManager.enableInputHandling();
+    this.mapManager.enableInputHandling();
 
     this.createStartModal();
   }
 
   createMap() {
     this.mapManager.drawBorder();
+    this.mapManager.createMapGrid();
+    this.mapManager.createLessonPins();
+    this.mapManager.createLessonSelector();
+    this.mapManager.setLessonChangedCallback(this.lessonChanged);
   }
 
   createLessonInfo() {
     this.lessonInfoManager.drawBorder();
-    this.lessonInfoManager.createLessonInfo();
+
+    const lessonId = this.mapManager.getSelectedLessonId();
+    if (lessonId != null) {
+      const lesson = this.sys.game.db.getLesson(lessonId);
+      this.lessonInfoManager.createLessonInfo(lesson);
+    }
   }
 
   createStageSelect() {
@@ -72,12 +80,13 @@ export default class extends Phaser.Scene {
 
   disableInputHandling() {
     this.stageSelectManager.disableInputHandling();
+    this.mapManager.disableInputHandling();
   }
 
   assignInputControl(component) {
     this.disableInputHandling();
     if (component === LESSON_SELECT) {
-      // TODO: lesson input
+      this.mapManager.enableInputHandling();
     } else if (component === STAGE_SELECT) {
       this.stageSelectManager.enableInputHandling();
     }
@@ -118,7 +127,7 @@ export default class extends Phaser.Scene {
     this.modal.enableInputClose();
     this.modal.setCloseCallback(() => {
       this.modal.disableInputHandling();
-      this.assignInputControl(STAGE_SELECT);
+      this.assignInputControl(LESSON_SELECT);
     });
   }
 
@@ -149,6 +158,15 @@ export default class extends Phaser.Scene {
   stageSelected(index) {
     this.selectedStageId = this.lesson.stages[index];
     this.createStageSelectedModal();
+  }
+
+  lessonChanged(lessonId) {
+    if (lessonId != null) {
+      const lesson = this.sys.game.db.getLesson(lessonId);
+      this.lessonInfoManager.createLessonInfo(lesson);
+    } else {
+      this.lessonInfoManager.clearLessonInfo();
+    }
   }
 
   fadeCallback(_camera, progress) {
