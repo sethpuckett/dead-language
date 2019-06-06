@@ -141,13 +141,27 @@ export default class {
     }
   }
 
-  // This will be called with the index of the selected stage for this lesson
+  // This will be called with the id of the selected stage
+  setStageChangedCallback(callback) {
+    this.stageChangedCallback = callback.bind(this.scene);
+  }
+
+  // This will be called with the id of the selected stage
   setStageSelectedCallback(callback) {
     this.stageSelectedCallback = callback.bind(this.scene);
   }
 
   setCancelCallback(callback) {
     this.cancelCallback = callback.bind(this.scene);
+  }
+
+  getSelectedStageId() {
+    if (this.selectedStage < this.lesson.stages.length) {
+      return this.lesson.stages[this.selectedStage];
+    }
+
+    // TODO: handle review
+    return 'review';
   }
 
   // Private
@@ -162,6 +176,8 @@ export default class {
       this.stageSelector.displayWidth = this.scene.ui.stageSelectorWidth;
       this.stageSelector.displayHeight = this.scene.ui.stageSelectorWidth;
     }
+
+    this.stageChangedCallback(this.getSelectedStageId());
   }
 
   getStageXPosition(index) {
@@ -187,7 +203,7 @@ export default class {
       this.incrementSelectedStage();
     } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
       if (this.selectedStage < this.lesson.stages.length) {
-        this.stageSelectedCallback(this.selectedStage);
+        this.stageSelectedCallback(this.getSelectedStageId());
       } else {
         // TODO: add review stage
       }

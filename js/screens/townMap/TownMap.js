@@ -72,6 +72,7 @@ export default class extends Phaser.Scene {
 
   createStageSelect() {
     this.stageSelectManager.drawBorder(false);
+    this.stageSelectManager.setStageChangedCallback(this.stageChanged);
     this.stageSelectManager.setStageSelectedCallback(this.stageSelected);
     this.stageSelectManager.setCancelCallback(this.stageSelectCancelled);
 
@@ -84,7 +85,6 @@ export default class extends Phaser.Scene {
 
   createStageInfo() {
     this.stageInfoManager.drawBorder(false);
-    this.stageInfoManager.createStageInfo();
   }
 
   disableInputHandling() {
@@ -164,8 +164,12 @@ export default class extends Phaser.Scene {
     });
   }
 
-  stageSelected(index) {
-    this.selectedStageId = this.lesson.stages[index];
+  stageChanged(stageId) {
+    this.stageInfoManager.createStageInfo(stageId);
+  }
+
+  stageSelected(stageId) {
+    this.selectedStageId = stageId;
     this.createStageSelectedModal();
   }
 
@@ -180,6 +184,7 @@ export default class extends Phaser.Scene {
     this.stageInfoManager.drawBorder(false);
     this.stageSelectManager.disableInputHandling();
     this.mapManager.enableInputHandling();
+    this.stageInfoManager.clearStageInfo();
   }
 
   lessonChanged(lessonId) {
@@ -208,6 +213,8 @@ export default class extends Phaser.Scene {
       this.stageInfoManager.drawBorder(true);
       this.mapManager.disableInputHandling();
       this.stageSelectManager.enableInputHandling();
+
+      this.stageInfoManager.createStageInfo(this.stageSelectManager.getSelectedStageId());
     }
   }
 
