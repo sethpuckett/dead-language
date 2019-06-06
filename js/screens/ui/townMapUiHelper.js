@@ -26,6 +26,16 @@ export default (config) => {
     get mapSquareBRX() { return this.mapX + this.mapWidth - townMap.ui.squareWidth; },
     get mapSquareBRY() { return this.mapY + this.mapHeight - townMap.ui.squareWidth; },
 
+    get mapTitleX() { return this.mapX + this.mapWidth / 2; },
+    get mapTitleY() { return this.mapY + u.paddingBig; },
+    mapTitleOriginX: u.center,
+    mapTitleOriginY: u.top,
+
+    get mapGridX() { return this.mapX; },
+    get mapGridY() { return this.mapY + u.h * 0.06; },
+    get mapGridWidth() { return this.mapWidth; },
+    get mapGridHeight() { return this.mapHeight + this.mapY - this.mapGridY; },
+
     mapPinOrigin: u.center,
     mapSelectorOrigin: u.center,
 

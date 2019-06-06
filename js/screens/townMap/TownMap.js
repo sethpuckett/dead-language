@@ -50,11 +50,13 @@ export default class extends Phaser.Scene {
 
   createMap() {
     this.mapManager.drawBorder(true);
+    this.mapManager.createTitle();
     this.mapManager.createMapGrid();
     this.mapManager.createLessonPins();
     this.mapManager.createLessonSelector();
     this.mapManager.setLessonChangedCallback(this.lessonChanged);
     this.mapManager.setLessonSelectedCallback(this.lessonSelected);
+    this.mapManager.setCancelCallback(this.lessonSelectCancelled);
   }
 
   createLessonInfo() {
@@ -171,6 +173,7 @@ export default class extends Phaser.Scene {
     this.stageSelectManager.clearStageSelector();
 
     this.mapManager.drawBorder(true);
+    this.mapManager.createTitle();
     this.lessonInfoManager.drawBorder(true);
     this.stageSelectManager.drawBorder(false);
     this.stageInfoManager.drawBorder(false);
@@ -193,6 +196,7 @@ export default class extends Phaser.Scene {
     if (lessonId != null) {
       const lesson = this.sys.game.db.getLesson(lessonId);
       this.lessonInfoManager.createLessonInfo(lesson);
+      this.mapManager.clearTitle();
       this.stageSelectManager.setLesson(lesson);
       this.stageSelectManager.createTitle();
       this.stageSelectManager.createStageSelector();
@@ -204,6 +208,10 @@ export default class extends Phaser.Scene {
       this.mapManager.disableInputHandling();
       this.stageSelectManager.enableInputHandling();
     }
+  }
+
+  lessonSelectCancelled() {
+    this.scene.start(screens.titleMenu);
   }
 
   fadeCallback(_camera, progress) {

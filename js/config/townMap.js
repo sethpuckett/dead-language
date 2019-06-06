@@ -61,6 +61,8 @@ export default {
   fonts: {
     instructionsSize: 11,
     instructionsFill: '#ffffff',
+    mapTitleSize: 14,
+    mapTitleFill: '#ffffff',
     lessonInfoTitleSize: 16,
     lessonInfoTitleColor: 0xffff22,
     lessonInfoTextSize: 11,

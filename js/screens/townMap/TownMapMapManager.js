@@ -1,8 +1,8 @@
-import { townMap, depth, lessonMap, images } from '../../config';
+import { townMap, depth, lessonMap, images, fonts } from '../../config';
 import TownMapHelper from './TownMapHelper';
 
 const MAP_X_CELL_COUNT = 8;
-const MAP_Y_CELL_COUNT = 6;
+const MAP_Y_CELL_COUNT = 5;
 
 export default class {
   constructor(scene) {
@@ -34,17 +34,40 @@ export default class {
     ]);
   }
 
+  createTitle() {
+    this.clearTitle();
+
+    this.mapTitle = this.scene.add.bitmapText(
+      this.scene.ui.mapTitleX,
+      this.scene.ui.mapTitleY,
+      fonts.blueSkyWhite,
+      'Choose a lesson',
+      townMap.fonts.mapTitleSize
+    );
+    this.mapTitle.setOrigin(
+      this.scene.ui.mapTitleOriginX, this.scene.ui.mapTitleOriginY
+    );
+    this.mapTitle.setCenterAlign();
+  }
+
+  clearTitle() {
+    if (this.mapTitle != null) {
+      this.mapTitle.destroy();
+      this.mapTitle = null;
+    }
+  }
+
   createMapGrid() {
     this.gridGraphics = this.scene.add.graphics();
     this.gridGraphics.lineStyle(townMap.ui.mapGridWidth, townMap.ui.mapGridColor);
     this.gridGraphics.setDepth(depth.townMap.mapGrid);
 
-    this.cellWidth = (this.scene.ui.mapWidth - townMap.ui.squareWidth * 2
+    this.cellWidth = (this.scene.ui.mapGridWidth - townMap.ui.squareWidth * 2
       - this.scene.ui.padding * 2) / MAP_X_CELL_COUNT;
-    this.cellHeight = (this.scene.ui.mapHeight - townMap.ui.squareWidth * 2
+    this.cellHeight = (this.scene.ui.mapGridHeight - townMap.ui.squareWidth * 2
       - this.scene.ui.padding * 2) / MAP_Y_CELL_COUNT;
-    this.baseX = this.scene.ui.mapX + townMap.ui.squareWidth + this.scene.ui.padding;
-    this.baseY = this.scene.ui.mapY + townMap.ui.squareWidth + this.scene.ui.padding;
+    this.baseX = this.scene.ui.mapGridX + townMap.ui.squareWidth + this.scene.ui.padding;
+    this.baseY = this.scene.ui.mapGridY + townMap.ui.squareWidth + this.scene.ui.padding;
 
     for (let x = 0; x < MAP_X_CELL_COUNT; x += 1) {
       for (let y = 0; y < MAP_Y_CELL_COUNT; y += 1) {
@@ -108,6 +131,10 @@ export default class {
     this.lessonSelectedCallback = callback.bind(this.scene);
   }
 
+  setCancelCallback(callback) {
+    this.cancelCallback = callback.bind(this.scene);
+  }
+
   getSelectedLessonId() {
     const lesson = lessonMap.find(
       l => l.position.x === this.selectedCell.x && l.position.y === this.selectedCell.y
@@ -144,7 +171,7 @@ export default class {
         this.lessonSelectedCallback(lessonId);
       }
     } else if (e.keyCode === this.keys.ESC.keyCode) {
-      // TODO: Back to title
+      this.cancelCallback();
     }
   }
 
