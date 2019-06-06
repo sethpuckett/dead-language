@@ -1,5 +1,4 @@
 export default {
-  gameTypeText: 'Game Type',
   mapTitleText: 'Choose a Location',
   stageTitleText: 'Choose a Stage',
   screenFadeTime: 750,

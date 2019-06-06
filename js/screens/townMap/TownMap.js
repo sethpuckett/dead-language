@@ -164,8 +164,8 @@ export default class extends Phaser.Scene {
     });
   }
 
-  stageChanged(stageId) {
-    this.stageInfoManager.createStageInfo(stageId);
+  stageChanged(stageId, stageNumber) {
+    this.stageInfoManager.createStageInfo(stageId, stageNumber);
   }
 
   stageSelected(stageId) {
@@ -214,7 +214,10 @@ export default class extends Phaser.Scene {
       this.mapManager.disableInputHandling();
       this.stageSelectManager.enableInputHandling();
 
-      this.stageInfoManager.createStageInfo(this.stageSelectManager.getSelectedStageId());
+      this.stageInfoManager.createStageInfo(
+        this.stageSelectManager.getSelectedStageId(),
+        this.stageSelectManager.getSelectedStageNumber()
+      );
     }
   }
 

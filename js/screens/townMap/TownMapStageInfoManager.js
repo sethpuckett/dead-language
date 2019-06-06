@@ -34,7 +34,7 @@ export default class {
     ]);
   }
 
-  createStageInfo(stageId) {
+  createStageInfo(stageId, stageNumber) {
     this.clearStageInfo();
 
     // TODO: handle review
@@ -46,19 +46,19 @@ export default class {
 
     switch (stage.type) {
       case gameTypes.zombieAssault.id:
-        this.createZombieAssaultStageInfo();
+        this.createZombieAssaultStageInfo(stageNumber);
         break;
       default:
         throw Error(`Invalid stage type '${stage.type}'`);
     }
   }
 
-  createCommonStageInfo(stageType) {
+  createCommonStageInfo(stageType, stageNumber) {
     this.stageInfoTitle = this.scene.add.bitmapText(
       this.scene.ui.stageInfoTitleX,
       this.scene.ui.stageInfoTitleY,
       fonts.blueSkyWhite,
-      townMap.gameTypeText,
+      `Stage ${stageNumber.toString().padStart(2, '0')}`,
       townMap.fonts.stageInfoTitleSize
     );
     this.stageInfoTitle.setOrigin(
@@ -92,8 +92,8 @@ export default class {
     this.stageInfoSubtitle.setCenterAlign();
   }
 
-  createZombieAssaultStageInfo() {
-    this.createCommonStageInfo(gameTypes.zombieAssault.id);
+  createZombieAssaultStageInfo(stageNumber) {
+    this.createCommonStageInfo(gameTypes.zombieAssault.id, stageNumber);
 
     this.stageInfoSprites = [];
     this.stageInfoZombie1 = this.scene.add.sprite(

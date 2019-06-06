@@ -164,6 +164,10 @@ export default class {
     return 'review';
   }
 
+  getSelectedStageNumber() {
+    return this.selectedStage + 1;
+  }
+
   // Private
 
   updateStageSelector() {
@@ -177,7 +181,7 @@ export default class {
       this.stageSelector.displayHeight = this.scene.ui.stageSelectorWidth;
     }
 
-    this.stageChangedCallback(this.getSelectedStageId());
+    this.stageChangedCallback(this.getSelectedStageId(), this.getSelectedStageNumber());
   }
 
   getStageXPosition(index) {
