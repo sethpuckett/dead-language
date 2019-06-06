@@ -5,16 +5,24 @@ const MAP_X_CELL_COUNT = 8;
 const MAP_Y_CELL_COUNT = 6;
 
 export default class {
-  constructor(scene, borderGraphics) {
+  constructor(scene) {
     this.scene = scene;
-    this.borderGraphics = borderGraphics;
     this.mapHelper = new TownMapHelper();
 
     this.selectedCell = { x: 0, y: 0 };
     this.inputHandled = false;
+
+    this.borderGraphics = this.scene.add.graphics();
+    this.borderGraphics.setDepth(depth.townMap.border);
   }
 
-  drawBorder() {
+  drawBorder(enabled) {
+    this.borderGraphics.clear();
+
+    const color = enabled ? townMap.ui.borderColor : townMap.ui.borderDisableColor;
+    this.borderGraphics.lineStyle(townMap.ui.borderWidth, color);
+    this.borderGraphics.fillStyle(color);
+
     this.borderGraphics.strokeRect(
       this.scene.ui.mapX, this.scene.ui.mapY, this.scene.ui.mapWidth, this.scene.ui.mapHeight
     );

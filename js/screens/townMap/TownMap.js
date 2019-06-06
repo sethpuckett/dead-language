@@ -27,12 +27,13 @@ export default class extends Phaser.Scene {
 
     this.borderGraphics = this.add.graphics();
     this.borderGraphics.lineStyle(townMap.ui.borderWidth, townMap.ui.borderColor);
+    this.borderGraphics.fillStyle(townMap.ui.borderColor);
     this.borderGraphics.setDepth(depth.townMap.border);
 
-    this.mapManager = new TownMapMapManager(this, this.borderGraphics);
-    this.lessonInfoManager = new TownMapLessonInfoManager(this, this.borderGraphics, this.lesson);
-    this.stageSelectManager = new TownMapStageSelectManager(this, this.borderGraphics, this.lesson);
-    this.stageInfoManager = new TownMapStageInfoManager(this, this.borderGraphics, this.stage);
+    this.mapManager = new TownMapMapManager(this);
+    this.lessonInfoManager = new TownMapLessonInfoManager(this);
+    this.stageSelectManager = new TownMapStageSelectManager(this);
+    this.stageInfoManager = new TownMapStageInfoManager(this, this.stage);
   }
 
   create() {
@@ -48,7 +49,7 @@ export default class extends Phaser.Scene {
   }
 
   createMap() {
-    this.mapManager.drawBorder();
+    this.mapManager.drawBorder(true);
     this.mapManager.createMapGrid();
     this.mapManager.createLessonPins();
     this.mapManager.createLessonSelector();
@@ -57,7 +58,7 @@ export default class extends Phaser.Scene {
   }
 
   createLessonInfo() {
-    this.lessonInfoManager.drawBorder();
+    this.lessonInfoManager.drawBorder(true);
 
     const lessonId = this.mapManager.getSelectedLessonId();
     if (lessonId != null) {
@@ -67,8 +68,9 @@ export default class extends Phaser.Scene {
   }
 
   createStageSelect() {
-    this.stageSelectManager.drawBorder();
+    this.stageSelectManager.drawBorder(false);
     this.stageSelectManager.setStageSelectedCallback(this.stageSelected);
+    this.stageSelectManager.setCancelCallback(this.stageSelectCancelled);
 
     const lessonId = this.mapManager.getSelectedLessonId();
     if (lessonId != null) {
@@ -78,7 +80,7 @@ export default class extends Phaser.Scene {
   }
 
   createStageInfo() {
-    this.stageInfoManager.drawBorder();
+    this.stageInfoManager.drawBorder(false);
     this.stageInfoManager.createStageInfo();
   }
 
@@ -164,6 +166,18 @@ export default class extends Phaser.Scene {
     this.createStageSelectedModal();
   }
 
+  stageSelectCancelled() {
+    this.stageSelectManager.clearTitle();
+    this.stageSelectManager.clearStageSelector();
+
+    this.mapManager.drawBorder(true);
+    this.lessonInfoManager.drawBorder(true);
+    this.stageSelectManager.drawBorder(false);
+    this.stageInfoManager.drawBorder(false);
+    this.stageSelectManager.disableInputHandling();
+    this.mapManager.enableInputHandling();
+  }
+
   lessonChanged(lessonId) {
     if (lessonId != null) {
       const lesson = this.sys.game.db.getLesson(lessonId);
@@ -183,6 +197,10 @@ export default class extends Phaser.Scene {
       this.stageSelectManager.createTitle();
       this.stageSelectManager.createStageSelector();
 
+      this.mapManager.drawBorder(false);
+      this.lessonInfoManager.drawBorder(false);
+      this.stageSelectManager.drawBorder(true);
+      this.stageInfoManager.drawBorder(true);
       this.mapManager.disableInputHandling();
       this.stageSelectManager.enableInputHandling();
     }

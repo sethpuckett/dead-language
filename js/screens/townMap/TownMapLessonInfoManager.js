@@ -1,14 +1,22 @@
-import { fonts, townMap } from '../../config';
+import { fonts, townMap, depth } from '../../config';
 import TownMapHelper from './TownMapHelper';
 
 export default class {
-  constructor(scene, borderGraphics) {
+  constructor(scene) {
     this.scene = scene;
-    this.borderGraphics = borderGraphics;
     this.mapHelper = new TownMapHelper();
+
+    this.borderGraphics = this.scene.add.graphics();
+    this.borderGraphics.setDepth(depth.townMap.border);
   }
 
-  drawBorder() {
+  drawBorder(enabled) {
+    this.borderGraphics.clear();
+
+    const color = enabled ? townMap.ui.borderColor : townMap.ui.borderDisableColor;
+    this.borderGraphics.lineStyle(townMap.ui.borderWidth, color);
+    this.borderGraphics.fillStyle(color);
+
     this.borderGraphics.strokeRect(
       this.scene.ui.lessonInfoX,
       this.scene.ui.lessonInfoY,

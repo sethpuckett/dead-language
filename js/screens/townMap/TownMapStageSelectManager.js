@@ -1,16 +1,22 @@
-import { fonts, townMap, images } from '../../config';
+import { fonts, townMap, images, depth } from '../../config';
 import TownMapHelper from './TownMapHelper';
 
 export default class {
-  constructor(scene, borderGraphics) {
+  constructor(scene) {
     this.scene = scene;
-    this.borderGraphics = borderGraphics;
     this.mapHelper = new TownMapHelper();
     this.selectedStage = 0;
     this.inputHandled = false;
+
+    this.borderGraphics = this.scene.add.graphics();
+    this.borderGraphics.setDepth(depth.townMap.border);
   }
 
-  drawBorder() {
+  drawBorder(enabled) {
+    const color = enabled ? townMap.ui.borderColor : townMap.ui.borderDisableColor;
+    this.borderGraphics.lineStyle(townMap.ui.borderWidth, color);
+    this.borderGraphics.fillStyle(color);
+
     this.borderGraphics.strokeRect(
       this.scene.ui.stageX,
       this.scene.ui.stageY,
@@ -140,6 +146,10 @@ export default class {
     this.stageSelectedCallback = callback.bind(this.scene);
   }
 
+  setCancelCallback(callback) {
+    this.cancelCallback = callback.bind(this.scene);
+  }
+
   // Private
 
   updateStageSelector() {
@@ -181,6 +191,8 @@ export default class {
       } else {
         // TODO: add review stage
       }
+    } else if (e.keyCode === this.keys.ESC.keyCode) {
+      this.cancelCallback();
     }
   }
 

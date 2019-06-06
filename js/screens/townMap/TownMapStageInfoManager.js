@@ -1,18 +1,24 @@
-import { fonts, townMap, images, animations } from '../../config';
+import { fonts, townMap, images, animations, depth } from '../../config';
 import TownMapHelper from './TownMapHelper';
 import { animationHelper, gameTypeHelper } from '../../util';
 
 const ZOMBIE_IMAGE_SCALE = 2.5;
 
 export default class {
-  constructor(scene, borderGraphics, stage) {
+  constructor(scene, stage) {
     this.scene = scene;
-    this.borderGraphics = borderGraphics;
     this.stage = stage;
     this.mapHelper = new TownMapHelper();
+
+    this.borderGraphics = this.scene.add.graphics();
+    this.borderGraphics.setDepth(depth.townMap.border);
   }
 
-  drawBorder() {
+  drawBorder(enabled) {
+    const color = enabled ? townMap.ui.borderColor : townMap.ui.borderDisableColor;
+    this.borderGraphics.lineStyle(townMap.ui.borderWidth, color);
+    this.borderGraphics.fillStyle(color);
+
     this.borderGraphics.strokeRect(
       this.scene.ui.stageInfoX,
       this.scene.ui.stageInfoY,
