@@ -51,6 +51,7 @@ export default class extends Phaser.Scene {
   createMap() {
     this.mapManager.drawBorder(true);
     this.mapManager.createTitle();
+    this.mapManager.createLocation();
     this.mapManager.createMapGrid();
     this.mapManager.createLessonPins();
     this.mapManager.createLessonSelector();

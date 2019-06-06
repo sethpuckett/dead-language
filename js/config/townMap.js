@@ -1,5 +1,7 @@
 export default {
   gameTypeText: 'Game Type',
+  mapTitleText: 'Choose a Location',
+  stageTitleText: 'Choose a Stage',
   screenFadeTime: 750,
   ui: {
     borderColor: 0xffffff,
@@ -63,6 +65,8 @@ export default {
     instructionsFill: '#ffffff',
     mapTitleSize: 14,
     mapTitleFill: '#ffffff',
+    mapLocationSize: 14,
+    mapLocationFill: '#ffffff',
     lessonInfoTitleSize: 16,
     lessonInfoTitleColor: 0xffff22,
     lessonInfoTextSize: 11,

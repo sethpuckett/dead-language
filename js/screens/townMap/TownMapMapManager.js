@@ -41,7 +41,7 @@ export default class {
       this.scene.ui.mapTitleX,
       this.scene.ui.mapTitleY,
       fonts.blueSkyWhite,
-      'Choose a lesson',
+      townMap.mapTitleText,
       townMap.fonts.mapTitleSize
     );
     this.mapTitle.setOrigin(
@@ -54,6 +54,29 @@ export default class {
     if (this.mapTitle != null) {
       this.mapTitle.destroy();
       this.mapTitle = null;
+    }
+  }
+
+  createLocation() {
+    this.clearLocation();
+
+    this.mapLocation = this.scene.add.bitmapText(
+      this.scene.ui.mapLocationX,
+      this.scene.ui.mapLocationY,
+      fonts.blueSkyWhite,
+      this.getSelectedLessonLocation(),
+      townMap.fonts.mapLocationSize
+    );
+    this.mapLocation.setOrigin(
+      this.scene.ui.mapLocationOriginX, this.scene.ui.mapLocationOriginY
+    );
+    this.mapTitle.setCenterAlign();
+  }
+
+  clearLocation() {
+    if (this.mapLocation != null) {
+      this.mapLocation.destroy();
+      this.mapLocation = null;
     }
   }
 
@@ -136,18 +159,34 @@ export default class {
   }
 
   getSelectedLessonId() {
+    const lesson = this.getSelectedLesson();
+    if (lesson != null) {
+      return lesson.id;
+    }
+    return null;
+  }
+
+  getSelectedLessonLocation() {
+    const lesson = this.getSelectedLesson();
+    if (lesson != null) {
+      return lesson.location;
+    }
+    return null;
+  }
+
+  // Private
+
+  getSelectedLesson() {
     const lesson = lessonMap.find(
       l => l.position.x === this.selectedCell.x && l.position.y === this.selectedCell.y
     );
 
     if (lesson != null) {
-      return lesson.id;
+      return lesson;
     }
 
     return null;
   }
-
-  // Private
 
   createInput() {
     this.keys = this.scene.input.keyboard.addKeys(
@@ -198,6 +237,7 @@ export default class {
   updateLessonSelector() {
     this.lessonSelector.x = this.getSelectorXPosition();
     this.lessonSelector.y = this.getSelectorYPosition();
+    this.createLocation();
     this.lessonChangedCallback(this.getSelectedLessonId());
   }
 

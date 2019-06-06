@@ -39,7 +39,7 @@ export default class {
       this.scene.ui.stageTitleX,
       this.scene.ui.stageTitleY,
       fonts.blueSkyWhite,
-      'Choose a stage',
+      townMap.stageTitleText,
       townMap.fonts.stageTitleSize
     );
     this.stageTitle.setOrigin(

@@ -31,10 +31,15 @@ export default (config) => {
     mapTitleOriginX: u.center,
     mapTitleOriginY: u.top,
 
+    get mapLocationX() { return this.mapX + this.mapWidth / 2; },
+    get mapLocationY() { return this.mapY + this.mapHeight - u.paddingBig; },
+    mapLocationOriginX: u.center,
+    mapLocationOriginY: u.bottom,
+
     get mapGridX() { return this.mapX; },
     get mapGridY() { return this.mapY + u.h * 0.06; },
     get mapGridWidth() { return this.mapWidth; },
-    get mapGridHeight() { return this.mapHeight + this.mapY - this.mapGridY; },
+    get mapGridHeight() { return this.mapHeight + this.mapY - this.mapGridY - u.h * 0.06; },
 
     mapPinOrigin: u.center,
     mapSelectorOrigin: u.center,
