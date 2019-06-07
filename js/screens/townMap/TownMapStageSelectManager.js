@@ -12,6 +12,46 @@ export default class {
     this.borderGraphics.setDepth(depth.townMap.border);
   }
 
+  initialize(enabled, lesson, stageIndex) {
+    this.drawBorder(enabled);
+    this.lesson = lesson;
+    this.selectedStage = stageIndex;
+
+    if (lesson != null) {
+      this.createStageIcons();
+    } else {
+      this.clearStageIcons();
+    }
+
+    if (enabled) {
+      this.createTitle();
+      this.createStageSelector();
+    } else {
+      this.clearTitle();
+      this.clearStageSelector();
+    }
+  }
+
+  enable() {
+    this.drawBorder(true);
+    this.createTitle();
+    this.createStageSelector();
+    this.enableInputHandling();
+  }
+
+  disable() {
+    this.drawBorder(false);
+    this.clearTitle();
+    this.clearStageSelector();
+    this.disableInputHandling();
+  }
+
+  setLesson(lesson) {
+    this.lesson = lesson;
+    this.selectedStage = 0;
+    this.createStageIcons();
+  }
+
   drawBorder(enabled) {
     const color = enabled ? townMap.ui.borderColor : townMap.ui.borderDisableColor;
     this.borderGraphics.lineStyle(townMap.ui.borderWidth, color);
@@ -48,12 +88,11 @@ export default class {
     this.stageTitle.setCenterAlign();
   }
 
-  setLesson(lesson) {
-    this.lesson = lesson;
-    this.selectedStage = 0;
-    // this.createTitle();
-    this.createStageIcons();
-    // this.createStageSelector();
+  clearTitle() {
+    if (this.stageTitle != null) {
+      this.stageTitle.destroy();
+      this.stageTitle = null;
+    }
   }
 
   clearAll() {
@@ -62,32 +101,11 @@ export default class {
     this.clearStageSelector();
   }
 
-  clearTitle() {
-    if (this.stageTitle != null) {
-      this.stageTitle.destroy();
-      this.stageTitle = null;
-    }
-  }
-
-  clearStageIcons() {
-    if (this.stageDots != null) {
-      this.stageDots.forEach(d => d.destroy());
-      this.stageDots = null;
-    }
-  }
-
-  clearStageSelector() {
-    if (this.stageSelector != null) {
-      this.stageSelector.destroy();
-      this.stageSelector = null;
-    }
-  }
-
   createStageIcons() {
     this.clearStageIcons();
 
     // evenly space stage dots in stage select section
-    this.stageDots = [];
+    this.stageIcons = [];
     this.lesson.stages.forEach((stage, index) => {
       const dot = this.scene.add.sprite(
         this.getStageXPosition(index), this.scene.ui.stageDotY, images.yellowBubble
@@ -97,7 +115,7 @@ export default class {
       dot.setOrigin(this.scene.ui.stageDotOriginX, this.scene.ui.stageDotOriginY);
       dot.displayWidth = this.scene.ui.stageDotWidth;
       dot.displayHeight = this.scene.ui.stageDotWidth;
-      this.stageDots.push(dot);
+      this.stageIcons.push(dot);
     });
 
     // draw review stage dot
@@ -111,7 +129,14 @@ export default class {
     reviewDot.setOrigin(this.scene.ui.stageDotOriginX, this.scene.ui.stageDotOriginY);
     reviewDot.displayWidth = this.scene.ui.stageReviewDotWidth;
     reviewDot.displayHeight = this.scene.ui.stageReviewDotWidth;
-    this.stageDots.push(reviewDot);
+    this.stageIcons.push(reviewDot);
+  }
+
+  clearStageIcons() {
+    if (this.stageIcons != null) {
+      this.stageIcons.forEach(d => d.destroy());
+      this.stageIcons = null;
+    }
   }
 
   createStageSelector() {
@@ -124,6 +149,13 @@ export default class {
     this.stageSelector.displayWidth = this.scene.ui.stageSelectorWidth;
     this.stageSelector.displayHeight = this.scene.ui.stageSelectorWidth;
     this.stageSelector.setOrigin(this.scene.ui.stageDotOriginX, this.scene.ui.stageDotOriginY);
+  }
+
+  clearStageSelector() {
+    if (this.stageSelector != null) {
+      this.stageSelector.destroy();
+      this.stageSelector = null;
+    }
   }
 
   enableInputHandling() {
@@ -155,13 +187,28 @@ export default class {
     this.cancelCallback = callback.bind(this.scene);
   }
 
-  getSelectedStageId() {
-    if (this.selectedStage < this.lesson.stages.length) {
-      return this.lesson.stages[this.selectedStage];
+  setSelectedStage(stageId) {
+    this.selectedStage = 0;
+    if (this.lesson != null && stageId != null) {
+      for (let i = 0; i < this.lesson.stages.length; i += 1) {
+        if (this.lesson.stages[i] === stageId) {
+          this.selectedStage = i;
+          break;
+        }
+      }
     }
+  }
 
-    // TODO: handle review
-    return 'review';
+  getSelectedStageId() {
+    if (this.lesson != null) {
+      if (this.selectedStage < this.lesson.stages.length) {
+        return this.lesson.stages[this.selectedStage];
+      }
+
+      // TODO: handle review
+      return 'review';
+    }
+    return null;
   }
 
   getSelectedStageNumber() {

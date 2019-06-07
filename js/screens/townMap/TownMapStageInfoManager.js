@@ -5,13 +5,32 @@ import { animationHelper, gameTypeHelper } from '../../util';
 const ZOMBIE_IMAGE_SCALE = 2.5;
 
 export default class {
-  constructor(scene, stage) {
+  constructor(scene) {
     this.scene = scene;
-    this.stage = stage;
     this.mapHelper = new TownMapHelper();
 
     this.borderGraphics = this.scene.add.graphics();
     this.borderGraphics.setDepth(depth.townMap.border);
+  }
+
+  initialize(enabled, stageId, stageNumber) {
+    this.drawBorder(enabled);
+    if (enabled) {
+      if (stageId != null && stageNumber != null) {
+        this.createStageInfo(stageId, stageNumber);
+      }
+    } else {
+      this.clearStageInfo();
+    }
+  }
+
+  enable() {
+
+  }
+
+  disable() {
+    this.drawBorder(false);
+    this.clearStageInfo();
   }
 
   drawBorder(enabled) {

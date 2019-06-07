@@ -16,6 +16,32 @@ export default class {
     this.borderGraphics.setDepth(depth.townMap.border);
   }
 
+  initialize(enabled) {
+    this.drawBorder(enabled);
+    this.createLocation();
+    this.createMapGrid();
+    this.createLessonPins();
+    this.createLessonSelector();
+
+    if (enabled) {
+      this.createTitle();
+    } else {
+      this.clearTitle();
+    }
+  }
+
+  enable() {
+    this.drawBorder(true);
+    this.createTitle();
+    this.enableInputHandling();
+  }
+
+  disable() {
+    this.drawBorder(false);
+    this.clearTitle();
+    this.disableInputHandling();
+  }
+
   drawBorder(enabled) {
     this.borderGraphics.clear();
 
@@ -47,7 +73,6 @@ export default class {
     this.mapTitle.setOrigin(
       this.scene.ui.mapTitleOriginX, this.scene.ui.mapTitleOriginY
     );
-    this.mapTitle.setCenterAlign();
   }
 
   clearTitle() {
@@ -59,18 +84,19 @@ export default class {
 
   createLocation() {
     this.clearLocation();
-
-    this.mapLocation = this.scene.add.bitmapText(
-      this.scene.ui.mapLocationX,
-      this.scene.ui.mapLocationY,
-      fonts.blueSkyWhite,
-      this.getSelectedLessonLocation(),
-      townMap.fonts.mapLocationSize
-    );
-    this.mapLocation.setOrigin(
-      this.scene.ui.mapLocationOriginX, this.scene.ui.mapLocationOriginY
-    );
-    this.mapTitle.setCenterAlign();
+    const location = this.getSelectedLessonLocation();
+    if (location != null) {
+      this.mapLocation = this.scene.add.bitmapText(
+        this.scene.ui.mapLocationX,
+        this.scene.ui.mapLocationY,
+        fonts.blueSkyWhite,
+        location,
+        townMap.fonts.mapLocationSize
+      );
+      this.mapLocation.setOrigin(
+        this.scene.ui.mapLocationOriginX, this.scene.ui.mapLocationOriginY
+      );
+    }
   }
 
   clearLocation() {
@@ -81,6 +107,7 @@ export default class {
   }
 
   createMapGrid() {
+    this.clearMapGrid();
     this.gridGraphics = this.scene.add.graphics();
     this.gridGraphics.lineStyle(townMap.ui.mapGridWidth, townMap.ui.mapGridColor);
     this.gridGraphics.setDepth(depth.townMap.mapGrid);
@@ -104,7 +131,16 @@ export default class {
     }
   }
 
+  clearMapGrid() {
+    if (this.gridGraphics != null) {
+      this.gridGraphics.clear();
+      this.gridGraphics = null;
+    }
+  }
+
   createLessonPins() {
+    this.clearLessonPins();
+    this.pins = [];
     lessonMap.forEach((lesson) => {
       const xPos = this.baseX + lesson.position.x * this.cellWidth + this.cellWidth / 2;
       const yPos = this.baseY + lesson.position.y * this.cellHeight + this.cellHeight / 2;
@@ -115,7 +151,15 @@ export default class {
       pin.setOrigin(this.scene.ui.mapPinOrigin);
       pin.displayWidth = this.cellWidth * townMap.ui.mapPinCellWidth;
       pin.displayHeight = this.cellHeight * townMap.ui.mapPinCellWidth;
+      this.pins.push(pin);
     });
+  }
+
+  clearLessonPins() {
+    if (this.pins != null) {
+      this.pins.forEach(p => p.destroy());
+      this.pins = null;
+    }
   }
 
   createLessonSelector() {
@@ -127,6 +171,13 @@ export default class {
     this.lessonSelector.displayWidth = this.cellWidth - this.scene.ui.padding * 2;
     this.lessonSelector.displayHeight = this.cellHeight - this.scene.ui.padding * 2;
     this.lessonSelector.setOrigin(this.scene.ui.mapSelectorOrigin);
+  }
+
+  clearLessonSelector() {
+    if (this.lessonSelector != null) {
+      this.lessonSelector.destroy();
+      this.lessonSelector = null;
+    }
   }
 
   enableInputHandling() {
@@ -158,6 +209,18 @@ export default class {
     this.cancelCallback = callback.bind(this.scene);
   }
 
+  getSelectedLesson() {
+    const lesson = lessonMap.find(
+      l => l.position.x === this.selectedCell.x && l.position.y === this.selectedCell.y
+    );
+
+    if (lesson != null) {
+      return lesson;
+    }
+
+    return null;
+  }
+
   getSelectedLessonId() {
     const lesson = this.getSelectedLesson();
     if (lesson != null) {
@@ -175,18 +238,6 @@ export default class {
   }
 
   // Private
-
-  getSelectedLesson() {
-    const lesson = lessonMap.find(
-      l => l.position.x === this.selectedCell.x && l.position.y === this.selectedCell.y
-    );
-
-    if (lesson != null) {
-      return lesson;
-    }
-
-    return null;
-  }
 
   createInput() {
     this.keys = this.scene.input.keyboard.addKeys(

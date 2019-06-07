@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
-import { townMap, depth, fonts, screens } from '../../config';
-import HudStatusManager from '../HudStatusManager';
+import { townMap, screens } from '../../config';
 import Modal from '../Modal';
 import ChoiceModal from '../ChoiceModal';
 import townMapUiHelper from '../ui/townMapUiHelper';
@@ -9,6 +8,7 @@ import TownMapHelper from './TownMapHelper';
 import TownMapLessonInfoManager from './TownMapLessonInfoManager';
 import TownMapStageSelectManager from './TownMapStageSelectManager';
 import TownMapStageInfoManager from './TownMapStageInfoManager';
+import TownMapInstructionsManager from './TownMapInstructionsManager';
 
 const LESSON_SELECT = 'lesson-select';
 const STAGE_SELECT = 'stage-select';
@@ -20,20 +20,13 @@ export default class extends Phaser.Scene {
 
   init() {
     this.mapHelper = new TownMapHelper();
-    this.lesson = this.sys.game.db.getLesson('lesson-basic-vocab-01');
-    this.stage = this.sys.game.db.getStage('intro-01');
     this.ui = townMapUiHelper(this.sys.game.config);
-    this.statusManager = new HudStatusManager(this);
-
-    this.borderGraphics = this.add.graphics();
-    this.borderGraphics.lineStyle(townMap.ui.borderWidth, townMap.ui.borderColor);
-    this.borderGraphics.fillStyle(townMap.ui.borderColor);
-    this.borderGraphics.setDepth(depth.townMap.border);
 
     this.mapManager = new TownMapMapManager(this);
     this.lessonInfoManager = new TownMapLessonInfoManager(this);
     this.stageSelectManager = new TownMapStageSelectManager(this);
-    this.stageInfoManager = new TownMapStageInfoManager(this, this.stage);
+    this.stageInfoManager = new TownMapStageInfoManager(this);
+    this.instructionsManager = new TownMapInstructionsManager(this);
   }
 
   create() {
@@ -49,42 +42,33 @@ export default class extends Phaser.Scene {
   }
 
   createMap() {
-    this.mapManager.drawBorder(true);
-    this.mapManager.createTitle();
-    this.mapManager.createLocation();
-    this.mapManager.createMapGrid();
-    this.mapManager.createLessonPins();
-    this.mapManager.createLessonSelector();
+    this.mapManager.initialize(true);
     this.mapManager.setLessonChangedCallback(this.lessonChanged);
     this.mapManager.setLessonSelectedCallback(this.lessonSelected);
     this.mapManager.setCancelCallback(this.lessonSelectCancelled);
   }
 
   createLessonInfo() {
-    this.lessonInfoManager.drawBorder(true);
-
-    const lessonId = this.mapManager.getSelectedLessonId();
-    if (lessonId != null) {
-      const lesson = this.sys.game.db.getLesson(lessonId);
-      this.lessonInfoManager.createLessonInfo(lesson);
-    }
+    this.lessonInfoManager.initialize(true, this.getSelectedLesson());
   }
 
   createStageSelect() {
-    this.stageSelectManager.drawBorder(false);
+    this.stageSelectManager.initialize(false, this.getSelectedLesson(), 0);
     this.stageSelectManager.setStageChangedCallback(this.stageChanged);
     this.stageSelectManager.setStageSelectedCallback(this.stageSelected);
     this.stageSelectManager.setCancelCallback(this.stageSelectCancelled);
-
-    const lessonId = this.mapManager.getSelectedLessonId();
-    if (lessonId != null) {
-      const lesson = this.sys.game.db.getLesson(lessonId);
-      this.stageSelectManager.setLesson(lesson);
-    }
   }
 
   createStageInfo() {
-    this.stageInfoManager.drawBorder(false);
+    this.stageInfoManager.initialize(
+      false,
+      this.stageSelectManager.getSelectedStageId(),
+      this.stageSelectManager.getSelectedStageNumber()
+    );
+  }
+
+  createInstructions() {
+    this.instructionsManager.initialize();
   }
 
   disableInputHandling() {
@@ -99,34 +83,6 @@ export default class extends Phaser.Scene {
     } else if (component === STAGE_SELECT) {
       this.stageSelectManager.enableInputHandling();
     }
-  }
-
-  createInstructions() {
-    this.borderGraphics.strokeRect(
-      this.ui.instructionsX,
-      this.ui.instructionsY,
-      this.ui.instructionsWidth,
-      this.ui.instructionsHeight
-    );
-
-    this.mapHelper.drawSquares(this.borderGraphics, [
-      [this.ui.instructionsSquareTLX, this.ui.instructionsSquareTLY],
-      [this.ui.instructionsSquareTRX, this.ui.instructionsSquareTRY],
-      [this.ui.instructionsSquareBLX, this.ui.instructionsSquareBLY],
-      [this.ui.instructionsSquareBRX, this.ui.instructionsSquareBRY],
-    ]);
-
-    this.instructionsText = this.add.bitmapText(
-      this.ui.instructionsTextX,
-      this.ui.instructionsTextY,
-      fonts.blueSkyWhite,
-      townMap.statusMessages.instructions,
-      townMap.fonts.instructionsSize
-    );
-    this.instructionsText.setOrigin(
-      this.ui.instructionsTextOriginX, this.ui.instructionsTextOriginY
-    );
-    this.instructionsText.setCenterAlign();
   }
 
   createStartModal() {
@@ -174,17 +130,10 @@ export default class extends Phaser.Scene {
   }
 
   stageSelectCancelled() {
-    this.stageSelectManager.clearTitle();
-    this.stageSelectManager.clearStageSelector();
-
-    this.mapManager.drawBorder(true);
-    this.mapManager.createTitle();
-    this.lessonInfoManager.drawBorder(true);
-    this.stageSelectManager.drawBorder(false);
-    this.stageInfoManager.drawBorder(false);
-    this.stageSelectManager.disableInputHandling();
-    this.mapManager.enableInputHandling();
-    this.stageInfoManager.clearStageInfo();
+    this.stageSelectManager.disable();
+    this.stageInfoManager.disable();
+    this.mapManager.enable();
+    this.lessonInfoManager.enable();
   }
 
   lessonChanged(lessonId) {
@@ -201,19 +150,13 @@ export default class extends Phaser.Scene {
   lessonSelected(lessonId) {
     if (lessonId != null) {
       const lesson = this.sys.game.db.getLesson(lessonId);
-      this.lessonInfoManager.createLessonInfo(lesson);
-      this.mapManager.clearTitle();
+
+      this.mapManager.disable();
+      this.lessonInfoManager.disable();
+
       this.stageSelectManager.setLesson(lesson);
-      this.stageSelectManager.createTitle();
-      this.stageSelectManager.createStageSelector();
-
-      this.mapManager.drawBorder(false);
-      this.lessonInfoManager.drawBorder(false);
-      this.stageSelectManager.drawBorder(true);
-      this.stageInfoManager.drawBorder(true);
-      this.mapManager.disableInputHandling();
-      this.stageSelectManager.enableInputHandling();
-
+      this.stageSelectManager.enable();
+      this.stageInfoManager.enable();
       this.stageInfoManager.createStageInfo(
         this.stageSelectManager.getSelectedStageId(),
         this.stageSelectManager.getSelectedStageNumber()
@@ -229,5 +172,15 @@ export default class extends Phaser.Scene {
     if (progress === 1) {
       this.scene.start(this.nextScreen, this.selectedStageId);
     }
+  }
+
+  getSelectedLesson() {
+    if (this.mapManager != null) {
+      const lessonId = this.mapManager.getSelectedLessonId();
+      if (lessonId != null) {
+        return this.sys.game.db.getLesson(lessonId);
+      }
+    }
+    return null;
   }
 }

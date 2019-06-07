@@ -10,6 +10,19 @@ export default class {
     this.borderGraphics.setDepth(depth.townMap.border);
   }
 
+  initialize(enabled, lesson) {
+    this.drawBorder(enabled);
+    this.createLessonInfo(lesson);
+  }
+
+  enable() {
+    this.drawBorder(true);
+  }
+
+  disable() {
+    this.drawBorder(false);
+  }
+
   drawBorder(enabled) {
     this.borderGraphics.clear();
 
@@ -35,29 +48,31 @@ export default class {
   createLessonInfo(lesson) {
     this.clearLessonInfo();
 
-    this.lessonInfoTitle = this.scene.add.bitmapText(
-      this.scene.ui.lessonInfoTitleX,
-      this.scene.ui.lessonInfoTitleY,
-      fonts.blueSkyWhite,
-      lesson.name,
-      townMap.fonts.lessonInfoTitleSize
-    );
-    this.lessonInfoTitle.setOrigin(
-      this.scene.ui.lessonInfoTitleOriginX, this.scene.ui.lessonInfoTitleOriginY
-    );
-    this.lessonInfoTitle.setCenterAlign();
-    this.lessonInfoTitle.setTint(townMap.fonts.lessonInfoTitleColor);
+    if (lesson != null) {
+      this.lessonInfoTitle = this.scene.add.bitmapText(
+        this.scene.ui.lessonInfoTitleX,
+        this.scene.ui.lessonInfoTitleY,
+        fonts.blueSkyWhite,
+        lesson.name,
+        townMap.fonts.lessonInfoTitleSize
+      );
+      this.lessonInfoTitle.setOrigin(
+        this.scene.ui.lessonInfoTitleOriginX, this.scene.ui.lessonInfoTitleOriginY
+      );
+      this.lessonInfoTitle.setCenterAlign();
+      this.lessonInfoTitle.setTint(townMap.fonts.lessonInfoTitleColor);
 
-    this.lessonInfoText = this.scene.add.bitmapText(
-      this.scene.ui.lessonInfoTextX,
-      this.scene.ui.lessonInfoTextY,
-      fonts.blueSkyWhite,
-      lesson.info,
-      townMap.fonts.lessonInfoTextSize
-    );
-    this.lessonInfoText.setOrigin(
-      this.scene.ui.lessonInfoTextOriginX, this.scene.ui.lessonInfoTextOriginY
-    );
+      this.lessonInfoText = this.scene.add.bitmapText(
+        this.scene.ui.lessonInfoTextX,
+        this.scene.ui.lessonInfoTextY,
+        fonts.blueSkyWhite,
+        lesson.info,
+        townMap.fonts.lessonInfoTextSize
+      );
+      this.lessonInfoText.setOrigin(
+        this.scene.ui.lessonInfoTextOriginX, this.scene.ui.lessonInfoTextOriginY
+      );
+    }
   }
 
   clearLessonInfo() {
