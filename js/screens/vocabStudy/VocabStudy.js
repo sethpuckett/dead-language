@@ -6,7 +6,6 @@ import HudStatusManager from '../HudStatusManager';
 import VocabStudyVocabManager from './VocabStudyVocabManager';
 import VocabStudyMenuManager from './VocabStudyMenuManager';
 import VocabWordManager from '../../languageContent/VocabWordManager';
-import VocabStudyTargetPracticeManager from './VocabStudyTargetPracticeManager';
 import Modal from '../Modal';
 
 export default class extends Phaser.Scene {
@@ -28,7 +27,6 @@ export default class extends Phaser.Scene {
       returnToMap() { this.returnToMap(); },
       startTargetPractice() { this.createPracticeModal(); },
     });
-    this.targetPracticeManager = new VocabStudyTargetPracticeManager(this);
     this.inPracticeMode = false;
   }
 
@@ -107,6 +105,7 @@ export default class extends Phaser.Scene {
   endTargetPractice() {
     this.inPracticeMode = false;
     this.clearPracticeWord();
+    this.time.removeAllEvents();
     this.vocabWordManager.resetContent();
     this.vocabManager.showAll();
     this.menuManager.enableInputHandling();
