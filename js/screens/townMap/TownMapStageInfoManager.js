@@ -25,7 +25,7 @@ export default class {
   }
 
   enable() {
-
+    this.drawBorder(true);
   }
 
   disable() {

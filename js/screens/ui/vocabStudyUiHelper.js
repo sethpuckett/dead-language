@@ -49,6 +49,8 @@ export default (config) => {
     get menuOption4Y() { return this.menuOption1Y + this.menuOptionHeight + u.padding * 2; },
     get menuOption5X() { return this.menuOption1X + this.menuOptionWidth + u.padding; },
     get menuOption5Y() { return this.menuOption1Y + this.menuOptionHeight + u.padding * 2; },
+    get menuOption6X() { return this.menuOption5X + this.menuOptionWidth + u.padding; },
+    get menuOption6Y() { return this.menuOption1Y + this.menuOptionHeight + u.padding * 2; },
 
     menuOptionWidth: hudUi.messageBorderX / 3 - u.padding * 2,
     menuOptionHeight: hud.height / 2 - u.padding * 2,
@@ -65,6 +67,8 @@ export default (config) => {
     get menuOption4TextY() { return this.menuOption4Y + this.menuOptionHeight / 2; },
     get menuOption5TextX() { return this.menuOption5X + this.menuOptionWidth / 2; },
     get menuOption5TextY() { return this.menuOption5Y + this.menuOptionHeight / 2; },
+    get menuOption6TextX() { return this.menuOption6X + this.menuOptionWidth / 2; },
+    get menuOption6TextY() { return this.menuOption6Y + this.menuOptionHeight / 2; },
     menuOptionTextOrigin: u.center,
 
     get practiceVocabX() { return this.crateX; },

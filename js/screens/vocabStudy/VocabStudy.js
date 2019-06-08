@@ -14,6 +14,7 @@ export default class extends Phaser.Scene {
   }
 
   init(stageId) {
+    this.stageId = stageId;
     this.ui = vocabStudyUiHelper(this.sys.game.config);
     this.hudManager = new HudManager(this);
     this.hudManager.setSubmitCallback(this.submitAnswer);
@@ -26,6 +27,7 @@ export default class extends Phaser.Scene {
       showAll() { this.vocabManager.showAll(); },
       returnToMap() { this.returnToMap(); },
       startTargetPractice() { this.createPracticeModal(); },
+      startGame() { this.startGame(); },
     });
     this.inPracticeMode = false;
   }
@@ -100,6 +102,14 @@ export default class extends Phaser.Scene {
     this.statusManager.setStatus({ message: vocabStudy.statusMessages.practice });
 
     this.showPracticeWord();
+  }
+
+  startGame() {
+    this.cameras.main.fade(vocabStudy.screenFadeTime, 0, 0, 0, false, (_c, progress) => {
+      if (progress === 1) {
+        this.scene.start(screens.minigame, this.stageId);
+      }
+    });
   }
 
   endTargetPractice() {

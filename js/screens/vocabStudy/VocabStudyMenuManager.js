@@ -6,6 +6,7 @@ const HIDE_LANGUAGE_2 = 2;
 const SHOW_ALL = 3;
 const TARGET_PRACTICE = 4;
 const RETURN_TO_MAP = 5;
+const START_GAME = 6;
 
 export default class {
   /*
@@ -15,6 +16,7 @@ export default class {
     showAll: function
     startTargetPractice: function
     returnToMap: function
+    startGame: function
   }
   */
   constructor(scene, callbackConfig) {
@@ -24,6 +26,7 @@ export default class {
     this.showAll = callbackConfig.showAll;
     this.startTargetPractice = callbackConfig.startTargetPractice;
     this.returnToMap = callbackConfig.returnToMap;
+    this.startGame = callbackConfig.startGame;
     this.inputHandled = true;
 
     this.ui = vocabStudyUiHelper(this.scene.sys.game.config);
@@ -85,6 +88,16 @@ export default class {
     this.option5.setOrigin(this.ui.menuOptionOriginX, this.ui.menuOptionOriginY);
     this.menuSprites.add(this.option5);
 
+    this.option6 = this.scene.add.sprite(
+      this.ui.menuOption6X,
+      this.ui.menuOption6Y,
+      images.hudMenuBorder
+    );
+    this.option6.displayWidth = this.ui.menuOptionWidth;
+    this.option6.displayHeight = this.ui.menuOptionHeight;
+    this.option6.setOrigin(this.ui.menuOptionOriginX, this.ui.menuOptionOriginY);
+    this.menuSprites.add(this.option6);
+
     this.option1Text = this.scene.add.bitmapText(
       this.ui.menuOption1TextX,
       this.ui.menuOption1TextY,
@@ -135,6 +148,16 @@ export default class {
     this.option5Text.setOrigin(this.ui.menuOptionTextOrigin);
     this.menuSprites.add(this.option5Text);
 
+    this.option6Text = this.scene.add.bitmapText(
+      this.ui.menuOption6TextX,
+      this.ui.menuOption6TextY,
+      fonts.blueSkyWhite,
+      'Start Game',
+      vocabStudy.fonts.menuOptionSize
+    );
+    this.option6Text.setOrigin(this.ui.menuOptionTextOrigin);
+    this.menuSprites.add(this.option6Text);
+
     this.updateSelection();
   }
 
@@ -144,6 +167,7 @@ export default class {
     this.option3.setFrame(images.frames.hudMenuDark);
     this.option4.setFrame(images.frames.hudMenuDark);
     this.option5.setFrame(images.frames.hudMenuDark);
+    this.option6.setFrame(images.frames.hudMenuDark);
 
     if (this.selectedOption === HIDE_LANGUAGE_1) {
       this.option1.setFrame(images.frames.hudMenuLight);
@@ -155,6 +179,8 @@ export default class {
       this.option4.setFrame(images.frames.hudMenuLight);
     } else if (this.selectedOption === RETURN_TO_MAP) {
       this.option5.setFrame(images.frames.hudMenuLight);
+    } else if (this.selectedOption === START_GAME) {
+      this.option6.setFrame(images.frames.hudMenuLight);
     }
   }
 
@@ -169,6 +195,8 @@ export default class {
       this.returnToMap.call(this.scene);
     } else if (this.selectedOption === TARGET_PRACTICE) {
       this.startTargetPractice.call(this.scene);
+    } else if (this.selectedOption === START_GAME) {
+      this.startGame.call(this.scene);
     }
   }
 
@@ -206,16 +234,18 @@ export default class {
 
   handleKeyDown(e) {
     if (e.keyCode === this.keys.UP.keyCode
-        && (this.selectedOption === 4 || this.selectedOption === 5)) {
+        && (this.selectedOption === 4 || this.selectedOption === 5 || this.selectedOption === 6)) {
       this.selectedOption -= 3;
     } else if (e.keyCode === this.keys.DOWN.keyCode
-        && (this.selectedOption === 1 || this.selectedOption === 2)) {
+        && (this.selectedOption === 1 || this.selectedOption === 2 || this.selectedOption === 3)) {
       this.selectedOption += 3;
     } else if (e.keyCode === this.keys.LEFT.keyCode
-        && (this.selectedOption === 2 || this.selectedOption === 3 || this.selectedOption === 5)) {
+        && (this.selectedOption === 2 || this.selectedOption === 3
+            || this.selectedOption === 5 || this.selectedOption === 6)) {
       this.selectedOption -= 1;
     } else if (e.keyCode === this.keys.RIGHT.keyCode
-        && (this.selectedOption === 1 || this.selectedOption === 2 || this.selectedOption === 4)) {
+        && (this.selectedOption === 1 || this.selectedOption === 2
+            || this.selectedOption === 4 || this.selectedOption === 5)) {
       this.selectedOption += 1;
     } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
       this.selectOption();
