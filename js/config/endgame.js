@@ -1,7 +1,13 @@
 export default {
-  displayTime: 4000,
+  win: 'win',
+  lose: 'lose',
+  winText: 'You Win!',
+  loseText: 'You Lose!',
+  screenFadeTime: 750,
   fonts: {
-    statsSize: 22,
-    statsFill: '#ffffff',
+    statusSize: 32,
+    statusFill: 0xffff22,
+    menuSize: 22,
+    menuFill: '#ffffff',
   },
 };

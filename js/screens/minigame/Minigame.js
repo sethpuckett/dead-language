@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { depth, minigame, levels, images, screens } from '../../config';
+import { depth, minigame, levels, images, screens, endgame } from '../../config';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
 import MinigameSpawnManager from './MinigameSpawnManager';
@@ -13,6 +13,7 @@ export default class extends Phaser.Scene {
   }
 
   init(stageId) {
+    this.stageId = stageId;
     this.currentLevel = levels.find(l => l.id === 1); // Only 1 level for now
     this.vocab = new VocabWordManager(this.sys.game.db.getStage(stageId).vocab);
     this.zombieManager = new MinigameZombieManager(this, this.vocab);
@@ -101,7 +102,7 @@ export default class extends Phaser.Scene {
   }
 
   gameTimerFinish() {
-    this.scene.start(screens.endgame, { kills: this.score, status: 'You Win!' });
+    this.scene.start(screens.endgame, { status: endgame.win, stageId: this.stageId });
   }
 
   changeHealth(amount) {
@@ -131,7 +132,7 @@ export default class extends Phaser.Scene {
   }
 
   loseGame() {
-    this.scene.start(screens.endgame, { kills: this.score, status: 'You Lose!' });
+    this.scene.start(screens.endgame, { status: endgame.lose, stageId: this.stageId });
   }
 
   updateGameTime() {

@@ -49,4 +49,8 @@ export default {
     border: 10,
     mapGrid: 10,
   },
+  endgame: {
+    background: 0,
+    text: 1,
+  },
 };

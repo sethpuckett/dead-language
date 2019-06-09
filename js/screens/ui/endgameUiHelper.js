@@ -12,11 +12,19 @@ export default (config) => {
     backgroundImageOriginY: u.top,
 
     statusLabelX: u.w_2,
-    statusLabelY: u.h_50p,
+    statusLabelY: u.h_40p,
     statusLabelOrigin: u.center,
 
-    killLabelX: u.w_2,
-    get killLabelY() { return this.statusLabelY + u.h_10p; },
-    killLabelOrigin: u.center,
+    menuTextX: u.w_40p,
+    get menuTextY() { return this.statusLabelY + u.h_10p; },
+    menuTextOriginX: u.left,
+    menuTextOriginY: u.top,
+    menuTextVerticalPadding: u.h * 0.075,
+
+    selectX: u.w_40p,
+    get selectY() { return this.menuTextY - u.h * 0.01; },
+    selectOriginX: u.right,
+    selectOriginY: u.top,
+    get selectVerticalPadding() { return this.menuTextVerticalPadding; },
   };
 };
