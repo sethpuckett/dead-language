@@ -11,6 +11,7 @@ export default class extends Phaser.Scene {
   preload() {
     this.sys.game.db.loadLessons(this.tryStart, this);
     this.sys.game.db.loadStages(this.tryStart, this);
+    this.sys.game.db.loadUserProfile(this.tryStart, this);
     this.ui = loadingUiHelper(this.sys.game.config);
     this.showBackground();
     this.showProgressBar();

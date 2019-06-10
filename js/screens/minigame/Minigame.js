@@ -102,7 +102,9 @@ export default class extends Phaser.Scene {
   }
 
   gameTimerFinish() {
-    this.scene.start(screens.endgame, { status: endgame.win, stageId: this.stageId });
+    this.game.db.saveStageCompleted(this.stageId, () => {
+      this.scene.start(screens.endgame, { status: endgame.win, stageId: this.stageId });
+    });
   }
 
   changeHealth(amount) {

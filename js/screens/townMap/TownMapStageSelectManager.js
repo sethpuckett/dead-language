@@ -106,12 +106,15 @@ export default class {
 
     // evenly space stage dots in stage select section
     this.stageIcons = [];
-    this.lesson.stages.forEach((stage, index) => {
+    this.lesson.stages.forEach((stageId, index) => {
       const dot = this.scene.add.sprite(
         this.getStageXPosition(index), this.scene.ui.stageDotY, images.yellowBubble
       );
-      // TODO: set this based on completion status of stage
-      dot.setFrame(images.frames.yellowBubbleEmpty);
+      if (this.scene.game.db.isStageCompleted(stageId)) {
+        dot.setFrame(images.frames.yellowBubbleFull);
+      } else {
+        dot.setFrame(images.frames.yellowBubbleEmpty);
+      }
       dot.setOrigin(this.scene.ui.stageDotOriginX, this.scene.ui.stageDotOriginY);
       dot.displayWidth = this.scene.ui.stageDotWidth;
       dot.displayHeight = this.scene.ui.stageDotWidth;
