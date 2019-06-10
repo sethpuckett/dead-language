@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
+import { gameTypes } from '../config';
 
 export default class {
   constructor(db) {
@@ -33,7 +34,18 @@ export default class {
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }
 
+  getStageType(stageId) {
+    return this.db.getStage(stageId).type;
+  }
+
   isReviewUnlocked(lessonId) {
-    return false;
+    const lesson = this.db.getLesson(lessonId);
+    return lesson.stages.every((sid) => {
+      const gameType = this.db.getStage(sid).type;
+      if (gameType !== gameTypes.zombieAssaultReview) {
+        return this.isStageCompleted(sid);
+      }
+      return true;
+    });
   }
 }

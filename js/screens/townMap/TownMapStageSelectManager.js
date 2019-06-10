@@ -264,7 +264,7 @@ export default class {
   }
 
   incrementSelectedStage() {
-    this.selectedStage = Math.min(this.selectedStage + 1, this.lesson.stages.length);
+    this.selectedStage = Math.min(this.selectedStage + 1, this.lesson.stages.length - 1);
     this.updateStageSelector();
   }
 }

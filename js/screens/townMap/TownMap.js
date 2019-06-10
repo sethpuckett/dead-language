@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { townMap, screens } from '../../config';
+import { townMap, screens, gameTypes } from '../../config';
 import Modal from '../Modal';
 import ChoiceModal from '../ChoiceModal';
 import townMapUiHelper from '../ui/townMapUiHelper';
@@ -9,6 +9,7 @@ import TownMapLessonInfoManager from './TownMapLessonInfoManager';
 import TownMapStageSelectManager from './TownMapStageSelectManager';
 import TownMapStageInfoManager from './TownMapStageInfoManager';
 import TownMapInstructionsManager from './TownMapInstructionsManager';
+import GameProgressManager from '../../data/GameProgressManager';
 
 const LESSON_SELECT = 'lesson-select';
 const STAGE_SELECT = 'stage-select';
@@ -27,6 +28,7 @@ export default class extends Phaser.Scene {
     this.stageSelectManager = new TownMapStageSelectManager(this);
     this.stageInfoManager = new TownMapStageInfoManager(this);
     this.instructionsManager = new TownMapInstructionsManager(this);
+    this.progressManager = new GameProgressManager(this.sys.game.db);
   }
 
   create() {
@@ -120,13 +122,58 @@ export default class extends Phaser.Scene {
     });
   }
 
+  createReviewStageSelectedModal() {
+    this.disableInputHandling();
+    this.stageModal = new ChoiceModal(
+      this,
+      townMap.choiceModals.reviewStageSelected.text,
+      townMap.choiceModals.reviewStageSelected.choices
+    );
+    this.stageModal.draw();
+    this.stageModal.enableInputHandling();
+    this.stageModal.setCloseCallback((index) => {
+      this.stageModal.disableInputHandling();
+      // TODO: move these index values to config or something
+      if (index === 0) { // start game
+        this.nextScreen = screens.minigame;
+      }
+      this.cameras.main.fade(townMap.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
+    });
+    this.stageModal.setCancelCallback(() => {
+      this.stageModal.disableInputHandling();
+      this.stageModal.close();
+      this.stageSelectManager.enableInputHandling();
+    });
+  }
+
   stageChanged(stageId, stageNumber) {
     this.stageInfoManager.createStageInfo(stageId, stageNumber);
   }
 
   stageSelected(stageId) {
     this.selectedStageId = stageId;
-    this.createStageSelectedModal();
+    const stageType = this.progressManager.getStageType(stageId);
+    if (stageType !== gameTypes.zombieAssaultReview.id) {
+      this.createStageSelectedModal();
+    } else {
+      const lessonId = this.mapManager.getSelectedLessonId();
+      if (this.progressManager.isReviewUnlocked(lessonId)) {
+        this.createReviewStageSelectedModal();
+      } else {
+        this.createReviewLockedModal();
+      }
+    }
+  }
+
+  createReviewLockedModal() {
+    this.disableInputHandling();
+    this.modal = new Modal(this, townMap.modals.reviewLocked);
+    this.modal.draw();
+    this.modal.enableInputClose();
+    this.modal.setCloseCallback(() => {
+      this.modal.disableInputHandling();
+      this.assignInputControl(STAGE_SELECT);
+    });
   }
 
   stageSelectCancelled() {

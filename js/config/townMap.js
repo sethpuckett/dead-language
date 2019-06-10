@@ -38,6 +38,12 @@ export default {
       'Well, that\'s enough ramblin\' from me.',
       'Let\'s get started!',
     ],
+    reviewLocked: [
+      'Whoa! Hold up there, friend.',
+      'You can\'t just charge into the review stage',
+      'guns blazin\'. Yer gonna have to clear out',
+      'all them other stages first.',
+    ],
   },
   choiceModals: {
     stageSelected: {
@@ -45,6 +51,15 @@ export default {
       choices: [
         'Start Game',
         'Target Practice',
+      ],
+    },
+    reviewStageSelected: {
+      text: [
+        'Alright, friend, this is the big one.', 'The final push to clear out this location',
+        'Yer gonna see vocab from every stage in this lesson.', 'I sure hope yer ready.',
+      ],
+      choices: [
+        'Start Game',
       ],
     },
   },
