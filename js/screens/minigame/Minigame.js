@@ -6,6 +6,7 @@ import MinigameSpawnManager from './MinigameSpawnManager';
 import HudStatusManager from '../HudStatusManager';
 import HudManager from '../HudManager';
 import Modal from '../Modal';
+import GameProgressManager from '../../data/GameProgressManager';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -20,6 +21,7 @@ export default class extends Phaser.Scene {
     this.spawnManager = new MinigameSpawnManager(this, this.currentLevel.waves, this.vocab);
     this.statusManager = new HudStatusManager(this);
     this.hudManager = new HudManager(this);
+    this.progressManager = new GameProgressManager(this.sys.game.db);
     this.score = 0;
     this.health = this.currentLevel.startHealth;
   }
@@ -102,7 +104,7 @@ export default class extends Phaser.Scene {
   }
 
   gameTimerFinish() {
-    this.game.db.saveStageCompleted(this.stageId, () => {
+    this.GameProgressManager.saveStageCompleted(this.stageId, () => {
       this.scene.start(screens.endgame, { status: endgame.win, stageId: this.stageId });
     });
   }

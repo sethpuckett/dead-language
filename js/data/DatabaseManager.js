@@ -67,33 +67,6 @@ export default class {
     throw Error('stages have not been loaded. Call loadStages() first');
   }
 
-  // callback will be passed true if the data saves, false otherwise
-  saveStageCompleted(stageId, callback) {
-    const user = this.getCurrentUserProfile();
-    if (user != null) {
-      user.update(
-        { stagesCompleted: firebase.firestore.FieldValue.arrayUnion(stageId) }
-      ).then(() => {
-        this.loadUserProfile();
-        callback(true);
-      });
-    } else {
-      callback(false);
-    }
-  }
-
-  isStageCompleted(stageId) {
-    if (!this.isUserLoggedIn()) {
-      return false;
-    }
-
-    if (this.userProfileLoaded) {
-      const completed = this.userProfile.stagesCompleted;
-      return completed != null && completed.includes(stageId);
-    }
-    throw Error('user profile has not been loaded. Call loadUserProfile() first');
-  }
-
   isUserLoggedIn() {
     return this.getCurrentUser() != null;
   }

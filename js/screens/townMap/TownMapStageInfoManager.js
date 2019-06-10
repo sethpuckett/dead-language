@@ -56,15 +56,12 @@ export default class {
   createStageInfo(stageId, stageNumber) {
     this.clearStageInfo();
 
-    // TODO: handle review
-    if (stageId === 'review') {
-      return;
-    }
-
     const stage = this.scene.sys.game.db.getStage(stageId);
 
     switch (stage.type) {
+      // TODO: handle review
       case gameTypes.zombieAssault.id:
+      case gameTypes.zombieAssaultReview.id:
         this.createZombieAssaultStageInfo(stageNumber);
         break;
       default:

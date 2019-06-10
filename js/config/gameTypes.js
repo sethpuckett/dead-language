@@ -4,4 +4,9 @@ export default {
     name: 'Zombie Assault',
     description: 'Vocab Mastery Mayhem',
   },
+  zombieAssaultReview: {
+    id: 'zombie-assault-review',
+    name: 'Zombie Assault',
+    description: 'Review Rampage',
+  },
 };

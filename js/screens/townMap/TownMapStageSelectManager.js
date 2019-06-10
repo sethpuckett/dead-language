@@ -1,10 +1,12 @@
-import { fonts, townMap, images, depth } from '../../config';
+import { fonts, townMap, images, depth, gameTypes } from '../../config';
 import TownMapHelper from './TownMapHelper';
+import GameProgressManager from '../../data/GameProgressManager';
 
 export default class {
   constructor(scene) {
     this.scene = scene;
     this.mapHelper = new TownMapHelper();
+    this.progressManager = new GameProgressManager(this.scene.sys.game.db);
     this.selectedStage = 0;
     this.inputHandled = false;
 
@@ -110,29 +112,23 @@ export default class {
       const dot = this.scene.add.sprite(
         this.getStageXPosition(index), this.scene.ui.stageDotY, images.yellowBubble
       );
-      if (this.scene.game.db.isStageCompleted(stageId)) {
+      if (this.progressManager.isStageCompleted(stageId)) {
         dot.setFrame(images.frames.yellowBubbleFull);
       } else {
         dot.setFrame(images.frames.yellowBubbleEmpty);
       }
       dot.setOrigin(this.scene.ui.stageDotOriginX, this.scene.ui.stageDotOriginY);
-      dot.displayWidth = this.scene.ui.stageDotWidth;
-      dot.displayHeight = this.scene.ui.stageDotWidth;
       this.stageIcons.push(dot);
-    });
 
-    // draw review stage dot
-    const reviewDot = this.scene.add.sprite(
-      this.getStageXPosition(this.lesson.stages.length),
-      this.scene.ui.stageDotY,
-      images.yellowBubble
-    );
-    // TODO: set this based on completion status of stage
-    reviewDot.setFrame(images.frames.yellowBubbleEmpty);
-    reviewDot.setOrigin(this.scene.ui.stageDotOriginX, this.scene.ui.stageDotOriginY);
-    reviewDot.displayWidth = this.scene.ui.stageReviewDotWidth;
-    reviewDot.displayHeight = this.scene.ui.stageReviewDotWidth;
-    this.stageIcons.push(reviewDot);
+      const gameType = this.scene.game.db.getStage(stageId).type;
+      if (gameType === gameTypes.zombieAssault.id) {
+        dot.displayWidth = this.scene.ui.stageDotWidth;
+        dot.displayHeight = this.scene.ui.stageDotWidth;
+      } else if (gameType === gameTypes.zombieAssaultReview.id) {
+        dot.displayWidth = this.scene.ui.stageReviewDotWidth;
+        dot.displayHeight = this.scene.ui.stageReviewDotWidth;
+      }
+    });
   }
 
   clearStageIcons() {
@@ -207,9 +203,6 @@ export default class {
       if (this.selectedStage < this.lesson.stages.length) {
         return this.lesson.stages[this.selectedStage];
       }
-
-      // TODO: handle review
-      return 'review';
     }
     return null;
   }
@@ -220,10 +213,14 @@ export default class {
 
   // Private
 
+  getSelectedStageType() {
+    return this.scene.game.db.getStage(this.getSelectedStageId()).type;
+  }
+
   updateStageSelector() {
     this.stageSelector.x = this.getStageXPosition(this.selectedStage)
       - this.scene.ui.stageSelectorXBuffer;
-    if (this.selectedStage === this.lesson.stages.length) { // review stage selected
+    if (this.getSelectedStageType() === gameTypes.zombieAssaultReview.id) {
       this.stageSelector.displayWidth = this.scene.ui.stageSelectorReviewWidth;
       this.stageSelector.displayHeight = this.scene.ui.stageSelectorReviewWidth;
     } else {
@@ -236,10 +233,9 @@ export default class {
 
   getStageXPosition(index) {
     const stageCount = this.lesson.stages.length;
-    const totalDotWidth = stageCount * this.scene.ui.stageDotWidth
-      + this.scene.ui.stageReviewDotWidth;
+    const totalDotWidth = stageCount * this.scene.ui.stageDotSpaceWidth;
     const baseX = this.scene.ui.stageX + this.scene.ui.stageWidth / 2 - totalDotWidth / 2;
-    const percentX = index / (this.lesson.stages.length + 1);
+    const percentX = index / (this.lesson.stages.length);
     return baseX + totalDotWidth * percentX;
   }
 
@@ -256,11 +252,7 @@ export default class {
     } else if (e.keyCode === this.keys.RIGHT.keyCode) {
       this.incrementSelectedStage();
     } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
-      if (this.selectedStage < this.lesson.stages.length) {
-        this.stageSelectedCallback(this.getSelectedStageId());
-      } else {
-        // TODO: add review stage
-      }
+      this.stageSelectedCallback(this.getSelectedStageId());
     } else if (e.keyCode === this.keys.ESC.keyCode) {
       this.cancelCallback();
     }

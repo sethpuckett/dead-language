@@ -106,6 +106,7 @@ export default (config) => {
     get stageDotY() { return this.stageY + this.stageHeight * 0.66; },
     stageDotWidth: u.w_5p,
     stageReviewDotWidth: u.w * 0.065,
+    stageDotSpaceWidth: u.w * 0.065,
     stageDotOriginX: u.left,
     stageDotOriginY: u.center,
 
