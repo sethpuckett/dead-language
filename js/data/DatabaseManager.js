@@ -67,6 +67,13 @@ export default class {
     throw Error('stages have not been loaded. Call loadStages() first');
   }
 
+  getLessonForStage(stageId) {
+    if (this.lessonsLoaded && this.stagesLoaded) {
+      return this.lessons.docs.find(doc => doc.data().stages.includes(stageId)).data();
+    }
+    throw Error('stages or lessons not loaded. Call loadLessons() and loadStages() first.');
+  }
+
   isUserLoggedIn() {
     return this.getCurrentUser() != null;
   }

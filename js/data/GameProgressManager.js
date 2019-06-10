@@ -42,7 +42,7 @@ export default class {
     const lesson = this.db.getLesson(lessonId);
     return lesson.stages.every((sid) => {
       const gameType = this.db.getStage(sid).type;
-      if (gameType !== gameTypes.zombieAssaultReview) {
+      if (gameType !== gameTypes.zombieAssaultReview.id) {
         return this.isStageCompleted(sid);
       }
       return true;

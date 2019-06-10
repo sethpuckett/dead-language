@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { depth, minigame, levels, images, screens, endgame } from '../../config';
+import { depth, minigame, levels, images, screens, endgame, gameTypes } from '../../config';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
 import MinigameSpawnManager from './MinigameSpawnManager';
@@ -16,12 +16,13 @@ export default class extends Phaser.Scene {
   init(stageId) {
     this.stageId = stageId;
     this.currentLevel = levels.find(l => l.id === 1); // Only 1 level for now
-    this.vocab = new VocabWordManager(this.sys.game.db.getStage(stageId).vocab);
-    this.zombieManager = new MinigameZombieManager(this, this.vocab);
-    this.spawnManager = new MinigameSpawnManager(this, this.currentLevel.waves, this.vocab);
     this.statusManager = new HudStatusManager(this);
     this.hudManager = new HudManager(this);
     this.progressManager = new GameProgressManager(this.sys.game.db);
+    this.vocab = new VocabWordManager(this.getVocab());
+    this.zombieManager = new MinigameZombieManager(this, this.vocab);
+    this.spawnManager = new MinigameSpawnManager(this, this.currentLevel.waves, this.vocab);
+
     this.score = 0;
     this.health = this.currentLevel.startHealth;
   }
@@ -104,7 +105,7 @@ export default class extends Phaser.Scene {
   }
 
   gameTimerFinish() {
-    this.GameProgressManager.saveStageCompleted(this.stageId, () => {
+    this.progressManager.saveStageCompleted(this.stageId, () => {
       this.scene.start(screens.endgame, { status: endgame.win, stageId: this.stageId });
     });
   }
@@ -149,5 +150,15 @@ export default class extends Phaser.Scene {
     this.score += points;
     this.hudManager.setKillValue(this.score);
     this.hudManager.clearTextEntry();
+  }
+
+  getVocab() {
+    const stageType = this.progressManager.getStageType(this.stageId);
+    if (stageType !== gameTypes.zombieAssaultReview.id) {
+      return this.sys.game.db.getStage(this.stageId).vocab;
+    }
+
+    const lesson = this.sys.game.db.getLessonForStage(this.stageId);
+    return lesson.stages.reduce((agg, cur) => agg.concat(this.sys.game.db.getStage(cur).vocab), []);
   }
 }
