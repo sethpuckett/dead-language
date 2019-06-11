@@ -49,7 +49,9 @@ export default class {
     if (this.lessonsLoaded) {
       const lesson = this.lessons.docs.find(d => d.id === id);
       if (lesson != null) {
-        return lesson.data();
+        const lessonData = lesson.data();
+        lessonData.id = lesson.id;
+        return lessonData;
       }
       throw Error(`lesson with id ${id} was not found in the database.`);
     }
@@ -69,7 +71,10 @@ export default class {
 
   getLessonForStage(stageId) {
     if (this.lessonsLoaded && this.stagesLoaded) {
-      return this.lessons.docs.find(doc => doc.data().stages.includes(stageId)).data();
+      const lesson = this.lessons.docs.find(doc => doc.data().stages.includes(stageId));
+      const lessonData = lesson.data();
+      lessonData.id = lesson.id;
+      return lessonData;
     }
     throw Error('stages or lessons not loaded. Call loadLessons() and loadStages() first.');
   }

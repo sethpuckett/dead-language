@@ -11,9 +11,13 @@ export default class {
   saveStageCompleted(stageId, callback) {
     const user = this.db.getCurrentUserProfile();
     if (user != null) {
-      user.update(
-        { stagesCompleted: firebase.firestore.FieldValue.arrayUnion(stageId) }
-      ).then(() => {
+      const lesson = this.db.getLessonForStage(stageId);
+      const lessonCompleted = lesson.stages.every(s => s === stageId || this.isStageCompleted(s));
+      const updateObject = { stagesCompleted: firebase.firestore.FieldValue.arrayUnion(stageId) };
+      if (lessonCompleted) {
+        updateObject.lessonsCompleted = firebase.firestore.FieldValue.arrayUnion(lesson.id);
+      }
+      user.update(updateObject).then(() => {
         this.db.loadUserProfile();
         callback(true);
       });
