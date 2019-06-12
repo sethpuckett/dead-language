@@ -163,6 +163,17 @@ export default (config) => {
     get stageInfoZombie3X() { return this.stageInfoX + this.stageInfoWidth * 0.80; },
     get stageInfoZombie3Y() { return this.stageInfoY + this.stageInfoHeight * 0.72; },
 
+    get stageInfoReviewZombie1X() { return this.stageInfoX + this.stageInfoWidth * 0.15; },
+    get stageInfoReviewZombie1Y() { return this.stageInfoY + this.stageInfoHeight * 0.65; },
+    get stageInfoReviewZombie2X() { return this.stageInfoX + this.stageInfoWidth * 0.33; },
+    get stageInfoReviewZombie2Y() { return this.stageInfoY + this.stageInfoHeight * 0.81; },
+    get stageInfoReviewZombie3X() { return this.stageInfoX + this.stageInfoWidth * 0.47; },
+    get stageInfoReviewZombie3Y() { return this.stageInfoY + this.stageInfoHeight * 0.59; },
+    get stageInfoReviewZombie4X() { return this.stageInfoX + this.stageInfoWidth * 0.62; },
+    get stageInfoReviewZombie4Y() { return this.stageInfoY + this.stageInfoHeight * 0.78; },
+    get stageInfoReviewZombie5X() { return this.stageInfoX + this.stageInfoWidth * 0.83; },
+    get stageInfoReviewZombie5Y() { return this.stageInfoY + this.stageInfoHeight * 0.69; },
+
     // Instructions
 
     get instructionsX() { return this.lessonInfoX + this.lessonInfoWidth + u.paddingBig; },

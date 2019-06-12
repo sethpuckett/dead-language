@@ -79,8 +79,10 @@ export default class {
       switch (stage.type) {
         // TODO: handle review
         case gameTypes.zombieAssault.id:
+          this.createZombieAssaultStageInfo(maintainAnimations);
+          break;
         case gameTypes.zombieAssaultReview.id:
-          this.createZombieAssaultStageInfo(this.stageNumber, maintainAnimations);
+          this.createZombieAssaultReviewStageInfo(maintainAnimations);
           break;
         default:
           throw Error(`Invalid stage type '${stage.type}'`);
@@ -89,18 +91,6 @@ export default class {
   }
 
   createCommonStageInfo(stageType) {
-    this.stageInfoTitle = this.scene.add.bitmapText(
-      this.scene.ui.stageInfoTitleX,
-      this.scene.ui.stageInfoTitleY,
-      fonts.blueSkyWhite,
-      `Stage ${this.stageNumber.toString().padStart(2, '0')}`,
-      townMap.fonts.stageInfoTitleSize
-    );
-    this.stageInfoTitle.setOrigin(
-      this.scene.ui.stageInfoTitleOriginX, this.scene.ui.stageInfoTitleOriginY
-    );
-    this.stageInfoTitle.setCenterAlign();
-
     this.stageInfoType = this.scene.add.bitmapText(
       this.scene.ui.stageInfoTypeX,
       this.scene.ui.stageInfoTypeY,
@@ -127,8 +117,20 @@ export default class {
     this.stageInfoSubtitle.setCenterAlign();
   }
 
-  createZombieAssaultStageInfo(stageNumber, animationsMaintained) {
-    this.createCommonStageInfo(gameTypes.zombieAssault.id, stageNumber);
+  createZombieAssaultStageInfo(animationsMaintained) {
+    this.createCommonStageInfo(gameTypes.zombieAssault.id);
+
+    this.stageInfoTitle = this.scene.add.bitmapText(
+      this.scene.ui.stageInfoTitleX,
+      this.scene.ui.stageInfoTitleY,
+      fonts.blueSkyWhite,
+      `Stage ${this.stageNumber.toString().padStart(2, '0')}`,
+      townMap.fonts.stageInfoTitleSize
+    );
+    this.stageInfoTitle.setOrigin(
+      this.scene.ui.stageInfoTitleOriginX, this.scene.ui.stageInfoTitleOriginY
+    );
+    this.stageInfoTitle.setCenterAlign();
 
     if (!animationsMaintained) {
       this.stageInfoSprites = [];
@@ -161,6 +163,85 @@ export default class {
       this.stageInfoZombie3.setScale(ZOMBIE_IMAGE_SCALE);
       this.stageInfoZombie3.anims.msPerFrame = 175;
       this.stageInfoSprites.push(this.stageInfoZombie3);
+    }
+  }
+
+  createZombieAssaultReviewStageInfo(animationsMaintained) {
+    this.createCommonStageInfo(gameTypes.zombieAssaultReview.id);
+
+    if (!animationsMaintained) {
+      this.stageInfoTitle = this.scene.add.bitmapText(
+        this.scene.ui.stageInfoTitleX,
+        this.scene.ui.stageInfoTitleY,
+        fonts.blueSkyWhite,
+        'Lesson Review',
+        townMap.fonts.stageInfoTitleSize
+      );
+      this.stageInfoTitle.setOrigin(
+        this.scene.ui.stageInfoTitleOriginX, this.scene.ui.stageInfoTitleOriginY
+      );
+      this.stageInfoTitle.setCenterAlign();
+
+      this.stageInfoSprites = [];
+      this.stageInfoZombie1 = this.scene.add.sprite(
+        this.scene.ui.stageInfoReviewZombie1X,
+        this.scene.ui.stageInfoReviewZombie1Y,
+        images.grayZombie.lightGreenZombie
+      );
+      this.stageInfoZombie1.play(
+        animationHelper.zombieAnimation(images.lightGreenZombie, animations.zombieRun),
+      );
+      this.stageInfoZombie1.setScale(ZOMBIE_IMAGE_SCALE);
+      this.stageInfoZombie1.anims.msPerFrame = 100;
+      this.stageInfoSprites.push(this.stageInfoZombie1);
+
+      this.stageInfoZombie2 = this.scene.add.sprite(
+        this.scene.ui.stageInfoReviewZombie2X,
+        this.scene.ui.stageInfoReviewZombie2Y,
+        images.redZombie
+      );
+      this.stageInfoZombie2.play(
+        animationHelper.zombieAnimation(images.redZombie, animations.zombieRun),
+      );
+      this.stageInfoZombie2.setScale(ZOMBIE_IMAGE_SCALE);
+      this.stageInfoZombie2.anims.msPerFrame = 112;
+      this.stageInfoSprites.push(this.stageInfoZombie2);
+
+      this.stageInfoZombie3 = this.scene.add.sprite(
+        this.scene.ui.stageInfoReviewZombie3X,
+        this.scene.ui.stageInfoReviewZombie3Y,
+        images.grayZombie
+      );
+      this.stageInfoZombie3.play(
+        animationHelper.zombieAnimation(images.grayZombie, animations.zombieRun)
+      );
+      this.stageInfoZombie3.setScale(ZOMBIE_IMAGE_SCALE);
+      this.stageInfoZombie3.anims.msPerFrame = 88;
+      this.stageInfoSprites.push(this.stageInfoZombie3);
+
+      this.stageInfoZombie4 = this.scene.add.sprite(
+        this.scene.ui.stageInfoReviewZombie4X,
+        this.scene.ui.stageInfoReviewZombie4Y,
+        images.greenZombie
+      );
+      this.stageInfoZombie4.play(
+        animationHelper.zombieAnimation(images.greenZombie, animations.zombieRun)
+      );
+      this.stageInfoZombie4.setScale(ZOMBIE_IMAGE_SCALE);
+      this.stageInfoZombie4.anims.msPerFrame = 120;
+      this.stageInfoSprites.push(this.stageInfoZombie4);
+
+      this.stageInfoZombie5 = this.scene.add.sprite(
+        this.scene.ui.stageInfoReviewZombie5X,
+        this.scene.ui.stageInfoReviewZombie5Y,
+        images.redZombie
+      );
+      this.stageInfoZombie5.play(
+        animationHelper.zombieAnimation(images.redZombie, animations.zombieRun)
+      );
+      this.stageInfoZombie5.setScale(ZOMBIE_IMAGE_SCALE);
+      this.stageInfoZombie5.anims.msPerFrame = 90;
+      this.stageInfoSprites.push(this.stageInfoZombie5);
     }
   }
 

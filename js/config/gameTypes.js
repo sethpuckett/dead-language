@@ -6,7 +6,7 @@ export default {
   },
   zombieAssaultReview: {
     id: 'zombie-assault-review',
-    name: 'Zombie Assault',
-    description: 'Review Rampage',
+    name: 'Final Assault',
+    description: 'Testing Turmoil',
   },
 };
