@@ -38,6 +38,18 @@ export default class {
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }
 
+  isLessonCompleted(lessonId) {
+    if (!this.db.isUserLoggedIn()) {
+      return false;
+    }
+
+    if (this.db.userProfileLoaded) {
+      const completed = this.db.userProfile.lessonsCompleted;
+      return completed != null && completed.includes(lessonId);
+    }
+    throw Error('user profile has not been loaded. Call loadUserProfile() first');
+  }
+
   getStageType(stageId) {
     return this.db.getStage(stageId).type;
   }
@@ -51,5 +63,30 @@ export default class {
       }
       return true;
     });
+  }
+
+  setMapPosition(lessonId, stageId, callback) {
+    const user = this.db.getCurrentUserProfile();
+    if (user != null) {
+      user.update({ mapState: { lesson: lessonId, stage: stageId } }).then(() => {
+        this.db.loadUserProfile();
+        if (callback != null) {
+          callback(true);
+        }
+      });
+    } else if (callback != null) {
+      callback(false);
+    }
+  }
+
+  getMapPosition() {
+    if (!this.db.isUserLoggedIn()) {
+      return null;
+    }
+
+    if (this.db.userProfileLoaded) {
+      return this.db.userProfile.mapState;
+    }
+    throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }
 }

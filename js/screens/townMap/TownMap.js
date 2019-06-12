@@ -29,6 +29,8 @@ export default class extends Phaser.Scene {
     this.stageInfoManager = new TownMapStageInfoManager(this);
     this.instructionsManager = new TownMapInstructionsManager(this);
     this.progressManager = new GameProgressManager(this.sys.game.db);
+
+    this.selectedStageId = null;
   }
 
   create() {
@@ -37,8 +39,7 @@ export default class extends Phaser.Scene {
     this.createStageSelect();
     this.createStageInfo();
     this.createInstructions();
-
-    this.mapManager.enableInputHandling();
+    this.setSelectedPosition();
 
     this.createStartModal();
   }
@@ -73,6 +74,30 @@ export default class extends Phaser.Scene {
     this.instructionsManager.initialize();
   }
 
+  setSelectedPosition() {
+    const position = this.progressManager.getMapPosition();
+    if (position != null) {
+      this.mapManager.setSelectedLesson(position.lesson);
+      if (position.stage != null) {
+        this.selectedStageId = position.stage;
+        this.mapManager.disable();
+        this.lessonInfoManager.disable();
+        this.stageSelectManager.enable();
+        this.stageInfoManager.enable();
+        this.stageSelectManager.setSelectedStage(position.stage);
+        this.stageInfoManager.createStageInfo(
+          this.stageSelectManager.getSelectedStageId(),
+          this.stageSelectManager.getSelectedStageNumber()
+        );
+      } else {
+        this.stageSelectManager.disable();
+        this.stageInfoManager.disable();
+        this.mapManager.enable();
+        this.lessonInfoManager.enable();
+      }
+    }
+  }
+
   disableInputHandling() {
     this.stageSelectManager.disableInputHandling();
     this.mapManager.disableInputHandling();
@@ -94,7 +119,7 @@ export default class extends Phaser.Scene {
     this.modal.enableInputClose();
     this.modal.setCloseCallback(() => {
       this.modal.disableInputHandling();
-      this.assignInputControl(LESSON_SELECT);
+      this.assignInputControl(this.selectedStageId != null ? STAGE_SELECT : LESSON_SELECT);
     });
   }
 
@@ -217,6 +242,9 @@ export default class extends Phaser.Scene {
 
   fadeCallback(_camera, progress) {
     if (progress === 1) {
+      this.progressManager.setMapPosition(
+        this.mapManager.getSelectedLessonId(), this.selectedStageId
+      );
       this.scene.start(this.nextScreen, this.selectedStageId);
     }
   }

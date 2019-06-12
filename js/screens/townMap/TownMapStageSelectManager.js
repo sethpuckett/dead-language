@@ -15,6 +15,7 @@ export default class {
   }
 
   initialize(enabled, lesson, stageIndex) {
+    this.enabled = enabled;
     this.drawBorder(enabled);
     this.lesson = lesson;
     this.selectedStage = stageIndex;
@@ -35,6 +36,7 @@ export default class {
   }
 
   enable() {
+    this.enabled = true;
     this.drawBorder(true);
     this.createTitle();
     this.createStageSelector();
@@ -42,6 +44,7 @@ export default class {
   }
 
   disable() {
+    this.enabled = false;
     this.drawBorder(false);
     this.clearTitle();
     this.clearStageSelector();
@@ -187,12 +190,17 @@ export default class {
   }
 
   setSelectedStage(stageId) {
-    this.selectedStage = 0;
-    if (this.lesson != null && stageId != null) {
-      for (let i = 0; i < this.lesson.stages.length; i += 1) {
-        if (this.lesson.stages[i] === stageId) {
-          this.selectedStage = i;
-          break;
+    if (stageId != null) {
+      this.selectedStage = 0;
+      if (this.lesson != null && stageId != null) {
+        for (let i = 0; i < this.lesson.stages.length; i += 1) {
+          if (this.lesson.stages[i] === stageId) {
+            this.selectedStage = i;
+            if (this.enabled) {
+              this.updateStageSelector();
+            }
+            break;
+          }
         }
       }
     }

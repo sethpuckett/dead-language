@@ -1,5 +1,6 @@
 import { townMap, depth, lessonMap, images, fonts } from '../../config';
 import TownMapHelper from './TownMapHelper';
+import GameProgressManager from '../../data/GameProgressManager';
 
 const MAP_X_CELL_COUNT = 8;
 const MAP_Y_CELL_COUNT = 5;
@@ -8,6 +9,7 @@ export default class {
   constructor(scene) {
     this.scene = scene;
     this.mapHelper = new TownMapHelper();
+    this.progressManager = new GameProgressManager(this.scene.sys.game.db);
 
     this.selectedCell = { x: 0, y: 0 };
     this.inputHandled = false;
@@ -17,6 +19,7 @@ export default class {
   }
 
   initialize(enabled) {
+    this.enabled = enabled;
     this.drawBorder(enabled);
     this.createLocation();
     this.createMapGrid();
@@ -31,12 +34,14 @@ export default class {
   }
 
   enable() {
+    this.enabled = true;
     this.drawBorder(true);
     this.createTitle();
     this.enableInputHandling();
   }
 
   disable() {
+    this.enabled = false;
     this.drawBorder(false);
     this.clearTitle();
     this.disableInputHandling();
@@ -145,9 +150,13 @@ export default class {
       const xPos = this.baseX + lesson.position.x * this.cellWidth + this.cellWidth / 2;
       const yPos = this.baseY + lesson.position.y * this.cellHeight + this.cellHeight / 2;
 
-      const pin = this.scene.add.sprite(
-        xPos, yPos, images.colorSquare, images.frames.colorSquareYellow
-      );
+      const completed = this.progressManager.isLessonCompleted(lesson.id);
+      let pinFrame = images.frames.colorSquareYellow;
+      if (completed) {
+        pinFrame = images.frames.colorSquareGreen;
+      }
+
+      const pin = this.scene.add.sprite(xPos, yPos, images.colorSquare, pinFrame);
       pin.setOrigin(this.scene.ui.mapPinOrigin);
       pin.displayWidth = this.cellWidth * townMap.ui.mapPinCellWidth;
       pin.displayHeight = this.cellHeight * townMap.ui.mapPinCellWidth;
@@ -235,6 +244,18 @@ export default class {
       return lesson.location;
     }
     return null;
+  }
+
+  setSelectedLesson(lessonId) {
+    lessonMap.some((lesson) => {
+      if (lesson.id === lessonId) {
+        this.selectedCell.x = lesson.position.x;
+        this.selectedCell.y = lesson.position.y;
+        this.updateLessonSelector();
+        return true;
+      }
+      return false;
+    });
   }
 
   // Private
