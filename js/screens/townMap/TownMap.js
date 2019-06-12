@@ -198,7 +198,7 @@ export default class extends Phaser.Scene {
   }
 
   stageChanged(stageId, stageNumber) {
-    this.stageInfoManager.createStageInfo(stageId, stageNumber);
+    this.stageInfoManager.setStage(stageId, stageNumber);
   }
 
   stageSelected(stageId) {
@@ -243,7 +243,7 @@ export default class extends Phaser.Scene {
   lessonSelected(lessonId) {
     if (lessonId != null) {
       this.stageSelectManager.setLesson(lessonId);
-      this.stageInfoManager.createStageInfo(
+      this.stageInfoManager.setStage(
         this.stageSelectManager.getStageId(),
         this.stageSelectManager.getStageNumber()
       );
