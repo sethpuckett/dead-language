@@ -7,32 +7,24 @@ export default class {
     this.scene = scene;
     this.mapHelper = new TownMapHelper();
     this.progressManager = new GameProgressManager(this.scene.sys.game.db);
-    this.selectedStage = 0;
+    this.selectedStageIndex = 0;
     this.inputHandled = false;
+    this.enabled = false;
+    this.lesson = null;
 
     this.borderGraphics = this.scene.add.graphics();
     this.borderGraphics.setDepth(depth.townMap.border);
   }
 
-  initialize(enabled, lesson, stageIndex) {
-    this.enabled = enabled;
-    this.drawBorder(enabled);
-    this.lesson = lesson;
-    this.selectedStage = stageIndex;
+  initialize() {
+    this.enabled = false;
+    this.lesson = null;
+    this.selectedStageIndex = 0;
 
-    if (lesson != null) {
-      this.createStageIcons();
-    } else {
-      this.clearStageIcons();
-    }
-
-    if (enabled) {
-      this.createTitle();
-      this.createStageSelector();
-    } else {
-      this.clearTitle();
-      this.clearStageSelector();
-    }
+    this.drawBorder(false);
+    this.clearStageIcons();
+    this.clearTitle();
+    this.clearStageSelector();
   }
 
   enable() {
@@ -51,11 +43,83 @@ export default class {
     this.disableInputHandling();
   }
 
-  setLesson(lesson) {
-    this.lesson = lesson;
-    this.selectedStage = 0;
+  setLesson(lessonId) {
+    this.lesson = this.scene.sys.game.db.getLesson(lessonId);
+    this.selectedStageIndex = 0;
     this.createStageIcons();
   }
+
+  setStage(stageId) {
+    if (stageId != null) {
+      this.selectedStageIndex = 0;
+      if (this.lesson != null) {
+        for (let i = 0; i < this.lesson.stages.length; i += 1) {
+          if (this.lesson.stages[i] === stageId) {
+            this.selectedStageIndex = i;
+            if (this.enabled) {
+              this.updateStageSelector();
+            }
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  resetStage() {
+    this.selectedStageIndex = 0;
+    if (this.enabled) {
+      this.updateStageSelector();
+    }
+  }
+
+  clear() {
+    this.clearTitle();
+    this.clearStageIcons();
+    this.clearStageSelector();
+  }
+
+  enableInputHandling() {
+    if (!this.inputHandled) {
+      this.inputHandled = true;
+      this.createInput();
+    }
+  }
+
+  disableInputHandling() {
+    if (this.inputHandled) {
+      this.inputHandled = false;
+      this.keys = null;
+      this.scene.input.keyboard.off('keydown', this.handleKeyDown);
+    }
+  }
+
+  // This will be called with the id of the selected stage
+  setStageChangedCallback(callback) {
+    this.stageChangedCallback = callback.bind(this.scene);
+  }
+
+  // This will be called with the id of the selected stage
+  setStageSelectedCallback(callback) {
+    this.stageSelectedCallback = callback.bind(this.scene);
+  }
+
+  setCancelCallback(callback) {
+    this.cancelCallback = callback.bind(this.scene);
+  }
+
+  getStageId() {
+    if (this.lesson != null) {
+      return this.lesson.stages[this.selectedStageIndex];
+    }
+    return null;
+  }
+
+  getStageNumber() {
+    return this.selectedStageIndex + 1;
+  }
+
+  // Private
 
   drawBorder(enabled) {
     const color = enabled ? townMap.ui.borderColor : townMap.ui.borderDisableColor;
@@ -100,38 +164,34 @@ export default class {
     }
   }
 
-  clearAll() {
-    this.clearTitle();
-    this.clearStageIcons();
-    this.clearStageSelector();
-  }
-
   createStageIcons() {
     this.clearStageIcons();
 
-    // evenly space stage dots in stage select section
-    this.stageIcons = [];
-    this.lesson.stages.forEach((stageId, index) => {
-      const dot = this.scene.add.sprite(
-        this.getStageXPosition(index), this.scene.ui.stageDotY, images.yellowBubble
-      );
-      if (this.progressManager.isStageCompleted(stageId)) {
-        dot.setFrame(images.frames.yellowBubbleFull);
-      } else {
-        dot.setFrame(images.frames.yellowBubbleEmpty);
-      }
-      dot.setOrigin(this.scene.ui.stageDotOriginX, this.scene.ui.stageDotOriginY);
-      this.stageIcons.push(dot);
+    if (this.lesson != null) {
+      // evenly space stage dots in stage select section
+      this.stageIcons = [];
+      this.lesson.stages.forEach((stageId, index) => {
+        const dot = this.scene.add.sprite(
+          this.getStageXPosition(index), this.scene.ui.stageDotY, images.yellowBubble
+        );
+        if (this.progressManager.isStageCompleted(stageId)) {
+          dot.setFrame(images.frames.yellowBubbleFull);
+        } else {
+          dot.setFrame(images.frames.yellowBubbleEmpty);
+        }
+        dot.setOrigin(this.scene.ui.stageDotOriginX, this.scene.ui.stageDotOriginY);
+        this.stageIcons.push(dot);
 
-      const gameType = this.scene.game.db.getStage(stageId).type;
-      if (gameType === gameTypes.zombieAssault.id) {
-        dot.displayWidth = this.scene.ui.stageDotWidth;
-        dot.displayHeight = this.scene.ui.stageDotWidth;
-      } else if (gameType === gameTypes.zombieAssaultReview.id) {
-        dot.displayWidth = this.scene.ui.stageReviewDotWidth;
-        dot.displayHeight = this.scene.ui.stageReviewDotWidth;
-      }
-    });
+        const gameType = this.scene.game.db.getStage(stageId).type;
+        if (gameType === gameTypes.zombieAssault.id) {
+          dot.displayWidth = this.scene.ui.stageDotWidth;
+          dot.displayHeight = this.scene.ui.stageDotWidth;
+        } else if (gameType === gameTypes.zombieAssaultReview.id) {
+          dot.displayWidth = this.scene.ui.stageReviewDotWidth;
+          dot.displayHeight = this.scene.ui.stageReviewDotWidth;
+        }
+      });
+    }
   }
 
   clearStageIcons() {
@@ -145,12 +205,11 @@ export default class {
     this.clearStageSelector();
 
     this.stageSelector = this.scene.add.sprite(
-      this.getStageXPosition(this.selectedStage) - this.scene.ui.stageSelectorXBuffer,
+      this.getStageXPosition(this.selectedStageIndex) - this.scene.ui.stageSelectorXBuffer,
       this.scene.ui.stageDotY, images.hudItemBorder
     );
-    this.stageSelector.displayWidth = this.scene.ui.stageSelectorWidth;
-    this.stageSelector.displayHeight = this.scene.ui.stageSelectorWidth;
     this.stageSelector.setOrigin(this.scene.ui.stageDotOriginX, this.scene.ui.stageDotOriginY);
+    this.setSelectorSize();
   }
 
   clearStageSelector() {
@@ -160,83 +219,22 @@ export default class {
     }
   }
 
-  enableInputHandling() {
-    if (!this.inputHandled) {
-      this.inputHandled = true;
-      this.createInput();
-    }
-  }
-
-  disableInputHandling() {
-    if (this.inputHandled) {
-      this.inputHandled = false;
-      this.keys = null;
-      this.scene.input.keyboard.off('keydown', this.handleKeyDown);
-    }
-  }
-
-  // This will be called with the id of the selected stage
-  setStageChangedCallback(callback) {
-    this.stageChangedCallback = callback.bind(this.scene);
-  }
-
-  // This will be called with the id of the selected stage
-  setStageSelectedCallback(callback) {
-    this.stageSelectedCallback = callback.bind(this.scene);
-  }
-
-  setCancelCallback(callback) {
-    this.cancelCallback = callback.bind(this.scene);
-  }
-
-  setSelectedStage(stageId) {
-    if (stageId != null) {
-      this.selectedStage = 0;
-      if (this.lesson != null && stageId != null) {
-        for (let i = 0; i < this.lesson.stages.length; i += 1) {
-          if (this.lesson.stages[i] === stageId) {
-            this.selectedStage = i;
-            if (this.enabled) {
-              this.updateStageSelector();
-            }
-            break;
-          }
-        }
-      }
-    }
-  }
-
-  getSelectedStageId() {
-    if (this.lesson != null) {
-      if (this.selectedStage < this.lesson.stages.length) {
-        return this.lesson.stages[this.selectedStage];
-      }
-    }
-    return null;
-  }
-
-  getSelectedStageNumber() {
-    return this.selectedStage + 1;
-  }
-
-  // Private
-
-  getSelectedStageType() {
-    return this.scene.game.db.getStage(this.getSelectedStageId()).type;
-  }
-
   updateStageSelector() {
-    this.stageSelector.x = this.getStageXPosition(this.selectedStage)
+    this.stageSelector.x = this.getStageXPosition(this.selectedStageIndex)
       - this.scene.ui.stageSelectorXBuffer;
-    if (this.getSelectedStageType() === gameTypes.zombieAssaultReview.id) {
+    this.setSelectorSize();
+
+    this.stageChangedCallback(this.getStageId(), this.getStageNumber());
+  }
+
+  setSelectorSize() {
+    if (this.getStageType() === gameTypes.zombieAssaultReview.id) {
       this.stageSelector.displayWidth = this.scene.ui.stageSelectorReviewWidth;
       this.stageSelector.displayHeight = this.scene.ui.stageSelectorReviewWidth;
     } else {
       this.stageSelector.displayWidth = this.scene.ui.stageSelectorWidth;
       this.stageSelector.displayHeight = this.scene.ui.stageSelectorWidth;
     }
-
-    this.stageChangedCallback(this.getSelectedStageId(), this.getSelectedStageNumber());
   }
 
   getStageXPosition(index) {
@@ -245,6 +243,10 @@ export default class {
     const baseX = this.scene.ui.stageX + this.scene.ui.stageWidth / 2 - totalDotWidth / 2;
     const percentX = index / (this.lesson.stages.length);
     return baseX + totalDotWidth * percentX;
+  }
+
+  getStageType() {
+    return this.scene.game.db.getStage(this.getStageId()).type;
   }
 
   createInput() {
@@ -260,19 +262,19 @@ export default class {
     } else if (e.keyCode === this.keys.RIGHT.keyCode) {
       this.incrementSelectedStage();
     } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
-      this.stageSelectedCallback(this.getSelectedStageId());
+      this.stageSelectedCallback(this.getStageId());
     } else if (e.keyCode === this.keys.ESC.keyCode) {
       this.cancelCallback();
     }
   }
 
   decrementSelectedStage() {
-    this.selectedStage = Math.max(this.selectedStage - 1, 0);
+    this.selectedStageIndex = Math.max(this.selectedStageIndex - 1, 0);
     this.updateStageSelector();
   }
 
   incrementSelectedStage() {
-    this.selectedStage = Math.min(this.selectedStage + 1, this.lesson.stages.length - 1);
+    this.selectedStageIndex = Math.min(this.selectedStageIndex + 1, this.lesson.stages.length - 1);
     this.updateStageSelector();
   }
 }

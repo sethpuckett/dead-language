@@ -8,11 +8,16 @@ export default class {
 
     this.borderGraphics = this.scene.add.graphics();
     this.borderGraphics.setDepth(depth.townMap.border);
+
+    this.enabled = false;
+    this.lessonId = null;
   }
 
-  initialize(enabled, lesson) {
-    this.drawBorder(enabled);
-    this.createLessonInfo(lesson);
+  initialize() {
+    this.enabled = false;
+    this.lessonId = null;
+    this.drawBorder(false);
+    this.clearLessonInfo();
   }
 
   enable() {
@@ -22,6 +27,18 @@ export default class {
   disable() {
     this.drawBorder(false);
   }
+
+  setLesson(lessonId) {
+    this.lessonId = lessonId;
+    this.createLessonInfo();
+  }
+
+  clear() {
+    this.lessonId = null;
+    this.clearLessonInfo();
+  }
+
+  // Private
 
   drawBorder(enabled) {
     this.borderGraphics.clear();
@@ -45,10 +62,11 @@ export default class {
     ]);
   }
 
-  createLessonInfo(lesson) {
+  createLessonInfo() {
     this.clearLessonInfo();
 
-    if (lesson != null) {
+    if (this.lessonId != null) {
+      const lesson = this.scene.sys.game.db.getLesson(this.lessonId);
       this.lessonInfoTitle = this.scene.add.bitmapText(
         this.scene.ui.lessonInfoTitleX,
         this.scene.ui.lessonInfoTitleY,

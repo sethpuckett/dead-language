@@ -30,7 +30,7 @@ export default class extends Phaser.Scene {
     this.instructionsManager = new TownMapInstructionsManager(this);
     this.progressManager = new GameProgressManager(this.sys.game.db);
 
-    this.selectedStageId = null;
+    this.selectState = LESSON_SELECT;
   }
 
   create() {
@@ -45,29 +45,25 @@ export default class extends Phaser.Scene {
   }
 
   createMap() {
-    this.mapManager.initialize(true);
+    this.mapManager.initialize();
     this.mapManager.setLessonChangedCallback(this.lessonChanged);
     this.mapManager.setLessonSelectedCallback(this.lessonSelected);
     this.mapManager.setCancelCallback(this.lessonSelectCancelled);
   }
 
   createLessonInfo() {
-    this.lessonInfoManager.initialize(true, this.getSelectedLesson());
+    this.lessonInfoManager.initialize();
   }
 
   createStageSelect() {
-    this.stageSelectManager.initialize(false, this.getSelectedLesson(), 0);
+    this.stageSelectManager.initialize();
     this.stageSelectManager.setStageChangedCallback(this.stageChanged);
     this.stageSelectManager.setStageSelectedCallback(this.stageSelected);
     this.stageSelectManager.setCancelCallback(this.stageSelectCancelled);
   }
 
   createStageInfo() {
-    this.stageInfoManager.initialize(
-      false,
-      this.stageSelectManager.getSelectedStageId(),
-      this.stageSelectManager.getSelectedStageNumber()
-    );
+    this.stageInfoManager.initialize();
   }
 
   createInstructions() {
@@ -77,30 +73,60 @@ export default class extends Phaser.Scene {
   setSelectedPosition() {
     const position = this.progressManager.getMapPosition();
     if (position != null) {
-      this.mapManager.setSelectedLesson(position.lesson);
-      if (position.stage != null) {
-        this.selectedStageId = position.stage;
-        this.mapManager.disable();
-        this.lessonInfoManager.disable();
-        this.stageSelectManager.enable();
-        this.stageInfoManager.enable();
-        this.stageSelectManager.setSelectedStage(position.stage);
-        this.stageInfoManager.createStageInfo(
-          this.stageSelectManager.getSelectedStageId(),
-          this.stageSelectManager.getSelectedStageNumber()
-        );
-      } else {
-        this.stageSelectManager.disable();
-        this.stageInfoManager.disable();
-        this.mapManager.enable();
-        this.lessonInfoManager.enable();
-      }
+      this.mapManager.setLesson(position.lesson);
+    } else {
+      this.mapManager.resetLesson();
+    }
+
+    const lessonId = this.mapManager.getLessonId();
+    this.lessonInfoManager.setLesson(lessonId);
+    this.stageSelectManager.setLesson(lessonId);
+
+    if (position.stage != null) {
+      this.stageSelectManager.setStage(position.stage);
+      const number = this.stageSelectManager.getStageNumber();
+      this.stageInfoManager.setStage(position.stage, number);
+      this.assignControl(STAGE_SELECT);
+    } else {
+      this.stageSelectManager.resetStage();
+      this.assignControl(LESSON_SELECT);
     }
   }
 
   disableInputHandling() {
     this.stageSelectManager.disableInputHandling();
     this.mapManager.disableInputHandling();
+  }
+
+  assignControl(component) {
+    this.selectState = component;
+    if (component === LESSON_SELECT) {
+      this.disableStageSelect();
+      this.enableLessonSelect();
+    } else if (component === STAGE_SELECT) {
+      this.disableLessonSelect();
+      this.enableStageSelect();
+    }
+  }
+
+  disableLessonSelect() {
+    this.mapManager.disable();
+    this.lessonInfoManager.disable();
+  }
+
+  disableStageSelect() {
+    this.stageSelectManager.disable();
+    this.stageInfoManager.disable();
+  }
+
+  enableLessonSelect() {
+    this.mapManager.enable();
+    this.lessonInfoManager.enable();
+  }
+
+  enableStageSelect() {
+    this.stageSelectManager.enable();
+    this.stageInfoManager.enable();
   }
 
   assignInputControl(component) {
@@ -119,7 +145,7 @@ export default class extends Phaser.Scene {
     this.modal.enableInputClose();
     this.modal.setCloseCallback(() => {
       this.modal.disableInputHandling();
-      this.assignInputControl(this.selectedStageId != null ? STAGE_SELECT : LESSON_SELECT);
+      this.assignInputControl(this.selectState);
     });
   }
 
@@ -176,12 +202,11 @@ export default class extends Phaser.Scene {
   }
 
   stageSelected(stageId) {
-    this.selectedStageId = stageId;
     const stageType = this.progressManager.getStageType(stageId);
     if (stageType !== gameTypes.zombieAssaultReview.id) {
       this.createStageSelectedModal();
     } else {
-      const lessonId = this.mapManager.getSelectedLessonId();
+      const lessonId = this.mapManager.getLessonId();
       if (this.progressManager.isReviewUnlocked(lessonId)) {
         this.createReviewStageSelectedModal();
       } else {
@@ -202,37 +227,27 @@ export default class extends Phaser.Scene {
   }
 
   stageSelectCancelled() {
-    this.stageSelectManager.disable();
-    this.stageInfoManager.disable();
-    this.mapManager.enable();
-    this.lessonInfoManager.enable();
+    this.assignControl(LESSON_SELECT);
   }
 
   lessonChanged(lessonId) {
     if (lessonId != null) {
-      const lesson = this.sys.game.db.getLesson(lessonId);
-      this.lessonInfoManager.createLessonInfo(lesson);
-      this.stageSelectManager.setLesson(lesson);
+      this.lessonInfoManager.setLesson(lessonId);
+      this.stageSelectManager.setLesson(lessonId);
     } else {
-      this.lessonInfoManager.clearLessonInfo();
-      this.stageSelectManager.clearAll();
+      this.lessonInfoManager.clear();
+      this.stageSelectManager.clear();
     }
   }
 
   lessonSelected(lessonId) {
     if (lessonId != null) {
-      const lesson = this.sys.game.db.getLesson(lessonId);
-
-      this.mapManager.disable();
-      this.lessonInfoManager.disable();
-
-      this.stageSelectManager.setLesson(lesson);
-      this.stageSelectManager.enable();
-      this.stageInfoManager.enable();
+      this.stageSelectManager.setLesson(lessonId);
       this.stageInfoManager.createStageInfo(
-        this.stageSelectManager.getSelectedStageId(),
-        this.stageSelectManager.getSelectedStageNumber()
+        this.stageSelectManager.getStageId(),
+        this.stageSelectManager.getStageNumber()
       );
+      this.assignControl(STAGE_SELECT);
     }
   }
 
@@ -242,20 +257,10 @@ export default class extends Phaser.Scene {
 
   fadeCallback(_camera, progress) {
     if (progress === 1) {
-      this.progressManager.setMapPosition(
-        this.mapManager.getSelectedLessonId(), this.selectedStageId
-      );
-      this.scene.start(this.nextScreen, this.selectedStageId);
+      const lessonId = this.mapManager.getLessonId();
+      const stageId = this.stageSelectManager.getStageId();
+      this.progressManager.setMapPosition(lessonId, stageId);
+      this.scene.start(this.nextScreen, stageId);
     }
-  }
-
-  getSelectedLesson() {
-    if (this.mapManager != null) {
-      const lessonId = this.mapManager.getSelectedLessonId();
-      if (lessonId != null) {
-        return this.sys.game.db.getLesson(lessonId);
-      }
-    }
-    return null;
   }
 }

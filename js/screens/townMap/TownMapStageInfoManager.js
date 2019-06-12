@@ -11,27 +11,38 @@ export default class {
 
     this.borderGraphics = this.scene.add.graphics();
     this.borderGraphics.setDepth(depth.townMap.border);
+
+    this.stageId = null;
+    this.stageNumber = null;
   }
 
-  initialize(enabled, stageId, stageNumber) {
-    this.drawBorder(enabled);
-    if (enabled) {
-      if (stageId != null && stageNumber != null) {
-        this.createStageInfo(stageId, stageNumber);
-      }
-    } else {
-      this.clearStageInfo();
-    }
-  }
-
-  enable() {
-    this.drawBorder(true);
-  }
-
-  disable() {
+  initialize() {
+    this.enabled = false;
+    this.stageId = null;
+    this.stageNumber = null;
     this.drawBorder(false);
     this.clearStageInfo();
   }
+
+  enable() {
+    this.enabled = true;
+    this.drawBorder(true);
+    this.createStageInfo();
+  }
+
+  disable() {
+    this.enabled = false;
+    this.drawBorder(false);
+    this.clearStageInfo();
+  }
+
+  setStage(stageId, stageNumber = 0) {
+    this.stageId = stageId;
+    this.stageNumber = stageNumber;
+    this.createStageInfo();
+  }
+
+  // Private
 
   drawBorder(enabled) {
     const color = enabled ? townMap.ui.borderColor : townMap.ui.borderDisableColor;
@@ -53,28 +64,30 @@ export default class {
     ]);
   }
 
-  createStageInfo(stageId, stageNumber) {
+  createStageInfo() {
     this.clearStageInfo();
 
-    const stage = this.scene.sys.game.db.getStage(stageId);
+    if (this.stageId != null) {
+      const stage = this.scene.sys.game.db.getStage(this.stageId);
 
-    switch (stage.type) {
-      // TODO: handle review
-      case gameTypes.zombieAssault.id:
-      case gameTypes.zombieAssaultReview.id:
-        this.createZombieAssaultStageInfo(stageNumber);
-        break;
-      default:
-        throw Error(`Invalid stage type '${stage.type}'`);
+      switch (stage.type) {
+        // TODO: handle review
+        case gameTypes.zombieAssault.id:
+        case gameTypes.zombieAssaultReview.id:
+          this.createZombieAssaultStageInfo(this.stageNumber);
+          break;
+        default:
+          throw Error(`Invalid stage type '${stage.type}'`);
+      }
     }
   }
 
-  createCommonStageInfo(stageType, stageNumber) {
+  createCommonStageInfo(stageType) {
     this.stageInfoTitle = this.scene.add.bitmapText(
       this.scene.ui.stageInfoTitleX,
       this.scene.ui.stageInfoTitleY,
       fonts.blueSkyWhite,
-      `Stage ${stageNumber.toString().padStart(2, '0')}`,
+      `Stage ${this.stageNumber.toString().padStart(2, '0')}`,
       townMap.fonts.stageInfoTitleSize
     );
     this.stageInfoTitle.setOrigin(

@@ -13,24 +13,23 @@ export default class {
 
     this.selectedCell = { x: 0, y: 0 };
     this.inputHandled = false;
+    this.enabled = false;
 
     this.borderGraphics = this.scene.add.graphics();
     this.borderGraphics.setDepth(depth.townMap.border);
   }
 
-  initialize(enabled) {
-    this.enabled = enabled;
-    this.drawBorder(enabled);
+  initialize() {
+    this.enabled = false;
+    this.selectedCell = { x: 0, y: 0 };
+    this.inputHandled = false;
+
+    this.drawBorder(false);
     this.createLocation();
     this.createMapGrid();
     this.createLessonPins();
     this.createLessonSelector();
-
-    if (enabled) {
-      this.createTitle();
-    } else {
-      this.clearTitle();
-    }
+    this.clearTitle();
   }
 
   enable() {
@@ -46,6 +45,83 @@ export default class {
     this.clearTitle();
     this.disableInputHandling();
   }
+
+  enableInputHandling() {
+    if (!this.inputHandled) {
+      this.inputHandled = true;
+      this.createInput();
+    }
+  }
+
+  disableInputHandling() {
+    if (this.inputHandled) {
+      this.inputHandled = false;
+      this.keys = null;
+      this.scene.input.keyboard.off('keydown', this.handleKeyDown);
+    }
+  }
+
+  // This will be called with the id of the selected lesson
+  setLessonChangedCallback(callback) {
+    this.lessonChangedCallback = callback.bind(this.scene);
+  }
+
+  // This will be called with the id of the selected lesson
+  setLessonSelectedCallback(callback) {
+    this.lessonSelectedCallback = callback.bind(this.scene);
+  }
+
+  setCancelCallback(callback) {
+    this.cancelCallback = callback.bind(this.scene);
+  }
+
+  getLesson() {
+    const lesson = lessonMap.find(
+      l => l.position.x === this.selectedCell.x && l.position.y === this.selectedCell.y
+    );
+
+    if (lesson != null) {
+      return lesson;
+    }
+
+    return null;
+  }
+
+  getLessonId() {
+    const lesson = this.getLesson();
+    if (lesson != null) {
+      return lesson.id;
+    }
+    return null;
+  }
+
+  getLessonLocation() {
+    const lesson = this.getLesson();
+    if (lesson != null) {
+      return lesson.location;
+    }
+    return null;
+  }
+
+  setLesson(lessonId) {
+    lessonMap.some((lesson) => {
+      if (lesson.id === lessonId) {
+        this.selectedCell.x = lesson.position.x;
+        this.selectedCell.y = lesson.position.y;
+        this.updateLessonSelector();
+        return true;
+      }
+      return false;
+    });
+  }
+
+  resetLesson() {
+    this.selectedCell.x = 0;
+    this.selectedCell.y = 0;
+    this.updateLessonSelector();
+  }
+
+  // Private
 
   drawBorder(enabled) {
     this.borderGraphics.clear();
@@ -89,7 +165,7 @@ export default class {
 
   createLocation() {
     this.clearLocation();
-    const location = this.getSelectedLessonLocation();
+    const location = this.getLessonLocation();
     if (location != null) {
       this.mapLocation = this.scene.add.bitmapText(
         this.scene.ui.mapLocationX,
@@ -189,77 +265,6 @@ export default class {
     }
   }
 
-  enableInputHandling() {
-    if (!this.inputHandled) {
-      this.inputHandled = true;
-      this.createInput();
-    }
-  }
-
-  disableInputHandling() {
-    if (this.inputHandled) {
-      this.inputHandled = false;
-      this.keys = null;
-      this.scene.input.keyboard.off('keydown', this.handleKeyDown);
-    }
-  }
-
-  // This will be called with the id of the selected lesson
-  setLessonChangedCallback(callback) {
-    this.lessonChangedCallback = callback.bind(this.scene);
-  }
-
-  // This will be called with the id of the selected lesson
-  setLessonSelectedCallback(callback) {
-    this.lessonSelectedCallback = callback.bind(this.scene);
-  }
-
-  setCancelCallback(callback) {
-    this.cancelCallback = callback.bind(this.scene);
-  }
-
-  getSelectedLesson() {
-    const lesson = lessonMap.find(
-      l => l.position.x === this.selectedCell.x && l.position.y === this.selectedCell.y
-    );
-
-    if (lesson != null) {
-      return lesson;
-    }
-
-    return null;
-  }
-
-  getSelectedLessonId() {
-    const lesson = this.getSelectedLesson();
-    if (lesson != null) {
-      return lesson.id;
-    }
-    return null;
-  }
-
-  getSelectedLessonLocation() {
-    const lesson = this.getSelectedLesson();
-    if (lesson != null) {
-      return lesson.location;
-    }
-    return null;
-  }
-
-  setSelectedLesson(lessonId) {
-    lessonMap.some((lesson) => {
-      if (lesson.id === lessonId) {
-        this.selectedCell.x = lesson.position.x;
-        this.selectedCell.y = lesson.position.y;
-        this.updateLessonSelector();
-        return true;
-      }
-      return false;
-    });
-  }
-
-  // Private
-
   createInput() {
     this.keys = this.scene.input.keyboard.addKeys(
       'SPACE,ENTER,LEFT,RIGHT,UP,DOWN,ESC'
@@ -277,7 +282,7 @@ export default class {
     } else if (e.keyCode === this.keys.DOWN.keyCode) {
       this.moveSelectedCellDown();
     } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
-      const lessonId = this.getSelectedLessonId();
+      const lessonId = this.getLessonId();
       if (lessonId != null) {
         this.lessonSelectedCallback(lessonId);
       }
@@ -310,7 +315,7 @@ export default class {
     this.lessonSelector.x = this.getSelectorXPosition();
     this.lessonSelector.y = this.getSelectorYPosition();
     this.createLocation();
-    this.lessonChangedCallback(this.getSelectedLessonId());
+    this.lessonChangedCallback(this.getLessonId());
   }
 
   getSelectorXPosition() {
