@@ -41,17 +41,19 @@ export default class extends Phaser.Scene {
   }
 
   update(_time, delta) {
-    this.updateGameTime();
-    const spawn = this.spawnManager.getSpawn(this.gameTimer.getElapsedSeconds());
-    if (spawn.canSpawn) {
-      this.zombieManager.spawnZombie(spawn);
-    }
-    this.zombieManager.moveZombies(delta);
-    const releasedWords = this.zombieManager.destroyDeadZombies();
-    releasedWords.forEach(w => this.vocab.releaseWord(w));
-    this.changeHealth(this.zombieManager.checkZombieAttack());
-    if (this.health <= 0) {
-      this.loseGame();
+    if (!this.gameTimer.paused) {
+      this.updateGameTime();
+      const spawn = this.spawnManager.getSpawn(this.gameTimer.getElapsedSeconds());
+      if (spawn.canSpawn) {
+        this.zombieManager.spawnZombie(spawn);
+      }
+      this.zombieManager.moveZombies(delta);
+      const releasedWords = this.zombieManager.destroyDeadZombies();
+      releasedWords.forEach(w => this.vocab.releaseWord(w));
+      this.changeHealth(this.zombieManager.checkZombieAttack());
+      if (this.health <= 0) {
+        this.loseGame();
+      }
     }
   }
 

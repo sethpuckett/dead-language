@@ -31,6 +31,6 @@ export default [
     startHealth: 20,
     baseFallSpeed: 75,
     fallRange: 10,
-    gameTime: 10,
+    gameTime: 180,
   },
 ];
