@@ -17,6 +17,12 @@ export default class {
 
     this.borderGraphics = this.scene.add.graphics();
     this.borderGraphics.setDepth(depth.townMap.border);
+
+    this.requirementGraphics = this.scene.add.graphics();
+    this.requirementGraphics.setDepth(depth.townMap.requirementLine);
+    this.requirementGraphics.lineStyle(
+      townMap.ui.requirementLineWidth, townMap.ui.requirementLineColor
+    );
   }
 
   initialize() {
@@ -29,6 +35,7 @@ export default class {
     this.createMapGrid();
     this.createLessonPins();
     this.createLessonSelector();
+    this.drawRequirementLines();
     this.clearTitle();
   }
 
@@ -234,6 +241,7 @@ export default class {
 
       const pin = this.scene.add.sprite(xPos, yPos, images.colorSquare, pinFrame);
       pin.setOrigin(this.scene.ui.mapPinOrigin);
+      pin.setDepth(depth.townMap.lessonPin);
       pin.displayWidth = this.cellWidth * townMap.ui.mapPinCellWidth;
       pin.displayHeight = this.cellHeight * townMap.ui.mapPinCellWidth;
       this.pins.push(pin);
@@ -324,5 +332,25 @@ export default class {
 
   getSelectorYPosition() {
     return this.baseY + this.selectedCell.y * this.cellHeight + this.cellHeight / 2;
+  }
+
+  drawRequirementLines() {
+    lessonMap.forEach((mapInfo) => {
+      const lesson = this.scene.sys.game.db.getLesson(mapInfo.id);
+      if (lesson.requirements != null) {
+        lesson.requirements.forEach((requiredLessonId) => {
+          const requireInfo = lessonMap.find(mi => mi.id === requiredLessonId);
+          const fromX = this.baseX + mapInfo.position.x * this.cellWidth + this.cellWidth / 2;
+          const fromY = this.baseY + mapInfo.position.y * this.cellHeight + this.cellHeight / 2;
+          const toX = this.baseX + requireInfo.position.x * this.cellWidth + this.cellWidth / 2;
+          const toY = this.baseY + requireInfo.position.y * this.cellHeight + this.cellHeight / 2;
+          this.requirementGraphics.beginPath();
+          this.requirementGraphics.moveTo(fromX, fromY);
+          this.requirementGraphics.lineTo(toX, toY);
+          this.requirementGraphics.closePath();
+          this.requirementGraphics.strokePath();
+        });
+      }
+    });
   }
 }

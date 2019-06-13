@@ -48,6 +48,8 @@ export default {
   townMap: {
     border: 10,
     mapGrid: 10,
+    requirementLine: 11,
+    lessonPin: 12,
   },
   endgame: {
     background: 0,

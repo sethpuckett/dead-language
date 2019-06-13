@@ -10,6 +10,8 @@ export default {
     mapGridColor: 0x222222,
     borderDisableColor: 0x222222,
     mapPinCellWidth: 0.25,
+    requirementLineWidth: 3,
+    requirementLineColor: 0xffffff,
   },
   modals: {
     start: [
