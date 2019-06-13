@@ -164,7 +164,9 @@ export default class extends Phaser.Scene {
       } else if (index === 1) { // target practice
         this.nextScreen = screens.vocabStudy;
       }
-      this.cameras.main.fade(townMap.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
+      this.cameras.main.fade(
+        townMap.screenFadeTime, 0, 0, 0, false, this.stageSelectedFadeCallback
+      );
     });
     this.stageModal.setCancelCallback(() => {
       this.stageModal.disableInputHandling();
@@ -188,7 +190,9 @@ export default class extends Phaser.Scene {
       if (index === 0) { // start game
         this.nextScreen = screens.minigame;
       }
-      this.cameras.main.fade(townMap.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
+      this.cameras.main.fade(
+        townMap.screenFadeTime, 0, 0, 0, false, this.stageSelectedFadeCallback
+      );
     });
     this.stageModal.setCancelCallback(() => {
       this.stageModal.disableInputHandling();
@@ -255,7 +259,7 @@ export default class extends Phaser.Scene {
     this.scene.start(screens.titleMenu);
   }
 
-  fadeCallback(_camera, progress) {
+  stageSelectedFadeCallback(_camera, progress) {
     if (progress === 1) {
       const lessonId = this.mapManager.getLessonId();
       const stageId = this.stageSelectManager.getStageId();

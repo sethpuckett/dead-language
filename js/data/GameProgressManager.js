@@ -16,6 +16,7 @@ export default class {
       const updateObject = { stagesCompleted: firebase.firestore.FieldValue.arrayUnion(stageId) };
       if (lessonCompleted) {
         updateObject.lessonsCompleted = firebase.firestore.FieldValue.arrayUnion(lesson.id);
+        updateObject.mapState = { lesson: lesson.id, stage: null };
       }
       user.update(updateObject).then(() => {
         this.db.loadUserProfile();
