@@ -1,6 +1,7 @@
 export default {
   mapTitleText: 'Choose a Location',
   stageTitleText: 'Choose a Stage',
+  clearedText: 'Cleared!',
   screenFadeTime: 750,
   ui: {
     borderColor: 0xffffff,

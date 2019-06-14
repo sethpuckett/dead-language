@@ -113,6 +113,7 @@ export default {
     colorSquareGreen: 0,
     colorSquareYellow: 1,
     colorSquareRed: 2,
+    zombieDead: 21,
   },
   scales: {
     crate: 1.5,
