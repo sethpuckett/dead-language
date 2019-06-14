@@ -46,6 +46,12 @@ export default {
       'guns blazin\'. Yer gonna have to clear out',
       'all them other stages first.',
     ],
+    lessonLocked: [
+      'Whoa! Slow down! That area\'s still too',
+      'dangerous. You\'ll never make it there alive!',
+      'I marked the spots we can get to in yella on',
+      'yer map. Stick to those!',
+    ],
   },
   choiceModals: {
     stageSelected: {

@@ -23,4 +23,12 @@ export default [
       y: 1,
     },
   },
+  {
+    id: 'lesson-numbers-02',
+    location: 'Accounting Office',
+    position: {
+      x: 1,
+      y: 2,
+    },
+  },
 ];

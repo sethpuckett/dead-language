@@ -234,9 +234,12 @@ export default class {
       const yPos = this.baseY + lesson.position.y * this.cellHeight + this.cellHeight / 2;
 
       const completed = this.progressManager.isLessonCompleted(lesson.id);
+      const locked = this.progressManager.isLessonLocked(lesson.id);
       let pinFrame = images.frames.colorSquareYellow;
       if (completed) {
         pinFrame = images.frames.colorSquareGreen;
+      } else if (locked) {
+        pinFrame = images.frames.colorSquareRed;
       }
 
       const pin = this.scene.add.sprite(xPos, yPos, images.colorSquare, pinFrame);

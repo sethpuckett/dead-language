@@ -51,6 +51,20 @@ export default class {
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }
 
+  isLessonLocked(lessonId) {
+    if (!this.db.isUserLoggedIn()) {
+      return true;
+    }
+
+    if (this.db.userProfileLoaded) {
+      const completed = this.db.userProfile.lessonsCompleted;
+      const lesson = this.db.getLesson(lessonId);
+      // has player completed every required lesson
+      return lesson.requirements.some(r => !completed.includes(r));
+    }
+    throw Error('user profile has not been loaded. Call loadUserProfile() first');
+  }
+
   getStageType(stageId) {
     return this.db.getStage(stageId).type;
   }

@@ -230,6 +230,17 @@ export default class extends Phaser.Scene {
     });
   }
 
+  createLessonLockedModal() {
+    this.disableInputHandling();
+    this.modal = new Modal(this, townMap.modals.lessonLocked);
+    this.modal.draw();
+    this.modal.enableInputClose();
+    this.modal.setCloseCallback(() => {
+      this.modal.disableInputHandling();
+      this.assignInputControl(LESSON_SELECT);
+    });
+  }
+
   stageSelectCancelled() {
     this.assignControl(LESSON_SELECT);
   }
@@ -246,12 +257,17 @@ export default class extends Phaser.Scene {
 
   lessonSelected(lessonId) {
     if (lessonId != null) {
-      this.stageSelectManager.setLesson(lessonId);
-      this.stageInfoManager.setStage(
-        this.stageSelectManager.getStageId(),
-        this.stageSelectManager.getStageNumber()
-      );
-      this.assignControl(STAGE_SELECT);
+      const locked = this.progressManager.isLessonLocked(lessonId);
+      if (!locked) {
+        this.stageSelectManager.setLesson(lessonId);
+        this.stageInfoManager.setStage(
+          this.stageSelectManager.getStageId(),
+          this.stageSelectManager.getStageNumber()
+        );
+        this.assignControl(STAGE_SELECT);
+      } else {
+        this.createLessonLockedModal();
+      }
     }
   }
 
