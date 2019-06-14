@@ -61,10 +61,33 @@ export default {
         'Target Practice',
       ],
     },
+    clearedStageSelected: {
+      text: [
+        'You already cleared this stage!',
+        '',
+        'But there might still be some zombies',
+        'around if you want to check it out.'],
+      choices: [
+        'Start Game',
+        'Target Practice',
+      ],
+    },
     reviewStageSelected: {
       text: [
         'Alright, friend, this is the big one.', 'The final push to clear out this location',
         'Yer gonna see vocab from every stage in this lesson.', 'I sure hope yer ready.',
+      ],
+      choices: [
+        'Start Game',
+      ],
+    },
+    clearedReviewStageSelected: {
+      text: [
+        'You already cleared this whole area,',
+        'but it\'s a good idea to check back in.',
+        '',
+        'I\'m sure there\'s still some zombies around,',
+        'and more practice never hurt.',
       ],
       choices: [
         'Start Game',

@@ -149,11 +149,11 @@ export default class extends Phaser.Scene {
     });
   }
 
-  createStageSelectedModal() {
+  createStageSelectedModal(cleared) {
     this.disableInputHandling();
-    this.stageModal = new ChoiceModal(
-      this, townMap.choiceModals.stageSelected.text, townMap.choiceModals.stageSelected.choices
-    );
+    const text = cleared ? townMap.choiceModals.clearedStageSelected.text
+      : townMap.choiceModals.stageSelected.text;
+    this.stageModal = new ChoiceModal(this, text, townMap.choiceModals.stageSelected.choices);
     this.stageModal.draw();
     this.stageModal.enableInputHandling();
     this.stageModal.setCloseCallback((index) => {
@@ -175,13 +175,11 @@ export default class extends Phaser.Scene {
     });
   }
 
-  createReviewStageSelectedModal() {
+  createReviewStageSelectedModal(cleared) {
     this.disableInputHandling();
-    this.stageModal = new ChoiceModal(
-      this,
-      townMap.choiceModals.reviewStageSelected.text,
-      townMap.choiceModals.reviewStageSelected.choices
-    );
+    const text = cleared ? townMap.choiceModals.clearedReviewStageSelected.text
+      : townMap.choiceModals.reviewStageSelected.text;
+    this.stageModal = new ChoiceModal(this, text, townMap.choiceModals.reviewStageSelected.choices);
     this.stageModal.draw();
     this.stageModal.enableInputHandling();
     this.stageModal.setCloseCallback((index) => {
@@ -207,12 +205,13 @@ export default class extends Phaser.Scene {
 
   stageSelected(stageId) {
     const stageType = this.progressManager.getStageType(stageId);
+    const cleared = this.progressManager.isStageCompleted(stageId);
     if (stageType !== gameTypes.zombieAssaultReview.id) {
-      this.createStageSelectedModal();
+      this.createStageSelectedModal(cleared);
     } else {
       const lessonId = this.mapManager.getLessonId();
       if (this.progressManager.isReviewUnlocked(lessonId)) {
-        this.createReviewStageSelectedModal();
+        this.createReviewStageSelectedModal(cleared);
       } else {
         this.createReviewLockedModal();
       }
