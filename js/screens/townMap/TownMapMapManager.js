@@ -105,7 +105,15 @@ export default class {
   getLessonLocation() {
     const lesson = this.getLesson();
     if (lesson != null) {
-      return lesson.location;
+      const cleared = this.progressManager.isLessonCompleted(lesson.id);
+      const locked = this.progressManager.isLessonLocked(lesson.id);
+      let text = lesson.location;
+      if (cleared) {
+        text += ` - ${townMap.clearedText}`;
+      } else if (locked) {
+        text += ` - ${townMap.lockedText}`;
+      }
+      return text;
     }
     return null;
   }

@@ -2,6 +2,7 @@ export default {
   mapTitleText: 'Choose a Location',
   stageTitleText: 'Choose a Stage',
   clearedText: 'Cleared!',
+  lockedText: 'Locked!',
   screenFadeTime: 750,
   ui: {
     borderColor: 0xffffff,
@@ -10,7 +11,7 @@ export default {
     mapGridWidth: 3,
     mapGridColor: 0x222222,
     borderDisableColor: 0x222222,
-    mapPinCellWidth: 0.25,
+    mapPinCellWidth: 0.5,
     requirementLineWidth: 3,
     requirementLineColor: 0xffffff,
   },
@@ -75,7 +76,7 @@ export default {
     },
     reviewStageSelected: {
       text: [
-        'Alright, friend, this is the big one.', 'The final push to clear out this location',
+        'Alright, friend, this is it.', 'The final push to clear out this location.',
         'Yer gonna see vocab from every stage in this lesson.', 'I sure hope yer ready.',
       ],
       choices: [
@@ -111,7 +112,7 @@ export default {
     instructionsFill: '#ffffff',
     mapTitleSize: 14,
     mapTitleFill: '#ffffff',
-    mapLocationSize: 14,
+    mapLocationSize: 12,
     mapLocationFill: '#ffffff',
     lessonInfoTitleSize: 16,
     lessonInfoTitleColor: 0xffff22,
