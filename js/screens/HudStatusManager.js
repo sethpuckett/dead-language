@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import hudUiHelper from './ui/hudUiHelper';
 import { hud, fonts, images } from '../config';
 
@@ -10,6 +11,7 @@ export default class {
   /*
   config: {
     image: string,
+    frame: int (default: 0)
     message: string or [string],
     displayTime: int
   }
@@ -19,10 +21,15 @@ export default class {
 
     this.scene.messageBorder.setFrame(images.frames.hudMessageLight);
     if (config.image != null) {
+      let frame = 0;
+      if (config.frame != null) {
+        frame = config.frame;
+      }
       this.scene.statusImage = this.scene.add.sprite(
         this.ui.statusImageX,
         this.ui.statusImageY,
-        config.image
+        config.image,
+        frame
       );
       this.scene.statusImage.displayWidth = this.ui.statusImageWidth;
       this.scene.statusImage.displayHeight = this.ui.statusImageHeight;

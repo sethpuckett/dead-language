@@ -9,6 +9,7 @@ export default {
   damageShakeDuration: 200,
   damageShakeIntensity: 0.005,
   statusTime: 1500,
+  mercenaryCost: 100,
   fonts: {
     zombieSize: 10,
     zombieFill: '#ffffff',
@@ -31,6 +32,8 @@ export default {
   },
   statusMessages: {
     damage: ['Cerebros', 'ricos!'],
+    useMercenary: ['Happy', 'to help.'],
+    mercenaryUnavailable: ['My services', 'aren\'t free,', 'friend.'],
   },
   modals: {
     start: [

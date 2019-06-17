@@ -24,7 +24,9 @@ export default class extends Phaser.Scene {
     this.spawnManager = new MinigameSpawnManager(this, this.currentLevel.waves, this.vocab);
 
     this.score = 0;
+    this.cash = this.currentLevel.startCash;
     this.health = this.currentLevel.startHealth;
+    this.mercenaryEnabled = this.currentLevel.mercenaryEnabled;
   }
 
   create() {
@@ -32,6 +34,7 @@ export default class extends Phaser.Scene {
       ...minigame.ui.hudConfig,
       startHealth: this.currentLevel.startHealth,
       maxHealth: this.currentLevel.maxHealth,
+      startCash: this.currentLevel.startCash,
     });
     this.hudManager.setSubmitCallback(this.submitAnswer);
     this.createBackground();
@@ -148,7 +151,31 @@ export default class extends Phaser.Scene {
   }
 
   submitAnswer() {
-    const points = this.zombieManager.scoreSubmittedAnswer(this.hudManager.getTextEntry());
+    const guess = this.hudManager.getTextEntry();
+    const points = this.zombieManager.scoreSubmittedAnswer(guess);
+    if (points === 0 && this.mercenaryEnabled) {
+      const canUseMercenary = this.cash >= minigame.mercenaryCost;
+      const mercenaryAttempt = this.zombieManager.checkMercenary(guess, canUseMercenary);
+      if (mercenaryAttempt) {
+        if (canUseMercenary) {
+          this.statusManager.setStatus({
+            image: images.mercenary,
+            frame: images.frames.mercenaryStatusShoot,
+            message: minigame.statusMessages.useMercenary,
+            displayTime: minigame.statusTime,
+          });
+          this.cash -= minigame.mercenaryCost;
+          this.hudManager.setCash(this.cash);
+        } else {
+          this.statusManager.setStatus({
+            image: images.mercenary,
+            frame: images.frames.mercenaryStatusRefuse,
+            message: minigame.statusMessages.mercenaryUnavailable,
+            displayTime: minigame.statusTime,
+          });
+        }
+      }
+    }
     this.score += points;
     this.hudManager.setKillValue(this.score);
     this.hudManager.clearTextEntry();

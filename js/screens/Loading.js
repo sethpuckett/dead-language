@@ -193,6 +193,12 @@ export default class extends Phaser.Scene {
       margin: 0,
       spacing: 0,
     });
+    this.load.spritesheet(images.mercenary, images.files.mercenary, {
+      frameWidth: images.frameSizes.mercenary.width,
+      frameHeight: images.frameSizes.mercenary.height,
+      margin: 0,
+      spacing: 0,
+    });
   }
 
   createAnimations() {

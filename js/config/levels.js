@@ -29,8 +29,10 @@ export default [
     ],
     maxHealth: 20,
     startHealth: 20,
+    startCash: 200,
     baseFallSpeed: 75,
     fallRange: 10,
     gameTime: 180,
+    mercenaryEnabled: true,
   },
 ];

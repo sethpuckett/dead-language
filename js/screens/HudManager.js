@@ -20,6 +20,7 @@ export default class {
     maxHealth: int,
     kills: bool,
     cash: bool,
+    startCash: int,
     timer: bool,
     message: bool,
     textInput: bool,
@@ -66,6 +67,7 @@ export default class {
       this.scene.healthBars = [];
       for (let i = 0; i < config.maxHealth; i += 1) {
         const prev = i !== 0 ? this.scene.healthBars[i - 1] : this.scene.healthIcon;
+        // TODO: this needs to take startHealth into account
         const bar = this.scene.add.sprite(
           this.ui.healthValueX(prev), this.ui.healthValueY, images.health, 0
         );
@@ -101,7 +103,7 @@ export default class {
       this.scene.cashIcon.setOrigin(this.ui.cashIconOriginX, this.ui.cashIconOriginY);
       this.scene.cashIcon.setDepth(depth.hud.ui);
       this.scene.cashValue = this.scene.add.bitmapText(
-        this.ui.cashValueX, this.ui.cashValueY, fonts.blueSkyWhite, '$100', hud.fonts.cashSize
+        this.ui.cashValueX, this.ui.cashValueY, fonts.blueSkyWhite, `$${config.startCash}`, hud.fonts.cashSize
       );
       this.scene.cashValue.setOrigin(this.ui.cashValueOriginX, this.ui.cashValueOriginY);
       this.scene.cashValue.setDepth(depth.hud.ui);
@@ -195,6 +197,10 @@ export default class {
         this.scene.healthBars[i].setFrame(images.frames.healthEmpty);
       }
     }
+  }
+
+  setCash(value) {
+    this.scene.cashValue.text = `$${value}`;
   }
 
   enableInputHandling() {

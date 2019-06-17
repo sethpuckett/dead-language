@@ -48,6 +48,7 @@ export default {
   dirtPile: 'dirt-pile',
   yellowBubble: 'yellow-bubble',
   colorSquare: 'color-square',
+  mercenary: 'mercenary',
   files: {
     grayZombie: 'assets/images/zombie-gray.png',
     greenZombie: 'assets/images/zombie-green.png',
@@ -96,6 +97,7 @@ export default {
     dirtPile: 'assets/images/dirt-pile.png',
     yellowBubble: 'assets/images/yellow-bubble.png',
     colorSquare: 'assets/images/color-square.png',
+    mercenary: 'assets/images/mercenary.png',
   },
   frames: {
     healthFull: 0,
@@ -114,6 +116,8 @@ export default {
     colorSquareYellow: 1,
     colorSquareRed: 2,
     zombieDead: 21,
+    mercenaryStatusShoot: 0,
+    mercenaryStatusRefuse: 1,
   },
   scales: {
     crate: 1.5,
@@ -157,6 +161,10 @@ export default {
     colorSquare: {
       width: 16,
       height: 16,
+    },
+    mercenary: {
+      width: 32,
+      height: 32,
     },
   },
 };

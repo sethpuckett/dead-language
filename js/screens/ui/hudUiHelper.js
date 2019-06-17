@@ -112,7 +112,7 @@ export default (config) => {
     },
     get statusMessageY() { return u.h - this.hudHeight / 2; },
     get statusMessageMaxWidth() {
-      return this.messageBorderWidth - this.statusImageWidth - u.padding * 3;
+      return this.messageBorderWidth - this.statusImageWidth - u.padding * 6;
     },
     statusMessageHeight: u.hudHeight,
     statusMessageOriginX: u.center,

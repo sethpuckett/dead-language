@@ -139,6 +139,19 @@ export default class {
     return points;
   }
 
+  checkMercenary(text, killZombie) {
+    const guess = text.toLowerCase().trim();
+    return this.zombies.some((z) => {
+      if (guess === z.word.language1.toLowerCase()) {
+        if (killZombie) {
+          this.killShotZombie(z);
+        }
+        return true;
+      }
+      return false;
+    });
+  }
+
   killShotZombie(zombie) {
     zombie.moving = false;
     zombie.play(animationHelper.zombieAnimation(zombie.image, animations.zombieDie));
