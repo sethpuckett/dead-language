@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import hudUiHelper from './ui/hudUiHelper';
 import { depth, images, fonts, hud } from '../config';
-import { keyboardHelper } from '../util';
+import { keyboardHelper, weaponHelper } from '../util';
 
 export default class {
   constructor(scene) {
@@ -44,6 +44,18 @@ export default class {
       this.scene.weaponBorder.displayHeight = this.ui.weaponBorderWidth;
       this.scene.weaponBorder.setOrigin(this.ui.weaponBorderOriginX, this.ui.weaponBorderOriginY);
       this.scene.weaponBorder.setDepth(depth.hud.ui);
+
+      this.scene.weapon = this.scene.add.sprite(
+        this.ui.weaponX,
+        this.ui.weaponY,
+        images.weapon,
+        images.frames.weaponShotgun
+      );
+      this.scene.weapon.displayWidth = this.ui.weaponWidth;
+      this.scene.weapon.displayHeight = this.ui.weaponHeight;
+      this.scene.weapon.setOrigin(this.ui.weaponOrigin);
+      this.scene.weapon.setDepth(depth.hud.ui);
+      this.scene.weapon.visible = false;
     }
 
     if (config.item) {
@@ -249,6 +261,11 @@ export default class {
       this.scene.textEntry.destroy();
       this.scene.textEntry = null;
     }
+  }
+
+  setWeapon(weapon) {
+    this.scene.weapon.visible = true;
+    this.scene.weapon.setFrame(weaponHelper.getImageFrame(weapon));
   }
 
   // Private

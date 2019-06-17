@@ -34,5 +34,6 @@ export default [
     fallRange: 10,
     gameTime: 180,
     mercenaryEnabled: true,
+    defaultWeapon: 'pistol',
   },
 ];

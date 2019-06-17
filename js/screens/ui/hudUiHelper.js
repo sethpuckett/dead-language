@@ -12,6 +12,12 @@ export default (config) => {
     get weaponBorderWidth() { return this.hudHeight / 2 - u.padding * 2; },
     weaponBorderOriginX: u.left,
     weaponBorderOriginY: u.Top,
+    get weaponX() { return this.weaponBorderX + this.weaponBorderWidth / 2; },
+    get weaponY() { return this.weaponBorderY + this.weaponBorderWidth / 2; },
+    get weaponWidth() { return this.weaponBorderWidth; },
+    get weaponHeight() { return this.weaponBorderWidth; },
+    weaponOrigin: u.center,
+
     itemBorderX: u.padding,
     get itemBorderWidth() { return this.hudHeight / 2 - u.padding * 2; },
     get itemBorderY() { return this.weaponBorderY + this.itemBorderWidth + u.padding * 2; },

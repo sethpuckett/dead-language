@@ -49,6 +49,7 @@ export default {
   yellowBubble: 'yellow-bubble',
   colorSquare: 'color-square',
   mercenary: 'mercenary',
+  weapon: 'weapon',
   files: {
     grayZombie: 'assets/images/zombie-gray.png',
     greenZombie: 'assets/images/zombie-green.png',
@@ -98,6 +99,7 @@ export default {
     yellowBubble: 'assets/images/yellow-bubble.png',
     colorSquare: 'assets/images/color-square.png',
     mercenary: 'assets/images/mercenary.png',
+    weapon: 'assets/images/weapon.png',
   },
   frames: {
     healthFull: 0,
@@ -118,6 +120,10 @@ export default {
     zombieDead: 21,
     mercenaryStatusShoot: 0,
     mercenaryStatusRefuse: 1,
+    weaponPistol: 0,
+    weaponShotgun: 1,
+    weaponRifle: 2,
+    weaponRocketLauncher: 3,
   },
   scales: {
     crate: 1.5,
@@ -165,6 +171,10 @@ export default {
     mercenary: {
       width: 32,
       height: 32,
+    },
+    weapon: {
+      width: 19,
+      height: 19,
     },
   },
 };

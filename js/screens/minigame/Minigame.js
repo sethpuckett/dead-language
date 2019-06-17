@@ -37,6 +37,7 @@ export default class extends Phaser.Scene {
       startCash: this.currentLevel.startCash,
     });
     this.hudManager.setSubmitCallback(this.submitAnswer);
+    this.hudManager.setWeapon(this.currentLevel.defaultWeapon);
     this.createBackground();
     this.createCollisions();
     this.createTimers();
