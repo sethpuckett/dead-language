@@ -51,5 +51,9 @@ export default {
       '',
       'Uh oh! Here they come! Look out!',
     ],
+    quit: [
+      'Press ESC again to quit.',
+      'Press any other key to continue.',
+    ],
   },
 };

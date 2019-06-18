@@ -27,6 +27,7 @@ export default class extends Phaser.Scene {
     this.cash = this.currentLevel.startCash;
     this.health = this.currentLevel.startHealth;
     this.mercenaryEnabled = this.currentLevel.mercenaryEnabled;
+    this.inputHandled = false;
   }
 
   create() {
@@ -95,6 +96,7 @@ export default class extends Phaser.Scene {
   }
 
   createStartModal() {
+    this.disableInputHandling();
     this.hudManager.disableInputHandling();
     this.modal = new Modal(this, minigame.modals.start);
     this.modal.draw();
@@ -102,6 +104,7 @@ export default class extends Phaser.Scene {
     this.modal.setCloseCallback(() => {
       this.modal.disableInputHandling();
       this.hudManager.enableInputHandling();
+      this.enableInputHandling();
       this.startGame();
     });
   }
@@ -190,5 +193,47 @@ export default class extends Phaser.Scene {
 
     const lesson = this.sys.game.db.getLessonForStage(this.stageId);
     return lesson.stages.reduce((agg, cur) => agg.concat(this.sys.game.db.getStage(cur).vocab), []);
+  }
+
+  enableInputHandling() {
+    if (!this.inputHandled) {
+      this.inputHandled = true;
+      this.createInput();
+    }
+  }
+
+  disableInputHandling() {
+    if (this.inputHandled) {
+      this.inputHandled = false;
+      this.keys = null;
+      this.input.keyboard.off('keydown', this.handleKeyDown);
+    }
+  }
+
+  createInput() {
+    this.keys = this.input.keyboard.addKeys('ESC');
+    this.input.keyboard.on('keydown', this.handleKeyDown, this);
+  }
+
+  handleKeyDown(e) {
+    if (e.keyCode === this.keys.ESC.keyCode) {
+      this.createQuitModal();
+    }
+  }
+
+  createQuitModal() {
+    this.disableInputHandling();
+    this.hudManager.disableInputHandling();
+    this.quitModal = new Modal(this, minigame.modals.quit);
+    this.quitModal.draw();
+    this.quitModal.enableInputClose();
+    this.quitModal.setCloseCallback((keyCode) => {
+      this.quitModal.disableInputHandling();
+      this.hudManager.enableInputHandling();
+      this.enableInputHandling();
+      if (keyCode === this.keys.ESC.keyCode) {
+        this.scene.start(screens.endgame, { status: endgame.lose, stageId: this.stageId });
+      }
+    });
   }
 }

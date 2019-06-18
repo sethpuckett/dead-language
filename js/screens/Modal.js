@@ -18,7 +18,8 @@ export default class {
     this.createBorder();
   }
 
-  close() {
+  // passes keyCode used to close back to the closeCallback
+  close(e) {
     if (this.fade != null) {
       this.fade.destroy();
       this.fade = null;
@@ -44,7 +45,7 @@ export default class {
       this.anyKeyText = null;
     }
 
-    this.closeCallback();
+    this.closeCallback(e.keyCode);
   }
 
   enableInputClose() {

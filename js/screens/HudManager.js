@@ -9,6 +9,7 @@ export default class {
 
     this.ui = hudUiHelper(this.scene.sys.game.config);
     this.textInputShown = false;
+    this.inputHandled = false;
 
     this.itemBgGraphics = this.scene.add.graphics();
     this.itemBgGraphics.fillStyle(hud.ui.itemBackgroundColor);
