@@ -1,6 +1,6 @@
 /* eslint-disable prefer-destructuring */
 import hudUiHelper from './ui/hudUiHelper';
-import { hud, fonts, images } from '../config';
+import { hud, fonts, images, depth } from '../config';
 
 export default class {
   constructor(scene) {
@@ -34,6 +34,7 @@ export default class {
       this.scene.statusImage.displayWidth = this.ui.statusImageWidth;
       this.scene.statusImage.displayHeight = this.ui.statusImageHeight;
       this.scene.statusImage.setOrigin(this.ui.statusImageOriginX, this.ui.statusImageOriginY);
+      this.scene.statusImage.setDepth(depth.hud.ui);
     }
 
     if (config.message != null) {
@@ -53,6 +54,7 @@ export default class {
       }
       this.scene.statusText.setOrigin(this.ui.statusMessageOriginX, this.ui.statusMessageOriginY);
       this.scene.statusText.setCenterAlign();
+      this.scene.statusText.setDepth(depth.hud.ui);
     }
 
     if (config.displayTime != null && config.displayTime > 0) {

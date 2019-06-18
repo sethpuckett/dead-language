@@ -21,8 +21,9 @@ export default {
   },
   hud: {
     buffer: 900,
-    ui: 901,
-    entryText: 902,
+    uiBackground: 901,
+    ui: 902,
+    entryText: 903,
   },
   vocabStudy: {
     background: 0,

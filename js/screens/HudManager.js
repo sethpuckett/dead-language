@@ -9,6 +9,10 @@ export default class {
 
     this.ui = hudUiHelper(this.scene.sys.game.config);
     this.textInputShown = false;
+
+    this.itemBgGraphics = this.scene.add.graphics();
+    this.itemBgGraphics.fillStyle(hud.ui.itemBackgroundColor);
+    this.itemBgGraphics.setDepth(depth.hud.uiBackground);
   }
 
   /*
@@ -34,6 +38,13 @@ export default class {
     this.maxHealth = config.maxHealth;
 
     if (config.weapon) {
+      this.itemBgGraphics.fillRect(
+        this.ui.weaponBorderX,
+        this.ui.weaponBorderY,
+        this.ui.weaponBorderWidth,
+        this.ui.weaponBorderWidth
+      );
+
       this.scene.weaponBorder = this.scene.add.sprite(
         this.ui.weaponBorderX,
         this.ui.weaponBorderY,
@@ -59,6 +70,13 @@ export default class {
     }
 
     if (config.item) {
+      this.itemBgGraphics.fillRect(
+        this.ui.itemBorderX,
+        this.ui.itemBorderY,
+        this.ui.itemBorderWidth,
+        this.ui.itemBorderWidth
+      );
+
       this.scene.itemBorder = this.scene.add.sprite(
         this.ui.itemBorderX, this.ui.itemBorderY, images.hudItemBorder, images.frames.hudItemDark
       );
@@ -137,6 +155,13 @@ export default class {
     }
 
     if (config.message) {
+      this.itemBgGraphics.fillRect(
+        this.ui.messageBorderX,
+        this.ui.messageBorderY,
+        this.ui.messageBorderWidth,
+        this.ui.messageBorderWidth
+      );
+
       this.scene.messageBorder = this.scene.add.sprite(
         this.ui.messageBorderX,
         this.ui.messageBorderY,
