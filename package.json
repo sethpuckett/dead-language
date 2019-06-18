@@ -13,9 +13,10 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
+    "axios": ">=0.18.1",
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.2",
-    "browser-sync": "^2.18.13",
+    "browser-sync": "^2.26.7",
     "browser-sync-webpack-plugin": "^2.2.2",
     "copy-webpack-plugin": "^5.0.2",
     "eslint": "^5.3.0",
