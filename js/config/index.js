@@ -19,3 +19,4 @@ export { default as townMap } from './townMap';
 export { default as gameTypes } from './gameTypes';
 export { default as lessonMap } from './lessonMap';
 export { default as weapons } from './weapons';
+export { default as minigameItems } from './minigameItems';

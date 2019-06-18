@@ -13,10 +13,6 @@ export default class {
     this.spawnPadding = this.scene.sys.game.config.width * minigame.sidePaddingPercent / 100;
   }
 
-  start() {
-    this.scene.spawnTimer.paused = false;
-  }
-
   /*
   return:
   {

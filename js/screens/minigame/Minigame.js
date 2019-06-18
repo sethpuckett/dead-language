@@ -7,6 +7,8 @@ import HudStatusManager from '../HudStatusManager';
 import HudManager from '../HudManager';
 import Modal from '../Modal';
 import GameProgressManager from '../../data/GameProgressManager';
+import MinigameItemSpawnManager from './MinigameItemSpawnManager';
+import MinigameItemManager from './MinigameItemManager';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -22,6 +24,8 @@ export default class extends Phaser.Scene {
     this.vocab = new VocabWordManager(this.getVocab());
     this.zombieManager = new MinigameZombieManager(this, this.vocab);
     this.spawnManager = new MinigameSpawnManager(this, this.currentLevel.waves, this.vocab);
+    this.itemSpawnManager = new MinigameItemSpawnManager(this, this.currentLevel.items);
+    this.itemManager = new MinigameItemManager(this);
 
     this.score = 0;
     this.cash = this.currentLevel.startCash;
@@ -48,10 +52,16 @@ export default class extends Phaser.Scene {
   update(_time, delta) {
     if (!this.gameTimer.paused) {
       this.updateGameTime();
-      const spawn = this.spawnManager.getSpawn(this.gameTimer.getElapsedSeconds());
-      if (spawn.canSpawn) {
-        this.zombieManager.spawnZombie(spawn);
+      const zombieSpawn = this.spawnManager.getSpawn(this.gameTimer.getElapsedSeconds());
+      if (zombieSpawn.canSpawn) {
+        this.zombieManager.spawnZombie(zombieSpawn);
       }
+
+      const itemSpawn = this.itemSpawnManager.getItemSpawn(this.gameTimer.getElapsedSeconds());
+      if (itemSpawn.canSpawn) {
+        this.itemManager.spawnItem(itemSpawn);
+      }
+
       this.zombieManager.moveZombies(delta);
       const releasedWords = this.zombieManager.destroyDeadZombies();
       releasedWords.forEach(w => this.vocab.releaseWord(w));

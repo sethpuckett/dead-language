@@ -35,5 +35,12 @@ export default [
     gameTime: 180,
     mercenaryEnabled: true,
     defaultWeapon: 'pistol',
+    items: {
+      cashEnabled: true,
+      baseSpawnRate: 1500,
+      spawnRange: 500,
+      lifeTime: 8000,
+      warnTime: 2000,
+    },
   },
 ];

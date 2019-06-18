@@ -50,6 +50,7 @@ export default {
   colorSquare: 'color-square',
   mercenary: 'mercenary',
   weapon: 'weapon',
+  cash: 'cash',
   files: {
     grayZombie: 'assets/images/zombie-gray.png',
     greenZombie: 'assets/images/zombie-green.png',
@@ -100,6 +101,7 @@ export default {
     colorSquare: 'assets/images/color-square.png',
     mercenary: 'assets/images/mercenary.png',
     weapon: 'assets/images/weapon.png',
+    cash: 'assets/images/cash.png',
   },
   frames: {
     healthFull: 0,
