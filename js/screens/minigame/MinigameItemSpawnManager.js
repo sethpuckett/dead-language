@@ -31,12 +31,15 @@ export default class {
       canSpawn: false,
     };
     if (this.nextSpawnTime <= gameTime) {
-      const word = this.vocab.getRandomWord();
-      if (word != null) {
-        itemSpawnConfig.canSpawn = true;
-        itemSpawnConfig.word = word;
-        itemSpawnConfig.slotNumber = 0; // TODO: randomize
-        itemSpawnConfig.item = minigameItems.cash; // TODO: randomize
+      const slotNumber = this.getSlotNumber();
+      if (slotNumber >= 0) {
+        const word = this.vocab.getRandomWord();
+        if (word != null) {
+          itemSpawnConfig.canSpawn = true;
+          itemSpawnConfig.word = word;
+          itemSpawnConfig.slotNumber = slotNumber;
+          itemSpawnConfig.item = minigameItems.cash; // TODO: randomize
+        }
       }
 
       this.nextSpawnTime = gameTime + this.getSpawnDelay();
@@ -54,5 +57,20 @@ export default class {
     return (this.config.baseSpawnRate + Phaser.Math.RND.between(
       -this.config.spawnRange, this.config.spawnRange
     )) / 1000;
+  }
+
+  getSlotNumber() {
+    // return -1 if no slots available
+    if (this.itemSlots.every(s => s)) {
+      return -1;
+    }
+
+    let slotNumber = 0;
+    do {
+      slotNumber = Phaser.Math.RND.between(0, gameConst.MINIGAME_ITEM_SLOTS - 1);
+    } while (this.itemSlots[slotNumber]);
+    this.itemSlots[slotNumber] = true;
+
+    return slotNumber;
   }
 }

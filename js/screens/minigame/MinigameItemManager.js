@@ -11,6 +11,7 @@ export default class {
     const position = this.getSpawnPosition(spawnConfig.slotNumber);
     const image = this.getItemImage(spawnConfig.item);
     const item = this.scene.add.sprite(position.x, position.y, image);
+    item.config = spawnConfig;
     item.itemType = spawnConfig.item;
     item.slotNumber = spawnConfig.slotNumber;
     item.word = spawnConfig.word;
@@ -27,11 +28,10 @@ export default class {
     item.text.setOrigin(this.scene.ui.itemWordOriginX, this.scene.ui.itemWordOriginY);
     item.text.setTintFill(minigame.fonts.itemColor);
     item.text.setDepth(depth.minigame.itemText);
-    // item.text.x = position.x - item.text.width / 2;
-    item.wordBgGraphics = this.scene.add.graphics();
-    item.wordBgGraphics.fillStyle(minigame.ui.itemWordBgColor);
-    item.wordBgGraphics.setDepth(depth.minigame.itemTextBackground);
-    item.wordBgGraphics.fillRect(
+    item.textBgGraphics = this.scene.add.graphics();
+    item.textBgGraphics.fillStyle(minigame.ui.itemWordBgColor);
+    item.textBgGraphics.setDepth(depth.minigame.itemTextBackground);
+    item.textBgGraphics.fillRect(
       item.text.x - item.text.width / 2 - minigame.ui.itemWordBgPadding,
       item.text.y - minigame.ui.itemWordBgPadding,
       item.text.width + minigame.ui.itemWordBgPadding * 2,
@@ -43,44 +43,63 @@ export default class {
 
   checkGuess(text) {
     const guess = text.toLowerCase().trim();
-    let foundIndex = null;
-    let foundItemType = null;
+    let foundIndex = -1;
+    let foundItemConfig = null;
 
     foundIndex = this.items.findIndex(item => guess === item.word.language2);
 
     // only check alternatives if no match found in main answer
-    if (foundIndex == null) {
+    if (foundIndex < 0) {
       foundIndex = this.items.findIndex(
         i => i.word.alternatives != null && i.word.alternatives.includes(guess)
       );
     }
 
-    if (foundIndex != null) {
-      foundItemType = this.items[foundIndex].itemType;
+    if (foundIndex >= 0) {
+      foundItemConfig = this.items[foundIndex].config;
       this.destroyItem(this.items[foundIndex]);
       this.items.splice(foundIndex, 1);
     }
 
-    return foundItemType;
+    return foundItemConfig;
   }
 
   // Private
   getSpawnPosition(slotNumber) {
-    const position = { x: 50, y: 100 };
-
-    return position;
+    switch (slotNumber) {
+      case 0:
+        return { x: this.scene.ui.itemLeftX, y: this.scene.ui.itemRow1Y };
+      case 1:
+        return { x: this.scene.ui.itemLeftX, y: this.scene.ui.itemRow2Y };
+      case 2:
+        return { x: this.scene.ui.itemLeftX, y: this.scene.ui.itemRow3Y };
+      case 3:
+        return { x: this.scene.ui.itemLeftX, y: this.scene.ui.itemRow4Y };
+      case 4:
+        return { x: this.scene.ui.itemRightX, y: this.scene.ui.itemRow1Y };
+      case 5:
+        return { x: this.scene.ui.itemRightX, y: this.scene.ui.itemRow2Y };
+      case 6:
+        return { x: this.scene.ui.itemRightX, y: this.scene.ui.itemRow3Y };
+      case 7:
+        return { x: this.scene.ui.itemRightX, y: this.scene.ui.itemRow4Y };
+      default:
+        throw Error('invalid slot number');
+    }
   }
 
   getItemImage(minigameItem) {
     switch (minigameItem) {
       case minigameItems.cash:
-        return images.cash; // TODO: add cash image
+        return images.cash;
       default:
         throw Error('invalid minigameItem');
     }
   }
 
   destroyItem(item) {
-    // TODO: implement
+    item.text.destroy();
+    item.textBgGraphics.destroy();
+    item.destroy();
   }
 }

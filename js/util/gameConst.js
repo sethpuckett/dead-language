@@ -1,3 +1,3 @@
 export default {
-  MINIGAME_ITEM_SLOTS: 16,
+  MINIGAME_ITEM_SLOTS: 8,
 };

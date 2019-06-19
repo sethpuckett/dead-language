@@ -169,9 +169,11 @@ export default class extends Phaser.Scene {
   submitAnswer() {
     const guess = this.hudManager.getTextEntry();
     const points = this.zombieManager.scoreSubmittedAnswer(guess);
+    let mercKill = false;
     if (points === 0 && this.mercenaryEnabled) {
       const canUseMercenary = this.cash >= minigame.mercenaryCost;
       const mercenaryAttempt = this.zombieManager.checkMercenary(guess, canUseMercenary);
+      // TODO: move all this to a helper method
       if (mercenaryAttempt) {
         if (canUseMercenary) {
           this.statusManager.setStatus({
@@ -182,6 +184,7 @@ export default class extends Phaser.Scene {
           });
           this.cash -= minigame.mercenaryCost;
           this.hudManager.setCash(this.cash);
+          mercKill = true;
         } else {
           this.statusManager.setStatus({
             image: images.mercenary,
@@ -192,6 +195,16 @@ export default class extends Phaser.Scene {
         }
       }
     }
+
+    if (points === 0 && !mercKill) {
+      const itemConfig = this.itemManager.checkGuess(guess);
+      if (itemConfig != null) {
+        // TODO: apply item
+        this.itemSpawnManager.releaseSlot(itemConfig.slotNumber);
+        this.vocab.releaseWord(itemConfig.word);
+      }
+    }
+
     this.score += points;
     this.hudManager.setKillValue(this.score);
     this.hudManager.clearTextEntry();
