@@ -9,6 +9,7 @@ import Modal from '../Modal';
 import GameProgressManager from '../../data/GameProgressManager';
 import MinigameItemSpawnManager from './MinigameItemSpawnManager';
 import MinigameItemManager from './MinigameItemManager';
+import minigameUiHelper from '../ui/minigameUiHelper';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -24,8 +25,9 @@ export default class extends Phaser.Scene {
     this.vocab = new VocabWordManager(this.getVocab());
     this.zombieManager = new MinigameZombieManager(this, this.vocab);
     this.spawnManager = new MinigameSpawnManager(this, this.currentLevel.waves, this.vocab);
-    this.itemSpawnManager = new MinigameItemSpawnManager(this, this.currentLevel.items);
+    this.itemSpawnManager = new MinigameItemSpawnManager(this, this.currentLevel.items, this.vocab);
     this.itemManager = new MinigameItemManager(this);
+    this.ui = minigameUiHelper(this.sys.game.config);
 
     this.score = 0;
     this.cash = this.currentLevel.startCash;

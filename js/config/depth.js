@@ -2,6 +2,9 @@ export default {
   minigame: {
     background: 0,
     splatter: 1,
+    itemTextBackground: 2,
+    itemText: 3,
+    item: 4,
     // 1000 - 3999 reserved for zombies & zombie text
     zombieTextBackground: 1000,
     zombieText: 1001,

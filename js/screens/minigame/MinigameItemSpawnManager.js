@@ -8,9 +8,10 @@ export default class {
       cashEnabled: bool
     }
   */
-  constructor(scene, itemConfig, startTime = 0) {
+  constructor(scene, itemConfig, vocabWordManager, startTime = 0) {
     this.scene = scene;
     this.config = itemConfig;
+    this.vocab = vocabWordManager;
     this.nextSpawnTime = startTime + this.getSpawnDelay();
 
     this.itemSlots = new Array(gameConst.MINIGAME_ITEM_SLOTS).fill(false);
@@ -22,6 +23,7 @@ export default class {
     canSpawn: bool
     slotNumber: int
     item: minigameItem
+    word: Word
   }
   */
   getItemSpawn(gameTime) {
@@ -29,17 +31,21 @@ export default class {
       canSpawn: false,
     };
     if (this.nextSpawnTime <= gameTime) {
-      itemSpawnConfig.canSpawn = true;
-      itemSpawnConfig.slotNumber = 0; // TODO: randomize
-      itemSpawnConfig.item = minigameItems.cash; // TODO: randomize
+      const word = this.vocab.getRandomWord();
+      if (word != null) {
+        itemSpawnConfig.canSpawn = true;
+        itemSpawnConfig.word = word;
+        itemSpawnConfig.slotNumber = 0; // TODO: randomize
+        itemSpawnConfig.item = minigameItems.cash; // TODO: randomize
+      }
 
       this.nextSpawnTime = gameTime + this.getSpawnDelay();
     }
     return itemSpawnConfig;
   }
 
-  releasePosition(position) {
-    this.itemSlots[position] = false;
+  releaseSlot(slotNumber) {
+    this.itemSlots[slotNumber] = false;
   }
 
   // Private

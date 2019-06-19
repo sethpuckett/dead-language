@@ -13,10 +13,14 @@ export default {
   fonts: {
     zombieSize: 10,
     zombieFill: '#ffffff',
+    itemSize: 10,
+    itemColor: 0xffffff,
   },
   ui: {
     zombieWordBgStyle: { color: '#000000' },
     zombieWordBgPadding: 2,
+    itemWordBgColor: 0x000000,
+    itemWordBgPadding: 2,
     hudConfig: {
       weapon: true,
       item: true,
