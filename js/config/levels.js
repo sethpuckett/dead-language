@@ -38,8 +38,8 @@ export default [
     items: {
       cashEnabled: true,
       cashAmount: 50,
-      baseSpawnRate: 1500,
-      spawnRange: 500,
+      baseSpawnRate: 10000,
+      spawnRange: 2500,
       lifeTime: 8000,
       warnTime: 2500,
     },
