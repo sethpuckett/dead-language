@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { depth, minigame, levels, images, screens, endgame, gameTypes } from '../../config';
+import { depth, minigame, levels, images, screens, endgame, gameTypes, minigameItems } from '../../config';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
 import MinigameSpawnManager from './MinigameSpawnManager';
@@ -71,6 +71,12 @@ export default class extends Phaser.Scene {
       if (this.health <= 0) {
         this.loseGame();
       }
+
+      const releasedItems = this.itemManager.clearDestroyedItems();
+      releasedItems.forEach((i) => {
+        this.vocab.releaseWord(i.word);
+        this.itemSpawnManager.releaseSlot(i.slotNumber);
+      });
     }
   }
 
@@ -199,9 +205,7 @@ export default class extends Phaser.Scene {
     if (points === 0 && !mercKill) {
       const itemConfig = this.itemManager.checkGuess(guess);
       if (itemConfig != null) {
-        // TODO: apply item
-        this.itemSpawnManager.releaseSlot(itemConfig.slotNumber);
-        this.vocab.releaseWord(itemConfig.word);
+        this.applyItem(itemConfig.itemType);
       }
     }
 
@@ -260,5 +264,16 @@ export default class extends Phaser.Scene {
         this.scene.start(screens.endgame, { status: endgame.lose, stageId: this.stageId });
       }
     });
+  }
+
+  applyItem(itemType) {
+    switch (itemType) {
+      case minigameItems.cash:
+        this.cash += this.currentLevel.items.cashAmount;
+        this.hudManager.setCash(this.cash);
+        break;
+      default:
+        throw Error('invalid itemType');
+    }
   }
 }

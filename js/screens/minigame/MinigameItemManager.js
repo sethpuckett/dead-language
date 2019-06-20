@@ -5,16 +5,19 @@ export default class {
     this.scene = scene;
 
     this.items = [];
+    this.destroyedItems = [];
   }
 
   spawnItem(spawnConfig) {
     const position = this.getSpawnPosition(spawnConfig.slotNumber);
-    const image = this.getItemImage(spawnConfig.item);
+    const image = this.getItemImage(spawnConfig.itemType);
     const item = this.scene.add.sprite(position.x, position.y, image);
     item.config = spawnConfig;
-    item.itemType = spawnConfig.item;
+    item.itemType = spawnConfig.itemType;
     item.slotNumber = spawnConfig.slotNumber;
     item.word = spawnConfig.word;
+    item.lifeTime = spawnConfig.lifeTime;
+    item.warnTime = spawnConfig.warnTime;
 
     item.displayWidth = this.scene.ui.itemWidth;
     item.displayHeight = this.scene.ui.itemWidth;
@@ -38,6 +41,20 @@ export default class {
       item.text.height + minigame.ui.itemWordBgPadding * 2
     );
 
+    item.killTimer = this.scene.time.addEvent({
+      delay: item.lifeTime,
+      callback: this.destroyItem,
+      args: [item],
+      callbackScope: this,
+    });
+
+    item.warnTimer = this.scene.time.addEvent({
+      delay: item.lifeTime - item.warnTime,
+      callback: this.startWarningFlash,
+      args: [item],
+      callbackScope: this,
+    });
+
     this.items.push(item);
   }
 
@@ -58,10 +75,15 @@ export default class {
     if (foundIndex >= 0) {
       foundItemConfig = this.items[foundIndex].config;
       this.destroyItem(this.items[foundIndex]);
-      this.items.splice(foundIndex, 1);
     }
 
     return foundItemConfig;
+  }
+
+  clearDestroyedItems() {
+    const retVal = this.destroyedItems;
+    this.destroyedItems = [];
+    return retVal;
   }
 
   // Private
@@ -97,9 +119,28 @@ export default class {
     }
   }
 
+  startWarningFlash(item) {
+    item.flashTimer = this.scene.time.addEvent({
+      delay: minigame.itemFlashDelay,
+      callback: (i) => { i.visible = !i.visible; },
+      args: [item],
+      callbackScope: this,
+      repeat: -1,
+    });
+  }
+
   destroyItem(item) {
+    this.destroyedItems.push(item.config);
+    const foundIndex = this.items.findIndex(i => i === item);
+    this.items.splice(foundIndex, 1);
+
     item.text.destroy();
     item.textBgGraphics.destroy();
+    item.killTimer.destroy();
+    item.warnTimer.destroy();
+    if (item.flashTimer != null) {
+      item.flashTimer.destroy();
+    }
     item.destroy();
   }
 }

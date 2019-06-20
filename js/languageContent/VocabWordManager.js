@@ -27,7 +27,8 @@ export default class {
 
   releaseWord(word) {
     const index = this.reservedContent.findIndex(r => r.id === word.id);
-    this.returnedContent.push(this.reservedContent.splice(index, 1)[0]);
+    const content = this.reservedContent.splice(index, 1)[0];
+    this.returnedContent.push(content);
   }
 
   // move all reserved & returned content to available content

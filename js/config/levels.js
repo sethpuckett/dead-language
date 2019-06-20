@@ -37,10 +37,11 @@ export default [
     defaultWeapon: 'pistol',
     items: {
       cashEnabled: true,
+      cashAmount: 50,
       baseSpawnRate: 1500,
       spawnRange: 500,
       lifeTime: 8000,
-      warnTime: 2000,
+      warnTime: 2500,
     },
   },
 ];

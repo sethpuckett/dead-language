@@ -38,7 +38,9 @@ export default class {
           itemSpawnConfig.canSpawn = true;
           itemSpawnConfig.word = word;
           itemSpawnConfig.slotNumber = slotNumber;
-          itemSpawnConfig.item = minigameItems.cash; // TODO: randomize
+          itemSpawnConfig.lifeTime = this.config.lifeTime;
+          itemSpawnConfig.warnTime = this.config.warnTime;
+          itemSpawnConfig.itemType = minigameItems.cash; // TODO: randomize
         }
       }
 

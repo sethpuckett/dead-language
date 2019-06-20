@@ -10,6 +10,7 @@ export default {
   damageShakeIntensity: 0.005,
   statusTime: 1500,
   mercenaryCost: 100,
+  itemFlashDelay: 125,
   fonts: {
     zombieSize: 10,
     zombieFill: '#ffffff',
