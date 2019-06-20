@@ -5,7 +5,12 @@ import { gameConst } from '../../util';
 export default class {
   /*
     itemConfig: {
-      cashEnabled: bool
+      cashEnabled: bool,
+      cashAmount: int,
+      baseSpawnRate: int,
+      spawnRange: int,
+      lifeTime: int,
+      warnTime: int,
     }
   */
   constructor(scene, itemConfig, vocabWordManager, startTime = 0) {

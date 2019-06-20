@@ -16,5 +16,8 @@ export default (config) => {
     itemRow2Y: u.h_30p,
     itemRow3Y: u.h_45p,
     itemRow4Y: u.h_60p,
+
+    itemPopOrigin: u.center,
+    get itemPopWidth() { return this.itemWidth * 1.25; },
   };
 };

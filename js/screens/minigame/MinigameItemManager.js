@@ -1,4 +1,4 @@
-import { fonts, minigame, minigameItems, images, depth } from '../../config';
+import { fonts, minigame, minigameItems, images, depth, animations } from '../../config';
 
 export default class {
   constructor(scene) {
@@ -75,6 +75,7 @@ export default class {
     if (foundIndex >= 0) {
       foundItemConfig = this.items[foundIndex].config;
       this.destroyItem(this.items[foundIndex]);
+      this.showItemPop(foundItemConfig);
     }
 
     return foundItemConfig;
@@ -87,6 +88,17 @@ export default class {
   }
 
   // Private
+  showItemPop(itemConfig) {
+    const position = this.getSpawnPosition(itemConfig.slotNumber);
+    const pop = this.scene.add.sprite(position.x, position.y, images.popWhite);
+    pop.setDepth(depth.minigame.itemPop);
+    pop.setOrigin(this.scene.ui.itemPopOrigin);
+    pop.displayWidth = this.scene.ui.itemPopWidth;
+    pop.displayHeight = this.scene.ui.itemPopWidth;
+    pop.on('animationcomplete', (_a, _f, s) => s.destroy(), this);
+    pop.play(animations.popWhitePop);
+  }
+
   getSpawnPosition(slotNumber) {
     switch (slotNumber) {
       case 0:

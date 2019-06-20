@@ -12,6 +12,7 @@ export default {
   shotBlastBottleExplode: 'shot-blast-bottle-explode',
   shotBlastDirtExplode: 'shot-blast-dirt-explode',
   bottle1Explode: 'bottle1-explode',
+  popWhitePop: 'pop-white-pop',
   frames: {
     zombieBounce: [0, 1, 2, 3],
     zombieWalk: [6, 7, 8, 9],
@@ -26,6 +27,7 @@ export default {
     shotBlastBottleExplode: [0, 1, 1, 2, 2, 3],
     shotBlastDirtExplode: [0, 1, 1, 2, 2, 3],
     bottle1Explode: [0, 1, 2, 3, 4, 5, 6],
+    popWhitePop: [2, 0, 1, 3],
   },
   frameRates: {
     zombieBounce: 8,
@@ -41,5 +43,6 @@ export default {
     shotBlastBottleExplode: 15,
     shotBlastDirtExplode: 20,
     bottle1Explode: 13,
+    popWhitePop: 12,
   },
 };

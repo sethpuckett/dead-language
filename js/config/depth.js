@@ -5,6 +5,7 @@ export default {
     itemTextBackground: 2,
     itemText: 3,
     item: 4,
+    itemPop: 5,
     // 1000 - 3999 reserved for zombies & zombie text
     zombieTextBackground: 1000,
     zombieText: 1001,

@@ -51,6 +51,7 @@ export default {
   mercenary: 'mercenary',
   weapon: 'weapon',
   cash: 'cash',
+  popWhite: 'pop-white',
   files: {
     grayZombie: 'assets/images/zombie-gray.png',
     greenZombie: 'assets/images/zombie-green.png',
@@ -102,6 +103,7 @@ export default {
     mercenary: 'assets/images/mercenary.png',
     weapon: 'assets/images/weapon.png',
     cash: 'assets/images/cash.png',
+    popWhite: 'assets/images/pop-white.png',
   },
   frames: {
     healthFull: 0,
@@ -177,6 +179,10 @@ export default {
     weapon: {
       width: 19,
       height: 19,
+    },
+    popWhite: {
+      width: 16,
+      height: 16,
     },
   },
 };

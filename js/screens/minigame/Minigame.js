@@ -175,31 +175,10 @@ export default class extends Phaser.Scene {
   submitAnswer() {
     const guess = this.hudManager.getTextEntry();
     const points = this.zombieManager.scoreSubmittedAnswer(guess);
+
     let mercKill = false;
     if (points === 0 && this.mercenaryEnabled) {
-      const canUseMercenary = this.cash >= minigame.mercenaryCost;
-      const mercenaryAttempt = this.zombieManager.checkMercenary(guess, canUseMercenary);
-      // TODO: move all this to a helper method
-      if (mercenaryAttempt) {
-        if (canUseMercenary) {
-          this.statusManager.setStatus({
-            image: images.mercenary,
-            frame: images.frames.mercenaryStatusShoot,
-            message: minigame.statusMessages.useMercenary,
-            displayTime: minigame.statusTime,
-          });
-          this.cash -= minigame.mercenaryCost;
-          this.hudManager.setCash(this.cash);
-          mercKill = true;
-        } else {
-          this.statusManager.setStatus({
-            image: images.mercenary,
-            frame: images.frames.mercenaryStatusRefuse,
-            message: minigame.statusMessages.mercenaryUnavailable,
-            displayTime: minigame.statusTime,
-          });
-        }
-      }
+      mercKill = this.checkMercenary(guess);
     }
 
     if (points === 0 && !mercKill) {
@@ -212,6 +191,34 @@ export default class extends Phaser.Scene {
     this.score += points;
     this.hudManager.setKillValue(this.score);
     this.hudManager.clearTextEntry();
+  }
+
+  checkMercenary(guess) {
+    let mercKill = false;
+    const canUseMercenary = this.cash >= minigame.mercenaryCost;
+    const mercenaryAttempt = this.zombieManager.checkMercenary(guess, canUseMercenary);
+    // TODO: move all this to a helper method
+    if (mercenaryAttempt) {
+      if (canUseMercenary) {
+        this.statusManager.setStatus({
+          image: images.mercenary,
+          frame: images.frames.mercenaryStatusShoot,
+          message: minigame.statusMessages.useMercenary,
+          displayTime: minigame.statusTime,
+        });
+        this.cash -= minigame.mercenaryCost;
+        this.hudManager.setCash(this.cash);
+        mercKill = true;
+      } else {
+        this.statusManager.setStatus({
+          image: images.mercenary,
+          frame: images.frames.mercenaryStatusRefuse,
+          message: minigame.statusMessages.mercenaryUnavailable,
+          displayTime: minigame.statusTime,
+        });
+      }
+    }
+    return mercKill;
   }
 
   getVocab() {
@@ -271,6 +278,10 @@ export default class extends Phaser.Scene {
       case minigameItems.cash:
         this.cash += this.currentLevel.items.cashAmount;
         this.hudManager.setCash(this.cash);
+        this.statusManager.setStatus({
+          message: minigame.statusMessages.cashReceived,
+          displayTime: minigame.statusTime,
+        });
         break;
       default:
         throw Error('invalid itemType');

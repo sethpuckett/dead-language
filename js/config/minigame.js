@@ -39,6 +39,7 @@ export default {
     damage: ['Cerebros', 'ricos!'],
     useMercenary: ['Happy', 'to help.'],
     mercenaryUnavailable: ['My services', 'aren\'t free,', 'friend.'],
+    cashReceived: ['¡Mas dinero!'],
   },
   modals: {
     start: [

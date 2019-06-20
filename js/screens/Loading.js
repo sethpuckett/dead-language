@@ -206,6 +206,12 @@ export default class extends Phaser.Scene {
       margin: 0,
       spacing: 0,
     });
+    this.load.spritesheet(images.popWhite, images.files.popWhite, {
+      frameWidth: images.frameSizes.popWhite.width,
+      frameHeight: images.frameSizes.popWhite.height,
+      margin: 0,
+      spacing: 0,
+    });
   }
 
   createAnimations() {
@@ -270,6 +276,15 @@ export default class extends Phaser.Scene {
         images.bottle1Explode, { frames: animations.frames.bottle1Explode }
       ),
       frameRate: animations.frameRates.bottle1Explode,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: animations.popWhitePop,
+      frames: this.anims.generateFrameNames(
+        images.popWhite, { frames: animations.frames.popWhitePop }
+      ),
+      frameRate: animations.frameRates.popWhitePop,
       repeat: 0,
     });
   }
