@@ -1,4 +1,7 @@
+import Phaser from 'phaser';
 import { fonts, minigame, minigameItems, images, depth, animations } from '../../config';
+
+const FOOD_TIER_1_TYPE_COUNT = 12;
 
 export default class {
   constructor(scene) {
@@ -10,8 +13,10 @@ export default class {
 
   spawnItem(spawnConfig) {
     const position = this.getSpawnPosition(spawnConfig.slotNumber);
-    const image = this.getItemImage(spawnConfig.itemType);
-    const item = this.scene.add.sprite(position.x, position.y, image);
+    const imageConfig = this.getItemImageConfig(spawnConfig.itemType);
+    const item = this.scene.add.sprite(
+      position.x, position.y, imageConfig.image, imageConfig.frame
+    );
     item.config = spawnConfig;
     item.itemType = spawnConfig.itemType;
     item.slotNumber = spawnConfig.slotNumber;
@@ -21,7 +26,7 @@ export default class {
 
     item.displayWidth = this.scene.ui.itemWidth;
     item.displayHeight = this.scene.ui.itemWidth;
-    item.setOrigin(this.scene.ui.itemOrigin);
+    item.setOrigin(this.scene.ui.itemOriginX, this.scene.ui.itemOriginY);
     item.setDepth(depth.minigame.item);
     item.text = this.scene.add.bitmapText(
       item.x, item.y + item.height / 2 + this.scene.ui.itemWordBuffer,
@@ -122,10 +127,15 @@ export default class {
     }
   }
 
-  getItemImage(minigameItem) {
+  // returns { image: image, frame: int }
+  getItemImageConfig(minigameItem) {
     switch (minigameItem) {
       case minigameItems.cash:
-        return images.cash;
+        return { image: images.cash, frame: 0 };
+      case minigameItems.foodTier1:
+        return {
+          image: images.foodTier1, frame: Phaser.Math.RND.between(0, FOOD_TIER_1_TYPE_COUNT - 1),
+        };
       default:
         throw Error('invalid minigameItem');
     }

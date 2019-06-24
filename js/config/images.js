@@ -52,6 +52,7 @@ export default {
   weapon: 'weapon',
   cash: 'cash',
   popWhite: 'pop-white',
+  foodTier1: 'food-tier-1',
   files: {
     grayZombie: 'assets/images/zombie-gray.png',
     greenZombie: 'assets/images/zombie-green.png',
@@ -104,6 +105,7 @@ export default {
     weapon: 'assets/images/weapon.png',
     cash: 'assets/images/cash.png',
     popWhite: 'assets/images/pop-white.png',
+    foodTier1: 'assets/images/food-tier-1.png',
   },
   frames: {
     healthFull: 0,
@@ -128,6 +130,18 @@ export default {
     weaponShotgun: 1,
     weaponRifle: 2,
     weaponRocketLauncher: 3,
+    foodApple: 0,
+    foodBeer: 1,
+    foodCake: 2,
+    foodGrapes: 3,
+    foodHamburger: 4,
+    foodHotDot: 5,
+    foodIceCream: 6,
+    foodMartini: 7,
+    foodMeat: 8,
+    foodSushi: 9,
+    foodWatermelon: 10,
+    foodWine: 11,
   },
   scales: {
     crate: 1.5,
@@ -181,6 +195,10 @@ export default {
       height: 19,
     },
     popWhite: {
+      width: 16,
+      height: 16,
+    },
+    foodTier1: {
       width: 16,
       height: 16,
     },

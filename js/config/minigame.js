@@ -40,6 +40,7 @@ export default {
     useMercenary: ['Mi placer.'],
     mercenaryUnavailable: ['No trabajo', 'gratis,', 'muchachos.'],
     cashReceived: ['¡Mas dinero!'],
+    foodTier1Received: ['¡Delicioso!'],
   },
   modals: {
     start: [

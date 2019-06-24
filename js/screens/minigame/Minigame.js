@@ -283,6 +283,13 @@ export default class extends Phaser.Scene {
           displayTime: minigame.statusTime,
         });
         break;
+      case minigameItems.foodTier1:
+        this.changeHealth(this.currentLevel.items.foodTier1HealAmount);
+        this.statusManager.setStatus({
+          message: minigame.statusMessages.foodTier1Received,
+          displayTime: minigame.statusTime,
+        });
+        break;
       default:
         throw Error('invalid itemType');
     }

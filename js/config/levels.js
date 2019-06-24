@@ -1,3 +1,5 @@
+import minigameItems from './minigameItems';
+
 export default [
   {
     id: 1,
@@ -36,12 +38,16 @@ export default [
     mercenaryEnabled: true,
     defaultWeapon: 'pistol',
     items: {
-      cashEnabled: true,
       cashAmount: 50,
-      baseSpawnRate: 10000,
+      foodTier1HealAmount: 1,
+      baseSpawnRate: 2600,
       spawnRange: 2500,
       lifeTime: 8000,
       warnTime: 2500,
+      probabilities: [
+        { min: 1, max: 1, itemType: minigameItems.cash },
+        { min: 2, max: 100, itemType: minigameItems.foodTier1 },
+      ],
     },
   },
 ];

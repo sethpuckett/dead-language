@@ -1,16 +1,18 @@
 import Phaser from 'phaser';
-import { minigameItems } from '../../config';
 import { gameConst } from '../../util';
 
 export default class {
   /*
     itemConfig: {
-      cashEnabled: bool,
       cashAmount: int,
       baseSpawnRate: int,
       spawnRange: int,
       lifeTime: int,
       warnTime: int,
+      probabilities: {
+        cash: int
+        foodTier1: int
+      },
     }
   */
   constructor(scene, itemConfig, vocabWordManager, startTime = 0) {
@@ -45,7 +47,7 @@ export default class {
           itemSpawnConfig.slotNumber = slotNumber;
           itemSpawnConfig.lifeTime = this.config.lifeTime;
           itemSpawnConfig.warnTime = this.config.warnTime;
-          itemSpawnConfig.itemType = minigameItems.cash; // TODO: randomize
+          itemSpawnConfig.itemType = this.getRandomItemType();
         }
       }
 
@@ -79,5 +81,11 @@ export default class {
     this.itemSlots[slotNumber] = true;
 
     return slotNumber;
+  }
+
+  getRandomItemType() {
+    const num = Phaser.Math.RND.between(1, 100);
+    const item = this.config.probabilities.find(c => c.min <= num && c.max >= num);
+    return item.itemType;
   }
 }

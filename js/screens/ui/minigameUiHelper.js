@@ -5,7 +5,8 @@ export default (config) => {
 
   return {
     itemWidth: u.h_5p,
-    itemOrigin: u.center,
+    itemOriginX: u.center,
+    itemOriginY: u.bottom,
     itemWordBuffer: u.padding,
     itemWordOriginX: u.center,
     itemWordOriginY: u.top,

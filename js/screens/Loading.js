@@ -212,6 +212,12 @@ export default class extends Phaser.Scene {
       margin: 0,
       spacing: 0,
     });
+    this.load.spritesheet(images.foodTier1, images.files.foodTier1, {
+      frameWidth: images.frameSizes.foodTier1.width,
+      frameHeight: images.frameSizes.foodTier1.height,
+      margin: 0,
+      spacing: 0,
+    });
   }
 
   createAnimations() {
