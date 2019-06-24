@@ -20,7 +20,9 @@ export default class {
     this.db.collection('lessons').get().then((collection) => {
       this.lessons = collection;
       this.lessonsLoaded = true;
-      callback.call(context);
+      if (callback != null) {
+        callback.call(context);
+      }
     });
   }
 
@@ -28,20 +30,26 @@ export default class {
     this.db.collection('stages').get().then((collection) => {
       this.stages = collection;
       this.stagesLoaded = true;
-      callback.call(context);
+      if (callback != null) {
+        callback.call(context);
+      }
     });
   }
 
   loadUserProfile(callback, context) {
     if (!this.isUserLoggedIn()) {
-      callback.call(context);
+      if (callback != null) {
+        callback.call(context);
+      }
       return;
     }
 
     this.db.collection('users').doc(this.getCurrentUserId()).get().then((profile) => {
       this.userProfile = profile.data();
       this.userProfileLoaded = true;
-      callback.call(context);
+      if (callback != null) {
+        callback.call(context);
+      }
     });
   }
 

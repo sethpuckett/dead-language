@@ -36,9 +36,9 @@ export default {
     },
   },
   statusMessages: {
-    damage: ['Cerebros', 'ricos!'],
-    useMercenary: ['Happy', 'to help.'],
-    mercenaryUnavailable: ['My services', 'aren\'t free,', 'friend.'],
+    damage: ['¡Cerebros', 'ricos!'],
+    useMercenary: ['Mi placer.'],
+    mercenaryUnavailable: ['No trabajo', 'gratis,', 'muchachos.'],
     cashReceived: ['¡Mas dinero!'],
   },
   modals: {
