@@ -1,17 +1,22 @@
 import Phaser from 'phaser';
 import { animations, depth, images, minigame, fonts, hud } from '../../config';
 import { animationHelper } from '../../util';
+import enemyTypes from '../../config/enemyTypes';
 
 const ZOMBIE_IMAGE_SCALE = 2.5;
 const SPAWN_Y = -35;
 const SPEED_MODIFIER = 1000000;
-const ZOMBIE_IMAGES = [
+const NORMAL_ZOMBIE_IMAGES = [
   images.zombieNormal1,
   images.zombieNormal2,
   images.zombieNormal3,
   images.zombieNormal4,
   images.zombieNormal5,
   images.zombieNormal6,
+];
+const SPECIAL_ZOMBIE_IMAGES = [
+  images.zombieSpecial1,
+  images.zombieSpecial2,
 ];
 
 export default class {
@@ -88,7 +93,7 @@ export default class {
   }
 
   spawnZombie(spawnConfig) {
-    const image = Phaser.Math.RND.pick(ZOMBIE_IMAGES);
+    const image = this.getZombieImage(spawnConfig.enemyType);
     const zombie = this.scene.add.sprite(spawnConfig.xPosition, SPAWN_Y, image, 0);
     zombie.setScale(ZOMBIE_IMAGE_SCALE);
     zombie.setDepth(depth.minigame.zombie);
@@ -109,7 +114,8 @@ export default class {
     zombie.moving = true;
     zombie.attacking = false;
 
-    zombie.play(animationHelper.zombieAnimation(image, animations.zombieWalk));
+    const animation = this.getZombieAnimation(spawnConfig.enemyType);
+    zombie.play(animationHelper.zombieAnimation(image, animation));
     zombie.on('animationcomplete', this.zombieAnimationComplete, this);
     this.zombies.push(zombie);
   }
@@ -168,6 +174,8 @@ export default class {
     ).setDepth(depth.minigame.splatter).setScale(2);
   }
 
+  // Private
+
   getMovement(speed, delta) {
     return speed * delta * this.totalDistance / SPEED_MODIFIER;
   }
@@ -180,5 +188,21 @@ export default class {
   getSplatterLocation(x) {
     const base = x + minigame.splatterBase;
     return Phaser.Math.RND.between(base - minigame.splatterRange, base + minigame.splatterRange);
+  }
+
+  getZombieImage(enemyType) {
+    if (enemyType === enemyTypes.sprinterZombie) {
+      return Phaser.Math.RND.pick(SPECIAL_ZOMBIE_IMAGES);
+    }
+
+    return Phaser.Math.RND.pick(NORMAL_ZOMBIE_IMAGES);
+  }
+
+  getZombieAnimation(enemyType) {
+    if (enemyType === enemyTypes.sprinterZombie) {
+      return animations.zombieRun;
+    }
+
+    return animations.zombieWalk;
   }
 }

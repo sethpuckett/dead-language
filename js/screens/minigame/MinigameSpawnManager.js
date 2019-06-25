@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { minigame } from '../../config';
+import enemyTypes from '../../config/enemyTypes';
 
 export default class {
   constructor(scene, waveConfig, vocabWordManager, startTime = 0) {
@@ -17,6 +18,7 @@ export default class {
   return:
   {
     canSpawn: bool
+    enemyType: enemyType
     xPosition: int
     speed: int
     word: Word
@@ -28,8 +30,9 @@ export default class {
       const word = this.vocab.getRandomWord();
       if (word != null) {
         spawnConfig.canSpawn = true;
+        spawnConfig.enemyType = this.getRandomEnemyType(gameTime);
         spawnConfig.xPosition = this.getSpawnLocation();
-        spawnConfig.speed = this.getFallSpeed();
+        spawnConfig.speed = this.getFallSpeed(spawnConfig.enemyType);
         spawnConfig.word = word;
       }
       this.nextSpawnTime = gameTime + this.getSpawnDelay(gameTime);
@@ -89,9 +92,22 @@ export default class {
     return this.waveConfig.find(el => el.start > gameTime);
   }
 
-  getFallSpeed() {
-    return (this.scene.currentLevel.baseFallSpeed + Phaser.Math.RND.between(
+  getFallSpeed(enemyType) {
+    let speed = this.scene.currentLevel.baseFallSpeed + Phaser.Math.RND.between(
       -this.scene.currentLevel.fallRange, this.scene.currentLevel.fallRange
-    ));
+    );
+
+    if (enemyType === enemyTypes.sprinterZombie) {
+      speed *= minigame.sprinterZombieSpeedModifier;
+    }
+
+    return speed;
+  }
+
+  getRandomEnemyType(gameTime) {
+    const wave = this.getCurrentWave(gameTime);
+    const num = Phaser.Math.RND.between(1, 100);
+    const enemy = wave.probabilities.find(c => c.min <= num && c.max >= num);
+    return enemy.enemyType;
   }
 }

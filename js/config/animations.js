@@ -32,7 +32,7 @@ export default {
   frameRates: {
     zombieBounce: 8,
     zombieWalk: 6,
-    zombieRun: 15,
+    zombieRun: 12,
     zombieFall: 15,
     zombieDamage: 10,
     zombieDie: 15,

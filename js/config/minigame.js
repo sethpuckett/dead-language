@@ -11,6 +11,7 @@ export default {
   statusTime: 1500,
   mercenaryCost: 100,
   itemFlashDelay: 125,
+  sprinterZombieSpeedModifier: 2,
   fonts: {
     zombieSize: 10,
     zombieFill: '#ffffff',

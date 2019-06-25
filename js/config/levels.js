@@ -1,4 +1,5 @@
-import minigameItems from "./minigameItems";
+import minigameItems from './minigameItems';
+import enemyTypes from './enemyTypes';
 
 export default [
   {
@@ -11,6 +12,10 @@ export default [
         maxStart: 20,
         maxEnd: 40,
         end: 60,
+        probabilities: [
+          { min: 1, max: 90, enemyType: enemyTypes.normalZombie },
+          { min: 91, max: 100, enemyType: enemyTypes.sprinterZombie },
+        ],
       },
       {
         baseSpawnRate: 2000,
@@ -19,6 +24,10 @@ export default [
         maxStart: 80,
         maxEnd: 100,
         end: 120,
+        probabilities: [
+          { min: 1, max: 85, enemyType: enemyTypes.normalZombie },
+          { min: 86, max: 100, enemyType: enemyTypes.sprinterZombie },
+        ],
       },
       {
         baseSpawnRate: 1500,
@@ -27,6 +36,10 @@ export default [
         maxStart: 140,
         maxEnd: 160,
         end: 170,
+        probabilities: [
+          { min: 1, max: 80, enemyType: enemyTypes.normalZombie },
+          { min: 81, max: 100, enemyType: enemyTypes.sprinterZombie },
+        ],
       },
     ],
     maxHealth: 20,
