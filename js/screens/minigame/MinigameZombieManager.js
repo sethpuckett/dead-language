@@ -6,10 +6,12 @@ const ZOMBIE_IMAGE_SCALE = 2.5;
 const SPAWN_Y = -35;
 const SPEED_MODIFIER = 1000000;
 const ZOMBIE_IMAGES = [
-  images.grayZombie,
-  images.redZombie,
-  images.greenZombie,
-  images.lightGreenZombie,
+  images.zombieNormal1,
+  images.zombieNormal2,
+  images.zombieNormal3,
+  images.zombieNormal4,
+  images.zombieNormal5,
+  images.zombieNormal6,
 ];
 
 export default class {

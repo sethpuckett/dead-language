@@ -104,25 +104,49 @@ export default class extends Phaser.Scene {
     this.load.image(images.bottle1, images.files.bottle1);
     this.load.image(images.dirtPile, images.files.dirtPile);
     this.load.image(images.cash, images.files.cash);
-    this.load.spritesheet(images.greenZombie, images.files.greenZombie, {
+    this.load.spritesheet(images.zombieNormal1, images.files.zombieNormal1, {
       frameWidth: images.frameSizes.zombie.width,
       frameHeight: images.frameSizes.zombie.height,
       margin: 0,
       spacing: 0,
     });
-    this.load.spritesheet(images.grayZombie, images.files.grayZombie, {
+    this.load.spritesheet(images.zombieNormal2, images.files.zombieNormal2, {
       frameWidth: images.frameSizes.zombie.width,
       frameHeight: images.frameSizes.zombie.height,
       margin: 0,
       spacing: 0,
     });
-    this.load.spritesheet(images.lightGreenZombie, images.files.lightGreenZombie, {
+    this.load.spritesheet(images.zombieNormal3, images.files.zombieNormal3, {
       frameWidth: images.frameSizes.zombie.width,
       frameHeight: images.frameSizes.zombie.height,
       margin: 0,
       spacing: 0,
     });
-    this.load.spritesheet(images.redZombie, images.files.redZombie, {
+    this.load.spritesheet(images.zombieNormal4, images.files.zombieNormal4, {
+      frameWidth: images.frameSizes.zombie.width,
+      frameHeight: images.frameSizes.zombie.height,
+      margin: 0,
+      spacing: 0,
+    });
+    this.load.spritesheet(images.zombieNormal5, images.files.zombieNormal5, {
+      frameWidth: images.frameSizes.zombie.width,
+      frameHeight: images.frameSizes.zombie.height,
+      margin: 0,
+      spacing: 0,
+    });
+    this.load.spritesheet(images.zombieNormal6, images.files.zombieNormal6, {
+      frameWidth: images.frameSizes.zombie.width,
+      frameHeight: images.frameSizes.zombie.height,
+      margin: 0,
+      spacing: 0,
+    });
+    this.load.spritesheet(images.zombieSpecial1, images.files.zombieSpecial1, {
+      frameWidth: images.frameSizes.zombie.width,
+      frameHeight: images.frameSizes.zombie.height,
+      margin: 0,
+      spacing: 0,
+    });
+    this.load.spritesheet(images.zombieSpecial2, images.files.zombieSpecial2, {
       frameWidth: images.frameSizes.zombie.width,
       frameHeight: images.frameSizes.zombie.height,
       margin: 0,
@@ -227,7 +251,10 @@ export default class extends Phaser.Scene {
     const afr = animations.frameRates;
     const za = animationHelper.zombieAnimation;
 
-    const ims = [im.redZombie, im.grayZombie, im.greenZombie, im.lightGreenZombie];
+    const ims = [
+      im.zombieNormal1, im.zombieNormal2, im.zombieNormal3, im.zombieNormal4, im.zombieNormal5,
+      im.zombieNormal6, im.zombieSpecial1, im.zombieSpecial2,
+    ];
 
     ims.forEach((i) => {
       this.zombieAnimation(za(i, a.zombieBounce), i, af.zombieBounce, afr.zombieBounce, true);

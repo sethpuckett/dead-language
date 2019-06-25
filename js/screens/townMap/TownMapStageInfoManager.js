@@ -139,19 +139,19 @@ export default class {
     if (!animationsMaintained) {
       this.stageInfoSprites = [];
       this.stageInfoZombie1 = this.scene.add.sprite(
-        this.scene.ui.stageInfoZombie1X, this.scene.ui.stageInfoZombie1Y, images.grayZombie
+        this.scene.ui.stageInfoZombie1X, this.scene.ui.stageInfoZombie1Y, images.zombieNormal1
       );
       this.stageInfoZombie1.setScale(ZOMBIE_IMAGE_SCALE);
       this.stageInfoSprites.push(this.stageInfoZombie1);
 
       this.stageInfoZombie2 = this.scene.add.sprite(
-        this.scene.ui.stageInfoZombie2X, this.scene.ui.stageInfoZombie2Y, images.lightGreenZombie
+        this.scene.ui.stageInfoZombie2X, this.scene.ui.stageInfoZombie2Y, images.zombieNormal3
       );
       this.stageInfoZombie2.setScale(ZOMBIE_IMAGE_SCALE);
       this.stageInfoSprites.push(this.stageInfoZombie2);
 
       this.stageInfoZombie3 = this.scene.add.sprite(
-        this.scene.ui.stageInfoZombie3X, this.scene.ui.stageInfoZombie3Y, images.greenZombie
+        this.scene.ui.stageInfoZombie3X, this.scene.ui.stageInfoZombie3Y, images.zombieNormal5
       );
       this.stageInfoZombie3.setScale(ZOMBIE_IMAGE_SCALE);
       this.stageInfoSprites.push(this.stageInfoZombie3);
@@ -163,15 +163,15 @@ export default class {
       } else {
         // TODO: fix all this copy/paste. Move numbers to config
         this.stageInfoZombie1.play(
-          animationHelper.zombieAnimation(images.grayZombie, animations.zombieWalk),
+          animationHelper.zombieAnimation(images.zombieNormal1, animations.zombieWalk),
         );
         this.stageInfoZombie1.anims.msPerFrame = 200;
         this.stageInfoZombie2.play(
-          animationHelper.zombieAnimation(images.lightGreenZombie, animations.zombieWalk),
+          animationHelper.zombieAnimation(images.zombieNormal3, animations.zombieWalk),
         );
         this.stageInfoZombie2.anims.msPerFrame = 225;
         this.stageInfoZombie3.play(
-          animationHelper.zombieAnimation(images.greenZombie, animations.zombieWalk)
+          animationHelper.zombieAnimation(images.zombieNormal5, animations.zombieWalk)
         );
         this.stageInfoZombie3.anims.msPerFrame = 175;
       }
@@ -198,7 +198,7 @@ export default class {
       this.stageInfoZombie1 = this.scene.add.sprite(
         this.scene.ui.stageInfoReviewZombie1X,
         this.scene.ui.stageInfoReviewZombie1Y,
-        images.lightGreenZombie
+        images.zombieNormal1
       );
       this.stageInfoZombie1.setScale(ZOMBIE_IMAGE_SCALE);
       this.stageInfoSprites.push(this.stageInfoZombie1);
@@ -206,7 +206,7 @@ export default class {
       this.stageInfoZombie2 = this.scene.add.sprite(
         this.scene.ui.stageInfoReviewZombie2X,
         this.scene.ui.stageInfoReviewZombie2Y,
-        images.redZombie
+        images.zombieSpecial1
       );
       this.stageInfoZombie2.setScale(ZOMBIE_IMAGE_SCALE);
       this.stageInfoSprites.push(this.stageInfoZombie2);
@@ -214,7 +214,7 @@ export default class {
       this.stageInfoZombie3 = this.scene.add.sprite(
         this.scene.ui.stageInfoReviewZombie3X,
         this.scene.ui.stageInfoReviewZombie3Y,
-        images.grayZombie
+        images.zombieNormal3
       );
       this.stageInfoZombie3.setScale(ZOMBIE_IMAGE_SCALE);
       this.stageInfoSprites.push(this.stageInfoZombie3);
@@ -222,7 +222,7 @@ export default class {
       this.stageInfoZombie4 = this.scene.add.sprite(
         this.scene.ui.stageInfoReviewZombie4X,
         this.scene.ui.stageInfoReviewZombie4Y,
-        images.greenZombie
+        images.zombieNormal5
       );
       this.stageInfoZombie4.setScale(ZOMBIE_IMAGE_SCALE);
       this.stageInfoSprites.push(this.stageInfoZombie4);
@@ -230,7 +230,7 @@ export default class {
       this.stageInfoZombie5 = this.scene.add.sprite(
         this.scene.ui.stageInfoReviewZombie5X,
         this.scene.ui.stageInfoReviewZombie5Y,
-        images.redZombie
+        images.zombieSpecial2
       );
       this.stageInfoZombie5.setScale(ZOMBIE_IMAGE_SCALE);
       this.stageInfoSprites.push(this.stageInfoZombie5);
@@ -244,23 +244,23 @@ export default class {
       } else {
         // TODO: fix all this copy/paste. Move numbers to config
         this.stageInfoZombie1.play(
-          animationHelper.zombieAnimation(images.lightGreenZombie, animations.zombieRun),
+          animationHelper.zombieAnimation(images.zombieNormal1, animations.zombieRun),
         );
         this.stageInfoZombie1.anims.msPerFrame = 100;
         this.stageInfoZombie2.play(
-          animationHelper.zombieAnimation(images.redZombie, animations.zombieRun),
+          animationHelper.zombieAnimation(images.zombieSpecial1, animations.zombieRun),
         );
         this.stageInfoZombie2.anims.msPerFrame = 112;
         this.stageInfoZombie3.play(
-          animationHelper.zombieAnimation(images.grayZombie, animations.zombieRun)
+          animationHelper.zombieAnimation(images.zombieNormal3, animations.zombieRun)
         );
         this.stageInfoZombie3.anims.msPerFrame = 88;
         this.stageInfoZombie4.play(
-          animationHelper.zombieAnimation(images.greenZombie, animations.zombieRun)
+          animationHelper.zombieAnimation(images.zombieNormal5, animations.zombieRun)
         );
         this.stageInfoZombie4.anims.msPerFrame = 120;
         this.stageInfoZombie5.play(
-          animationHelper.zombieAnimation(images.redZombie, animations.zombieRun)
+          animationHelper.zombieAnimation(images.zombieSpecial2, animations.zombieRun)
         );
         this.stageInfoZombie5.anims.msPerFrame = 90;
       }
