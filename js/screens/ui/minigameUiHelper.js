@@ -4,6 +4,14 @@ export default (config) => {
   const u = uiHelper(config);
 
   return {
+    padding: u.padding,
+
+    zombieWidth: u.w * 0.075,
+    zombieOriginX: u.center,
+    zombieOriginY: u.bottom,
+
+    zombieWordMargin: u.h * 0.02,
+
     itemWidth: u.h_5p,
     itemOriginX: u.center,
     itemOriginY: u.bottom,

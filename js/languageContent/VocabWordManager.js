@@ -25,6 +25,22 @@ export default class {
     return word;
   }
 
+  // returns array of Words, or null if not enough words to fulfill request
+  getRandomWords(count) {
+    const words = [];
+
+    for (let i = 0; i < count; i += 1) {
+      const word = this.getRandomWord();
+      if (word == null) {
+        words.forEach(w => this.releaseWord(w));
+        return null;
+      }
+      words.push(word);
+    }
+
+    return words;
+  }
+
   releaseWord(word) {
     const index = this.reservedContent.findIndex(r => r.id === word.id);
     const content = this.reservedContent.splice(index, 1)[0];

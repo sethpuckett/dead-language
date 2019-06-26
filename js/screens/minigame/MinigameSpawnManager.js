@@ -21,19 +21,20 @@ export default class {
     enemyType: enemyType
     xPosition: int
     speed: int
-    word: Word
+    words: [Word]
   }
   */
   getSpawn(gameTime) {
     const spawnConfig = { canSpawn: false };
     if (gameTime >= this.nextSpawnTime) {
-      const word = this.vocab.getRandomWord();
-      if (word != null) {
+      const enemyType = this.getRandomEnemyType(gameTime);
+      const words = this.vocab.getRandomWords(this.getWordCount(enemyType));
+      if (words != null) {
         spawnConfig.canSpawn = true;
-        spawnConfig.enemyType = this.getRandomEnemyType(gameTime);
+        spawnConfig.enemyType = enemyType;
         spawnConfig.xPosition = this.getSpawnLocation();
         spawnConfig.speed = this.getFallSpeed(spawnConfig.enemyType);
-        spawnConfig.word = word;
+        spawnConfig.words = words;
       }
       this.nextSpawnTime = gameTime + this.getSpawnDelay(gameTime);
     }
@@ -99,9 +100,19 @@ export default class {
 
     if (enemyType === enemyTypes.sprinterZombie) {
       speed *= minigame.sprinterZombieSpeedModifier;
+    } else if (enemyType === enemyTypes.bruiserZombie) {
+      speed *= minigame.bruiserZombieSpeedModifier;
     }
 
     return speed;
+  }
+
+  getWordCount(enemyType) {
+    if (enemyType === enemyTypes.bruiserZombie) {
+      return minigame.bruiserZombieHealth;
+    }
+
+    return minigame.normalZombieHealth;
   }
 
   getRandomEnemyType(gameTime) {

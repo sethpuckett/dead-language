@@ -31,5 +31,9 @@ export default (config) => {
     maxBackSpawnY: u.h * 0.84,
     minFrontSpawnY: u.h * 0.88,
     maxFrontSpawnY: u.h * 0.95,
+
+    zombieFrontWidth: u.w * 0.09,
+    zombieBackWidth: u.w * 0.05,
+    zombieOrigin: u.center,
   };
 };

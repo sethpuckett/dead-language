@@ -1,7 +1,6 @@
 export default {
   zombieColumns: 18,
   sidePaddingPercent: 20,
-  splatterBase: -5,
   splatterRange: 8,
   splatterVarieties: 6,
   damageFlashDuration: 100,
@@ -11,7 +10,11 @@ export default {
   statusTime: 1500,
   mercenaryCost: 100,
   itemFlashDelay: 125,
+  normalZombieHealth: 1,
   sprinterZombieSpeedModifier: 2,
+  bruiserZombieSpeedModifier: 0.66,
+  bruiserZombieSizeModifier: 1.25,
+  bruiserZombieHealth: 3,
   fonts: {
     zombieSize: 10,
     zombieFill: '#ffffff',
@@ -20,7 +23,6 @@ export default {
   },
   ui: {
     zombieWordBgStyle: { color: '#000000' },
-    zombieWordBgPadding: 2,
     itemWordBgColor: 0x000000,
     itemWordBgPadding: 2,
     hudConfig: {

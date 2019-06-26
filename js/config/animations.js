@@ -18,7 +18,7 @@ export default {
     zombieWalk: [6, 7, 8, 9],
     zombieRun: [12, 13, 14, 15, 16, 17],
     zombieFall: [18, 19, 20, 21],
-    zombieDamage: [24, 25, 26],
+    zombieDamage: [24, 25, 26, 26],
     zombieDie: [26, 24, 24, 24],
     zombieStun: [30, 31, 32, 33],
     zombieAttack: [36, 36, 36, 36, 36, 37, 38],
