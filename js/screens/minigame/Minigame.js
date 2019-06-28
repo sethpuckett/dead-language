@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { depth, minigame, levels, images, screens, endgame, gameTypes, minigameItems } from '../../config';
+import { depth, minigame, levels, images, screens, endgame, gameTypes, minigameItems, weapons } from '../../config';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
 import MinigameSpawnManager from './MinigameSpawnManager';
@@ -32,6 +32,7 @@ export default class extends Phaser.Scene {
     this.score = 0;
     this.cash = this.currentLevel.startCash;
     this.health = this.currentLevel.startHealth;
+    this.weapon = this.currentLevel.defaultWeapon;
     this.mercenaryEnabled = this.currentLevel.mercenaryEnabled;
     this.inputHandled = false;
   }
@@ -174,7 +175,7 @@ export default class extends Phaser.Scene {
 
   submitAnswer() {
     const guess = this.hudManager.getTextEntry();
-    const points = this.zombieManager.scoreSubmittedAnswer(guess);
+    const points = this.zombieManager.scoreSubmittedAnswer(guess, this.weapon);
 
     let mercKill = false;
     if (points === 0 && this.mercenaryEnabled) {
@@ -289,6 +290,10 @@ export default class extends Phaser.Scene {
           message: minigame.statusMessages.foodTier1Received,
           displayTime: minigame.statusTime,
         });
+        break;
+      case minigameItems.shotgun:
+        this.weapon = weapons.shotgun;
+        this.hudManager.setWeapon(weapons.shotgun);
         break;
       default:
         throw Error('invalid itemType');

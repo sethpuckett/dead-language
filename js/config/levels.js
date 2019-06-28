@@ -56,13 +56,14 @@ export default [
     items: {
       cashAmount: 50,
       foodTier1HealAmount: 1,
-      baseSpawnRate: 8000,
-      spawnRange: 2500,
+      baseSpawnRate: 1000,
+      spawnRange: 500,
       lifeTime: 8000,
       warnTime: 2500,
       probabilities: [
         { min: 1, max: 25, itemType: minigameItems.cash },
-        { min: 26, max: 100, itemType: minigameItems.foodTier1 },
+        { min: 26, max: 50, itemType: minigameItems.foodTier1 },
+        { min: 51, max: 100, itemType: minigameItems.shotgun },
       ],
     },
   },

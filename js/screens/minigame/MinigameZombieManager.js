@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { animations, depth, images, minigame, fonts, hud } from '../../config';
+import { animations, depth, images, minigame, fonts, hud, weapons } from '../../config';
 import { animationHelper } from '../../util';
 import enemyTypes from '../../config/enemyTypes';
 
@@ -100,7 +100,7 @@ export default class {
     this.zombies.push(zombie);
   }
 
-  scoreSubmittedAnswer(text) {
+  scoreSubmittedAnswer(text, weapon) {
     const guess = text.toLowerCase().trim();
     let points = 0;
 
@@ -108,7 +108,7 @@ export default class {
     this.zombies.some((z) => {
       const word = this.getCurrentZombieWord(z);
       if (guess === word.language2) {
-        this.shootZombie(z);
+        this.shootZombie(z, weapon);
         points += 1;
       }
       return points > 0;
@@ -119,7 +119,7 @@ export default class {
       this.zombies.some((z) => {
         const word = this.getCurrentZombieWord(z);
         if (word.alternatives != null && word.alternatives.includes(guess)) {
-          this.shootZombie(z);
+          this.shootZombie(z, weapon);
           points += 1;
         }
         return points > 0;
@@ -135,7 +135,7 @@ export default class {
       const word = this.getCurrentZombieWord(z);
       if (guess === word.language1.toLowerCase()) {
         if (killZombie) {
-          this.shootZombie(z);
+          this.shootZombie(z, weapons.pistol);
         }
         return true;
       }
@@ -145,17 +145,18 @@ export default class {
 
   // Private
 
-  shootZombie(zombie) {
+  shootZombie(zombie, weapon) {
+    const shotImageConfig = this.getShotImageConfig(weapon);
     const shot = this.scene.add.sprite(
-      zombie.x, zombie.y - this.getZombieImageSize(zombie.type) / 2, images.shotBlast
+      zombie.x, zombie.y - this.getZombieImageSize(zombie.type) / 2, shotImageConfig.image
     );
     shot.setDepth(depth.minigame.shotBlast);
     shot.on('animationcomplete', (_a, _f, s) => s.destroy(), this);
-    shot.play(animations.shotBlastExplode);
+    shot.play(shotImageConfig.animation);
 
     zombie.moving = false;
     zombie.hits += 1;
-    zombie.health -= 1;
+    zombie.health -= weapons.damage[weapon];
 
     if (zombie.health <= 0) {
       this.killShotZombie(zombie);
@@ -218,6 +219,15 @@ export default class {
     }
 
     return Phaser.Math.RND.pick(NORMAL_ZOMBIE_IMAGES);
+  }
+
+  // returns { image: image, animation: animation }
+  getShotImageConfig(weaponType) {
+    if (weaponType === weapons.shotgun) {
+      return { image: images.shotgunBlast, animation: animations.shotgunBlastExplode };
+    }
+
+    return { image: images.shotBlast, animation: animations.shotBlastExplode };
   }
 
   getZombieMoveAnimation(enemyType) {

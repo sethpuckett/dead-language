@@ -25,16 +25,16 @@ export default class {
       if (config.frame != null) {
         frame = config.frame;
       }
-      this.scene.statusImage = this.scene.add.sprite(
+      this.statusImage = this.scene.add.sprite(
         this.ui.statusImageX,
         this.ui.statusImageY,
         config.image,
         frame
       );
-      this.scene.statusImage.displayWidth = this.ui.statusImageWidth;
-      this.scene.statusImage.displayHeight = this.ui.statusImageHeight;
-      this.scene.statusImage.setOrigin(this.ui.statusImageOriginX, this.ui.statusImageOriginY);
-      this.scene.statusImage.setDepth(depth.hud.ui);
+      this.statusImage.displayWidth = this.ui.statusImageWidth;
+      this.statusImage.displayHeight = this.ui.statusImageHeight;
+      this.statusImage.setOrigin(this.ui.statusImageOriginX, this.ui.statusImageOriginY);
+      this.statusImage.setDepth(depth.hud.ui);
     }
 
     if (config.message != null) {
@@ -43,22 +43,22 @@ export default class {
       const maxWidth = config.image != null
         ? this.ui.statusMessageMaxWidth : this.ui.statusMessageNoImageMaxWidth;
 
-      this.scene.statusText = this.scene.add.bitmapText(
+      this.statusText = this.scene.add.bitmapText(
         x, y, fonts.blueSkyWhite, config.message, hud.fonts.statusSize
       );
-      if (this.scene.statusText.width > maxWidth) {
-        this.scene.statusText.destroy();
-        this.scene.statusText = this.scene.add.bitmapText(
+      if (this.statusText.width > maxWidth) {
+        this.statusText.destroy();
+        this.statusText = this.scene.add.bitmapText(
           x, y, fonts.blueSkyWhite, config.message, hud.fonts.statusSizeSmall
         );
       }
-      this.scene.statusText.setOrigin(this.ui.statusMessageOriginX, this.ui.statusMessageOriginY);
-      this.scene.statusText.setCenterAlign();
-      this.scene.statusText.setDepth(depth.hud.ui);
+      this.statusText.setOrigin(this.ui.statusMessageOriginX, this.ui.statusMessageOriginY);
+      this.statusText.setCenterAlign();
+      this.statusText.setDepth(depth.hud.ui);
     }
 
     if (config.displayTime != null && config.displayTime > 0) {
-      this.scene.statusTimer = this.scene.time.addEvent({
+      this.statusTimer = this.scene.time.addEvent({
         delay: config.displayTime,
         callback: this.clearCurrentStatus,
         callbackScope: this,
@@ -69,17 +69,17 @@ export default class {
   clearCurrentStatus() {
     // TODO: messageBorder is defined in HudManager. using it here is messy
     this.scene.messageBorder.setFrame(images.frames.hudMessageDark);
-    if (this.scene.statusImage != null) {
-      this.scene.statusImage.destroy();
-      this.scene.statusImage = null;
+    if (this.statusImage != null) {
+      this.statusImage.destroy();
+      this.statusImage = null;
     }
-    if (this.scene.statusText != null) {
-      this.scene.statusText.destroy();
-      this.scene.statusText = null;
+    if (this.statusText != null) {
+      this.statusText.destroy();
+      this.statusText = null;
     }
-    if (this.scene.statusTimer != null) {
-      this.scene.statusTimer.remove();
-      this.scene.statusTimer = null;
+    if (this.statusTimer != null) {
+      this.statusTimer.remove();
+      this.statusTimer = null;
     }
   }
 }

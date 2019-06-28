@@ -80,7 +80,8 @@ export default class extends Phaser.Scene {
       images.shotgun,
       images.frames.shotgunNormal
     );
-    this.selector.setScale(images.scales.shotgun);
+    this.selector.displayWidth = this.ui.selectWidth;
+    this.selector.displayHeight = this.ui.selectHeight;
     this.selector.flipX = true;
     this.selector.setOrigin(this.ui.selectOriginX, this.ui.selectOriginY);
   }

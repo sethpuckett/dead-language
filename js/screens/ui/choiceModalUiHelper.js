@@ -23,5 +23,7 @@ export default (config) => {
     selectX: u.w_2 - u.paddingBig,
     selectOriginX: u.right,
     selectOriginY: u.center,
+    selectWidth: u.w_10p,
+    selectHeight: u.w_5p,
   };
 };

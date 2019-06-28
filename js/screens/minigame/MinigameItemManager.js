@@ -24,8 +24,8 @@ export default class {
     item.lifeTime = spawnConfig.lifeTime;
     item.warnTime = spawnConfig.warnTime;
 
-    item.displayWidth = this.scene.ui.itemWidth;
-    item.displayHeight = this.scene.ui.itemWidth;
+    item.displayWidth = imageConfig.width;
+    item.displayHeight = imageConfig.height;
     item.setOrigin(this.scene.ui.itemOriginX, this.scene.ui.itemOriginY);
     item.setDepth(depth.minigame.item);
     item.text = this.scene.add.bitmapText(
@@ -127,14 +127,29 @@ export default class {
     }
   }
 
-  // returns { image: image, frame: int }
+  // returns { image: image, frame: int, width: int, height: int }
   getItemImageConfig(minigameItem) {
     switch (minigameItem) {
       case minigameItems.cash:
-        return { image: images.cash, frame: 0 };
+        return {
+          image: images.cash,
+          frame: 0,
+          width: this.scene.ui.itemWidth,
+          height: this.scene.ui.itemHeight,
+        };
       case minigameItems.foodTier1:
         return {
-          image: images.foodTier1, frame: Phaser.Math.RND.between(0, FOOD_TIER_1_TYPE_COUNT - 1),
+          image: images.foodTier1,
+          frame: Phaser.Math.RND.between(0, FOOD_TIER_1_TYPE_COUNT - 1),
+          width: this.scene.ui.itemWidth,
+          height: this.scene.ui.itemHeight,
+        };
+      case minigameItems.shotgun:
+        return {
+          image: images.shotgun,
+          frame: images.frames.shotgunNormal,
+          width: this.scene.ui.shotgunWidth,
+          height: this.scene.ui.shotgunHeight,
         };
       default:
         throw Error('invalid minigameItem');

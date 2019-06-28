@@ -22,9 +22,11 @@ export default (config) => {
     instructionsOrigin: u.center,
 
     selectX: u.w_40p,
-    get selectY() { return this.textY - u.h * 0.01; },
+    get selectY() { return this.textY + this.textVerticalPadding / 3; },
+    selectWidth: u.w_10p,
+    selectHeight: u.w_5p,
     selectOriginX: u.right,
-    selectOriginY: u.top,
+    selectOriginY: u.center,
     get selectVerticalPadding() { return this.textVerticalPadding; },
 
     minBackSpawnY: u.h * 0.75,

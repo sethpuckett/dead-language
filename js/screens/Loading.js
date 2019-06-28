@@ -158,9 +158,21 @@ export default class extends Phaser.Scene {
       margin: 0,
       spacing: 0,
     });
+    this.load.spritesheet(images.shotgunBlast, images.files.shotgunBlast, {
+      frameWidth: images.frameSizes.shotgunBlast.width,
+      frameHeight: images.frameSizes.shotgunBlast.height,
+      margin: 0,
+      spacing: 0,
+    });
     this.load.spritesheet(images.shotBlastGreen, images.files.shotBlastGreen, {
       frameWidth: images.frameSizes.shotBlast.width,
       frameHeight: images.frameSizes.shotBlast.height,
+      margin: 0,
+      spacing: 0,
+    });
+    this.load.spritesheet(images.shotgunBlastGreen, images.files.shotgunBlastGreen, {
+      frameWidth: images.frameSizes.shotgunBlast.width,
+      frameHeight: images.frameSizes.shotgunBlast.height,
       margin: 0,
       spacing: 0,
     });
@@ -277,11 +289,29 @@ export default class extends Phaser.Scene {
     });
 
     this.anims.create({
+      key: animations.shotgunBlastExplode,
+      frames: this.anims.generateFrameNames(
+        images.shotgunBlast, { frames: animations.frames.shotgunBlastExplode }
+      ),
+      frameRate: animations.frameRates.shotBlastExplode,
+      repeat: 0,
+    });
+
+    this.anims.create({
       key: animations.shotBlastGreenExplode,
       frames: this.anims.generateFrameNames(
         images.shotBlastGreen, { frames: animations.frames.shotBlastGreenExplode }
       ),
       frameRate: animations.frameRates.shotBlastGreenExplode,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: animations.shotgunBlastGreenExplode,
+      frames: this.anims.generateFrameNames(
+        images.shotgunBlastGreen, { frames: animations.frames.shotgunBlastGreenExplode }
+      ),
+      frameRate: animations.frameRates.shotgunBlastGreenExplode,
       repeat: 0,
     });
 

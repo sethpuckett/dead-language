@@ -13,6 +13,9 @@ export default (config) => {
     zombieWordMargin: u.h * 0.02,
 
     itemWidth: u.h_5p,
+    itemHeight: u.h_5p,
+    shotgunWidth: u.h_10p,
+    shotgunHeight: u.h_5p,
     itemOriginX: u.center,
     itemOriginY: u.bottom,
     itemWordBuffer: u.padding,

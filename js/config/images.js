@@ -19,6 +19,8 @@ export default {
   brick: 'brick',
   shotBlast: 'shot-blast',
   shotBlastGreen: 'shot-blast-green',
+  shotgunBlast: 'shotgun-blast',
+  shotgunBlastGreen: 'shotgun-blast-green',
   shotBlastBottle: 'shot-blast-bottle',
   shotBlastDirt: 'shot-blast-dirt',
   bloodSplatter: 'blood-splatter',
@@ -78,6 +80,8 @@ export default {
     brick: 'assets/images/brick.png',
     shotBlast: 'assets/images/shot-blast.png',
     shotBlastGreen: 'assets/images/shot-blast-green.png',
+    shotgunBlast: 'assets/images/shotgun-blast.png',
+    shotgunBlastGreen: 'assets/images/shotgun-blast-green.png',
     shotBlastBottle: 'assets/images/shot-blast-bottle.png',
     shotBlastDirt: 'assets/images/shot-blast-dirt.png',
     bloodSplatter1: 'assets/images/blood-splatter-1.png',
@@ -154,7 +158,6 @@ export default {
   scales: {
     crate: 1.5,
     bottle1: 1.5,
-    shotgun: 4,
     dirtPile: 1.5,
   },
   frameSizes: {
@@ -166,9 +169,13 @@ export default {
       width: 32,
       height: 32,
     },
+    shotgunBlast: {
+      width: 32,
+      height: 32,
+    },
     shotgun: {
-      width: 21,
-      height: 10,
+      width: 22,
+      height: 11,
     },
     hudMenuBorder: {
       width: 66,

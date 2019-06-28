@@ -25,6 +25,8 @@ export default (config) => {
     get selectY() { return this.menuTextY - u.h * 0.01; },
     selectOriginX: u.right,
     selectOriginY: u.top,
+    selectWidth: u.w_10p,
+    selectHeight: u.w_5p,
     get selectVerticalPadding() { return this.menuTextVerticalPadding; },
   };
 };
