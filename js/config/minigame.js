@@ -22,7 +22,7 @@ export default {
     itemColor: 0xffffff,
   },
   ui: {
-    zombieWordBgStyle: { color: '#000000' },
+    zombieWordBgColor: 0x000000,
     itemWordBgColor: 0x000000,
     itemWordBgPadding: 2,
     hudConfig: {

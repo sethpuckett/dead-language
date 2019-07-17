@@ -18,6 +18,10 @@ export default (config) => {
     get weaponHeight() { return this.weaponBorderWidth; },
     weaponOrigin: u.center,
 
+    get ammoIconWidth() { return this.weaponBorderWidth * 0.1; },
+    get ammoIconPadding() { return this.weaponBorderWidth * 0.04; },
+    get ammoIconY() { return this.weaponBorderY + this.weaponHeight * 0.7; },
+
     itemBorderX: u.padding,
     get itemBorderWidth() { return this.hudHeight / 2 - u.padding * 2; },
     get itemBorderY() { return this.weaponBorderY + this.itemBorderWidth + u.padding * 2; },

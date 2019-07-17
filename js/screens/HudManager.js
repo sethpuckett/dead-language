@@ -289,9 +289,14 @@ export default class {
     }
   }
 
-  setWeapon(weapon) {
+  setWeapon(weapon, totalAmmo) {
     this.weapon.visible = true;
     this.weapon.setFrame(weaponHelper.getImageFrame(weapon));
+    this.createAmmoIcons(totalAmmo, totalAmmo);
+  }
+
+  updateAmmo(count, totalAmmo) {
+    this.createAmmoIcons(count, totalAmmo);
   }
 
   // Private
@@ -315,5 +320,35 @@ export default class {
     } else if (e.keyCode === this.keys.ENTER.keyCode) {
       this.submitCallback();
     }
+  }
+
+  createAmmoIcons(count, totalAmmo) {
+    this.clearAmmoIcons();
+    this.ammoGraphics = this.scene.add.graphics();
+    this.ammoGraphics.fillStyle(hud.ui.ammoIconColor);
+    this.ammoGraphics.setDepth(depth.hud.ui);
+
+    for (let i = 0; i < totalAmmo; i += 1) {
+      const x = this.getAmmoIconXPosition(i, totalAmmo);
+      const y = this.ui.ammoIconY;
+
+      if (i < count) {
+        this.ammoGraphics.fillRect(x, y, this.ui.ammoIconWidth, this.ui.ammoIconWidth);
+      }
+    }
+  }
+
+  clearAmmoIcons() {
+    if (this.ammoGraphics != null) {
+      this.ammoGraphics.clear();
+      this.ammoGraphics = null;
+    }
+  }
+
+  getAmmoIconXPosition(current, total) {
+    const totalIconWidth = total * this.ui.ammoIconWidth
+      + (total - 1) * this.ui.ammoIconPadding;
+    const baseX = this.ui.weaponBorderX + this.ui.weaponBorderWidth / 2 - totalIconWidth / 2;
+    return baseX + (this.ui.ammoIconWidth + this.ui.ammoIconPadding) * current;
   }
 }

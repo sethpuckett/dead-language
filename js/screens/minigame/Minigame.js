@@ -32,7 +32,9 @@ export default class extends Phaser.Scene {
     this.score = 0;
     this.cash = this.currentLevel.startCash;
     this.health = this.currentLevel.startHealth;
-    this.weapon = this.currentLevel.defaultWeapon;
+    this.weapon = this.currentLevel.weapons.default;
+    this.ammo = 0;
+    this.maxAmmo = 0;
     this.mercenaryEnabled = this.currentLevel.mercenaryEnabled;
     this.inputHandled = false;
   }
@@ -45,7 +47,7 @@ export default class extends Phaser.Scene {
       startCash: this.currentLevel.startCash,
     });
     this.hudManager.setSubmitCallback(this.submitAnswer);
-    this.hudManager.setWeapon(this.currentLevel.defaultWeapon);
+    this.hudManager.setWeapon(this.currentLevel.weapons.default, 0);
     this.createBackground();
     this.createCollisions();
     this.createTimers();
@@ -176,22 +178,31 @@ export default class extends Phaser.Scene {
   submitAnswer() {
     const guess = this.hudManager.getTextEntry();
     const points = this.zombieManager.scoreSubmittedAnswer(guess, this.weapon);
+    let shotFired = true;
 
     let mercKill = false;
     if (points === 0 && this.mercenaryEnabled) {
       mercKill = this.checkMercenary(guess);
+      if (mercKill) {
+        shotFired = false;
+      }
     }
 
     if (points === 0 && !mercKill) {
       const itemConfig = this.itemManager.checkGuess(guess);
       if (itemConfig != null) {
         this.applyItem(itemConfig.itemType);
+        shotFired = false;
       }
     }
 
     this.score += points;
     this.hudManager.setKillValue(this.score);
     this.hudManager.clearTextEntry();
+
+    if (shotFired) {
+      this.updateAmmo(this.ammo - 1);
+    }
   }
 
   checkMercenary(guess) {
@@ -293,10 +304,22 @@ export default class extends Phaser.Scene {
         break;
       case minigameItems.shotgun:
         this.weapon = weapons.shotgun;
-        this.hudManager.setWeapon(weapons.shotgun);
+        this.ammo = this.currentLevel.weapons.shotgunAmmo;
+        this.maxAmmo = this.ammo;
+        this.hudManager.setWeapon(weapons.shotgun, this.ammo);
         break;
       default:
         throw Error('invalid itemType');
+    }
+  }
+
+  updateAmmo(newCount) {
+    this.ammo = newCount;
+    this.hudManager.updateAmmo(this.ammo, this.maxAmmo);
+    if (this.ammo <= 0) {
+      this.maxAmmo = 0;
+      this.weapon = this.currentLevel.weapons.default;
+      this.hudManager.setWeapon(this.weapon, 0);
     }
   }
 }

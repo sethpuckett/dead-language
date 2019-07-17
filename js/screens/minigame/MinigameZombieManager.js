@@ -84,7 +84,8 @@ export default class {
     zombie.type = spawnConfig.enemyType;
     zombie.speed = spawnConfig.speed;
     zombie.health = this.getZombieHealth(spawnConfig.enemyType);
-    zombie.wordBgGraphics = this.scene.add.graphics({ fillStyle: minigame.ui.zombieWordBgStyle });
+    zombie.wordBgGraphics = this.scene.add.graphics();
+    zombie.wordBgGraphics.fillStyle(minigame.ui.zombieWordBgColor);
     zombie.wordBgGraphics.setDepth(depth.minigame.zombieTextBackground);
     zombie.words = spawnConfig.words;
     zombie.alive = true;
@@ -271,6 +272,7 @@ export default class {
 
   setZombieWordBg(zombie) {
     zombie.wordBgGraphics.clear();
+    zombie.wordBgGraphics.fillStyle(minigame.ui.zombieWordBgColor);
     zombie.wordBgGraphics.fillRect(
       zombie.text.x - this.scene.ui.padding,
       zombie.text.y - this.scene.ui.padding,

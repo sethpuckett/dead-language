@@ -18,5 +18,6 @@ export default {
   ui: {
     textEntryStyle: { color: '#000000' },
     itemBackgroundColor: 0x111111,
+    ammoIconColor: 0xffffff,
   },
 };
