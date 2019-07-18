@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { fonts, minigame, minigameItems, images, depth, animations } from '../../config';
+import { textHelper } from '../../util';
 
 const FOOD_TIER_1_TYPE_COUNT = 12;
 
@@ -64,17 +65,19 @@ export default class {
   }
 
   checkGuess(text) {
-    const guess = text.toLowerCase().trim();
+    const guess = textHelper.cleanText(text);
     let foundIndex = -1;
     let foundItemConfig = null;
 
-    foundIndex = this.items.findIndex(item => guess === item.word.language2);
+    foundIndex = this.items.findIndex(item => guess === textHelper.cleanText(item.word.language2));
 
     // only check alternatives if no match found in main answer
     if (foundIndex < 0) {
-      foundIndex = this.items.findIndex(
-        i => i.word.alternatives != null && i.word.alternatives.includes(guess)
-      );
+      foundIndex = this.items.findIndex((i) => {
+        const alternatives = i.word.alternatives != null
+          ? i.word.alternatives.map(w => textHelper.cleanText(w)) : null;
+        return alternatives != null && alternatives.includes(guess);
+      });
     }
 
     if (foundIndex >= 0) {

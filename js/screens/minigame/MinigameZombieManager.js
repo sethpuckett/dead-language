@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { animations, depth, images, minigame, fonts, hud, weapons } from '../../config';
-import { animationHelper } from '../../util';
+import { animationHelper, textHelper } from '../../util';
 import enemyTypes from '../../config/enemyTypes';
 
 const SPAWN_Y = -35;
@@ -102,13 +102,13 @@ export default class {
   }
 
   checkGuess(text, weapon) {
-    const guess = text.toLowerCase().trim();
+    const guess = textHelper.cleanText(text);
     let isCorrect = false;
 
     // stop checking when find a correct answer
     this.zombies.some((z) => {
       const word = this.getCurrentZombieWord(z);
-      if (guess === word.language2) {
+      if (guess === textHelper.cleanText(word.language2)) {
         this.shootZombie(z, weapon);
         isCorrect = true;
       }
@@ -119,7 +119,9 @@ export default class {
     if (!isCorrect) {
       this.zombies.some((z) => {
         const word = this.getCurrentZombieWord(z);
-        if (word.alternatives != null && word.alternatives.includes(guess)) {
+        const alternatives = word.alternatives != null
+          ? word.alternatives.map(w => textHelper.cleanText(w)) : null;
+        if (alternatives != null && alternatives.includes(guess)) {
           this.shootZombie(z, weapon);
           isCorrect = true;
         }
@@ -131,10 +133,10 @@ export default class {
   }
 
   checkMercenary(text, killZombie) {
-    const guess = text.toLowerCase().trim();
+    const guess = textHelper.cleanText(text);
     return this.zombies.some((z) => {
       const word = this.getCurrentZombieWord(z);
-      if (guess === word.language1.toLowerCase()) {
+      if (guess === textHelper.cleanText(word.language1)) {
         if (killZombie) {
           this.shootZombie(z, weapons.pistol);
         }
