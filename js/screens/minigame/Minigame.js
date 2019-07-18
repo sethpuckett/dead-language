@@ -181,18 +181,20 @@ export default class extends Phaser.Scene {
 
   submitAnswer() {
     const guess = this.hudManager.getTextEntry();
-    const points = this.zombieManager.scoreSubmittedAnswer(guess, this.weapon);
+    const isCorrect = this.zombieManager.checkGuess(guess, this.weapon);
     let shotFired = true;
 
+    // if guess did not match, check mercenary
     let mercKill = false;
-    if (points === 0 && this.mercenaryEnabled) {
+    if (!isCorrect && this.mercenaryEnabled) {
       mercKill = this.mercenaryManager.checkGuess(guess);
       if (mercKill) {
         shotFired = false;
       }
     }
 
-    if (points === 0 && !mercKill) {
+    // if no match & no mercenary, check items
+    if (!isCorrect && !mercKill) {
       const itemConfig = this.itemManager.checkGuess(guess);
       if (itemConfig != null) {
         this.itemEffectManager.applyItem(itemConfig.itemType);
@@ -200,7 +202,9 @@ export default class extends Phaser.Scene {
       }
     }
 
-    this.score += points;
+    if (isCorrect) {
+      this.score += 1;
+    }
     this.hudManager.setKillValue(this.score);
     this.hudManager.clearTextEntry();
 

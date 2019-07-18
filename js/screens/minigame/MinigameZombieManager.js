@@ -101,33 +101,33 @@ export default class {
     this.zombies.push(zombie);
   }
 
-  scoreSubmittedAnswer(text, weapon) {
+  checkGuess(text, weapon) {
     const guess = text.toLowerCase().trim();
-    let points = 0;
+    let isCorrect = false;
 
     // stop checking when find a correct answer
     this.zombies.some((z) => {
       const word = this.getCurrentZombieWord(z);
       if (guess === word.language2) {
         this.shootZombie(z, weapon);
-        points += 1;
+        isCorrect = true;
       }
-      return points > 0;
+      return isCorrect;
     });
 
     // only check alternatives if no match found in main answer
-    if (points === 0) {
+    if (!isCorrect) {
       this.zombies.some((z) => {
         const word = this.getCurrentZombieWord(z);
         if (word.alternatives != null && word.alternatives.includes(guess)) {
           this.shootZombie(z, weapon);
-          points += 1;
+          isCorrect = true;
         }
-        return points > 0;
+        return isCorrect;
       });
     }
 
-    return points;
+    return isCorrect;
   }
 
   checkMercenary(text, killZombie) {
