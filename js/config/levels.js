@@ -52,6 +52,7 @@ export default [
     fallRange: 10,
     gameTime: 180,
     mercenaryEnabled: true,
+    mercenaryCost: 100,
     weapons: {
       default: 'pistol',
       shotgunAmmo: 6,

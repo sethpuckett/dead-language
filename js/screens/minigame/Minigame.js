@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { depth, minigame, levels, images, screens, endgame, gameTypes, minigameItems, weapons } from '../../config';
+import { depth, minigame, levels, images, screens, endgame, gameTypes } from '../../config';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
 import MinigameSpawnManager from './MinigameSpawnManager';
@@ -10,6 +10,8 @@ import GameProgressManager from '../../data/GameProgressManager';
 import MinigameItemSpawnManager from './MinigameItemSpawnManager';
 import MinigameItemManager from './MinigameItemManager';
 import minigameUiHelper from '../ui/minigameUiHelper';
+import MinigameItemEffectManager from './MinigameItemEffectManager';
+import MinigameMercenaryManager from './MinigameMercenaryManager';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -27,6 +29,8 @@ export default class extends Phaser.Scene {
     this.spawnManager = new MinigameSpawnManager(this, this.currentLevel.waves, this.vocab);
     this.itemSpawnManager = new MinigameItemSpawnManager(this, this.currentLevel.items, this.vocab);
     this.itemManager = new MinigameItemManager(this);
+    this.itemEffectManager = new MinigameItemEffectManager(this);
+    this.mercenaryManager = new MinigameMercenaryManager(this);
     this.ui = minigameUiHelper(this.sys.game.config);
 
     this.score = 0;
@@ -182,7 +186,7 @@ export default class extends Phaser.Scene {
 
     let mercKill = false;
     if (points === 0 && this.mercenaryEnabled) {
-      mercKill = this.checkMercenary(guess);
+      mercKill = this.mercenaryManager.checkGuess(guess);
       if (mercKill) {
         shotFired = false;
       }
@@ -191,7 +195,7 @@ export default class extends Phaser.Scene {
     if (points === 0 && !mercKill) {
       const itemConfig = this.itemManager.checkGuess(guess);
       if (itemConfig != null) {
-        this.applyItem(itemConfig.itemType);
+        this.itemEffectManager.applyItem(itemConfig.itemType);
         shotFired = false;
       }
     }
@@ -203,34 +207,6 @@ export default class extends Phaser.Scene {
     if (shotFired) {
       this.updateAmmo(this.ammo - 1);
     }
-  }
-
-  checkMercenary(guess) {
-    let mercKill = false;
-    const canUseMercenary = this.cash >= minigame.mercenaryCost;
-    const mercenaryAttempt = this.zombieManager.checkMercenary(guess, canUseMercenary);
-    // TODO: move all this to a helper method
-    if (mercenaryAttempt) {
-      if (canUseMercenary) {
-        this.statusManager.setStatus({
-          image: images.mercenary,
-          frame: images.frames.mercenaryStatusShoot,
-          message: minigame.statusMessages.useMercenary,
-          displayTime: minigame.statusTime,
-        });
-        this.cash -= minigame.mercenaryCost;
-        this.hudManager.setCash(this.cash);
-        mercKill = true;
-      } else {
-        this.statusManager.setStatus({
-          image: images.mercenary,
-          frame: images.frames.mercenaryStatusRefuse,
-          message: minigame.statusMessages.mercenaryUnavailable,
-          displayTime: minigame.statusTime,
-        });
-      }
-    }
-    return mercKill;
   }
 
   getVocab() {
@@ -283,34 +259,6 @@ export default class extends Phaser.Scene {
         this.scene.start(screens.endgame, { status: endgame.lose, stageId: this.stageId });
       }
     });
-  }
-
-  applyItem(itemType) {
-    switch (itemType) {
-      case minigameItems.cash:
-        this.cash += this.currentLevel.items.cashAmount;
-        this.hudManager.setCash(this.cash);
-        this.statusManager.setStatus({
-          message: minigame.statusMessages.cashReceived,
-          displayTime: minigame.statusTime,
-        });
-        break;
-      case minigameItems.foodTier1:
-        this.changeHealth(this.currentLevel.items.foodTier1HealAmount);
-        this.statusManager.setStatus({
-          message: minigame.statusMessages.foodTier1Received,
-          displayTime: minigame.statusTime,
-        });
-        break;
-      case minigameItems.shotgun:
-        this.weapon = weapons.shotgun;
-        this.ammo = this.currentLevel.weapons.shotgunAmmo;
-        this.maxAmmo = this.ammo;
-        this.hudManager.setWeapon(weapons.shotgun, this.ammo);
-        break;
-      default:
-        throw Error('invalid itemType');
-    }
   }
 
   updateAmmo(newCount) {

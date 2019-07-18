@@ -8,7 +8,6 @@ export default {
   damageShakeDuration: 200,
   damageShakeIntensity: 0.005,
   statusTime: 1500,
-  mercenaryCost: 100,
   itemFlashDelay: 125,
   normalZombieHealth: 1,
   sprinterZombieSpeedModifier: 2,
