@@ -9,7 +9,7 @@ export default (config) => {
     padding: u.padding,
     paddingBig: u.paddingBig,
     textMargin: u.w * 0.07,
-    bottomBuffer: u.h * 0.03,
+    bottomBuffer: u.h * 0.075,
     cornerSquareWidth: u.w * 0.04,
     borderWidth: u.w * 0.015,
     textOrigin: u.center,
