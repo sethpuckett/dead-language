@@ -6,7 +6,7 @@ import HudStatusManager from '../HudStatusManager';
 import VocabStudyVocabManager from './VocabStudyVocabManager';
 import VocabStudyMenuManager from './VocabStudyMenuManager';
 import VocabWordManager from '../../languageContent/VocabWordManager';
-import Modal from '../Modal';
+import Modal from '../modal/Modal';
 
 export default class extends Phaser.Scene {
   constructor() {

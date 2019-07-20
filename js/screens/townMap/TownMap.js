@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { townMap, screens, gameTypes } from '../../config';
-import Modal from '../Modal';
-import ChoiceModal from '../ChoiceModal';
+import Modal from '../modal/Modal';
+import ChoiceModal from '../modal/ChoiceModal';
 import townMapUiHelper from '../ui/townMapUiHelper';
 import TownMapMapManager from './TownMapMapManager';
 import TownMapHelper from './TownMapHelper';

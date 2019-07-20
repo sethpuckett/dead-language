@@ -5,7 +5,8 @@ import MinigameZombieManager from './MinigameZombieManager';
 import MinigameSpawnManager from './MinigameSpawnManager';
 import HudStatusManager from '../HudStatusManager';
 import HudManager from '../HudManager';
-import Modal from '../Modal';
+import Modal from '../modal/Modal';
+import MultiModal from '../modal/MultiModal';
 import GameProgressManager from '../../data/GameProgressManager';
 import MinigameItemSpawnManager from './MinigameItemSpawnManager';
 import MinigameItemManager from './MinigameItemManager';
@@ -123,11 +124,9 @@ export default class extends Phaser.Scene {
   createStartModal() {
     this.disableInputHandling();
     this.hudManager.disableInputHandling();
-    this.modal = new Modal(this, minigame.modals.start);
-    this.modal.draw();
-    this.modal.enableInputClose();
-    this.modal.setCloseCallback(() => {
-      this.modal.disableInputHandling();
+    this.startModal = new MultiModal(this, minigame.modals.start);
+    this.startModal.draw();
+    this.startModal.setCloseCallback(() => {
       this.hudManager.enableInputHandling();
       this.enableInputHandling();
       this.startGame();
