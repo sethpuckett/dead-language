@@ -1,10 +1,13 @@
 import screens from './screens';
+import modalChecks from './modalChecks';
 
 export default [
   {
     id: 'minigame-intro',
+    check: modalChecks.onStage,
     stage: 'intro-01',
     screen: screens.minigame,
+    repeat: false,
     text: [
       [
         'Those zombies will be here any second!',

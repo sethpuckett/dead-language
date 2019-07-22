@@ -1,5 +1,8 @@
-import { modalText } from '../config';
+/* eslint-disable arrow-body-style */
+import { modalText, modalChecks } from '../config';
 
 export default {
-  getModalConfig: stageId => modalText.find(c => c.stage === stageId),
+  getOnStageModalConfig: (stageId) => {
+    return modalText.find(c => c.stage === stageId && c.check === modalChecks.onStage);
+  },
 };

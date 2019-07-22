@@ -21,3 +21,4 @@ export { default as lessonMap } from './lessonMap';
 export { default as weapons } from './weapons';
 export { default as minigameItems } from './minigameItems';
 export { default as modalText } from './modalText';
+export { default as modalChecks } from './modalChecks';

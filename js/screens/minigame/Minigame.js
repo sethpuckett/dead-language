@@ -134,7 +134,8 @@ export default class extends Phaser.Scene {
   }
 
   getStartModal() {
-    return modalTextHelper.getModalConfig(this.stageId);
+    const config = modalTextHelper.getOnStageModalConfig(this.stageId);
+    return config;
   }
 
   createStartModal(text) {
