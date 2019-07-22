@@ -207,21 +207,24 @@ export default class extends Phaser.Scene {
   stageSelected(stageId) {
     const stageType = this.progressManager.getStageType(stageId);
     const cleared = this.progressManager.isStageCompleted(stageId);
+    const unlocked = this.progressManager.isStageUnlocked(stageId);
+
     if (stageType !== gameTypes.zombieAssaultReview.id) {
-      this.createStageSelectedModal(cleared);
-    } else {
-      const lessonId = this.mapManager.getLessonId();
-      if (this.progressManager.isReviewUnlocked(lessonId)) {
-        this.createReviewStageSelectedModal(cleared);
+      if (unlocked) {
+        this.createStageSelectedModal(cleared);
       } else {
-        this.createReviewLockedModal();
+        this.createStageLockedModal();
       }
+    } else if (unlocked) {
+      this.createReviewStageSelectedModal(cleared);
+    } else {
+      this.createStageLockedModal();
     }
   }
 
-  createReviewLockedModal() {
+  createStageLockedModal() {
     this.disableInputHandling();
-    this.modal = new Modal(this, townMap.modals.reviewLocked);
+    this.modal = new Modal(this, townMap.modals.stageLocked);
     this.modal.draw();
     this.modal.enableInputClose();
     this.modal.setCloseCallback(() => {

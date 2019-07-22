@@ -42,11 +42,13 @@ export default {
       'Well, that\'s enough ramblin\' from me.',
       'Let\'s get started!',
     ],
-    reviewLocked: [
+    stageLocked: [
       'Whoa! Hold up there, friend.',
-      'You can\'t just charge into the review stage',
-      'guns blazin\'. Yer gonna have to clear out',
-      'all them other stages first.',
+      'I like the enthusiasm, but yer',
+      'jumpin\' the gun a little bit.',
+      'We gotta clear them stages out in order.',
+      'Looks like you still got some work to do',
+      'before you can take this one on.',
     ],
     lessonLocked: [
       'Whoa! Slow down! That area\'s still too',

@@ -69,15 +69,20 @@ export default class {
     return this.db.getStage(stageId).type;
   }
 
-  isReviewUnlocked(lessonId) {
-    const lesson = this.db.getLesson(lessonId);
-    return lesson.stages.every((sid) => {
-      const gameType = this.db.getStage(sid).type;
-      if (gameType !== gameTypes.zombieAssaultReview.id) {
-        return this.isStageCompleted(sid);
+  isStageUnlocked(stageId) {
+    const lesson = this.db.getLessonForStage(stageId);
+    for (let i = 0; i < lesson.stages.length; i += 1) {
+      const sid = lesson.stages[i];
+      if (sid === stageId) {
+        return true;
       }
-      return true;
-    });
+
+      if (!this.isStageCompleted(sid)) {
+        return false;
+      }
+    }
+
+    return false;
   }
 
   setMapPosition(lessonId, stageId, callback) {
