@@ -76,6 +76,7 @@ export default class extends Phaser.Scene {
       this.mapManager.setLesson(position.lesson);
     } else {
       this.mapManager.resetLesson();
+      return;
     }
 
     const lessonId = this.mapManager.getLessonId();
