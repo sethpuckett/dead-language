@@ -13,6 +13,7 @@ import MinigameItemManager from './MinigameItemManager';
 import minigameUiHelper from '../ui/minigameUiHelper';
 import MinigameItemEffectManager from './MinigameItemEffectManager';
 import MinigameMercenaryManager from './MinigameMercenaryManager';
+import { modalTextHelper } from '../../util';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -56,7 +57,7 @@ export default class extends Phaser.Scene {
     this.createBackground();
     this.createCollisions();
     this.createTimers();
-    this.createStartModal();
+    this.checkStartModal();
   }
 
   update(_time, delta) {
@@ -121,10 +122,25 @@ export default class extends Phaser.Scene {
     });
   }
 
-  createStartModal() {
+  checkStartModal() {
+    const startModalConfig = this.getStartModal();
+    if (startModalConfig != null) {
+      this.createStartModal(startModalConfig.text);
+    } else {
+      this.hudManager.enableInputHandling();
+      this.enableInputHandling();
+      this.startGame();
+    }
+  }
+
+  getStartModal() {
+    return modalTextHelper.getModalConfig(this.stageId);
+  }
+
+  createStartModal(text) {
     this.disableInputHandling();
     this.hudManager.disableInputHandling();
-    this.startModal = new MultiModal(this, minigame.modals.start);
+    this.startModal = new MultiModal(this, text);
     this.startModal.draw();
     this.startModal.setCloseCallback(() => {
       this.hudManager.enableInputHandling();

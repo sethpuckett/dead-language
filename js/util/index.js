@@ -5,3 +5,4 @@ export { default as gameTypeHelper } from './gameTypeHelper';
 export { default as weaponHelper } from './weaponHelper';
 export { default as gameConst } from './gameConst';
 export { default as textHelper } from './textHelper';
+export { default as modalTextHelper } from './modalTextHelper';
