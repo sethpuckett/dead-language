@@ -4,5 +4,6 @@ export default {
   levelCompleted: 'level-completed',
   stageWon: 'stage-won',
   stageLost: 'stage-lost',
+  gameType: 'game-type',
   default: 'default',
 };
