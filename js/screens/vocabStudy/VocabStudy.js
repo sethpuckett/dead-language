@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { images, vocabStudy, screens, fonts, depth, animations } from '../../config';
+import { textHelper } from '../../util';
 import vocabStudyUiHelper from '../ui/vocabStudyUiHelper';
 import HudManager from '../HudManager';
 import HudStatusManager from '../HudStatusManager';
@@ -271,10 +272,11 @@ export default class extends Phaser.Scene {
   }
 
   isGuessCorrect() {
-    const guess = this.hudManager.getTextEntry().toLowerCase().trim();
-    return (guess === this.practiceWord.language2
-      || (this.practiceWord.alternatives != null
-      && this.practiceWord.alternatives.includes(guess)));
+    const guess = textHelper.cleanText(this.hudManager.getTextEntry());
+    const alternatives = this.practiceWord.alternatives != null
+      ? this.practiceWord.alternatives.map(w => textHelper.cleanText(w)) : null;
+    return (guess === textHelper.cleanText(this.practiceWord.language2)
+      || (alternatives != null && alternatives.includes(guess)));
   }
 
   enableInputHandling() {
