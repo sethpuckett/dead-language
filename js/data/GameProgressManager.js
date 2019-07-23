@@ -7,26 +7,6 @@ export default class {
     this.db = db;
   }
 
-  // callback will be passed true if the data saves, false otherwise
-  saveStageCompleted(stageId, callback) {
-    const user = this.db.getCurrentUserProfile();
-    if (user != null) {
-      const lesson = this.db.getLessonForStage(stageId);
-      const lessonCompleted = lesson.stages.every(s => s === stageId || this.isStageCompleted(s));
-      const updateObject = { stagesCompleted: firebase.firestore.FieldValue.arrayUnion(stageId) };
-      if (lessonCompleted) {
-        updateObject.lessonsCompleted = firebase.firestore.FieldValue.arrayUnion(lesson.id);
-        updateObject.mapState = { lesson: lesson.id, stage: null };
-      }
-      user.update(updateObject).then(() => {
-        this.db.loadUserProfile();
-        callback(true);
-      });
-    } else {
-      callback(false);
-    }
-  }
-
   isStageCompleted(stageId) {
     if (!this.db.isUserLoggedIn()) {
       return false;
@@ -37,6 +17,22 @@ export default class {
       return completed != null && completed.includes(stageId);
     }
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
+  }
+
+  isStageUnlocked(stageId) {
+    const lesson = this.db.getLessonForStage(stageId);
+    for (let i = 0; i < lesson.stages.length; i += 1) {
+      const sid = lesson.stages[i];
+      if (sid === stageId) {
+        return true;
+      }
+
+      if (!this.isStageCompleted(sid)) {
+        return false;
+      }
+    }
+
+    return false;
   }
 
   isLessonCompleted(lessonId) {
@@ -69,36 +65,6 @@ export default class {
     return this.db.getStage(stageId).type;
   }
 
-  isStageUnlocked(stageId) {
-    const lesson = this.db.getLessonForStage(stageId);
-    for (let i = 0; i < lesson.stages.length; i += 1) {
-      const sid = lesson.stages[i];
-      if (sid === stageId) {
-        return true;
-      }
-
-      if (!this.isStageCompleted(sid)) {
-        return false;
-      }
-    }
-
-    return false;
-  }
-
-  setMapPosition(lessonId, stageId, callback) {
-    const user = this.db.getCurrentUserProfile();
-    if (user != null) {
-      user.update({ mapState: { lesson: lessonId, stage: stageId } }).then(() => {
-        this.db.loadUserProfile();
-        if (callback != null) {
-          callback(true);
-        }
-      });
-    } else if (callback != null) {
-      callback(false);
-    }
-  }
-
   getMapPosition() {
     if (!this.db.isUserLoggedIn()) {
       return null;
@@ -108,5 +74,54 @@ export default class {
       return this.db.userProfile.mapState;
     }
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
+  }
+
+  getModalsSeen() {
+    if (!this.db.isUserLoggedIn()) {
+      return null;
+    }
+
+    if (this.db.userProfileLoaded) {
+      return this.db.userProfile.modalsSeen;
+    }
+    throw Error('user profile has not been loaded. Call loadUserProfile() first');
+  }
+
+  saveMapPosition(lessonId, stageId, callback) {
+    const updateObject = { mapState: { lesson: lessonId, stage: stageId } };
+    this.updateUserProfile(updateObject, callback);
+  }
+
+  saveStageCompleted(stageId, callback) {
+    const lesson = this.db.getLessonForStage(stageId);
+    const lessonCompleted = lesson.stages.every(s => s === stageId || this.isStageCompleted(s));
+    const updateObject = { stagesCompleted: firebase.firestore.FieldValue.arrayUnion(stageId) };
+    if (lessonCompleted) {
+      updateObject.lessonsCompleted = firebase.firestore.FieldValue.arrayUnion(lesson.id);
+      updateObject.mapState = { lesson: lesson.id, stage: null };
+    }
+    this.updateUserProfile(updateObject, callback);
+  }
+
+  saveModalSeen(modalId, callback) {
+    const updateObject = { modalsSeen: firebase.firestore.FieldValue.arrayUnion(modalId) };
+    this.updateUserProfile(updateObject, callback);
+  }
+
+  // Private
+
+  // callback will be passed true if data saves, false otherwise
+  updateUserProfile(updateObject, callback) {
+    const user = this.db.getCurrentUserProfile();
+    if (user != null) {
+      user.update(updateObject).then(() => {
+        this.db.loadUserProfile();
+        if (callback != null) {
+          callback(true);
+        }
+      });
+    } else if (callback != null) {
+      callback(false);
+    }
   }
 }

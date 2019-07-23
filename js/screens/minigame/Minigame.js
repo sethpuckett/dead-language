@@ -125,7 +125,7 @@ export default class extends Phaser.Scene {
   checkStartModal() {
     const startModalConfig = this.getStartModal();
     if (startModalConfig != null) {
-      this.createStartModal(startModalConfig.text);
+      this.createStartModal(startModalConfig);
     } else {
       this.hudManager.enableInputHandling();
       this.enableInputHandling();
@@ -134,14 +134,17 @@ export default class extends Phaser.Scene {
   }
 
   getStartModal() {
-    const config = modalTextHelper.getOnStageModalConfig(this.stageId);
+    const config = modalTextHelper.getOnStageModalConfig(
+      this.stageId, this.progressManager.getModalsSeen()
+    );
     return config;
   }
 
-  createStartModal(text) {
+  createStartModal(modalConfig) {
     this.disableInputHandling();
     this.hudManager.disableInputHandling();
-    this.startModal = new MultiModal(this, text);
+    this.startModalConfig = modalConfig;
+    this.startModal = new MultiModal(this, modalConfig.text);
     this.startModal.draw();
     this.startModal.setCloseCallback(() => {
       this.hudManager.enableInputHandling();
@@ -156,6 +159,9 @@ export default class extends Phaser.Scene {
 
   gameTimerFinish() {
     this.progressManager.saveStageCompleted(this.stageId, () => {
+      if (this.startModalConfig != null) {
+        this.progressManager.saveModalSeen(this.startModalConfig.id);
+      }
       this.scene.start(screens.endgame, { status: endgame.win, stageId: this.stageId });
     });
   }

@@ -282,7 +282,7 @@ export default class extends Phaser.Scene {
     if (progress === 1) {
       const lessonId = this.mapManager.getLessonId();
       const stageId = this.stageSelectManager.getStageId();
-      this.progressManager.setMapPosition(lessonId, stageId);
+      this.progressManager.saveMapPosition(lessonId, stageId);
       this.scene.start(this.nextScreen, stageId);
     }
   }
