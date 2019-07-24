@@ -1,6 +1,6 @@
 export default [
   {
-    id: 'lesson-basic-vocab-01',
+    id: 'lesson-basic-vocab',
     location: 'The Front Gate',
     position: {
       x: 0,
@@ -16,7 +16,7 @@ export default [
     },
   },
   {
-    id: 'lesson-numbers-01',
+    id: 'lesson-numbers-1',
     location: 'Administration Building',
     position: {
       x: 1,
