@@ -17,6 +17,7 @@ export default class {
     this.stageId = null;
     this.stageNumber = null;
     this.currentStageType = null;
+    this.currentStageCleared = null;
   }
 
   initialize() {
@@ -70,14 +71,14 @@ export default class {
   }
 
   createStageInfo() {
-    const maintainAnimations = this.shouldMaintainAnimations();
-
-    this.clearStageInfo(maintainAnimations);
-
     if (this.stageId != null) {
       const stage = this.scene.sys.game.db.getStage(this.stageId);
       const cleared = this.progressManager.isStageCompleted(this.stageId);
+      const maintainAnimations = this.shouldMaintainAnimations(cleared);
+
       this.currentStageType = stage.type;
+      this.currentStageCleared = cleared;
+      this.clearStageInfo(maintainAnimations);
 
       switch (stage.type) {
         // TODO: handle review
@@ -90,6 +91,8 @@ export default class {
         default:
           throw Error(`Invalid stage type '${stage.type}'`);
       }
+    } else {
+      this.clearStageInfo(false);
     }
   }
 
@@ -181,19 +184,19 @@ export default class {
   createZombieAssaultReviewStageInfo(animationsMaintained, cleared) {
     this.createCommonStageInfo(gameTypes.zombieAssaultReview.id, cleared);
 
-    if (!animationsMaintained) {
-      this.stageInfoTitle = this.scene.add.bitmapText(
-        this.scene.ui.stageInfoTitleX,
-        this.scene.ui.stageInfoTitleY,
-        fonts.blueSkyWhite,
-        'Lesson Review',
-        townMap.fonts.stageInfoTitleSize
-      );
-      this.stageInfoTitle.setOrigin(
-        this.scene.ui.stageInfoTitleOriginX, this.scene.ui.stageInfoTitleOriginY
-      );
-      this.stageInfoTitle.setCenterAlign();
+    this.stageInfoTitle = this.scene.add.bitmapText(
+      this.scene.ui.stageInfoTitleX,
+      this.scene.ui.stageInfoTitleY,
+      fonts.blueSkyWhite,
+      'Lesson Review',
+      townMap.fonts.stageInfoTitleSize
+    );
+    this.stageInfoTitle.setOrigin(
+      this.scene.ui.stageInfoTitleOriginX, this.scene.ui.stageInfoTitleOriginY
+    );
+    this.stageInfoTitle.setCenterAlign();
 
+    if (!animationsMaintained) {
       this.stageInfoSprites = [];
       this.stageInfoZombie1 = this.scene.add.sprite(
         this.scene.ui.stageInfoReviewZombie1X,
@@ -291,11 +294,11 @@ export default class {
     }
   }
 
-  shouldMaintainAnimations() {
+  shouldMaintainAnimations(cleared) {
     if (this.currentStageType == null) {
       return false;
     }
     const stage = this.scene.sys.game.db.getStage(this.stageId);
-    return stage.type === this.currentStageType;
+    return stage.type === this.currentStageType && cleared === this.currentStageCleared;
   }
 }
