@@ -5,9 +5,10 @@ import modalUiHelper from '../ui/modalUiHelper';
 const MIN_WIDTH = 450;
 
 export default class {
-  constructor(scene, textContent) {
+  constructor(scene, textContent, fadeEnabled = true) {
     this.scene = scene;
     this.textContent = textContent;
+    this.fadeEnabled = fadeEnabled;
     this.ui = modalUiHelper(this.scene.sys.game.config);
   }
 
@@ -87,10 +88,12 @@ export default class {
   }
 
   createFade() {
-    this.fade = this.scene.add.graphics();
-    this.fade.fillStyle(modal.fadeColor, modal.fadeAlpha);
-    this.fade.fillRect(0, 0, this.ui.w, this.ui.h);
-    this.fade.setDepth(depth.modal.fade);
+    if (this.fadeEnabled) {
+      this.fade = this.scene.add.graphics();
+      this.fade.fillStyle(modal.fadeColor, modal.fadeAlpha);
+      this.fade.fillRect(0, 0, this.ui.w, this.ui.h);
+      this.fade.setDepth(depth.modal.fade);
+    }
   }
 
   createBackground() {

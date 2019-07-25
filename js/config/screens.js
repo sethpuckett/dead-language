@@ -6,4 +6,5 @@ export default {
   endgame: 'Endgame',
   vocabStudy: 'VocabStudy',
   townMap: 'TownMap',
+  story: 'Story',
 };

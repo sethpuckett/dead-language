@@ -59,6 +59,7 @@ export default {
   cash: 'cash',
   popWhite: 'pop-white',
   foodTier1: 'food-tier-1',
+  storyScreenBackground: 'story-screen-background',
   files: {
     zombieNormal1: 'assets/images/zombie-normal-1.png',
     zombieNormal2: 'assets/images/zombie-normal-2.png',
@@ -118,6 +119,7 @@ export default {
     cash: 'assets/images/cash.png',
     popWhite: 'assets/images/pop-white.png',
     foodTier1: 'assets/images/food-tier-1.png',
+    storyScreenBackground: '/assets/images/story-screen-background.png',
   },
   frames: {
     healthFull: 0,

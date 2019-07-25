@@ -1,8 +1,9 @@
 import Phaser from 'phaser';
-import { images, titleMenu, fonts, screens, depth } from '../../config';
+import { images, titleMenu, fonts, screens, depth, modalText } from '../../config';
 import titleMenuUiHelper from '../ui/titleMenuUiHelper';
 import TitleZombieManager from './TitleZombieManager';
 import TitleSpawnManager from './TitleSpawnManager';
+import { modalTextHelper } from '../../util';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -116,7 +117,10 @@ export default class extends Phaser.Scene {
   }
 
   startGame() {
-    this.scene.start(screens.townMap);
+    this.scene.start(screens.story, {
+      modalConfig: modalTextHelper.getModalConfig('game-intro'),
+      nextScreen: screens.townMap,
+    });
   }
 
   createBackground() {

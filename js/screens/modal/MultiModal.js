@@ -1,16 +1,17 @@
 import Modal from './Modal';
 
 export default class {
-  constructor(scene, textContent) {
+  constructor(scene, textContent, fadeEnabled = true) {
     this.scene = scene;
     this.textContent = textContent;
+    this.fadeEnabled = fadeEnabled;
 
     this.modalCount = this.textContent.length;
     this.modalIndex = 0;
   }
 
   draw() {
-    this.modal = new Modal(this.scene, this.textContent[this.modalIndex]);
+    this.modal = new Modal(this.scene, this.textContent[this.modalIndex], this.fadeEnabled);
     this.modal.draw();
     this.modal.enableInputClose();
     this.modal.setCloseCallback((keyCode) => {

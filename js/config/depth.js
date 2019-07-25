@@ -23,6 +23,9 @@ export default {
     frontGrass: 21,
     text: 22,
   },
+  story: {
+    background: 0,
+  },
   hud: {
     buffer: 900,
     uiBackground: 901,
