@@ -49,7 +49,6 @@ export default class extends Phaser.Scene {
     });
   }
 
-
   fadeCallback(_camera, progress) {
     if (progress === 1) {
       this.scene.start(this.nextScreen);

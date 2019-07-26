@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
-import { images, titleMenu, fonts, screens, depth, modalText } from '../../config';
+import { images, titleMenu, fonts, screens, depth } from '../../config';
 import titleMenuUiHelper from '../ui/titleMenuUiHelper';
 import TitleZombieManager from './TitleZombieManager';
 import TitleSpawnManager from './TitleSpawnManager';
 import { modalTextHelper } from '../../util';
+import GameProgressManager from '../../data/GameProgressManager';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -13,11 +14,16 @@ export default class extends Phaser.Scene {
   init() {
     this.zombieManager = new TitleZombieManager(this);
     this.spawnManager = new TitleSpawnManager(this);
-    this.menuOptions = [
-      { text: 'Start Demo', key: 'start' },
-    ];
+    this.progressManager = new GameProgressManager(this.sys.game.db);
+    this.menuOptions = [];
     this.currentSelection = 0;
     this.selectedOption = '';
+
+    if (this.progressManager.isNewGame()) {
+      this.menuOptions.push({ text: 'New Game', key: 'start' });
+    } else {
+      this.menuOptions.push({ text: 'Continue Game', key: 'start' });
+    }
   }
 
   create() {
@@ -117,10 +123,14 @@ export default class extends Phaser.Scene {
   }
 
   startGame() {
-    this.scene.start(screens.story, {
-      modalConfig: modalTextHelper.getModalConfig('game-intro'),
-      nextScreen: screens.townMap,
-    });
+    if (this.progressManager.isNewGame()) {
+      this.scene.start(screens.story, {
+        modalConfig: modalTextHelper.getModalConfig('game-intro'),
+        nextScreen: screens.townMap,
+      });
+    } else {
+      this.scene.start(screens.townMap);
+    }
   }
 
   createBackground() {

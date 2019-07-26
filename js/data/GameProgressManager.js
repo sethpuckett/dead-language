@@ -1,10 +1,21 @@
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
-import { gameTypes } from '../config';
 
 export default class {
   constructor(db) {
     this.db = db;
+  }
+
+  isNewGame() {
+    if (!this.db.isUserLoggedIn()) {
+      return true;
+    }
+
+    if (this.db.userProfileLoaded) {
+      const completed = this.db.userProfile.stagesCompleted;
+      return completed == null || completed.length === 0;
+    }
+    throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }
 
   isStageCompleted(stageId) {
@@ -56,7 +67,7 @@ export default class {
       const completed = this.db.userProfile.lessonsCompleted;
       const lesson = this.db.getLesson(lessonId);
       // has player completed every required lesson
-      return lesson.requirements.some(r => !completed.includes(r));
+      return lesson.requirements.some(r => completed == null || !completed.includes(r));
     }
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }
