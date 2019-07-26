@@ -65,9 +65,9 @@ export default [
   },
   {
     id: 'minigame-intro',
-    check: modalChecks.onStage,
-    stage: 'intro-01',
     screen: screens.minigame,
+    check: modalChecks.onStage,
+    checkValue: 'intro-01',
     repeat: false,
     text: [
       [
@@ -88,6 +88,18 @@ export default [
       ],
       [
         'Okay! Here they come! Look out!',
+      ],
+    ],
+  },
+  {
+    id: 'map-intro',
+    screen: screens.townMap,
+    check: modalChecks.completedStageCount,
+    checkValue: 0,
+    repeat: true,
+    text: [
+      [
+        'This is the map.',
       ],
     ],
   },

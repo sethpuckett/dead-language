@@ -3,7 +3,7 @@ import { images, titleMenu, fonts, screens, depth } from '../../config';
 import titleMenuUiHelper from '../ui/titleMenuUiHelper';
 import TitleZombieManager from './TitleZombieManager';
 import TitleSpawnManager from './TitleSpawnManager';
-import { modalTextHelper } from '../../util';
+import ModalHelper from '../../util/ModalHelper';
 import GameProgressManager from '../../data/GameProgressManager';
 
 export default class extends Phaser.Scene {
@@ -15,6 +15,7 @@ export default class extends Phaser.Scene {
     this.zombieManager = new TitleZombieManager(this);
     this.spawnManager = new TitleSpawnManager(this);
     this.progressManager = new GameProgressManager(this.sys.game.db);
+    this.modalHelper = new ModalHelper(this);
     this.menuOptions = [];
     this.currentSelection = 0;
     this.selectedOption = '';
@@ -125,7 +126,8 @@ export default class extends Phaser.Scene {
   startGame() {
     if (this.progressManager.isNewGame()) {
       this.scene.start(screens.story, {
-        modalConfig: modalTextHelper.getModalConfig('game-intro'),
+        // TODO: don't hard code the id here
+        modalConfig: this.modalHelper.getModalConfig('game-intro'),
         nextScreen: screens.townMap,
       });
     } else {

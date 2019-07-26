@@ -13,7 +13,7 @@ import MinigameItemManager from './MinigameItemManager';
 import minigameUiHelper from '../ui/minigameUiHelper';
 import MinigameItemEffectManager from './MinigameItemEffectManager';
 import MinigameMercenaryManager from './MinigameMercenaryManager';
-import { modalTextHelper } from '../../util';
+import ModalHelper from '../../util/ModalHelper';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -33,6 +33,7 @@ export default class extends Phaser.Scene {
     this.itemManager = new MinigameItemManager(this);
     this.itemEffectManager = new MinigameItemEffectManager(this);
     this.mercenaryManager = new MinigameMercenaryManager(this);
+    this.modalHelper = new ModalHelper(this);
     this.ui = minigameUiHelper(this.sys.game.config);
 
     this.score = 0;
@@ -134,10 +135,7 @@ export default class extends Phaser.Scene {
   }
 
   getStartModal() {
-    const config = modalTextHelper.getOnStageModalConfig(
-      this.stageId, this.progressManager.getModalsSeen()
-    );
-    return config;
+    return this.modalHelper.getModalConfigByConditions(screens.minigame, this.stageId);
   }
 
   createStartModal(modalConfig) {

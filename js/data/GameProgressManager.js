@@ -98,6 +98,17 @@ export default class {
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }
 
+  getCompletedStages() {
+    if (!this.db.isUserLoggedIn()) {
+      return 0;
+    }
+
+    if (this.db.userProfileLoaded) {
+      return this.db.userProfile.stagesCompleted;
+    }
+    throw Error('user profile has not been loaded. Call loadUserProfile() first');
+  }
+
   saveMapPosition(lessonId, stageId, callback) {
     const updateObject = { mapState: { lesson: lessonId, stage: stageId } };
     this.updateUserProfile(updateObject, callback);
