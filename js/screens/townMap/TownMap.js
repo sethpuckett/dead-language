@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { townMap, screens, gameTypes } from '../../config';
 import Modal from '../modal/Modal';
+import MultiModal from '../modal/MultiModal';
 import ChoiceModal from '../modal/ChoiceModal';
 import townMapUiHelper from '../ui/townMapUiHelper';
 import TownMapMapManager from './TownMapMapManager';
@@ -10,6 +11,7 @@ import TownMapStageSelectManager from './TownMapStageSelectManager';
 import TownMapStageInfoManager from './TownMapStageInfoManager';
 import TownMapInstructionsManager from './TownMapInstructionsManager';
 import GameProgressManager from '../../data/GameProgressManager';
+import ModalHelper from '../../util/ModalHelper';
 
 const LESSON_SELECT = 'lesson-select';
 const STAGE_SELECT = 'stage-select';
@@ -29,6 +31,7 @@ export default class extends Phaser.Scene {
     this.stageInfoManager = new TownMapStageInfoManager(this);
     this.instructionsManager = new TownMapInstructionsManager(this);
     this.progressManager = new GameProgressManager(this.sys.game.db);
+    this.modalHelper = new ModalHelper(this);
 
     this.selectState = LESSON_SELECT;
   }
@@ -41,7 +44,7 @@ export default class extends Phaser.Scene {
     this.createInstructions();
     this.setSelectedPosition();
 
-    this.createStartModal();
+    this.checkStartModal();
   }
 
   createMap() {
@@ -139,13 +142,26 @@ export default class extends Phaser.Scene {
     }
   }
 
-  createStartModal() {
+  checkStartModal() {
+    const startModalConfig = this.getStartModal();
+    if (startModalConfig != null) {
+      this.createStartModal(startModalConfig);
+    } else {
+      this.assignInputControl(this.selectState);
+    }
+  }
+
+  getStartModal() {
+    return this.modalHelper.getModalConfigByConditions(screens.townMap, null);
+  }
+
+  createStartModal(modalConfig) {
     this.disableInputHandling();
-    this.modal = new Modal(this, townMap.modals.start);
-    this.modal.draw();
-    this.modal.enableInputClose();
-    this.modal.setCloseCallback(() => {
-      this.modal.disableInputHandling();
+    this.startModalConfig = modalConfig;
+    this.startModal = new MultiModal(this, modalConfig.text);
+    this.startModal.draw();
+    this.startModal.setCloseCallback(() => {
+      this.progressManager.saveModalSeen(this.startModalConfig.id);
       this.assignInputControl(this.selectState);
     });
   }

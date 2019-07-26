@@ -49,7 +49,7 @@ export default class {
   getCompletedStageCountModalConfig(potentials, completedStageCount) {
     return potentials.find(
       m => m.check === modalChecks.completedStageCount
-      && m.checkValue <= completedStageCount
+      && completedStageCount >= m.checkValue
     );
   }
 }
