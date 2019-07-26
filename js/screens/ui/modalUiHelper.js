@@ -6,6 +6,8 @@ export default (config) => {
   return {
     w: u.w,
     h: u.h,
+    modalWidth: u.w_85p,
+    get modalX() { return this.w / 2 - this.modalWidth / 2; },
     padding: u.padding,
     paddingBig: u.paddingBig,
     textMargin: u.w * 0.07,

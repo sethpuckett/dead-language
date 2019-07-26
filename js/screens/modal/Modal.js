@@ -100,11 +100,10 @@ export default class {
     this.backgroundGraphics = this.scene.add.graphics();
     this.backgroundGraphics.fillStyle(modal.backgroundColor);
     const bounds = this.text.getTextBounds().global;
-    const width = Math.max(bounds.width + this.ui.textMargin * 2, MIN_WIDTH);
     this.bgRect = new Phaser.Geom.Rectangle(
-      this.ui.w / 2 - width / 2,
+      this.ui.modalX,
       bounds.y - this.ui.textMargin,
-      width,
+      this.ui.modalWidth,
       bounds.height + this.ui.textMargin * 2 + this.ui.bottomBuffer
     );
     this.backgroundGraphics.fillRectShape(this.bgRect);
