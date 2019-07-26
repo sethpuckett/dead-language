@@ -89,22 +89,24 @@ export default class {
 
   getModalsSeen() {
     if (!this.db.isUserLoggedIn()) {
-      return null;
+      return [];
     }
 
     if (this.db.userProfileLoaded) {
-      return this.db.userProfile.modalsSeen;
+      const modals = this.db.userProfile.modalsSeen;
+      return modals != null ? modals : [];
     }
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }
 
   getCompletedStages() {
     if (!this.db.isUserLoggedIn()) {
-      return 0;
+      return [];
     }
 
     if (this.db.userProfileLoaded) {
-      return this.db.userProfile.stagesCompleted;
+      const stages = this.db.userProfile.stagesCompleted;
+      return stages != null ? stages : [];
     }
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }

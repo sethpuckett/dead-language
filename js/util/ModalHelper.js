@@ -12,8 +12,8 @@ export default class {
     return modalText.find(m => m.id === modalId);
   }
 
-  getModalConfigByConditions(screenType, stageId) {
-    const potentials = this.getPotentialModals(screenType);
+  getModalConfigByConditions(screen, stageId) {
+    const potentials = this.getPotentialModals(screen);
 
     let modalConfig = this.getOnStageModalConfig(potentials, stageId);
     if (modalConfig != null) {
@@ -31,10 +31,10 @@ export default class {
 
   // Private
 
-  getPotentialModals(screenType) {
+  getPotentialModals(screen) {
     const seenModals = this.progressManager.getModalsSeen();
     return modalText.filter(
-      m => m.screenType === screenType
+      m => m.screen === screen
       && (m.repeat || !seenModals.includes(m.id))
     );
   }

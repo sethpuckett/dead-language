@@ -67,7 +67,7 @@ export default [
     id: 'minigame-intro',
     screen: screens.minigame,
     check: modalChecks.onStage,
-    checkValue: 'intro-01',
+    checkValue: 'basic-vocab-1',
     repeat: false,
     text: [
       [
