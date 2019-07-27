@@ -3,7 +3,7 @@ import { images, fonts, screens } from '../config';
 
 export default class extends Phaser.Scene {
   constructor() {
-    super({ key: 'Boot' });
+    super({ key: screens.boot });
   }
 
   preload() {

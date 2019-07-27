@@ -1,11 +1,11 @@
 import Phaser from 'phaser';
-import { images, depth, story } from '../config';
+import { images, depth, story, screens } from '../config';
 import storyUiHelper from './ui/storyUiHelper';
 import MultiModal from './modal/MultiModal';
 
 export default class extends Phaser.Scene {
   constructor() {
-    super({ key: 'Story' });
+    super({ key: screens.story });
   }
 
   /*

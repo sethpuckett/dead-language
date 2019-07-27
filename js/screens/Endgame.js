@@ -8,7 +8,7 @@ const PRACTICE = 'practice';
 
 export default class extends Phaser.Scene {
   constructor() {
-    super({ key: 'Endgame' });
+    super({ key: screens.endgame });
   }
 
   init(params) {

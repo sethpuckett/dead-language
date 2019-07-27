@@ -5,7 +5,7 @@ import { animationHelper } from '../util';
 
 export default class extends Phaser.Scene {
   constructor() {
-    super({ key: 'Loading' });
+    super({ key: screens.loading });
   }
 
   preload() {

@@ -16,7 +16,7 @@ import ModalChecker from '../modal/ModalChecker';
 
 export default class extends Phaser.Scene {
   constructor() {
-    super({ key: 'Minigame' });
+    super({ key: screens.minigame });
   }
 
   init(stageId) {

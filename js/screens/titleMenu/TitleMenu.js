@@ -8,7 +8,7 @@ import GameProgressManager from '../../data/GameProgressManager';
 
 export default class extends Phaser.Scene {
   constructor() {
-    super({ key: 'TitleMenu' });
+    super({ key: screens.titleMenu });
   }
 
   init() {

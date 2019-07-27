@@ -11,7 +11,7 @@ import Modal from '../modal/Modal';
 
 export default class extends Phaser.Scene {
   constructor() {
-    super({ key: 'VocabStudy' });
+    super({ key: screens.vocabStudy });
   }
 
   init(stageId) {

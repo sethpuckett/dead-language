@@ -17,7 +17,7 @@ const STAGE_SELECT = 'stage-select';
 
 export default class extends Phaser.Scene {
   constructor() {
-    super({ key: 'TownMap' });
+    super({ key: screens.townMap });
   }
 
   init() {
