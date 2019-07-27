@@ -6,14 +6,13 @@ import MinigameSpawnManager from './MinigameSpawnManager';
 import HudStatusManager from '../HudStatusManager';
 import HudManager from '../HudManager';
 import Modal from '../modal/Modal';
-import MultiModal from '../modal/MultiModal';
 import GameProgressManager from '../../data/GameProgressManager';
 import MinigameItemSpawnManager from './MinigameItemSpawnManager';
 import MinigameItemManager from './MinigameItemManager';
 import minigameUiHelper from '../ui/minigameUiHelper';
 import MinigameItemEffectManager from './MinigameItemEffectManager';
 import MinigameMercenaryManager from './MinigameMercenaryManager';
-import ModalHelper from '../../util/ModalHelper';
+import ModalChecker from '../modal/ModalChecker';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -33,7 +32,7 @@ export default class extends Phaser.Scene {
     this.itemManager = new MinigameItemManager(this);
     this.itemEffectManager = new MinigameItemEffectManager(this);
     this.mercenaryManager = new MinigameMercenaryManager(this);
-    this.modalHelper = new ModalHelper(this);
+    this.modalChecker = new ModalChecker(this, stageId);
     this.ui = minigameUiHelper(this.sys.game.config);
 
     this.score = 0;
@@ -124,31 +123,18 @@ export default class extends Phaser.Scene {
   }
 
   checkStartModal() {
-    const startModalConfig = this.getStartModal();
-    if (startModalConfig != null) {
-      this.createStartModal(startModalConfig);
-    } else {
-      this.hudManager.enableInputHandling();
-      this.enableInputHandling();
-      this.startGame();
-    }
-  }
+    this.modalChecker.setBeforeStartCallback(() => {
+      this.disableInputHandling();
+      this.hudManager.disableInputHandling();
+    });
 
-  getStartModal() {
-    return this.modalHelper.getModalConfigByConditions(screens.minigame, this.stageId);
-  }
-
-  createStartModal(modalConfig) {
-    this.disableInputHandling();
-    this.hudManager.disableInputHandling();
-    this.startModalConfig = modalConfig;
-    this.startModal = new MultiModal(this, modalConfig.text);
-    this.startModal.draw();
-    this.startModal.setCloseCallback(() => {
+    this.modalChecker.setCompletedCallback(() => {
       this.hudManager.enableInputHandling();
       this.enableInputHandling();
       this.startGame();
     });
+
+    this.modalChecker.checkModal();
   }
 
   startGame() {
@@ -157,9 +143,6 @@ export default class extends Phaser.Scene {
 
   gameTimerFinish() {
     this.progressManager.saveStageCompleted(this.stageId, () => {
-      if (this.startModalConfig != null) {
-        this.progressManager.saveModalSeen(this.startModalConfig.id);
-      }
       this.scene.start(screens.endgame, { status: endgame.win, stageId: this.stageId });
     });
   }
