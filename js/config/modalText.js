@@ -103,4 +103,42 @@ export default [
       ],
     ],
   },
+  {
+    id: 'vocab-study-intro',
+    screen: screens.vocabStudy,
+    check: modalChecks.completedStageCount,
+    checkValue: 0,
+    repeat: true,
+    text: [
+      [
+        'Welcome to target practice, friend.',
+        'Ya need to be prepared if yer gonna',
+        'take on them zombies.',
+      ],
+      [
+        'Here\'s how it works: The words on the sides',
+        'of the screen are the new vocab fer',
+        'this stage. Memorize \'em!',
+      ],
+      [
+        'Ya can use the controls at the bottom',
+        'to hide one language or the other',
+        'if it helps ya study.',
+      ],
+      [
+        'When yer ready to put yer skills to the test',
+        'select \'Practice\'. I\'ll set up the bottles',
+        'and you do yer best to shoot \'em down.',
+      ],
+      [
+        'Just type the translation fer the word under',
+        'the bottle and press \'Enter\'. Don\'t worry',
+        'about time and don\'t worry about missin\'.',
+      ],
+      [
+        'And if ya get tired ya can stop at',
+        'any time by pressin\' \'Esc\'.',
+      ],
+    ],
+  },
 ];

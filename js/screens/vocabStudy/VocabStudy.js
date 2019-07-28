@@ -8,6 +8,7 @@ import VocabStudyVocabManager from './VocabStudyVocabManager';
 import VocabStudyMenuManager from './VocabStudyMenuManager';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import Modal from '../modal/Modal';
+import ModalChecker from '../modal/ModalChecker';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -22,6 +23,7 @@ export default class extends Phaser.Scene {
     this.statusManager = new HudStatusManager(this);
     this.vocabManager = new VocabStudyVocabManager(this, this.sys.game.db.getStage(stageId).vocab);
     this.vocabWordManager = new VocabWordManager(this.sys.game.db.getStage(stageId).vocab);
+    this.ModalChecker = new ModalChecker(this);
     this.menuManager = new VocabStudyMenuManager(this, {
       hideLanguage1() { this.vocabManager.hideLanguage1(); },
       hideLanguage2() { this.vocabManager.hideLanguage2(); },
@@ -40,18 +42,19 @@ export default class extends Phaser.Scene {
     this.menuManager.createMenu();
     this.createBackground();
     this.createStatus();
-    this.createTutorialModal();
+    this.checkStartModal();
   }
 
-  createTutorialModal() {
-    this.menuManager.disableInputHandling();
-    this.modal = new Modal(this, vocabStudy.modals.tutorial);
-    this.modal.draw();
-    this.modal.enableInputClose();
-    this.modal.setCloseCallback(() => {
-      this.modal.disableInputHandling();
+  checkStartModal() {
+    this.ModalChecker.setBeforeStartCallback(() => {
+      this.menuManager.disableInputHandling();
+    });
+
+    this.ModalChecker.setCompletedCallback(() => {
       this.menuManager.enableInputHandling();
     });
+
+    this.ModalChecker.checkModal();
   }
 
   createPracticeModal() {
