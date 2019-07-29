@@ -66,8 +66,9 @@ export default [
   {
     id: 'minigame-intro',
     screen: screens.minigame,
-    check: modalChecks.onStage,
-    checkValue: 'basic-vocab-1',
+    checks: [
+      { checkType: modalChecks.onStage, checkValue: 'basic-vocab-1' },
+    ],
     repeat: false,
     text: [
       [
@@ -94,8 +95,9 @@ export default [
   {
     id: 'map-intro',
     screen: screens.townMap,
-    check: modalChecks.completedStageCount,
-    checkValue: 0,
+    checks: [
+      { checkType: modalChecks.completedStageCount, checkValue: 0 },
+    ],
     repeat: true,
     text: [
       [
@@ -106,8 +108,9 @@ export default [
   {
     id: 'vocab-study-intro',
     screen: screens.vocabStudy,
-    check: modalChecks.completedStageCount,
-    checkValue: 0,
+    checks: [
+      { checkType: modalChecks.completedStageCount, checkValue: 0 },
+    ],
     repeat: true,
     text: [
       [
@@ -144,9 +147,11 @@ export default [
   {
     id: 'first-win',
     screen: screens.endgame,
-    check: modalChecks.completedStageCount,
-    checkValue: 1,
-    repeat: false,
+    checks: [
+      { checkType: modalChecks.completedStageCount, checkValue: 1 },
+      { checkType: modalChecks.stageWon },
+    ],
+    repeat: true,
     text: [
       [
         'You win!',

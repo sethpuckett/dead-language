@@ -24,8 +24,10 @@ export default class extends Phaser.Scene {
     ];
     this.currentSelection = 0;
     this.inputHandled = false;
+    this.won = this.params.status === endgame.win;
+    this.stageId = this.params.stageId;
 
-    this.ModalChecker = new ModalChecker(this);
+    this.ModalChecker = new ModalChecker(this, this.stageId, this.won);
   }
 
   create() {

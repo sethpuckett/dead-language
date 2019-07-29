@@ -3,9 +3,10 @@ import MultiModal from './MultiModal';
 import GameProgressManager from '../../data/GameProgressManager';
 
 export default class {
-  constructor(scene, stageId = null) {
+  constructor(scene, stageId = null, won = false) {
     this.scene = scene;
     this.stageId = stageId;
+    this.won = won;
     this.completedCallback = null;
 
     this.modalHelper = new ModalHelper(this.scene);
@@ -32,7 +33,9 @@ export default class {
   // Private
 
   getStartModal() {
-    return this.modalHelper.getModalConfigByConditions(this.scene.scene.key, this.stageId);
+    return this.modalHelper.getModalConfigByConditions(
+      this.scene.scene.key, this.stageId, this.won
+    );
   }
 
   createStartModal(modalConfig) {

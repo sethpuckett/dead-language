@@ -12,21 +12,12 @@ export default class {
     return modalText.find(m => m.id === modalId);
   }
 
-  getModalConfigByConditions(screen, stageId) {
+  getModalConfigByConditions(screen, stageId = null, won = false) {
     const potentials = this.getPotentialModals(screen);
 
-    let modalConfig = this.getOnStageModalConfig(potentials, stageId);
-    if (modalConfig != null) {
-      return modalConfig;
-    }
-
-    const completedStages = this.progressManager.getCompletedStages();
-    modalConfig = this.getCompletedStageCountModalConfig(potentials, completedStages.length);
-    if (modalConfig != null) {
-      return modalConfig;
-    }
-
-    return null;
+    return potentials.find((potential) => {
+      return potential.checks.every(c => this.passesCheck(c, stageId, won));
+    });
   }
 
   // Private
@@ -39,17 +30,24 @@ export default class {
     );
   }
 
-  getOnStageModalConfig(potentials, stageId) {
-    return potentials.find(
-      m => m.check === modalChecks.onStage
-      && m.checkValue === stageId
-    );
-  }
+  passesCheck(check, stageId, won) {
+    if (check.checkType === modalChecks.onStage) {
+      return check.checkValue === stageId;
+    }
 
-  getCompletedStageCountModalConfig(potentials, completedStageCount) {
-    return potentials.find(
-      m => m.check === modalChecks.completedStageCount
-      && m.checkValue === completedStageCount
-    );
+    if (check.checkType === modalChecks.completedStageCount) {
+      const completedStages = this.progressManager.getCompletedStages();
+      return check.checkValue === completedStages.length;
+    }
+
+    if (check.checkType === modalChecks.stageWon) {
+      return won;
+    }
+
+    if (check.checkType === modalChecks.stageLost) {
+      return !won;
+    }
+
+    return false;
   }
 }
