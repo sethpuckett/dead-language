@@ -6,7 +6,5 @@ export default {
   stageCompleted: 'stage-completed',
   lessonCompleted: 'lesson-completed',
   gameType: 'game-type',
-
-  // Not implemented yet
   default: 'default',
 };

@@ -210,4 +210,30 @@ export default [
       ],
     ],
   },
+  {
+    id: 'default-test',
+    screen: screens.minigame,
+    checks: [
+      { checkType: modalChecks.default },
+    ],
+    repeat: false,
+    text: [
+      [
+        'default modal!',
+      ],
+    ],
+  },
+  {
+    id: 'default-test-2',
+    screen: screens.townMap,
+    checks: [
+      { checkType: modalChecks.default },
+    ],
+    repeat: false,
+    text: [
+      [
+        'default map modal!',
+      ],
+    ],
+  },
 ];

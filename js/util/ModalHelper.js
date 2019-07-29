@@ -15,9 +15,15 @@ export default class {
   getModalConfigByConditions(screen, stageId = null, won = false) {
     const potentialModals = this.getPotentialModals(screen);
 
-    return potentialModals.find((potential) => {
+    let modal = potentialModals.find((potential) => {
       return potential.checks.every(c => this.passesCheck(c, stageId, won));
     });
+
+    if (modal == null) {
+      modal = this.getDefaultModal(screen);
+    }
+
+    return modal;
   }
 
   // Private
@@ -67,6 +73,16 @@ export default class {
       return stageType === check.checkValue;
     }
 
+    if (check.checkType === modalChecks.default) {
+      return false;
+    }
+
     throw Error(`Unsupported check type: ${check.checkType}`);
+  }
+
+  getDefaultModal(screen) {
+    return modalText.find(
+      m => m.screen === screen && m.checks.some(c => c.checkType === modalChecks.default)
+    );
   }
 }
