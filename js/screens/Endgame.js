@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { fonts, endgame, screens, images, depth } from '../config';
 import endgameUiHelper from './ui/endgameUiHelper';
+import ModalChecker from './modal/ModalChecker';
 
 const MAP = 'map';
 const REDO = 'redo';
@@ -22,6 +23,9 @@ export default class extends Phaser.Scene {
       { text: 'Return to Map', key: MAP },
     ];
     this.currentSelection = 0;
+    this.inputHandled = false;
+
+    this.ModalChecker = new ModalChecker(this);
   }
 
   create() {
@@ -29,8 +33,9 @@ export default class extends Phaser.Scene {
     this.showBackground();
     this.showStatus();
     this.createMenu();
-    this.createInput();
+    this.enableInputHandling();
     this.updateMenuSelection();
+    this.checkStartModal();
   }
 
   showBackground() {
@@ -84,6 +89,33 @@ export default class extends Phaser.Scene {
     this.selector.displayHeight = this.ui.selectHeight;
     this.selector.flipX = true;
     this.selector.setOrigin(this.ui.selectOriginX, this.ui.selectOriginY);
+  }
+
+  checkStartModal() {
+    this.ModalChecker.setBeforeStartCallback(() => {
+      this.disableInputHandling();
+    });
+
+    this.ModalChecker.setCompletedCallback(() => {
+      this.enableInputHandling();
+    });
+
+    this.ModalChecker.checkModal();
+  }
+
+  enableInputHandling() {
+    if (!this.inputHandled) {
+      this.inputHandled = true;
+      this.createInput();
+    }
+  }
+
+  disableInputHandling() {
+    if (this.inputHandled) {
+      this.inputHandled = false;
+      this.keys = null;
+      this.input.keyboard.off('keydown', this.handleKeyDown);
+    }
   }
 
   createInput() {

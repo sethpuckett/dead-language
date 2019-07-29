@@ -139,10 +139,11 @@ export default class {
     const user = this.db.getCurrentUserProfile();
     if (user != null) {
       user.update(updateObject).then(() => {
-        this.db.loadUserProfile();
-        if (callback != null) {
-          callback(true);
-        }
+        this.db.loadUserProfile(() => {
+          if (callback != null) {
+            callback(true);
+          }
+        }, this);
       });
     } else if (callback != null) {
       callback(false);

@@ -141,4 +141,16 @@ export default [
       ],
     ],
   },
+  {
+    id: 'first-win',
+    screen: screens.endgame,
+    check: modalChecks.completedStageCount,
+    checkValue: 1,
+    repeat: false,
+    text: [
+      [
+        'You win!',
+      ],
+    ],
+  },
 ];
