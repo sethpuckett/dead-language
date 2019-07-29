@@ -3,10 +3,10 @@ export default {
   completedStageCount: 'completed-stage-count',
   stageWon: 'stage-won',
   stageLost: 'stage-lost',
+  stageCompleted: 'stage-completed',
+  lessonCompleted: 'lesson-completed',
+  gameType: 'game-type',
 
   // Not implemented yet
-  stageCompleted: 'stage-completed',
-  levelCompleted: 'level-completed',
-  gameType: 'game-type',
   default: 'default',
 };

@@ -158,4 +158,56 @@ export default [
       ],
     ],
   },
+  {
+    id: 'first-loss',
+    screen: screens.endgame,
+    checks: [
+      { checkType: modalChecks.stageLost },
+    ],
+    repeat: false,
+    text: [
+      [
+        'You lost!',
+      ],
+    ],
+  },
+  {
+    id: 'stage-completed-test',
+    screen: screens.townMap,
+    checks: [
+      { checkType: modalChecks.stageCompleted, checkValue: 'basic-vocab-4' },
+    ],
+    repeat: false,
+    text: [
+      [
+        'stage 4 completed!',
+      ],
+    ],
+  },
+  {
+    id: 'lesson-completed-test',
+    screen: screens.townMap,
+    checks: [
+      { checkType: modalChecks.lessonCompleted, checkValue: 'lesson-basic-vocab' },
+    ],
+    repeat: false,
+    text: [
+      [
+        'basic vocab lesson completed!',
+      ],
+    ],
+  },
+  {
+    id: 'game-type-test',
+    screen: screens.minigame,
+    checks: [
+      { checkType: modalChecks.gameType, checkValue: 'zombie-assault-review' },
+    ],
+    repeat: false,
+    text: [
+      [
+        'review stage!',
+      ],
+    ],
+  },
 ];

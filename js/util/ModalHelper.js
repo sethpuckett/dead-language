@@ -13,9 +13,9 @@ export default class {
   }
 
   getModalConfigByConditions(screen, stageId = null, won = false) {
-    const potentials = this.getPotentialModals(screen);
+    const potentialModals = this.getPotentialModals(screen);
 
-    return potentials.find((potential) => {
+    return potentialModals.find((potential) => {
       return potential.checks.every(c => this.passesCheck(c, stageId, won));
     });
   }
@@ -48,6 +48,25 @@ export default class {
       return !won;
     }
 
-    return false;
+    if (check.checkType === modalChecks.stageCompleted) {
+      const completedStages = this.progressManager.getCompletedStages();
+      return completedStages.includes(check.checkValue);
+    }
+
+    if (check.checkType === modalChecks.lessonCompleted) {
+      const completedLessons = this.progressManager.getCompletedLessons();
+      return completedLessons.includes(check.checkValue);
+    }
+
+    if (check.checkType === modalChecks.gameType) {
+      if (stageId == null) {
+        return false;
+      }
+
+      const stageType = this.progressManager.getStageType(stageId);
+      return stageType === check.checkValue;
+    }
+
+    throw Error(`Unsupported check type: ${check.checkType}`);
   }
 }
