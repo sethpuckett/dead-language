@@ -8,7 +8,7 @@ export default [
     },
   },
   {
-    id: 'lesson-nouns-01',
+    id: 'lesson-nouns-1',
     location: 'Storage Sheds',
     position: {
       x: 1,
@@ -23,12 +23,20 @@ export default [
       y: 1,
     },
   },
+  // {
+  //   id: 'lesson-numbers-2',
+  //   location: 'Accounting Office',
+  //   position: {
+  //     x: 0,
+  //     y: 1,
+  //   },
+  // },
   {
-    id: 'lesson-numbers-02',
-    location: 'Accounting Office',
+    id: 'lesson-adjectives-1',
+    location: 'Econo-lux Apartments',
     position: {
-      x: 1,
-      y: 2,
+      x: 2,
+      y: 1,
     },
   },
 ];
