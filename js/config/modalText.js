@@ -225,14 +225,15 @@ export default [
   },
   {
     id: 'default-test-2',
-    screen: screens.townMap,
+    screen: screens.minigame,
     checks: [
+      { checkType: modalChecks.gameType, checkValue: 'zombie-assault-review' },
       { checkType: modalChecks.default },
     ],
-    repeat: false,
+    repeat: true,
     text: [
       [
-        'default map modal!',
+        'default review modal!',
       ],
     ],
   },

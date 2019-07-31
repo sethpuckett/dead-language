@@ -16,11 +16,14 @@ export default class {
     const potentialModals = this.getPotentialModals(screen);
 
     let modal = potentialModals.find((potential) => {
-      return potential.checks.every(c => this.passesCheck(c, stageId, won));
+      return potential.checks.every(c => this.passesCheck(c, stageId, won, false));
     });
 
+    // if no potentials match, check for default modal
     if (modal == null) {
-      modal = this.getDefaultModal(screen);
+      modal = potentialModals.find((potential) => {
+        return potential.checks.every(c => this.passesCheck(c, stageId, won, true));
+      });
     }
 
     return modal;
@@ -36,7 +39,7 @@ export default class {
     );
   }
 
-  passesCheck(check, stageId, won) {
+  passesCheck(check, stageId, won, includeDefault) {
     if (check.checkType === modalChecks.onStage) {
       return check.checkValue === stageId;
     }
@@ -74,7 +77,7 @@ export default class {
     }
 
     if (check.checkType === modalChecks.default) {
-      return false;
+      return includeDefault;
     }
 
     throw Error(`Unsupported check type: ${check.checkType}`);
