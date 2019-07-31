@@ -39,4 +39,28 @@ export default [
       y: 1,
     },
   },
+  {
+    id: 'lesson-verbs-1',
+    location: 'Activity Center',
+    position: {
+      x: 2,
+      y: 2,
+    },
+  },
+  {
+    id: 'lesson-nouns-2',
+    location: 'Maintenance Building',
+    position: {
+      x: 2,
+      y: 0,
+    },
+  },
+  {
+    id: 'lesson-around-the-house',
+    location: 'Hillside Apartments',
+    position: {
+      x: 3,
+      y: 2,
+    },
+  },
 ];
