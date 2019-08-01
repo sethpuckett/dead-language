@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
-import { fonts, endgame, screens, images, depth } from '../config';
+import { fonts, endgame, screens, images, depth, gameTypes } from '../config';
 import endgameUiHelper from './ui/endgameUiHelper';
 import ModalChecker from './modal/ModalChecker';
+import GameProgressManager from '../data/GameProgressManager';
 
 const MAP = 'map';
 const REDO = 'redo';
@@ -13,19 +14,18 @@ export default class extends Phaser.Scene {
   }
 
   init(params) {
+    this.progressManager = new GameProgressManager(this.sys.game.db);
     this.params = params;
-    this.winOptions = [
-      { text: 'Return to Map', key: MAP },
-    ];
-    this.loseOptions = [
-      { text: 'Try Again', key: REDO },
-      { text: 'Target Practice', key: PRACTICE },
-      { text: 'Return to Map', key: MAP },
-    ];
     this.currentSelection = 0;
     this.inputHandled = false;
     this.won = this.params.status === endgame.win;
     this.stageId = this.params.stageId;
+
+    this.winOptions = [{ text: 'Return to Map', key: MAP }];
+    this.loseOptions = [{ text: 'Try Again', key: REDO }, { text: 'Return to Map', key: MAP }];
+    if (this.allowTargetPractice()) {
+      this.loseOptions.push({ text: 'Target Practice', key: PRACTICE });
+    }
 
     this.ModalChecker = new ModalChecker(this, this.stageId, this.won);
   }
@@ -163,5 +163,9 @@ export default class extends Phaser.Scene {
         this.scene.start(screens.minigame, this.params.stageId);
       }
     }
+  }
+
+  allowTargetPractice() {
+    return this.progressManager.getStageType(this.stageId) === gameTypes.zombieAssault.id;
   }
 }
