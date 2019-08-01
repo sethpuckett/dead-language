@@ -6,89 +6,70 @@ export default [
     id: 'game-intro',
     text: [
       [
-        'Howdy. You awake? How ya holdin\' up?',
+        '¡Hola! ¿Estás despierto?',
       ],
       [
-        'Tired? Yeah, me too. We\'re all tired.',
-        'I can\'t even remember how long we\'ve been on',
-        'the run from them zombies. Weeks?',
-        'Months? Who knows.',
+        'Oops! Sorry! I forgot that your Spanish',
+        'still needs some work. No te preocupes.',
+        'You\'ll get the hang of it.',
       ],
       [
-        'Moral is low for everyone these days.',
-        'supplies are runnin\' out, and it seems',
-        'like there\'s  more of them... THINGS out',
-        'there every day. We\'re losin\' folks',
-        'left and right.',
+        'Anyway, how are you holding up?',
       ],
       [
-        'But enough of that gloom and doom.',
-        'I came over here to tell ya that we got some',
-        'good news for a change.',
+        'Tired? Yo también. Everyone is tired.',
+        'Running from the zombies is hard work.',
+        'But I suppose it\'s better than',
+        'the alternative!',
       ],
       [
-        'The scouts came back and they found somethin\'.',
-        'Somethin\' big.',
+        'I don\'t know how much longer we can',
+        'keep it up. Supplies are running out.',
+        'And there are more of those... THINGS out',
+        'there every day.',
       ],
       [
-        'It\'s a town. One of them... gated communities.',
-        'They say it\'s got strong walls, housin\', medical',
-        'facilities... you name it. And they say it\'s',
-        'mostly intact. Could be a great place to hole',
-        'up and ride this thing out.',
+        'But enough gloom and doom. I came over here',
+        'to tell you that we\'ve got some good news',
+        'for a change.',
       ],
       [
-        'Better than runnin\' around scavengin\' every',
-        'day. Never knowin\' when we\'re gonna run into',
-        'more of them creatures.',
+        'The scouts came back and they found something.',
+        'Something big!',
       ],
       [
-        'There\'s just one catch. The whole place is',
-        'still crawlin\' with zombies. We\'re gonna have',
-        'to clear \'em out before we can make much',
+        'It\'s a town. Some kind of gated community.',
+        'They say it\'s got strong walls, food, housing',
+        'medical facilities... you name it. And they',
+        'say it\'s mostly intact. It could be a',
+        'great place to hole up and ride this',
+        'thing out.',
+      ],
+      [
+        'It\'s better than running around out here',
+        'in the open, scavenging for food, and never',
+        'knowing when we\'re going to run into more of',
+        'those creatures.',
+      ],
+      [
+        'There\'s just one catch. The whole town is',
+        'still crawling with muertos. We\'ll have',
+        'to clear them out before we can make much',
         'use of the place.',
       ],
       [
         'But I think we can do it. We\'ve got the people.',
         'We\'ve got the guns. And the scouts were able',
-        'to map out the town. I\'m thinkin\' if we move in',
-        'strategic-like and clear it out area by area we',
-        'might just have a chance.',
+        'to map out the whole town. If we move in',
+        'strategically and clear it out area by area',
+        'we might just have a chance.',
       ],
       [
-        'Anyway, it\'s the best hope we got. So whadda',
-        'ya say? You in? The others are gearin\' up right',
-        'now. Grab yer pack, get yer gun, and let\'s go',
-        'put some zombies to rest.',
-      ],
-    ],
-  },
-  {
-    id: 'minigame-intro',
-    screen: screens.minigame,
-    checks: [
-      { checkType: modalChecks.onStage, checkValue: 'basic-vocab-1' },
-    ],
-    repeat: false,
-    text: [
-      [
-        'Those zombies will be here any second!',
-        'I sure hope ya got enough practice.',
-      ],
-      [
-        'Try to stay calm when ya see \'em.',
-        'Just focus on the vocab next to each one.',
-        'Type the translation and press \'Enter\'',
-        'to take \'em out.',
-      ],
-      [
-        'But don\'t dawdle! If a zombie gets through',
-        'they\'ll attack. Take too many hits and',
-        'yer toast. Ya just need to survive until',
-        'the timer reaches 0.',
-      ],
-      [
-        'Okay! Here they come! Look out!',
+        'Anyway, it\'s the best hope we\'ve got.',
+        'So, what do you say? Are you in? The others',
+        'are gearing up right now. Grab your pack,',
+        'get your gun, and let\'s go kill some zombies!',
+        '¡Vamos!',
       ],
     ],
   },
@@ -101,7 +82,66 @@ export default [
     repeat: true,
     text: [
       [
-        'This is the map.',
+        'This is the town map. From here you can see',
+        'all the areas we\'ve cleared out along with',
+        'all the areas that are still infested.',
+      ],
+      [
+        'Each area has it\'s own category of vocab',
+        'words you\'ll need to learn if you want to',
+        'stand a chance against those muertos.',
+      ],
+      [
+        'As you can see we\'ve got our work cut out',
+        'for us. But I think we can do it.',
+      ],
+      [
+        'Now, we can\'t just go running into town',
+        'without a plan. We need to clear this place',
+        'out area by area. Let\'s start with the "Front',
+        'Gate. I\'ve marked it in yellow on your map.',
+      ],
+      [
+        'Try selecting the "Front Gate" on the map and',
+        'I\'ll show you what we need to do.',
+      ],
+    ],
+  },
+  {
+    id: 'minigame-intro',
+    screen: screens.minigame,
+    checks: [
+      { checkType: modalChecks.stageCompleted, checkValue: 0 },
+    ],
+    repeat: true,
+    text: [
+      [
+        'The muertos will be here any second!',
+        'I sure hope you got enough practice.',
+      ],
+      [
+        'They\'re vile, disgusting creatures, but',
+        'try to stay calm when you see them.',
+      ],
+      [
+        'Remember your target practice. Shooting a',
+        'zombie is the same as shooting a bottle. Just',
+        'focus on the vocab next to each one,',
+        'type the translation, and press \'Enter\'',
+        'to take \'em out.',
+      ],
+      [
+        'But don\'t take too long! If a zombie gets through',
+        'they\'ll attack. Take too many hits and you\'re',
+        'a goner.',
+      ],
+      [
+        'And keep an eye on that timer at the bottom',
+        'of the screen. You just need to survive',
+        'until that reaches \'0\'.',
+      ],
+      [
+        'Okay! Here they come! ¡Ten cuidado!',
       ],
     ],
   },
@@ -114,33 +154,42 @@ export default [
     repeat: true,
     text: [
       [
-        'Welcome to target practice, friend.',
-        'Ya need to be prepared if yer gonna',
-        'take on them zombies.',
+        'This is target practice. You\'re going to need',
+        'it. You won\'t stand a chance against those',
+        'zombies if you\'re not prepared.',
       ],
       [
-        'Here\'s how it works: The words on the sides',
-        'of the screen are the new vocab fer',
-        'this stage. Memorize \'em!',
+        'From this screen you can see all of the vocab',
+        'for the current stage. Some stages will have',
+        'more than others. It looks like we should have',
+        'it pretty easy for our first go.',
       ],
       [
-        'Ya can use the controls at the bottom',
-        'to hide one language or the other',
-        'if it helps ya study.',
+        'Before you start the stage you should memorize',
+        'all the translations on this screen. You can',
+        'use the controls at the bottom of the screen to',
+        'hide either language if it helps you study.',
       ],
       [
-        'When yer ready to put yer skills to the test',
-        'select \'Practice\'. I\'ll set up the bottles',
-        'and you do yer best to shoot \'em down.',
+        'You can also practice if you want to test',
+        'your skills before taking on the zombies.',
+        'Select "Start Practice" and I\'ll set up some',
+        'bottles for your to shoot at.',
       ],
       [
-        'Just type the translation fer the word under',
-        'the bottle and press \'Enter\'. Don\'t worry',
-        'about time and don\'t worry about missin\'.',
+        'Just type the translation for the word under',
+        'the bottle and press "Enter". You don\'t have',
+        'to worry about time and you don\'t have to',
+        'worry about missing.',
       ],
       [
-        'And if ya get tired ya can stop at',
-        'any time by pressin\' \'Esc\'.',
+        'If you get tired of target practice you can stop',
+        'at any time by pressing "Esc".',
+      ],
+      [
+        'Okay, I\'ll leave you to it. Practice as much',
+        'as you need, and start the game with controls',
+        'at the bottom when you\'re ready.',
       ],
     ],
   },
@@ -154,7 +203,22 @@ export default [
     repeat: true,
     text: [
       [
-        'You win!',
+        '¡Felicidades! You did it!',
+      ],
+      [
+        'We\'ve got a long way to go, but this is a great',
+        'start. I really think we have a chance!',
+      ],
+      [
+        'On this screen you can check out your stats for',
+        'the last stage. When you\'re ready to move',
+        'on head back to the map and see what\'s next.',
+      ],
+      [
+        'Oh, and just a heads up... I got some news',
+        'from the scouts. They\'ve seen something in the',
+        'the next area. Something bad. I\'ll tell you',
+        'all about it when we get there.',
       ],
     ],
   },
@@ -167,73 +231,19 @@ export default [
     repeat: false,
     text: [
       [
-        'You lost!',
+        'Oh no! There\'s too many of them!',
       ],
-    ],
-  },
-  {
-    id: 'stage-completed-test',
-    screen: screens.townMap,
-    checks: [
-      { checkType: modalChecks.stageCompleted, checkValue: 'basic-vocab-4' },
-    ],
-    repeat: false,
-    text: [
       [
-        'stage 4 completed!',
+        'We\'ve got to fall back, but don\'t give up.',
+        'This is just a minor setback.',
       ],
-    ],
-  },
-  {
-    id: 'lesson-completed-test',
-    screen: screens.townMap,
-    checks: [
-      { checkType: modalChecks.lessonCompleted, checkValue: 'lesson-basic-vocab' },
-    ],
-    repeat: false,
-    text: [
       [
-        'basic vocab lesson completed!',
+        'Maybe you should get in some more target',
+        'practice. Study that vocab a little longer',
+        'and then get back out there.',
       ],
-    ],
-  },
-  {
-    id: 'game-type-test',
-    screen: screens.minigame,
-    checks: [
-      { checkType: modalChecks.gameType, checkValue: 'zombie-assault-review' },
-    ],
-    repeat: false,
-    text: [
       [
-        'review stage!',
-      ],
-    ],
-  },
-  {
-    id: 'default-test',
-    screen: screens.minigame,
-    checks: [
-      { checkType: modalChecks.default },
-    ],
-    repeat: false,
-    text: [
-      [
-        'default modal!',
-      ],
-    ],
-  },
-  {
-    id: 'default-test-2',
-    screen: screens.minigame,
-    checks: [
-      { checkType: modalChecks.gameType, checkValue: 'zombie-assault-review' },
-      { checkType: modalChecks.default },
-    ],
-    repeat: true,
-    text: [
-      [
-        'default review modal!',
+        'I know you can do it, amigo.',
       ],
     ],
   },
