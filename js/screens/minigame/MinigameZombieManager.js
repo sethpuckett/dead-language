@@ -146,6 +146,18 @@ export default class {
     });
   }
 
+  destroyAllZombies() {
+    let releasedWords = [];
+    this.zombies.forEach((z) => {
+      releasedWords = releasedWords.concat(z.words);
+      z.text.destroy();
+      z.wordBgGraphics.destroy();
+      z.destroy();
+    });
+    this.zombies = [];
+    return releasedWords;
+  }
+
   // Private
 
   shootZombie(zombie, weapon) {

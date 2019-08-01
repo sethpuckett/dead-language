@@ -142,6 +142,9 @@ export default class extends Phaser.Scene {
   }
 
   gameTimerFinish() {
+    // destroy zombies so player doesn't take damage before callback fires
+    const releasedWords = this.zombieManager.destroyAllZombies();
+    releasedWords.forEach(w => this.vocab.releaseWord(w));
     this.progressManager.saveStageCompleted(this.stageId, () => {
       this.scene.start(screens.endgame, { status: endgame.win, stageId: this.stageId });
     });
