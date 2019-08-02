@@ -15,20 +15,6 @@ export default {
     requirementLineWidth: 3,
     requirementLineColor: 0xffffff,
   },
-  modals: {
-    stageLocked: [
-      'Whoa, slow down! The enthusiasm is great,',
-      'but we should clear these stages out in',
-      'order. You\'ve still got some work to',
-      'do before you take this one on.',
-    ],
-    lessonLocked: [
-      'Ten cuidado! That area\'s still too',
-      'dangerous. You\'ll never make it there alive!',
-      'I marked the spots we can get to in yellow on',
-      'the map. Stick to those!',
-    ],
-  },
   choiceModals: {
     stageSelected: {
       text: ['Are you ready to start?', '', 'Or do you need some target practice first?'],

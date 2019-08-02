@@ -18,6 +18,8 @@ const LESSON_SELECT = 'lesson-select';
 const STAGE_SELECT = 'stage-select';
 const STAGE_SELECT_INTRO = 'stage-select-intro';
 const FIRST_STAGE_GAME_LOCKED = 'first-stage-game-locked';
+const STAGE_LOCKED = 'stage-locked';
+const LESSON_LOCKED = 'lesson-locked';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -229,22 +231,20 @@ export default class extends Phaser.Scene {
 
   createStageLockedModal() {
     this.disableInputHandling();
-    this.modal = new Modal(this, townMap.modals.stageLocked);
-    this.modal.draw();
-    this.modal.enableInputClose();
-    this.modal.setCloseCallback(() => {
-      this.modal.disableInputHandling();
+    const config = this.modalHelper.getModalConfig(STAGE_LOCKED);
+    this.stageLockedModal = new MultiModal(this, config.text);
+    this.stageLockedModal.draw();
+    this.stageLockedModal.setCloseCallback(() => {
       this.assignControl(STAGE_SELECT);
     });
   }
 
   createLessonLockedModal() {
     this.disableInputHandling();
-    this.modal = new Modal(this, townMap.modals.lessonLocked);
-    this.modal.draw();
-    this.modal.enableInputClose();
-    this.modal.setCloseCallback(() => {
-      this.modal.disableInputHandling();
+    const config = this.modalHelper.getModalConfig(LESSON_LOCKED);
+    this.lessonLockedModal = new MultiModal(this, config.text);
+    this.lessonLockedModal.draw();
+    this.lessonLockedModal.setCloseCallback(() => {
       this.assignControl(LESSON_SELECT);
     });
   }

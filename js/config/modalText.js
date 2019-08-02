@@ -274,4 +274,26 @@ export default [
       ],
     ],
   },
+  {
+    id: 'stage-locked',
+    text: [
+      [
+        'Whoa, slow down! The enthusiasm is great,',
+        'but we should clear these stages out in',
+        'order. You\'ve still got some work to',
+        'do before you take this one on.',
+      ],
+    ],
+  },
+  {
+    id: 'lesson-locked',
+    text: [
+      [
+        'Ten cuidado! That area\'s still too',
+        'dangerous. You\'ll never make it there alive!',
+        'I marked the spots we can get to in yellow on',
+        'the map. Stick to those!',
+      ],
+    ],
+  },
 ];
