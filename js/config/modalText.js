@@ -126,6 +126,15 @@ export default [
     ],
   },
   {
+    id: 'first-stage-game-locked',
+    text: [
+      [
+        'It\'s a bad idea to go in unprepared.',
+        'Why don\'t you try some target practice first?',
+      ],
+    ],
+  },
+  {
     id: 'minigame-intro',
     screen: screens.minigame,
     checks: [

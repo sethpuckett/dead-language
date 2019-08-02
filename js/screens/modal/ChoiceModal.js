@@ -243,8 +243,7 @@ export default class {
     } else if (e.keyCode === this.keys.DOWN.keyCode) {
       this.incrementSelection();
     } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
-      this.selector.setFrame(images.frames.shotgunFiring);
-      this.closeCallback(this.selectedIndex);
+      this.optionSelected();
     } else if (e.keyCode === this.keys.ESC.keyCode) {
       this.cancelCallback();
     }

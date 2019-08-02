@@ -16,6 +16,8 @@ import ModalHelper from '../../util/ModalHelper';
 
 const LESSON_SELECT = 'lesson-select';
 const STAGE_SELECT = 'stage-select';
+const STAGE_SELECT_INTRO = 'stage-select-intro';
+const FIRST_STAGE_GAME_LOCKED = 'first-stage-game-locked';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -161,6 +163,13 @@ export default class extends Phaser.Scene {
       } else if (index === 1) { // target practice
         this.nextScreen = screens.vocabStudy;
       }
+
+      // force target practice for first stage
+      if (this.nextScreen === screens.minigame && this.progressManager.isNewGame()) {
+        this.createFirstLessonStartLockedModal();
+        return;
+      }
+
       this.cameras.main.fade(
         townMap.screenFadeTime, 0, 0, 0, false, this.stageSelectedFadeCallback
       );
@@ -242,12 +251,21 @@ export default class extends Phaser.Scene {
 
   createFirstLessonSelectedModal() {
     this.disableInputHandling();
-    // TODO: don't hard code name
-    const config = this.modalHelper.getModalConfig('stage-select-intro');
+    const config = this.modalHelper.getModalConfig(STAGE_SELECT_INTRO);
     this.firstLessonModal = new MultiModal(this, config.text);
     this.firstLessonModal.draw();
     this.firstLessonModal.setCloseCallback(() => {
       this.assignControl(STAGE_SELECT);
+    });
+  }
+
+  createFirstLessonStartLockedModal() {
+    this.disableInputHandling();
+    const config = this.modalHelper.getModalConfig(FIRST_STAGE_GAME_LOCKED);
+    this.startLockedModal = new MultiModal(this, config.text);
+    this.startLockedModal.draw();
+    this.startLockedModal.setCloseCallback(() => {
+      this.createStageSelectedModal(false);
     });
   }
 
