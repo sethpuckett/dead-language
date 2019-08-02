@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { townMap, screens, gameTypes } from '../../config';
 import Modal from '../modal/Modal';
+import MultiModal from '../modal/MultiModal';
 import ChoiceModal from '../modal/ChoiceModal';
 import townMapUiHelper from '../ui/townMapUiHelper';
 import TownMapMapManager from './TownMapMapManager';
@@ -11,6 +12,7 @@ import TownMapStageInfoManager from './TownMapStageInfoManager';
 import TownMapInstructionsManager from './TownMapInstructionsManager';
 import GameProgressManager from '../../data/GameProgressManager';
 import ModalChecker from '../modal/ModalChecker';
+import ModalHelper from '../../util/ModalHelper';
 
 const LESSON_SELECT = 'lesson-select';
 const STAGE_SELECT = 'stage-select';
@@ -30,7 +32,8 @@ export default class extends Phaser.Scene {
     this.stageInfoManager = new TownMapStageInfoManager(this);
     this.instructionsManager = new TownMapInstructionsManager(this);
     this.progressManager = new GameProgressManager(this.sys.game.db);
-    this.ModalChecker = new ModalChecker(this);
+    this.modalChecker = new ModalChecker(this);
+    this.modalHelper = new ModalHelper(this);
 
     this.selectState = LESSON_SELECT;
   }
@@ -131,25 +134,16 @@ export default class extends Phaser.Scene {
     this.stageInfoManager.enable();
   }
 
-  assignInputControl(component) {
-    this.disableInputHandling();
-    if (component === LESSON_SELECT) {
-      this.mapManager.enableInputHandling();
-    } else if (component === STAGE_SELECT) {
-      this.stageSelectManager.enableInputHandling();
-    }
-  }
-
   checkStartModal() {
-    this.ModalChecker.setBeforeStartCallback(() => {
+    this.modalChecker.setBeforeStartCallback(() => {
       this.disableInputHandling();
     });
 
-    this.ModalChecker.setCompletedCallback(() => {
-      this.assignInputControl(this.selectState);
+    this.modalChecker.setCompletedCallback(() => {
+      this.assignControl(this.selectState);
     });
 
-    this.ModalChecker.checkModal();
+    this.modalChecker.checkModal();
   }
 
   createStageSelectedModal(cleared) {
@@ -231,7 +225,7 @@ export default class extends Phaser.Scene {
     this.modal.enableInputClose();
     this.modal.setCloseCallback(() => {
       this.modal.disableInputHandling();
-      this.assignInputControl(STAGE_SELECT);
+      this.assignControl(STAGE_SELECT);
     });
   }
 
@@ -242,7 +236,18 @@ export default class extends Phaser.Scene {
     this.modal.enableInputClose();
     this.modal.setCloseCallback(() => {
       this.modal.disableInputHandling();
-      this.assignInputControl(LESSON_SELECT);
+      this.assignControl(LESSON_SELECT);
+    });
+  }
+
+  createFirstLessonSelectedModal() {
+    this.disableInputHandling();
+    // TODO: don't hard code name
+    const config = this.modalHelper.getModalConfig('stage-select-intro');
+    this.firstLessonModal = new MultiModal(this, config.text);
+    this.firstLessonModal.draw();
+    this.firstLessonModal.setCloseCallback(() => {
+      this.assignControl(STAGE_SELECT);
     });
   }
 
@@ -269,7 +274,11 @@ export default class extends Phaser.Scene {
           this.stageSelectManager.getStageId(),
           this.stageSelectManager.getStageNumber()
         );
-        this.assignControl(STAGE_SELECT);
+        if (this.progressManager.isNewGame()) {
+          this.createFirstLessonSelectedModal();
+        } else {
+          this.assignControl(STAGE_SELECT);
+        }
       } else {
         this.createLessonLockedModal();
       }

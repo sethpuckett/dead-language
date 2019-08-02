@@ -2,6 +2,7 @@
 import { modalText, modalChecks } from '../config';
 import GameProgressManager from '../data/GameProgressManager';
 
+// TODO: move this to modal directory
 export default class {
   constructor(scene) {
     this.scene = scene;

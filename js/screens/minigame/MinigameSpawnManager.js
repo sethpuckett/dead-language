@@ -119,6 +119,8 @@ export default class {
     const wave = this.getCurrentWave(gameTime);
     const num = Phaser.Math.RND.between(1, 100);
     const enemy = wave.probabilities.find(c => c.min <= num && c.max >= num);
+    // TODO: this will error if wave probability times aren't set correctly
+    //       and there are no enemies.
     return enemy.enemyType;
   }
 }

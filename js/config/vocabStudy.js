@@ -52,7 +52,7 @@ export default {
   modals: {
     practice: [
       'I\'ll set up the bottles, then.',
-      'Take yer time. And good luck.',
+      'Take your time. And good luck.',
     ],
   },
 };

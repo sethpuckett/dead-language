@@ -88,7 +88,7 @@ export default [
       ],
       [
         'Each area has it\'s own category of vocab',
-        'words you\'ll need to learn if you want to',
+        'that you\'ll need to learn if you want to',
         'stand a chance against those muertos.',
       ],
       [
@@ -104,6 +104,24 @@ export default [
       [
         'Try selecting the "Front Gate" on the map and',
         'I\'ll show you what we need to do.',
+      ],
+    ],
+  },
+  {
+    id: 'stage-select-intro',
+    text: [
+      [
+        'Each area on the map contains one or more',
+        'stages. Now that you\'ve selected an area',
+        'you need to pick a stage. Each one has',
+        'its own challenges and its own vocab.',
+      ],
+      [
+        'Go ahead and pick the first stage. You\'ll',
+        'have the opportunity to do some target',
+        'practice before you take on the zombies.',
+        'I recommend that you take advantage',
+        'of it.',
       ],
     ],
   },
@@ -173,7 +191,7 @@ export default [
       [
         'You can also practice if you want to test',
         'your skills before taking on the zombies.',
-        'Select "Start Practice" and I\'ll set up some',
+        'Select "Practice" and I\'ll set up some',
         'bottles for your to shoot at.',
       ],
       [
@@ -188,8 +206,8 @@ export default [
       ],
       [
         'Okay, I\'ll leave you to it. Practice as much',
-        'as you need, and start the game with controls',
-        'at the bottom when you\'re ready.',
+        'as you need. When you\'re ready you can start',
+        'the game with the controls at the bottom.',
       ],
     ],
   },

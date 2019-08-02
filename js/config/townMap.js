@@ -17,23 +17,21 @@ export default {
   },
   modals: {
     stageLocked: [
-      'Whoa! Hold up there, friend.',
-      'I like the enthusiasm, but yer',
-      'jumpin\' the gun a little bit.',
-      'We gotta clear them stages out in order.',
-      'Looks like you still got some work to do',
-      'before you can take this one on.',
+      'Whoa, slow down! The enthusiasm is great,',
+      'but we should clear these stages out in',
+      'order. You\'ve still got some work to',
+      'do before you take this one on.',
     ],
     lessonLocked: [
-      'Whoa! Slow down! That area\'s still too',
+      'Ten cuidado! That area\'s still too',
       'dangerous. You\'ll never make it there alive!',
-      'I marked the spots we can get to in yella on',
-      'yer map. Stick to those!',
+      'I marked the spots we can get to in yellow on',
+      'the map. Stick to those!',
     ],
   },
   choiceModals: {
     stageSelected: {
-      text: ['Are ya ready to start?', '', 'Or do ya need some target practice first?'],
+      text: ['Are you ready to start?', '', 'Or do you need some target practice first?'],
       choices: [
         'Start Game',
         'Target Practice',
@@ -52,8 +50,10 @@ export default {
     },
     reviewStageSelected: {
       text: [
-        'Alright, friend, this is it.', 'The final push to clear out this location.',
-        'Yer gonna see vocab from every stage in this lesson.', 'I sure hope yer ready.',
+        'Alright, this is it. The final push to clear',
+        'out this location. You\'re going to see vocab',
+        'from every stage in this lesson.',
+        'I hope you\'re ready!',
       ],
       choices: [
         'Start Game',
