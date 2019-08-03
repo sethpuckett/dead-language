@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
-import { modalText, modalChecks } from '../config';
-import GameProgressManager from '../data/GameProgressManager';
+import { modalText, modalChecks } from '../../config';
+import GameProgressManager from '../../data/GameProgressManager';
 
 // TODO: move this to modal directory
 export default class {

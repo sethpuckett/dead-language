@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import { townMap, screens, gameTypes } from '../../config';
-import Modal from '../modal/Modal';
 import MultiModal from '../modal/MultiModal';
 import ChoiceModal from '../modal/ChoiceModal';
 import townMapUiHelper from '../ui/townMapUiHelper';
@@ -12,7 +11,7 @@ import TownMapStageInfoManager from './TownMapStageInfoManager';
 import TownMapInstructionsManager from './TownMapInstructionsManager';
 import GameProgressManager from '../../data/GameProgressManager';
 import ModalChecker from '../modal/ModalChecker';
-import ModalHelper from '../../util/ModalHelper';
+import ModalHelper from '../modal/ModalHelper';
 
 const LESSON_SELECT = 'lesson-select';
 const STAGE_SELECT = 'stage-select';

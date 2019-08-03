@@ -3,7 +3,7 @@ import { images, titleMenu, fonts, screens, depth } from '../../config';
 import titleMenuUiHelper from '../ui/titleMenuUiHelper';
 import TitleZombieManager from './TitleZombieManager';
 import TitleSpawnManager from './TitleSpawnManager';
-import ModalHelper from '../../util/ModalHelper';
+import ModalHelper from '../modal/ModalHelper';
 import GameProgressManager from '../../data/GameProgressManager';
 
 export default class extends Phaser.Scene {

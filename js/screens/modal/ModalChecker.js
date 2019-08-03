@@ -1,4 +1,4 @@
-import ModalHelper from '../../util/ModalHelper';
+import ModalHelper from './ModalHelper';
 import MultiModal from './MultiModal';
 import GameProgressManager from '../../data/GameProgressManager';
 
