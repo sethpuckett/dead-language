@@ -50,7 +50,7 @@ export default [
     startCash: 200,
     baseFallSpeed: 75,
     fallRange: 10,
-    gameTime: 20,
+    gameTime: 2,
     mercenaryEnabled: true,
     mercenaryCost: 100,
     weapons: {

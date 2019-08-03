@@ -1,9 +1,11 @@
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
+import UnlockableManager from './UnlockableManager';
 
 export default class {
   constructor(db) {
     this.db = db;
+    this.unlockableManager = new UnlockableManager(db);
   }
 
   isNewGame() {
@@ -131,10 +133,14 @@ export default class {
   saveStageCompleted(stageId, callback) {
     const lesson = this.db.getLessonForStage(stageId);
     const lessonCompleted = lesson.stages.every(s => s === stageId || this.isStageCompleted(s));
+    const unlockedItems = this.unlockableManager.getUnlockedItemsForStage(stageId);
     const updateObject = { stagesCompleted: firebase.firestore.FieldValue.arrayUnion(stageId) };
     if (lessonCompleted) {
       updateObject.lessonsCompleted = firebase.firestore.FieldValue.arrayUnion(lesson.id);
       updateObject.mapState = { lesson: lesson.id, stage: null };
+    }
+    if (unlockedItems.length > 0) {
+      updateObject.unlockedItems = firebase.firestore.FieldValue.arrayUnion(...unlockedItems);
     }
     this.updateUserProfile(updateObject, callback);
   }

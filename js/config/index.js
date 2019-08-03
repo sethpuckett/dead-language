@@ -23,3 +23,5 @@ export { default as minigameItems } from './minigameItems';
 export { default as modalText } from './modalText';
 export { default as modalChecks } from './modalChecks';
 export { default as story } from './story';
+export { default as enemyTypes } from './enemyTypes';
+export { default as unlockableItems } from './unlockableItems';
