@@ -1,9 +1,10 @@
 import unlockableItems from './unlockableItems';
+import lessons from './lessons';
 
 // TODO: move this to db
 export default [
   {
     item: unlockableItems.sprinterZombie,
-    stage: 'basic-vocab-2',
+    stage: lessons.basicVocab.stage2,
   },
 ];

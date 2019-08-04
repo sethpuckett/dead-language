@@ -1,6 +1,8 @@
+import lessons from './lessons';
+
 export default [
   {
-    id: 'lesson-basic-vocab',
+    id: lessons.basicVocab.name,
     location: 'The Front Gate',
     position: {
       x: 0,
@@ -8,7 +10,7 @@ export default [
     },
   },
   {
-    id: 'lesson-nouns-1',
+    id: lessons.nouns1.name,
     location: 'Storage Sheds',
     position: {
       x: 1,
@@ -16,7 +18,7 @@ export default [
     },
   },
   {
-    id: 'lesson-numbers-1',
+    id: lessons.numbers1.name,
     location: 'Administration Building',
     position: {
       x: 1,
@@ -24,7 +26,7 @@ export default [
     },
   },
   // {
-  //   id: 'lesson-numbers-2',
+  //   id: lessons.numbers2.name,
   //   location: 'Accounting Office',
   //   position: {
   //     x: 0,
@@ -32,7 +34,7 @@ export default [
   //   },
   // },
   {
-    id: 'lesson-adjectives-1',
+    id: lessons.adjectives1.name,
     location: 'Econo-lux Apartments',
     position: {
       x: 2,
@@ -40,7 +42,7 @@ export default [
     },
   },
   {
-    id: 'lesson-verbs-1',
+    id: lessons.verbs1.name,
     location: 'Activity Center',
     position: {
       x: 2,
@@ -48,7 +50,7 @@ export default [
     },
   },
   {
-    id: 'lesson-nouns-2',
+    id: lessons.nouns2.name,
     location: 'Maintenance Building',
     position: {
       x: 2,
@@ -56,7 +58,7 @@ export default [
     },
   },
   {
-    id: 'lesson-around-the-house',
+    id: lessons.aroundTheHouse.name,
     location: 'Hillside Apartments',
     position: {
       x: 3,
