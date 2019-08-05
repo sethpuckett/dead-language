@@ -74,6 +74,18 @@ export default class {
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }
 
+  isModalSeen(modalId) {
+    if (!this.db.isUserLoggedIn()) {
+      return false;
+    }
+
+    if (this.db.userProfileLoaded) {
+      const seen = this.db.userProfile.modalsSeen;
+      return seen != null && seen.includes(modalId);
+    }
+    throw Error('user profile has not been loaded. Call loadUserProfile() first');
+  }
+
   getStageType(stageId) {
     return this.db.getStage(stageId).type;
   }

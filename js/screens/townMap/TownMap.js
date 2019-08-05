@@ -165,8 +165,10 @@ export default class extends Phaser.Scene {
         this.nextScreen = screens.vocabStudy;
       }
 
-      // force target practice for first stage
-      if (this.nextScreen === screens.minigame && this.progressManager.isNewGame()) {
+      // force target practice first time
+      // TODO: don't hard code modal id
+      if (this.nextScreen === screens.minigame
+          && !this.progressManager.isModalSeen('vocab-study-intro')) {
         this.createFirstLessonStartLockedModal();
         return;
       }
