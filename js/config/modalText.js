@@ -1,6 +1,7 @@
 import screens from './screens';
 import modalChecks from './modalChecks';
 import unlockableItems from './unlockableItems';
+import lessons from './lessons';
 
 export default [
   {
@@ -348,22 +349,56 @@ export default [
         'to clear.',
       ],
       [
-        'By the way, are you getting hungry yet? The scouts',
-        'have reported that there is still quite a bit of',
-        'food in town. Picking some up should give you',
-        'a health boost if those zombies are getting',
-        'to you.',
+        'By the way, are you getting hungry yet? The',
+        'scouts have reported that there is still',
+        'quite a bit of food in town. Picking some up',
+        'should give you a health boost if those',
+        'zombies are getting to you.',
       ],
       [
         'Keep an eye out for food while you\'re taking',
-        'care of business out there. Picking it up should',
-        'be familiar. Each food item will have a word',
-        'next to it. Type the translation to grab it.',
+        'care of business out there. Picking it up',
+        'should be familiar. Each food item will have',
+        'a word next to it. Type the translation to',
+        'grab it.',
       ],
       [
         'Each piece of food will give you some health',
         'back. But be quick about it, food won\'t last',
         'long out there.',
+      ],
+    ],
+  },
+  {
+    id: 'review-intro',
+    screen: screens.townMap,
+    checks: [
+      { checkType: modalChecks.stageCompleted, checkValue: lessons.basicVocab.stage4 },
+    ],
+    repeat: false,
+    text: [
+      [
+        'The front gate is almost clear. You\'re doing',
+        'a great job out there.',
+      ],
+      [
+        'The last stage won\'t be easy, though.',
+        'It\'s packed with zombies and it covers',
+        'vocab from the entire lesson.',
+      ],
+      [
+        'That means you\'ll have to know all the',
+        'vocab from the previous stages if you want',
+        'to stand a chance.',
+      ],
+      [
+        'You can go back to target practice for any',
+        'stage, or just replay the stages if you need',
+        'more practice.',
+      ],
+      [
+        'We\'re all rooting for you, amigo. Now get',
+        'out there and do your best.',
       ],
     ],
   },

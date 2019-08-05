@@ -11,8 +11,4 @@ export default [
     item: unlockableItems.foodTier1,
     stage: lessons.basicVocab.stage2,
   },
-  {
-    item: unlockableItems.shotgun,
-    stage: lessons.basicVocab.stage3,
-  },
 ];
