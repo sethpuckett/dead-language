@@ -80,7 +80,7 @@ export default [
     checks: [
       { checkType: modalChecks.completedStageCount, checkValue: 0 },
     ],
-    repeat: true,
+    repeat: false,
     text: [
       [
         'This is the town map. From here you can see',
@@ -228,7 +228,7 @@ export default [
       { checkType: modalChecks.completedStageCount, checkValue: 1 },
       { checkType: modalChecks.stageWon },
     ],
-    repeat: true,
+    repeat: false,
     text: [
       [
         '¡Felicidades! You did it!',
@@ -332,6 +332,38 @@ export default [
       ],
       [
         'Okay, get ready. Here they come. ¡Buena suerte!',
+      ],
+    ],
+  },
+  {
+    id: 'food-unlocked',
+    screen: screens.minigame,
+    checks: [
+      { checkType: modalChecks.itemUnlocked, checkValue: unlockableItems.foodTier1 },
+    ],
+    repeat: false,
+    text: [
+      [
+        'Keep up the good work. Just a few more stages',
+        'to clear.',
+      ],
+      [
+        'By the way, are you getting hungry yet? The scouts',
+        'have reported that there is still quite a bit of',
+        'food in town. Picking some up should give you',
+        'a health boost if those zombies are getting',
+        'to you.',
+      ],
+      [
+        'Keep an eye out for food while you\'re taking',
+        'care of business out there. Picking it up should',
+        'be familiar. Each food item will have a word',
+        'next to it. Type the translation to grab it.',
+      ],
+      [
+        'Each piece of food will give you some health',
+        'back. But be quick about it, food won\'t last',
+        'long out there.',
       ],
     ],
   },

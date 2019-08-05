@@ -11,7 +11,6 @@ export default {
   // Items
   cash: minigameItems.cash,
   foodTier1: minigameItems.foodTier1,
-  foodTier2: minigameItems.foodTier2,
 
   // Enemies
   sprinterZombie: enemyTypes.sprinterZombie,
