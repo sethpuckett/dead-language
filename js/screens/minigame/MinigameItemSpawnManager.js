@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 import { gameConst } from '../../util';
+import UnlockableManager from '../../data/UnlockableManager';
+import { minigameItems } from '../../config';
 
 export default class {
   /*
@@ -22,6 +24,8 @@ export default class {
     this.nextSpawnTime = startTime + this.getSpawnDelay();
 
     this.itemSlots = new Array(gameConst.MINIGAME_ITEM_SLOTS).fill(false);
+
+    this.unlockableManager = new UnlockableManager(this.scene.game.db);
   }
 
   /*
@@ -39,7 +43,8 @@ export default class {
     };
     if (this.nextSpawnTime <= gameTime) {
       const slotNumber = this.getSlotNumber();
-      if (slotNumber >= 0) {
+      const itemType = this.getRandomItemType();
+      if (slotNumber >= 0 && itemType != null) {
         const word = this.vocab.getRandomWord();
         if (word != null) {
           itemSpawnConfig.canSpawn = true;
@@ -47,7 +52,7 @@ export default class {
           itemSpawnConfig.slotNumber = slotNumber;
           itemSpawnConfig.lifeTime = this.config.lifeTime;
           itemSpawnConfig.warnTime = this.config.warnTime;
-          itemSpawnConfig.itemType = this.getRandomItemType();
+          itemSpawnConfig.itemType = itemType;
         }
       }
 
@@ -86,6 +91,15 @@ export default class {
   getRandomItemType() {
     const num = Phaser.Math.RND.between(1, 100);
     const item = this.config.probabilities.find(c => c.min <= num && c.max >= num);
-    return item.itemType;
+    if (item != null && this.unlockableManager.isUnlocked(item.itemType)) {
+      return item.itemType;
+    }
+    // if chosen item is not unlocked check if food is unlocked and return that
+    if (this.unlockableManager.isUnlocked(minigameItems.foodTier1)) {
+      return minigameItems.foodTier1;
+    }
+
+    // ...otherwise spawn nothing
+    return null;
   }
 }

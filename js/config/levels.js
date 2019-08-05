@@ -65,8 +65,8 @@ export default [
       lifeTime: 8000,
       warnTime: 2500,
       probabilities: [
-        { min: 1, max: 25, itemType: minigameItems.cash },
-        { min: 26, max: 50, itemType: minigameItems.foodTier1 },
+        // { min: 1, max: 25, itemType: minigameItems.cash },
+        { min: 1, max: 50, itemType: minigameItems.foodTier1 },
         { min: 51, max: 100, itemType: minigameItems.shotgun },
       ],
     },

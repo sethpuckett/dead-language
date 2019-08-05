@@ -7,4 +7,12 @@ export default [
     item: unlockableItems.sprinterZombie,
     stage: lessons.basicVocab.stage1,
   },
+  {
+    item: unlockableItems.foodTier1,
+    stage: lessons.basicVocab.stage2,
+  },
+  {
+    item: unlockableItems.shotgun,
+    stage: lessons.basicVocab.stage3,
+  },
 ];
