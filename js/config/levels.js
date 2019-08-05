@@ -13,9 +13,9 @@ export default [
         maxEnd: 50,
         end: 60,
         probabilities: [
-          { min: 1, max: 49, enemyType: enemyTypes.normalZombie },
-          // { min: 81, max: 90, enemyType: enemyTypes.sprinterZombie },
-          { min: 50, max: 100, enemyType: enemyTypes.bruiserZombie },
+          { min: 1, max: 50, enemyType: enemyTypes.normalZombie },
+          { min: 51, max: 75, enemyType: enemyTypes.sprinterZombie },
+          { min: 76, max: 100, enemyType: enemyTypes.bruiserZombie },
         ],
       },
       {
@@ -26,9 +26,9 @@ export default [
         maxEnd: 110,
         end: 120,
         probabilities: [
-          { min: 1, max: 70, enemyType: enemyTypes.normalZombie },
-          { min: 71, max: 85, enemyType: enemyTypes.sprinterZombie },
-          { min: 86, max: 100, enemyType: enemyTypes.bruiserZombie },
+          { min: 1, max: 50, enemyType: enemyTypes.normalZombie },
+          { min: 51, max: 75, enemyType: enemyTypes.sprinterZombie },
+          { min: 76, max: 100, enemyType: enemyTypes.bruiserZombie },
         ],
       },
       {
@@ -39,9 +39,9 @@ export default [
         maxEnd: 160,
         end: 180,
         probabilities: [
-          { min: 1, max: 60, enemyType: enemyTypes.normalZombie },
-          { min: 61, max: 80, enemyType: enemyTypes.sprinterZombie },
-          { min: 81, max: 100, enemyType: enemyTypes.bruiserZombie },
+          { min: 1, max: 50, enemyType: enemyTypes.normalZombie },
+          { min: 51, max: 75, enemyType: enemyTypes.sprinterZombie },
+          { min: 76, max: 100, enemyType: enemyTypes.bruiserZombie },
         ],
       },
     ],
@@ -50,7 +50,7 @@ export default [
     startCash: 200,
     baseFallSpeed: 75,
     fallRange: 10,
-    gameTime: 2,
+    gameTime: 60,
     mercenaryEnabled: true,
     mercenaryCost: 100,
     weapons: {
@@ -66,8 +66,8 @@ export default [
       warnTime: 2500,
       probabilities: [
         { min: 1, max: 25, itemType: minigameItems.cash },
-        // { min: 26, max: 50, itemType: minigameItems.foodTier1 },
-        { min: 26, max: 100, itemType: minigameItems.shotgun },
+        { min: 26, max: 50, itemType: minigameItems.foodTier1 },
+        { min: 51, max: 100, itemType: minigameItems.shotgun },
       ],
     },
   },

@@ -1,4 +1,8 @@
 import unlockableItemMap from '../config/unlockableItemMap';
+import { enemyTypes } from '../config';
+
+// TODO: Move this to db
+const GLOBAL_UNLOCKED_ITEMS = [enemyTypes.normalZombie];
 
 export default class {
   constructor(db) {
@@ -11,8 +15,9 @@ export default class {
     }
 
     if (this.db.userProfileLoaded) {
-      const unlocked = this.db.userProfile.unlockedItems;
-      return unlocked != null && unlocked.includes(itemType);
+      const userUnlocked = this.db.userProfile.unlockedItems;
+      return GLOBAL_UNLOCKED_ITEMS.includes(itemType)
+        || (userUnlocked != null && userUnlocked.includes(itemType));
     }
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }

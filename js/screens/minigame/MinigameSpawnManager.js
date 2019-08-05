@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { minigame } from '../../config';
 import enemyTypes from '../../config/enemyTypes';
+import UnlockableManager from '../../data/UnlockableManager';
 
 export default class {
   constructor(scene, waveConfig, vocabWordManager, startTime = 0) {
@@ -12,6 +13,8 @@ export default class {
     this.prevSpawnColumn = 0;
 
     this.spawnPadding = this.scene.sys.game.config.width * minigame.sidePaddingPercent / 100;
+
+    this.unlockableManager = new UnlockableManager(this.scene.game.db);
   }
 
   /*
@@ -119,8 +122,12 @@ export default class {
     const wave = this.getCurrentWave(gameTime);
     const num = Phaser.Math.RND.between(1, 100);
     const enemy = wave.probabilities.find(c => c.min <= num && c.max >= num);
-    // TODO: this will error if wave probability times aren't set correctly
-    //       and there are no enemies.
-    return enemy.enemyType;
+    // If all values 1-100 are not present in probabilities enemy could be null; default to normal
+    // TODO: log this as a warning somewhere
+    let enemyType = enemy != null ? enemy.enemyType : enemyTypes.normalZombie;
+    if (!this.unlockableManager.isUnlocked(enemyType)) {
+      enemyType = enemyTypes.normalZombie;
+    }
+    return enemyType;
   }
 }

@@ -5,6 +5,6 @@ import lessons from './lessons';
 export default [
   {
     item: unlockableItems.sprinterZombie,
-    stage: lessons.basicVocab.stage2,
+    stage: lessons.basicVocab.stage1,
   },
 ];
