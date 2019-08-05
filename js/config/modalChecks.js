@@ -6,5 +6,6 @@ export default {
   stageCompleted: 'stage-completed',
   lessonCompleted: 'lesson-completed',
   gameType: 'game-type',
+  itemUnlocked: 'item-unlocked',
   default: 'default',
 };

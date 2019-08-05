@@ -1,12 +1,14 @@
 /* eslint-disable arrow-body-style */
 import { modalText, modalChecks } from '../../config';
 import GameProgressManager from '../../data/GameProgressManager';
+import UnlockableManager from '../../data/UnlockableManager';
 
 // TODO: move this to modal directory
 export default class {
   constructor(scene) {
     this.scene = scene;
     this.progressManager = new GameProgressManager(this.scene.sys.game.db);
+    this.unlockableManager = new UnlockableManager(this.scene.sys.game.db);
   }
 
   getModalConfig(modalId) {
@@ -75,6 +77,10 @@ export default class {
 
       const stageType = this.progressManager.getStageType(stageId);
       return stageType === check.checkValue;
+    }
+
+    if (check.checkType === modalChecks.itemUnlocked) {
+      return this.unlockableManager.isUnlocked(check.checkValue);
     }
 
     if (check.checkType === modalChecks.default) {

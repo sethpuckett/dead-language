@@ -1,5 +1,6 @@
 import screens from './screens';
 import modalChecks from './modalChecks';
+import unlockableItems from './unlockableItems';
 
 export default [
   {
@@ -138,7 +139,7 @@ export default [
     id: 'minigame-intro',
     screen: screens.minigame,
     checks: [
-      { checkType: modalChecks.stageCompleted, checkValue: 0 },
+      { checkType: modalChecks.completedStageCount, checkValue: 0 },
     ],
     repeat: true,
     text: [
@@ -293,6 +294,44 @@ export default [
         'dangerous. You\'ll never make it there alive!',
         'I marked the spots we can get to in yellow on',
         'the map. Stick to those!',
+      ],
+    ],
+  },
+  {
+    id: 'sprinter-unlocked',
+    screen: screens.minigame,
+    checks: [
+      { checkType: modalChecks.itemUnlocked, checkValue: unlockableItems.sprinterZombie },
+    ],
+    repeat: false,
+    text: [
+      [
+        'Welcome back. I hope you got enough practice.',
+        'The scouts are reporting something new out there.',
+      ],
+      [
+        'The only good thing about fighting zombies is',
+        'that they\'re slow, right?',
+      ],
+      [
+        'Well, not any more. We\'ve gotten reports of',
+        'running zombies! You can\'t miss them. They\'re',
+        'bright red and they\'re a lot faster than anything',
+        'we\'ve seen before.',
+      ],
+      [
+        'The scouts have been calling them Sprinters.',
+        'If you spot a Sprinter take it out immediately.',
+        'If you hesitate they\'ll be right on top of us.',
+      ],
+      [
+        'You\'ll need to think strategically from',
+        'now on. Sometimes you\'ll have to ignore a slow',
+        'zombie for a bit to focus on a bigger threat',
+        'in the back.',
+      ],
+      [
+        'Okay, get ready. Here they come. ¡Buena suerte!',
       ],
     ],
   },
