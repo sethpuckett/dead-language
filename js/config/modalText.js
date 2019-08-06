@@ -505,4 +505,97 @@ export default [
       ],
     ],
   },
+  {
+    id: 'bruiser-unlocked',
+    screen: screens.minigame,
+    checks: [
+      { checkType: modalChecks.itemUnlocked, checkValue: unlockableItems.bruiserZombie },
+    ],
+    repeat: false,
+    text: [
+      [
+        'Heads up. I\'ve got the latest from the',
+        'scouts and it\'s not good.',
+      ],
+      [
+        'Those damn zombies throw something new at us',
+        'at every turn. The scouts say there\'s',
+        'something out there now that\'s even worse',
+        'than the Sprinters.',
+      ],
+      [
+        'They say these new zombies are big. Real big.',
+        'They\'re slower than the other zombies, but a',
+        'lot tougher to kill. The scouts have been',
+        'calling them Bruisers. You can\'t bring down',
+        'a Bruiser with just one shot like the other',
+        'zombies.',
+      ],
+      [
+        'In fact, they are reporting that it',
+        'takes three shots to kill each one of these',
+        'monsters. And three shots means three vocab',
+        'words. I hope you got enough practice!',
+      ],
+      [
+        'Thankfully there\'s not a lot of them... yet.',
+        'But if you see one take it out quickly. It',
+        'will take some time to bring down one of',
+        'those suckers, so don\'t wait too long.',
+      ],
+      [
+        'Alright, that\'s all the news for now.',
+        '¡Buena suerte!',
+      ],
+    ],
+  },
+  {
+    id: 'shotgun-unlocked',
+    screen: screens.minigame,
+    checks: [
+      { checkType: modalChecks.itemUnlocked, checkValue: unlockableItems.shotgun },
+    ],
+    repeat: false,
+    text: [
+      [
+        'Wow, those bruisers are pretty tough.',
+      ],
+      [
+        'I think it\'s time for us to level the',
+        'playing field. And the latest intel is that',
+        'this town might have exactly what we need.',
+      ],
+      [
+        'You see, what we need is more firepower.',
+        'That pistol is great for your average muerto,',
+        'but when it comes to Bruisers what we really',
+        'need are... Shotguns! And it just so happens',
+        'that this town is full of them!',
+      ],
+      [
+        'Huh? What do you mean where did they come',
+        'from? We\'re living in a zombie hellscape',
+        'and you\'re worried about where the guns',
+        'are coming from? Come on!',
+      ],
+      [
+        'Anyway, you know the drill. When you see',
+        'a shotgun you can pick it up just like',
+        'other items. And with a shotgun you can',
+        'kill Bruisers with a single blast.',
+      ],
+      [
+        'But be careful, unlike your pistol the',
+        'shotgun has limited ammo. There\'s no sense',
+        'wasting good shotgun ammo on a regular',
+        'zombie when your pistol works just as well.',
+        'If you can try to save the big guns for the',
+        'Bruisers.',
+      ],
+      [
+        'Alright, that\'s enough for now. Happy',
+        'hunting out there.',
+      ],
+    ],
+  },
 ];

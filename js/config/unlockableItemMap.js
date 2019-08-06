@@ -24,5 +24,20 @@ export default [
   //   item: unlockableItems.reviewZombie,
   //   stage: lessons.basicVocab.review,
   // },
-
+  {
+    item: unlockableItems.bruiserZombie,
+    stage: lessons.nouns1.stage1,
+  },
+  {
+    item: unlockableItems.bruiserZombie,
+    stage: lessons.numbers1.stage1,
+  },
+  {
+    item: unlockableItems.shotgun,
+    stage: lessons.nouns1.stage2,
+  },
+  {
+    item: unlockableItems.shotgun,
+    stage: lessons.numbers1.stage2,
+  },
 ];
