@@ -402,4 +402,33 @@ export default [
       ],
     ],
   },
+  {
+    id: 'lesson-unlocked-intro',
+    screen: screens.townMap,
+    checks: [
+      { checkType: modalChecks.lessonCompleted, checkValue: lessons.basicVocab.name },
+    ],
+    repeat: false,
+    text: [
+      [
+        '¡Hurra! You did it! The front gate is clear.',
+      ],
+      [
+        'But we can\'t stop now. There\'s still a lot',
+        'of work to do.',
+      ],
+      [
+        'I\'ve marked the areas on your map that we',
+        'should check out next. Whenever you\'re',
+        'ready head to one of the locations in yellow.',
+      ],
+      [
+        'Oh, and you\'re welcome to go back and check',
+        'out a location that we\'ve already cleared',
+        'if you want to review old vocab. I\'m sure',
+        'there are still a few zombies prowling',
+        'around back there.',
+      ],
+    ],
+  },
 ];
