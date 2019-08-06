@@ -388,7 +388,7 @@ export default [
         'make our way into town.',
       ],
       [
-        'But don\'t give up just yet. Some help just',
+        'But don\'t give up yet. Some help just',
         'arrived. It seems a mysterious stranger',
         'has seen what we\'re up to and has offered',
         'some assistance... for a price.',
@@ -400,9 +400,9 @@ export default [
         'afford her services.',
       ],
       [
-        'And what does she want, you ask? The same',
-        'thing that all mercenaries want... dinero!',
-        'Cold, hard, cash.',
+        'And what does she want? The same thing that',
+        'all mercenaries want... dinero! Cold, hard,',
+        'cash.',
       ],
       [
         'I don\'t know what she\'s planning to do with',
@@ -413,7 +413,7 @@ export default [
       [
         'So here\'s how it works. Before you can take',
         'advantage of the mercenary\'s services you',
-        'need to find some cash. It\'s bound to be',
+        'need to find some money. It\'s bound to be',
         'lying around out there. Pick it up just like',
         'you would any other item. Type the',
         'translation and it\'s yours.',

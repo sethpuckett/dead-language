@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { depth, minigame, levels, images, screens, endgame, gameTypes } from '../../config';
+import { depth, minigame, levels, images, screens, endgame, gameTypes, unlockableItems } from '../../config';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
 import MinigameSpawnManager from './MinigameSpawnManager';
@@ -13,6 +13,7 @@ import minigameUiHelper from '../ui/minigameUiHelper';
 import MinigameItemEffectManager from './MinigameItemEffectManager';
 import MinigameMercenaryManager from './MinigameMercenaryManager';
 import ModalChecker from '../modal/ModalChecker';
+import UnlockableManager from '../../data/UnlockableManager';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -33,6 +34,7 @@ export default class extends Phaser.Scene {
     this.itemEffectManager = new MinigameItemEffectManager(this);
     this.mercenaryManager = new MinigameMercenaryManager(this);
     this.modalChecker = new ModalChecker(this, stageId);
+    this.unlockableManager = new UnlockableManager(this.sys.game.db);
     this.ui = minigameUiHelper(this.sys.game.config);
 
     this.score = 0;
@@ -46,14 +48,7 @@ export default class extends Phaser.Scene {
   }
 
   create() {
-    this.hudManager.createHud({
-      ...minigame.ui.hudConfig,
-      startHealth: this.currentLevel.startHealth,
-      maxHealth: this.currentLevel.maxHealth,
-      startCash: this.currentLevel.startCash,
-    });
-    this.hudManager.setSubmitCallback(this.submitAnswer);
-    this.hudManager.setWeapon(this.currentLevel.weapons.default, 0);
+    this.createHud();
     this.createBackground();
     this.createCollisions();
     this.createTimers();
@@ -87,6 +82,21 @@ export default class extends Phaser.Scene {
         this.itemSpawnManager.releaseSlot(i.slotNumber);
       });
     }
+  }
+
+  createHud() {
+    const hudConfig = { ...minigame.ui.hudConfig };
+    if (!this.unlockableManager.isUnlocked(unlockableItems.cash)) {
+      hudConfig.cash = false;
+    }
+    this.hudManager.createHud({
+      ...hudConfig,
+      startHealth: this.currentLevel.startHealth,
+      maxHealth: this.currentLevel.maxHealth,
+      startCash: this.currentLevel.startCash,
+    });
+    this.hudManager.setSubmitCallback(this.submitAnswer);
+    this.hudManager.setWeapon(this.currentLevel.weapons.default, 0);
   }
 
   createBackground() {

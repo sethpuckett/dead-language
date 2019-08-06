@@ -50,7 +50,7 @@ export default [
     startCash: 200,
     baseFallSpeed: 75,
     fallRange: 10,
-    gameTime: 60,
+    gameTime: 120,
     mercenaryEnabled: true,
     mercenaryCost: 100,
     weapons: {
@@ -65,8 +65,8 @@ export default [
       lifeTime: 8000,
       warnTime: 2500,
       probabilities: [
-        // { min: 1, max: 25, itemType: minigameItems.cash },
-        { min: 1, max: 50, itemType: minigameItems.foodTier1 },
+        { min: 1, max: 25, itemType: minigameItems.cash },
+        { min: 26, max: 50, itemType: minigameItems.foodTier1 },
         { min: 51, max: 100, itemType: minigameItems.shotgun },
       ],
     },
