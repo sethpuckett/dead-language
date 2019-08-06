@@ -43,7 +43,8 @@ export default class extends Phaser.Scene {
     this.weapon = this.currentLevel.weapons.default;
     this.ammo = 0;
     this.maxAmmo = 0;
-    this.mercenaryEnabled = this.currentLevel.mercenaryEnabled;
+    this.mercenaryEnabled = this.unlockableManager.isUnlocked(unlockableItems.mercenary)
+      && this.currentLevel.mercenaryEnabled;
     this.inputHandled = false;
   }
 
