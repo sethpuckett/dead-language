@@ -370,6 +370,80 @@ export default [
     ],
   },
   {
+    id: 'mercenary-unlocked',
+    screen: screens.minigame,
+    checks: [
+      { checkType: modalChecks.itemUnlocked, checkValue: unlockableItems.mercenary },
+    ],
+    repeat: false,
+    text: [
+      [
+        'You\'re doing great. How are you feeling?',
+        'Is your head spinning yet?',
+      ],
+      [
+        'I know it can be hard to remember every',
+        'single vocab word all by yourself. And',
+        'there are only going to be more as we',
+        'make our way into town.',
+      ],
+      [
+        'But don\'t give up just yet. Some help just',
+        'arrived. It seems a mysterious stranger',
+        'has seen what we\'re up to and has offered',
+        'some assistance... for a price.',
+      ],
+      [
+        'She\'s what you might call a mercenary.',
+        'She\'s willing to kill any zombies that',
+        'are giving you trouble, as long as you can',
+        'afford her services.',
+      ],
+      [
+        'And what does she want, you ask? The same',
+        'thing that all mercenaries want... dinero!',
+        'Cold, hard, cash.',
+      ],
+      [
+        'I don\'t know what she\'s planning to do with',
+        'all that money in this zombie-infested',
+        'wasteland, but that\'s not really any of our',
+        'business.',
+      ],
+      [
+        'So here\'s how it works. Before you can take',
+        'advantage of the mercenary\'s services you',
+        'need to find some cash. It\'s bound to be',
+        'lying around out there. Pick it up just like',
+        'you would any other item. Type the',
+        'translation and it\'s yours.',
+      ],
+      [
+        'The mercenary\'s standard rate is $100 per',
+        'zombie. Once you have enough cash you can',
+        'call on her to shoot any zombie that you can',
+        'see. This could be helpful if there\'s some',
+        'vocab that you just can\'t remember.',
+      ],
+      [
+        'Calling her is easy enough. Just type the English',
+        'word under the zombie you want her to take out',
+        'and press \'Enter\'. She\'ll take your cash',
+        'and eliminate the zombie.',
+      ],
+      [
+        'It\'s a good idea to keep some money on hand',
+        'in case you need to call on her. Here, I\'ll',
+        'give you some to get started. And remember',
+        'to keep an eye out for any more lying around.',
+      ],
+      [
+        'Alright, that\'s enough chit-chat. Get out',
+        'there kill some zombies.',
+      ],
+    ],
+  },
+  {
     id: 'review-intro',
     screen: screens.townMap,
     checks: [
