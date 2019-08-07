@@ -20,8 +20,9 @@ const SPECIAL_ZOMBIE_IMAGES = [
 ];
 
 export default class {
-  constructor(scene) {
+  constructor(scene, stageParameters) {
     this.scene = scene;
+    this.stageParameters = stageParameters;
 
     this.totalDistance = scene.sys.game.config.height - hud.height;
     this.zombies = [];
@@ -51,7 +52,7 @@ export default class {
   }
 
   applyZombieDamage(zombie) {
-    this.damage += 1;
+    this.damage += this.stageParameters.enemies.attackDamage;
     zombie.alive = false;
   }
 
@@ -214,7 +215,7 @@ export default class {
     let size = this.scene.ui.zombieWidth;
 
     if (enemyType === enemyTypes.bruiserZombie) {
-      size *= minigame.bruiserZombieSizeModifier;
+      size *= this.stageParameters.enemies.bruiserZombieSizeModifier;
     }
 
     return size;
@@ -222,10 +223,10 @@ export default class {
 
   getZombieHealth(enemyType) {
     if (enemyType === enemyTypes.bruiserZombie) {
-      return minigame.bruiserZombieHealth;
+      return this.stageParameters.enemies.bruiserZombieHealth;
     }
 
-    return minigame.normalZombieHealth;
+    return this.stageParameters.enemies.normalZombieHealth;
   }
 
   getZombieImage(enemyType) {

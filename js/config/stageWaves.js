@@ -1,9 +1,8 @@
-import minigameItems from './minigameItems';
 import enemyTypes from './enemyTypes';
 
 export default [
   {
-    id: 1,
+    id: 'base-180',
     waves: [
       {
         baseSpawnRate: 2500,
@@ -45,30 +44,5 @@ export default [
         ],
       },
     ],
-    maxHealth: 20,
-    startHealth: 20,
-    startCash: 200,
-    baseFallSpeed: 75,
-    fallRange: 10,
-    gameTime: 120,
-    mercenaryEnabled: true,
-    mercenaryCost: 100,
-    weapons: {
-      default: 'pistol',
-      shotgunAmmo: 6,
-    },
-    items: {
-      cashAmount: 50,
-      foodTier1HealAmount: 1,
-      baseSpawnRate: 8000,
-      spawnRange: 1500,
-      lifeTime: 8000,
-      warnTime: 2500,
-      probabilities: [
-        { min: 1, max: 25, itemType: minigameItems.cash },
-        { min: 26, max: 50, itemType: minigameItems.foodTier1 },
-        { min: 51, max: 100, itemType: minigameItems.shotgun },
-      ],
-    },
   },
 ];

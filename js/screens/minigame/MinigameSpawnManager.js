@@ -4,9 +4,9 @@ import enemyTypes from '../../config/enemyTypes';
 import UnlockableManager from '../../data/UnlockableManager';
 
 export default class {
-  constructor(scene, waveConfig, vocabWordManager, startTime = 0) {
+  constructor(scene, stageParams, vocabWordManager, startTime = 0) {
     this.scene = scene;
-    this.waveConfig = waveConfig;
+    this.stageParams = stageParams;
     this.vocab = vocabWordManager;
     this.currentTime = startTime;
     this.nextSpawnTime = this.getSpawnDelay(startTime);
@@ -89,11 +89,11 @@ export default class {
   }
 
   getCurrentWave(gameTime) {
-    return this.waveConfig.find(el => el.start <= gameTime && el.end > gameTime);
+    return this.stageParams.waves.find(el => el.start <= gameTime && el.end > gameTime);
   }
 
   getNextWave(gameTime) {
-    return this.waveConfig.find(el => el.start > gameTime);
+    return this.stageParams.waves.find(el => el.start > gameTime);
   }
 
   getFallSpeed(enemyType) {
@@ -102,9 +102,9 @@ export default class {
     );
 
     if (enemyType === enemyTypes.sprinterZombie) {
-      speed *= minigame.sprinterZombieSpeedModifier;
+      speed *= this.stageParams.enemies.sprinterZombieSpeedModifier;
     } else if (enemyType === enemyTypes.bruiserZombie) {
-      speed *= minigame.bruiserZombieSpeedModifier;
+      speed *= this.stageParams.enemies.bruiserZombieSpeedModifier;
     }
 
     return speed;
@@ -112,10 +112,10 @@ export default class {
 
   getWordCount(enemyType) {
     if (enemyType === enemyTypes.bruiserZombie) {
-      return minigame.bruiserZombieHealth;
+      return this.stageParams.enemies.bruiserZombieHealth;
     }
 
-    return minigame.normalZombieHealth;
+    return this.stageParams.enemies.normalZombieHealth;
   }
 
   getRandomEnemyType(gameTime) {

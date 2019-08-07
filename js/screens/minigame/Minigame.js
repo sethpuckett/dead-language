@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { depth, minigame, levels, images, screens, endgame, gameTypes, unlockableItems } from '../../config';
+import { depth, minigame, images, screens, endgame, gameTypes, unlockableItems } from '../../config';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import MinigameZombieManager from './MinigameZombieManager';
 import MinigameSpawnManager from './MinigameSpawnManager';
@@ -14,6 +14,7 @@ import MinigameItemEffectManager from './MinigameItemEffectManager';
 import MinigameMercenaryManager from './MinigameMercenaryManager';
 import ModalChecker from '../modal/ModalChecker';
 import UnlockableManager from '../../data/UnlockableManager';
+import StageParameterManager from '../../gameContent/StageParameterManager';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -22,19 +23,22 @@ export default class extends Phaser.Scene {
 
   init(stageId) {
     this.stageId = stageId;
-    this.currentLevel = levels.find(l => l.id === 1); // Only 1 level for now
     this.statusManager = new HudStatusManager(this);
     this.hudManager = new HudManager(this);
     this.progressManager = new GameProgressManager(this.sys.game.db);
     this.vocab = new VocabWordManager(this.getVocab());
-    this.zombieManager = new MinigameZombieManager(this, this.vocab);
-    this.spawnManager = new MinigameSpawnManager(this, this.currentLevel.waves, this.vocab);
-    this.itemSpawnManager = new MinigameItemSpawnManager(this, this.currentLevel.items, this.vocab);
     this.itemManager = new MinigameItemManager(this);
     this.itemEffectManager = new MinigameItemEffectManager(this);
     this.mercenaryManager = new MinigameMercenaryManager(this);
     this.modalChecker = new ModalChecker(this, stageId);
     this.unlockableManager = new UnlockableManager(this.sys.game.db);
+    this.stageParameterManager = new StageParameterManager();
+
+    this.currentLevel = this.stageParameterManager.getParameters(this.stageId);
+
+    this.zombieManager = new MinigameZombieManager(this, this.currentLevel);
+    this.spawnManager = new MinigameSpawnManager(this, this.currentLevel, this.vocab);
+    this.itemSpawnManager = new MinigameItemSpawnManager(this, this.currentLevel.items, this.vocab);
     this.ui = minigameUiHelper(this.sys.game.config);
 
     this.score = 0;
