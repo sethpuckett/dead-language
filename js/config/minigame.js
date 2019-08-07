@@ -16,9 +16,9 @@ export default {
   bruiserZombieHealth: 3,
   fonts: {
     zombieSize: 10,
-    zombieTint: 0xffff00,
+    zombieTint: 0xffffff,
     itemSize: 10,
-    itemTint: 0xffff00,
+    itemTint: 0xffffff,
   },
   ui: {
     zombieWordBgColor: 0x000000,
