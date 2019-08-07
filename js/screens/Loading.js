@@ -54,6 +54,7 @@ export default class extends Phaser.Scene {
       loading.fonts.loadingTextSize
     );
     loadingText.setOrigin(this.ui.loadingTextOrigin);
+    loadingText.setTintFill(loading.fonts.loadingTextTint);
 
     const barBg = this.add.graphics();
     barBg.setPosition(this.ui.barBackgroundX, this.ui.barBackgroundY);

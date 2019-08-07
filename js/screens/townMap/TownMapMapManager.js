@@ -169,6 +169,7 @@ export default class {
     this.mapTitle.setOrigin(
       this.scene.ui.mapTitleOriginX, this.scene.ui.mapTitleOriginY
     );
+    this.mapTitle.setTintFill(townMap.fonts.mapTitleTint);
   }
 
   clearTitle() {
@@ -192,6 +193,7 @@ export default class {
       this.mapLocation.setOrigin(
         this.scene.ui.mapLocationOriginX, this.scene.ui.mapLocationOriginY
       );
+      this.mapLocation.setTintFill(townMap.fonts.mapLocationTint);
     }
   }
 

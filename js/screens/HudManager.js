@@ -123,6 +123,7 @@ export default class {
       );
       this.killValue.setOrigin(this.ui.killValueOriginX, this.ui.killValueOriginY);
       this.killValue.setDepth(depth.hud.ui);
+      this.killValue.setTintFill(hud.fonts.killTint);
     }
 
     if (config.cash) {
@@ -138,6 +139,7 @@ export default class {
       );
       this.cashValue.setOrigin(this.ui.cashValueOriginX, this.ui.cashValueOriginY);
       this.cashValue.setDepth(depth.hud.ui);
+      this.cashValue.setTintFill(hud.fonts.cashTint);
     }
 
     if (config.timer) {
@@ -153,6 +155,7 @@ export default class {
       );
       this.timerValue.setOrigin(this.ui.timerValueOriginX, this.ui.timerValueOriginY);
       this.timerValue.setDepth(depth.hud.ui);
+      this.timerValue.setTintFill(hud.fonts.timerTint);
     }
 
     if (config.message) {
@@ -259,9 +262,8 @@ export default class {
   showTextInput() {
     if (!this.textInputShown) {
       this.textInputShown = true;
-      this.textEntryGraphics = this.scene.add.graphics({
-        fillStyle: hud.ui.textEntryStyle,
-      });
+      this.textEntryGraphics = this.scene.add.graphics();
+      this.textEntryGraphics.fillStyle(hud.ui.textEntryBackgroundColor);
       this.textEntryArea = new Phaser.Geom.Rectangle(
         this.ui.textEntryAreaX,
         this.ui.textEntryAreaY,
@@ -275,6 +277,7 @@ export default class {
       );
       this.textEntry.setOrigin(this.ui.textEntryOriginX, this.ui.textEntryOriginY);
       this.textEntry.setDepth(depth.hud.entryText);
+      this.textEntry.setTintFill(hud.fonts.textEntryTint);
     }
   }
 

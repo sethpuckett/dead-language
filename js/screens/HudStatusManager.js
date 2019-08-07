@@ -55,6 +55,7 @@ export default class {
       this.statusText.setOrigin(this.ui.statusMessageOriginX, this.ui.statusMessageOriginY);
       this.statusText.setCenterAlign();
       this.statusText.setDepth(depth.hud.ui);
+      this.statusText.setTintFill(hud.fonts.statusTint);
     }
 
     if (config.displayTime != null && config.displayTime > 0) {

@@ -154,6 +154,7 @@ export default class {
     this.stageTitle.setOrigin(
       this.scene.ui.stageTitleOriginX, this.scene.ui.stageTitleOriginY
     );
+    this.stageTitle.setTintFill(townMap.fonts.stageTitleTint);
     this.stageTitle.setCenterAlign();
   }
 

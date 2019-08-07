@@ -106,6 +106,7 @@ export default class {
       vocabStudy.fonts.menuOptionSize
     );
     this.option1Text.setOrigin(this.ui.menuOptionTextOrigin);
+    this.option1Text.setTintFill(vocabStudy.fonts.menuOptionTint);
     this.menuSprites.add(this.option1Text);
 
     this.option2Text = this.scene.add.bitmapText(
@@ -116,6 +117,7 @@ export default class {
       vocabStudy.fonts.menuOptionSize
     );
     this.option2Text.setOrigin(this.ui.menuOptionTextOrigin);
+    this.option2Text.setTintFill(vocabStudy.fonts.menuOptionTint);
     this.menuSprites.add(this.option2Text);
 
     this.option3Text = this.scene.add.bitmapText(
@@ -126,6 +128,7 @@ export default class {
       vocabStudy.fonts.menuOptionSize
     );
     this.option3Text.setOrigin(this.ui.menuOptionTextOrigin);
+    this.option3Text.setTintFill(vocabStudy.fonts.menuOptionTint);
     this.menuSprites.add(this.option3Text);
 
     this.option4Text = this.scene.add.bitmapText(
@@ -136,6 +139,7 @@ export default class {
       vocabStudy.fonts.menuOptionSize
     );
     this.option4Text.setOrigin(this.ui.menuOptionTextOrigin);
+    this.option4Text.setTintFill(vocabStudy.fonts.menuOptionTint);
     this.menuSprites.add(this.option4Text);
 
     this.option5Text = this.scene.add.bitmapText(
@@ -146,6 +150,7 @@ export default class {
       vocabStudy.fonts.menuOptionSize
     );
     this.option5Text.setOrigin(this.ui.menuOptionTextOrigin);
+    this.option5Text.setTintFill(vocabStudy.fonts.menuOptionTint);
     this.menuSprites.add(this.option5Text);
 
     this.option6Text = this.scene.add.bitmapText(
@@ -156,6 +161,7 @@ export default class {
       vocabStudy.fonts.menuOptionSize
     );
     this.option6Text.setOrigin(this.ui.menuOptionTextOrigin);
+    this.option6Text.setTintFill(vocabStudy.fonts.menuOptionTint);
     this.menuSprites.add(this.option6Text);
 
     this.updateSelection();

@@ -9,9 +9,9 @@ export default {
   screenFadeTime: 750,
   fonts: {
     textSize: 22,
-    textFill: '#ffffff',
+    textTint: 0xffffff,
     instructionsSize: 12,
-    instructionsFill: '#ffffff',
+    instructionsTint: 0xffffff,
   },
   instructions: 'Use arrow keys and Spacebar to choose',
 };

@@ -96,6 +96,7 @@ export default class extends Phaser.Scene {
     );
     this.instructionText.setOrigin(this.ui.instructionsOrigin);
     this.instructionText.setDepth(depth.titleMenu.text);
+    this.instructionText.setTintFill(titleMenu.fonts.instructionsTint);
   }
 
   createMenu() {
@@ -109,6 +110,7 @@ export default class extends Phaser.Scene {
       );
       text.setOrigin(this.ui.textOriginX, this.ui.textOriginY);
       text.setDepth(depth.titleMenu.text);
+      text.setTintFill(titleMenu.fonts.textTint);
     });
 
     this.selector = this.add.sprite(

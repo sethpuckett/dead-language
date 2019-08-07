@@ -49,6 +49,7 @@ export default class {
         fontSize
       );
       l1.setOrigin(this.ui.vocab1OriginX, this.ui.vocab1OriginY);
+      l1.setTintFill(vocabStudy.fonts.vocabTint);
       const l2 = this.scene.add.bitmapText(
         vocab2X,
         this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset),
@@ -57,6 +58,7 @@ export default class {
         fontSize
       );
       l2.setOrigin(this.ui.vocab2OriginX, this.ui.vocab2OriginY);
+      l2.setTintFill(vocabStudy.fonts.vocabTint);
       const dots = this.scene.add.bitmapText(
         (vocab1X + l1.width + vocab2X - l2.width) / 2,
         this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset),
@@ -65,6 +67,7 @@ export default class {
         vocabStudy.fonts.dotSize
       );
       dots.setOrigin(this.ui.dotsOriginX, this.ui.dotsOriginY);
+      dots.setTintFill(vocabStudy.fonts.vocabTint);
 
       const entry = {
         word: c,
@@ -91,11 +94,11 @@ export default class {
   showEntryCorrect(word) {
     this.entries.some((entry) => {
       if (word.id === entry.word.id) {
-        entry.language1.setTint(vocabStudy.fonts.practiceWordCorrectFill);
+        entry.language1.setTintFill(vocabStudy.fonts.practiceWordCorrectTint);
         entry.language1.visible = true;
-        entry.language2.setTint(vocabStudy.fonts.practiceWordCorrectFill);
+        entry.language2.setTintFill(vocabStudy.fonts.practiceWordCorrectTint);
         entry.language2.visible = true;
-        entry.dots.setTint(vocabStudy.fonts.practiceWordCorrectFill);
+        entry.dots.setTintFill(vocabStudy.fonts.practiceWordCorrectTint);
         entry.dots.visible = true;
         return true;
       }
@@ -106,11 +109,11 @@ export default class {
   showEntryWrong(word) {
     this.entries.some((entry) => {
       if (word.id === entry.word.id) {
-        entry.language1.setTint(vocabStudy.fonts.practiceWordWrongFill);
+        entry.language1.setTintFill(vocabStudy.fonts.practiceWordWrongTint);
         entry.language1.visible = true;
-        entry.language2.setTint(vocabStudy.fonts.practiceWordWrongFill);
+        entry.language2.setTintFill(vocabStudy.fonts.practiceWordWrongTint);
         entry.language2.visible = true;
-        entry.dots.setTint(vocabStudy.fonts.practiceWordWrongFill);
+        entry.dots.setTintFill(vocabStudy.fonts.practiceWordWrongTint);
         entry.dots.visible = true;
         return true;
       }

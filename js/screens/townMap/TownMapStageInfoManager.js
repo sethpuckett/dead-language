@@ -107,8 +107,9 @@ export default class {
     this.stageInfoType.setOrigin(
       this.scene.ui.stageInfoTypeOriginX, this.scene.ui.stageInfoTypeOriginY
     );
+    this.stageInfoType.setTintFill(townMap.fonts.stageInfoTypeColor);
     this.stageInfoType.setCenterAlign();
-    this.stageInfoType.setTint(townMap.fonts.stageInfoTypeColor);
+    this.stageInfoType.setTintFill(townMap.fonts.stageInfoTypeColor);
 
     const subtitleText = cleared ? townMap.clearedText : gameTypeHelper.getDescription(stageType);
     this.stageInfoSubtitle = this.scene.add.bitmapText(
@@ -121,6 +122,7 @@ export default class {
     this.stageInfoSubtitle.setOrigin(
       this.scene.ui.stageInfoSubtitleOriginX, this.scene.ui.stageInfoSubtitleOriginY
     );
+    this.stageInfoSubtitle.setTintFill(townMap.fonts.stageInfoSubtitleTint);
     this.stageInfoSubtitle.setCenterAlign();
   }
 
@@ -137,6 +139,7 @@ export default class {
     this.stageInfoTitle.setOrigin(
       this.scene.ui.stageInfoTitleOriginX, this.scene.ui.stageInfoTitleOriginY
     );
+    this.stageInfoTitle.setTintFill(townMap.fonts.stageInfoTitleTint);
     this.stageInfoTitle.setCenterAlign();
 
     if (!animationsMaintained) {
@@ -194,6 +197,7 @@ export default class {
     this.stageInfoTitle.setOrigin(
       this.scene.ui.stageInfoTitleOriginX, this.scene.ui.stageInfoTitleOriginY
     );
+    this.stageInfoTitle.setTintFill(townMap.fonts.stageInfoTitleTint);
     this.stageInfoTitle.setCenterAlign();
 
     if (!animationsMaintained) {

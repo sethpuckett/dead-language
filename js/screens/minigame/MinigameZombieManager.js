@@ -281,6 +281,7 @@ export default class {
     );
     zombie.text.x = zombie.x - zombie.text.width / 2;
     zombie.text.setDepth(depth.minigame.zombieText + zombie.text.y - this.scene.ui.padding);
+    zombie.text.setTintFill(minigame.fonts.zombieTint);
     this.setZombieWordBg(zombie);
   }
 

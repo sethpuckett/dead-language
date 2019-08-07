@@ -32,10 +32,10 @@ export default class {
     item.text = this.scene.add.bitmapText(
       item.x, item.y + item.height / 2 + this.scene.ui.itemWordBuffer,
       fonts.blueSkyWhite, item.word.language1,
-      minigame.fonts.zombieSize
+      minigame.fonts.itemSize
     );
     item.text.setOrigin(this.scene.ui.itemWordOriginX, this.scene.ui.itemWordOriginY);
-    item.text.setTintFill(minigame.fonts.itemColor);
+    item.text.setTintFill(minigame.fonts.itemTint);
     item.text.setDepth(depth.minigame.itemText);
     item.textBgGraphics = this.scene.add.graphics();
     item.textBgGraphics.fillStyle(minigame.ui.itemWordBgColor);

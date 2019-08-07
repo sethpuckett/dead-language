@@ -3,6 +3,6 @@ export default {
   progressFillColor: 0x33aa22,
   fonts: {
     loadingTextSize: 22,
-    loadingTextFill: '#ffffff',
+    loadingTextTint: 0xffffff,
   },
 };

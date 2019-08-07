@@ -74,7 +74,7 @@ export default class {
     );
     this.anyKeyText.setOrigin(this.ui.anyKeyTextOriginX, this.ui.anyKeyTextOriginY);
     this.anyKeyText.setDepth(depth.modal.text);
-    this.anyKeyText.setTint(modal.textColor);
+    this.anyKeyText.setTintFill(modal.textTint);
     this.pressAnyKeyShown = true;
     this.flashTimer = this.scene.time.addEvent({
       delay: modal.flashDelay,
@@ -171,6 +171,6 @@ export default class {
     this.text.setOrigin(this.ui.textOrigin);
     this.text.setCenterAlign();
     this.text.setDepth(depth.modal.text);
-    this.text.setTint(modal.textColor);
+    this.text.setTintFill(modal.textTint);
   }
 }

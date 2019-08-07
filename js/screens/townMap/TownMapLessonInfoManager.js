@@ -77,8 +77,8 @@ export default class {
       this.lessonInfoTitle.setOrigin(
         this.scene.ui.lessonInfoTitleOriginX, this.scene.ui.lessonInfoTitleOriginY
       );
+      this.lessonInfoTitle.setTintFill(townMap.fonts.lessonInfoTitleTint);
       this.lessonInfoTitle.setCenterAlign();
-      this.lessonInfoTitle.setTint(townMap.fonts.lessonInfoTitleColor);
 
       this.lessonInfoText = this.scene.add.bitmapText(
         this.scene.ui.lessonInfoTextX,
@@ -90,6 +90,7 @@ export default class {
       this.lessonInfoText.setOrigin(
         this.scene.ui.lessonInfoTextOriginX, this.scene.ui.lessonInfoTextOriginY
       );
+      this.lessonInfoText.setTintFill(townMap.fonts.lessonInfoTextTint);
     }
   }
 

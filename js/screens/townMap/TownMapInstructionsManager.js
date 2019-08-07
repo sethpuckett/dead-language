@@ -44,6 +44,7 @@ export default class {
     this.instructionsText.setOrigin(
       this.scene.ui.instructionsTextOriginX, this.scene.ui.instructionsTextOriginY
     );
+    this.instructionsText.setTintFill(townMap.fonts.instructionsTint);
     this.instructionsText.setCenterAlign();
   }
 }

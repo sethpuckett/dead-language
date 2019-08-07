@@ -160,7 +160,7 @@ export default class {
     this.text.setOrigin(this.ui.textOriginX, this.ui.textOriginY);
     this.text.setCenterAlign();
     this.text.setDepth(depth.choiceModal.text);
-    this.text.setTint(choiceModal.textColor);
+    this.text.setTintFill(choiceModal.textTint);
   }
 
   createChoices() {
@@ -177,7 +177,7 @@ export default class {
       );
       text.setOrigin(this.ui.choiceTextOriginX, this.ui.choiceTextOriginY);
       text.setDepth(depth.choiceModal.text);
-      text.setTint(choiceModal.choiceColor);
+      text.setTintFill(choiceModal.choiceColor);
 
       this.choiceTexts.push(text);
     });

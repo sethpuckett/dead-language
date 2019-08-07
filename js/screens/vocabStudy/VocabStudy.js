@@ -160,7 +160,9 @@ export default class extends Phaser.Scene {
     );
     this.practiceWordText.setOrigin(this.ui.practiceVocabOriginX, this.ui.practiceVocabOriginY);
     this.practiceWordText.setDepth(depth.vocabStudy.word);
-    this.practiceWordBg = this.add.graphics({ fillStyle: vocabStudy.ui.practiceWordBgStyle });
+    this.practiceWordText.setTintFill(vocabStudy.fonts.practiceWordTint);
+    this.practiceWordBg = this.add.graphics();
+    this.practiceWordBg.fillStyle(vocabStudy.ui.practiceWordBgColor);
     this.practiceWordBg.setDepth(depth.vocabStudy.wordBackground);
     this.practiceWordBg.fillRect(
       this.practiceWordText.x

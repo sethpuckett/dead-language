@@ -6,8 +6,8 @@ export default {
   screenFadeTime: 750,
   fonts: {
     statusSize: 32,
-    statusFill: 0xffff22,
+    statusTint: 0xffff22,
     menuSize: 22,
-    menuFill: '#ffffff',
+    menuTint: 0xffffff,
   },
 };

@@ -44,7 +44,7 @@ export default class extends Phaser.Scene {
     this.background = this.add.sprite(
       this.ui.backgroundImageX,
       this.ui.backgroundImageY,
-      images.titleScreenBackground
+      images.storyScreenBackground
     );
     this.background.displayWidth = this.ui.backgroundImageWidth;
     this.background.displayHeight = this.ui.backgroundImageHeight;
@@ -63,7 +63,7 @@ export default class extends Phaser.Scene {
     );
     statusLabel.setOrigin(this.ui.statusLabelOrigin);
     statusLabel.setDepth(depth.endgame.text);
-    statusLabel.setTint(endgame.fonts.statusFill);
+    statusLabel.setTintFill(endgame.fonts.statusTint);
   }
 
   createMenu() {
@@ -79,6 +79,7 @@ export default class extends Phaser.Scene {
       );
       text.setOrigin(this.ui.menuTextOriginX, this.ui.menuTextOriginY);
       text.setDepth(depth.endgame.text);
+      text.setTintFill(endgame.fonts.menuTint);
     });
 
     this.selector = this.add.sprite(
