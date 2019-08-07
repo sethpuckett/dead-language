@@ -145,6 +145,8 @@ header h1 {
 
 #game-container {
   width: 60%;
+  min-width: 800px;
+  min-height: 600px;
 }
 
 /******************************************
