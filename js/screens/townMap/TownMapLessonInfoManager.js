@@ -9,23 +9,13 @@ export default class {
     this.borderGraphics = this.scene.add.graphics();
     this.borderGraphics.setDepth(depth.townMap.border);
 
-    this.enabled = false;
     this.lessonId = null;
   }
 
   initialize() {
-    this.enabled = false;
     this.lessonId = null;
     this.drawBorder(false);
     this.clearLessonInfo();
-  }
-
-  enable() {
-    this.drawBorder(true);
-  }
-
-  disable() {
-    this.drawBorder(false);
   }
 
   setLesson(lessonId) {
@@ -40,10 +30,10 @@ export default class {
 
   // Private
 
-  drawBorder(enabled) {
+  drawBorder() {
     this.borderGraphics.clear();
 
-    const color = enabled ? townMap.ui.borderColor : townMap.ui.borderDisableColor;
+    const color = townMap.ui.borderColor;
     this.borderGraphics.lineStyle(townMap.ui.borderWidth, color);
     this.borderGraphics.fillStyle(color);
 

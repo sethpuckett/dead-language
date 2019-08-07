@@ -119,7 +119,6 @@ export default class extends Phaser.Scene {
 
   disableLessonSelect() {
     this.mapManager.disable();
-    this.lessonInfoManager.disable();
   }
 
   disableStageSelect() {
@@ -129,7 +128,6 @@ export default class extends Phaser.Scene {
 
   enableLessonSelect() {
     this.mapManager.enable();
-    this.lessonInfoManager.enable();
   }
 
   enableStageSelect() {
