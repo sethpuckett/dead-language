@@ -15,9 +15,6 @@ export default class {
     this.inputHandled = false;
     this.enabled = false;
 
-    this.borderGraphics = this.scene.add.graphics();
-    this.borderGraphics.setDepth(depth.townMap.border);
-
     this.requirementGraphics = this.scene.add.graphics();
     this.requirementGraphics.setDepth(depth.townMap.requirementLine);
     this.requirementGraphics.lineStyle(
@@ -37,17 +34,19 @@ export default class {
     this.createLessonSelector();
     this.drawRequirementLines();
     this.clearTitle();
+    this.clearFlashTimer();
   }
 
   enable() {
     this.enabled = true;
-    this.drawBorder(true);
+    this.flashBorder();
     this.createTitle();
     this.enableInputHandling();
   }
 
   disable() {
     this.enabled = false;
+    this.clearFlashTimer();
     this.drawBorder(false);
     this.clearTitle();
     this.disableInputHandling();
@@ -138,9 +137,25 @@ export default class {
 
   // Private
 
-  drawBorder(enabled) {
-    this.borderGraphics.clear();
+  flashBorder() {
+    this.clearFlashTimer();
+    this.drawBorder(true);
+    this.selectorFlashOn = true;
+    this.flashTimer = this.scene.time.addEvent({
+      delay: townMap.selectorFlashDelay,
+      callback: () => {
+        this.selectorFlashOn = !this.selectorFlashOn;
+        this.drawBorder(this.selectorFlashOn);
+      },
+      callbackScope: this,
+      repeat: -1,
+    });
+  }
 
+  drawBorder(enabled) {
+    this.clearBorder();
+    this.borderGraphics = this.scene.add.graphics();
+    this.borderGraphics.setDepth(depth.townMap.border);
     const color = enabled ? townMap.ui.borderColor : townMap.ui.borderDisableColor;
     this.borderGraphics.lineStyle(townMap.ui.borderWidth, color);
     this.borderGraphics.fillStyle(color);
@@ -176,6 +191,21 @@ export default class {
     if (this.mapTitle != null) {
       this.mapTitle.destroy();
       this.mapTitle = null;
+    }
+  }
+
+  clearFlashTimer() {
+    this.selectorFlashOn = false;
+    if (this.flashTimer != null) {
+      this.flashTimer.destroy();
+      this.flashTimer = null;
+    }
+  }
+
+  clearBorder() {
+    if (this.borderGraphics != null) {
+      this.borderGraphics.destroy();
+      this.borderGraphics = null;
     }
   }
 

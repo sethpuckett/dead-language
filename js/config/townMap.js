@@ -4,6 +4,7 @@ export default {
   clearedText: 'Cleared!',
   lockedText: 'Locked!',
   screenFadeTime: 750,
+  selectorFlashDelay: 400,
   ui: {
     borderColor: 0xffffff,
     borderWidth: 5,

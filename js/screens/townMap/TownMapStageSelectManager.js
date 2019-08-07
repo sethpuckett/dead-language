@@ -11,9 +11,7 @@ export default class {
     this.inputHandled = false;
     this.enabled = false;
     this.lesson = null;
-
-    this.borderGraphics = this.scene.add.graphics();
-    this.borderGraphics.setDepth(depth.townMap.border);
+    this.selectorFlashOn = false;
   }
 
   initialize() {
@@ -22,14 +20,12 @@ export default class {
     this.selectedStageIndex = 0;
 
     this.drawBorder(false);
-    this.clearStageIcons();
-    this.clearTitle();
-    this.clearStageSelector();
+    this.clear();
   }
 
   enable() {
     this.enabled = true;
-    this.drawBorder(true);
+    this.flashBorder();
     this.createTitle();
     this.createStageSelector();
     this.enableInputHandling();
@@ -37,9 +33,10 @@ export default class {
 
   disable() {
     this.enabled = false;
-    this.drawBorder(false);
+    this.clearFlashTimer();
     this.clearTitle();
     this.clearStageSelector();
+    this.drawBorder(false);
     this.disableInputHandling();
   }
 
@@ -77,6 +74,7 @@ export default class {
     this.clearTitle();
     this.clearStageIcons();
     this.clearStageSelector();
+    this.clearFlashTimer();
   }
 
   enableInputHandling() {
@@ -121,8 +119,26 @@ export default class {
 
   // Private
 
+  flashBorder() {
+    this.clearFlashTimer();
+    this.drawBorder(true);
+    this.selectorFlashOn = true;
+    this.flashTimer = this.scene.time.addEvent({
+      delay: townMap.selectorFlashDelay,
+      callback: () => {
+        this.selectorFlashOn = !this.selectorFlashOn;
+        this.drawBorder(this.selectorFlashOn);
+      },
+      callbackScope: this,
+      repeat: -1,
+    });
+  }
+
   drawBorder(enabled) {
+    this.clearBorder();
     const color = enabled ? townMap.ui.borderColor : townMap.ui.borderDisableColor;
+    this.borderGraphics = this.scene.add.graphics();
+    this.borderGraphics.setDepth(depth.townMap.border);
     this.borderGraphics.lineStyle(townMap.ui.borderWidth, color);
     this.borderGraphics.fillStyle(color);
 
@@ -217,6 +233,21 @@ export default class {
     if (this.stageSelector != null) {
       this.stageSelector.destroy();
       this.stageSelector = null;
+    }
+  }
+
+  clearFlashTimer() {
+    this.selectorFlashOn = false;
+    if (this.flashTimer != null) {
+      this.flashTimer.destroy();
+      this.flashTimer = null;
+    }
+  }
+
+  clearBorder() {
+    if (this.borderGraphics != null) {
+      this.borderGraphics.destroy();
+      this.borderGraphics = null;
     }
   }
 
