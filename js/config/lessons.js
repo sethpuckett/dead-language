@@ -19,6 +19,7 @@ export default {
     stage1: 'nouns-1-1',
     stage2: 'nouns-1-2',
     stage3: 'nouns-1-3',
+    stage4: 'nouns-1-4',
     review: 'nouns-1-review',
   },
   food1: {

@@ -9,12 +9,12 @@ export default [
     maxHealth: 20,
     startHealth: 20,
     startCash: 100,
-    baseFallSpeed: 75,
-    fallRange: 10,
+    baseFallSpeed: 60,
+    fallRange: 8,
     mercenaryEnabled: true,
     mercenaryCost: 100,
     enemies: {
-      attackDamage: 1,
+      attackDamage: 2,
       normalZombieHealth: 1,
       sprinterZombieSpeedModifier: 2,
       sprinterZombieHealth: 1,
@@ -33,17 +33,19 @@ export default [
       lifeTime: 8000,
       warnTime: 2500,
       probabilities: [
-        { min: 1, max: 25, itemType: minigameItems.cash },
-        { min: 26, max: 50, itemType: minigameItems.foodTier1 },
-        { min: 51, max: 100, itemType: minigameItems.shotgun },
+        { min: 1, max: 33, itemType: minigameItems.cash },
+        { min: 34, max: 66, itemType: minigameItems.foodTier1 },
+        { min: 67, max: 100, itemType: minigameItems.shotgun },
       ],
     },
   },
   {
-    id: 'basic-vocab-1',
-    waveId: 'normal-only-180',
-    items: {
-      probabilities: [],
-    },
+    id: 'basic-vocab',
+    waveId: 'waves-basic-vocab',
+    gameTime: 120,
+  },
+  {
+    id: 'basic-vocab-review',
+    waveId: 'waves-basic-vocab-review',
   },
 ];
