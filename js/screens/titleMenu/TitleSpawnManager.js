@@ -11,10 +11,6 @@ export default class {
     this.ui = titleMenuUiHelper(this.scene.sys.game.config);
   }
 
-  start() {
-    this.scene.spawnTimer.paused = false;
-  }
-
   /*
   return:
   {

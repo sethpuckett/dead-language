@@ -166,18 +166,18 @@ export default class {
         this.ui.messageBorderWidth
       );
 
-      this.scene.messageBorder = this.scene.add.sprite(
+      this.messageBorder = this.scene.add.sprite(
         this.ui.messageBorderX,
         this.ui.messageBorderY,
         images.hudMessageBorder,
         images.frames.hudMessageDark
       );
-      this.scene.messageBorder.displayWidth = this.ui.messageBorderWidth;
-      this.scene.messageBorder.displayHeight = this.ui.messageBorderHeight;
-      this.scene.messageBorder.setOrigin(
+      this.messageBorder.displayWidth = this.ui.messageBorderWidth;
+      this.messageBorder.displayHeight = this.ui.messageBorderHeight;
+      this.messageBorder.setOrigin(
         this.ui.messageBorderOriginX, this.ui.messageBorderOriginY
       );
-      this.scene.messageBorder.setDepth(depth.hud.ui);
+      this.messageBorder.setDepth(depth.hud.ui);
     }
 
     if (config.hudBuffer) {

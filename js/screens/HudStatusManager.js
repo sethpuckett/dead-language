@@ -19,7 +19,7 @@ export default class {
   setStatus(config) {
     this.clearCurrentStatus();
 
-    this.scene.messageBorder.setFrame(images.frames.hudMessageLight);
+    this.scene.hudManager.messageBorder.setFrame(images.frames.hudMessageLight);
     if (config.image != null) {
       let frame = 0;
       if (config.frame != null) {
@@ -68,8 +68,7 @@ export default class {
   }
 
   clearCurrentStatus() {
-    // TODO: messageBorder is defined in HudManager. using it here is messy
-    this.scene.messageBorder.setFrame(images.frames.hudMessageDark);
+    this.scene.hudManager.messageBorder.setFrame(images.frames.hudMessageDark);
     if (this.statusImage != null) {
       this.statusImage.destroy();
       this.statusImage = null;
