@@ -9,6 +9,7 @@ export default {
   damageShakeIntensity: 0.005,
   statusTime: 1500,
   itemFlashDelay: 125,
+  bigZombieSizeModifier: 1.25,
   fonts: {
     zombieSize: 10,
     zombieTint: 0xffffff,

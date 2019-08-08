@@ -3,7 +3,7 @@ import minigameItems from './minigameItems';
 export default [
   {
     id: 'base',
-    gameTime: 120,
+    gameTime: 180,
     waveId: 'base-180',
     waves: [],
     maxHealth: 20,
@@ -17,9 +17,8 @@ export default [
       attackDamage: 1,
       normalZombieHealth: 1,
       sprinterZombieSpeedModifier: 2,
-      sprinterZombieHealth: 2,
+      sprinterZombieHealth: 1,
       bruiserZombieSpeedModifier: 0.66,
-      bruiserZombieSizeModifier: 1.25,
       bruiserZombieHealth: 3,
     },
     weapons: {
@@ -38,6 +37,13 @@ export default [
         { min: 26, max: 50, itemType: minigameItems.foodTier1 },
         { min: 51, max: 100, itemType: minigameItems.shotgun },
       ],
+    },
+  },
+  {
+    id: 'basic-vocab-1',
+    waveId: 'normal-only-180',
+    items: {
+      probabilities: [],
     },
   },
 ];

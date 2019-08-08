@@ -1,32 +1,35 @@
 import Phaser from 'phaser';
 import { stageParameters, stageParameterMap, stageWaves } from '../config';
 
+const BASE = 'base';
+
 export default class {
   getParameters(stageId) {
-    const baseParams = this.getBaseParams(stageId);
-    return this.buildParameters(baseParams);
+    const stageParams = this.getStageParams(stageId);
+    return this.buildParameters(stageParams);
   }
 
   // Private
 
-  buildParameters(baseParams) {
-    const params = { ...baseParams };
+  buildParameters(stageParams) {
+    const baseParams = stageParameters.find(p => p.id === BASE);
+    const params = { ...baseParams, ...stageParams };
     const waveConfig = this.getWaves(params.waveId);
     params.waves = waveConfig.waves;
     return params;
   }
 
-  getBaseParams(stageId) {
+  getStageParams(stageId) {
     const paramMap = stageParameterMap.find(p => p.stage === stageId);
     if (paramMap == null) {
       throw Error(`No stage parameters available for stageId: ${stageId}`);
     }
     const paramId = this.getRandomParameterId(paramMap.availableParameters);
-    const baseParams = stageParameters.find(p => p.id === paramId);
-    if (baseParams == null) {
+    const stageParams = stageParameters.find(p => p.id === paramId);
+    if (stageParams == null) {
       throw Error(`No stage parameters found with id: ${paramId}`);
     }
-    return baseParams;
+    return stageParams;
   }
 
   getWaves(waveId) {

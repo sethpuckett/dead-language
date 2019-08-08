@@ -1,7 +1,7 @@
 import lessons from './lessons';
 
 export default [
-  { stage: lessons.basicVocab.stage1, availableParameters: ['base'] },
+  { stage: lessons.basicVocab.stage1, availableParameters: ['basic-vocab-1'] },
   { stage: lessons.basicVocab.stage2, availableParameters: ['base'] },
   { stage: lessons.basicVocab.stage3, availableParameters: ['base'] },
   { stage: lessons.basicVocab.stage4, availableParameters: ['base'] },

@@ -215,7 +215,7 @@ export default class {
     let size = this.scene.ui.zombieWidth;
 
     if (enemyType === enemyTypes.bruiserZombie) {
-      size *= this.stageParameters.enemies.bruiserZombieSizeModifier;
+      size *= minigame.bigZombieSizeModifier;
     }
 
     return size;
