@@ -17,6 +17,7 @@ export default [
       attackDamage: 1,
       normalZombieHealth: 1,
       sprinterZombieSpeedModifier: 2,
+      sprinterZombieHealth: 2,
       bruiserZombieSpeedModifier: 0.66,
       bruiserZombieSizeModifier: 1.25,
       bruiserZombieHealth: 3,

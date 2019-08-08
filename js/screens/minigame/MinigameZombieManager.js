@@ -225,6 +225,9 @@ export default class {
     if (enemyType === enemyTypes.bruiserZombie) {
       return this.stageParameters.enemies.bruiserZombieHealth;
     }
+    if (enemyType === enemyTypes.sprinterZombie) {
+      return this.stageParameters.enemies.sprinterZombieHealth;
+    }
 
     return this.stageParameters.enemies.normalZombieHealth;
   }
