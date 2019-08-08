@@ -5,19 +5,16 @@ export default class {
     this.scene = scene;
   }
 
-  checkGuess(guess) {
-    let mercKill = false;
-    const canUseMercenary = this.scene.cash >= this.scene.currentLevel.mercenaryCost;
-    const mercenaryAttempt = this.scene.zombieManager.checkMercenary(guess, canUseMercenary);
-    if (mercenaryAttempt) {
-      this.setStatus(canUseMercenary);
-      if (canUseMercenary) {
-        mercKill = true;
+  checkGuess(guess, canAfford) {
+    const mercAttempt = this.scene.zombieManager.checkMercenary(guess, canAfford);
+    if (mercAttempt) {
+      this.setStatus(canAfford);
+      if (canAfford) {
         this.scene.cash -= this.scene.currentLevel.mercenaryCost;
         this.scene.hudManager.setCash(this.scene.cash);
       }
     }
-    return mercKill;
+    return mercAttempt;
   }
 
   setStatus(canUse) {

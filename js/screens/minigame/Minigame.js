@@ -207,10 +207,15 @@ export default class extends Phaser.Scene {
 
     // if guess did not match, check mercenary
     let mercKill = false;
+    let mercAttempt = false;
     if (!isCorrect && this.mercenaryEnabled) {
-      mercKill = this.mercenaryManager.checkGuess(guess);
-      if (mercKill) {
+      const canAffordMerc = this.cash >= this.currentLevel.mercenaryCost;
+      mercAttempt = this.mercenaryManager.checkGuess(guess, canAffordMerc);
+      if (mercAttempt) {
         shotFired = false;
+        if (canAffordMerc) {
+          mercKill = true;
+        }
       }
     }
 
