@@ -46,4 +46,14 @@ export default [
     location: 'Rusty Spoon Restaurant',
     position: { x: 2, y: 2 },
   },
+  {
+    id: lessons.school.name,
+    location: 'Hillside Elementary School',
+    position: { x: 3, y: 1 },
+  },
+  {
+    id: lessons.office.name,
+    location: 'Business Center',
+    position: { x: 3, y: 0 },
+  },
 ];

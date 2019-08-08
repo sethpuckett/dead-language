@@ -60,4 +60,22 @@ export default {
     stage5: 'around-the-house-5',
     review: 'around-the-house-review',
   },
+  school: {
+    name: 'lesson-school',
+    stage1: 'school-1',
+    stage2: 'school-2',
+    stage3: 'school-3',
+    stage4: 'school-4',
+    stage5: 'school-5',
+    review: 'school-review',
+  },
+  office: {
+    name: 'lesson-office',
+    stage1: 'office-1',
+    stage2: 'office-2',
+    stage3: 'office-3',
+    stage4: 'office-4',
+    stage5: 'office-5',
+    review: 'office-review',
+  },
 };
