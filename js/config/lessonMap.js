@@ -56,4 +56,9 @@ export default [
     location: 'Business Center',
     position: { x: 3, y: 0 },
   },
+  {
+    id: lessons.whenAndWhere.name,
+    location: 'Antique Shop',
+    position: { x: 0, y: 2 },
+  },
 ];

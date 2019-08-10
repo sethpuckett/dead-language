@@ -79,4 +79,12 @@ export default {
     stage5: 'office-5',
     review: 'office-review',
   },
+  whenAndWhere: {
+    name: 'lesson-when-and-where',
+    stage1: 'when-and-where-1',
+    stage2: 'when-and-where-2',
+    stage3: 'when-and-where-3',
+    stage4: 'when-and-where-4',
+    review: 'when-and-where-review',
+  },
 };
