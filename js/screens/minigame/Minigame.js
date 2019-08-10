@@ -246,7 +246,8 @@ export default class extends Phaser.Scene {
     }
 
     const lesson = this.sys.game.db.getLessonForStage(this.stageId);
-    return lesson.stages.reduce((agg, cur) => agg.concat(this.sys.game.db.getStage(cur).vocab), []);
+    const raw = lesson.stages.reduce((a, c) => a.concat(this.sys.game.db.getStage(c).vocab), []);
+    return raw.filter(v => v != null);
   }
 
   enableInputHandling() {

@@ -48,4 +48,13 @@ export default [
     id: 'basic-vocab-review',
     waveId: 'waves-basic-vocab-review',
   },
+  {
+    id: 'lesson-2',
+    waveId: 'waves-lesson-2',
+  },
+  {
+    id: 'lesson-2-review',
+    waveId: 'waves-lesson-2-review',
+    gameTime: 210,
+  },
 ];
