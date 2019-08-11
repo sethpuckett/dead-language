@@ -34,7 +34,7 @@ export default class {
     this.borderGraphics.clear();
 
     const color = townMap.ui.borderColor;
-    this.borderGraphics.lineStyle(townMap.ui.borderWidth, color);
+    this.borderGraphics.lineStyle(this.scene.ui.borderWidth, color);
     this.borderGraphics.fillStyle(color);
 
     this.borderGraphics.strokeRect(
@@ -44,7 +44,7 @@ export default class {
       this.scene.ui.lessonInfoHeight
     );
 
-    this.mapHelper.drawSquares(this.borderGraphics, [
+    this.mapHelper.drawSquares(this.borderGraphics, this.scene.ui.squareWidth, [
       [this.scene.ui.lessonInfoSquareTLX, this.scene.ui.lessonInfoSquareTLY],
       [this.scene.ui.lessonInfoSquareTRX, this.scene.ui.lessonInfoSquareTRY],
       [this.scene.ui.lessonInfoSquareBLX, this.scene.ui.lessonInfoSquareBLY],

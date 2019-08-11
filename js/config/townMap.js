@@ -5,15 +5,12 @@ export default {
   lockedText: 'Locked!',
   screenFadeTime: 750,
   selectorFlashDelay: 350,
+  // TODO: most of this should be in UiHelper
   ui: {
     borderColor: 0xffffff,
-    borderWidth: 5,
-    squareWidth: 10,
-    mapGridWidth: 3,
     mapGridColor: 0x222222,
     borderDisableColor: 0x222222,
-    mapPinCellWidth: 0.5,
-    requirementLineWidth: 3,
+    mapPinCellRatio: 0.5,
     requirementLineColor: 0xffffff,
   },
   choiceModals: {

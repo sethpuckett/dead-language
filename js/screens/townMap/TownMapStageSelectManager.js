@@ -139,7 +139,7 @@ export default class {
     const color = enabled ? townMap.ui.borderColor : townMap.ui.borderDisableColor;
     this.borderGraphics = this.scene.add.graphics();
     this.borderGraphics.setDepth(depth.townMap.border);
-    this.borderGraphics.lineStyle(townMap.ui.borderWidth, color);
+    this.borderGraphics.lineStyle(this.scene.ui.borderWidth, color);
     this.borderGraphics.fillStyle(color);
 
     this.borderGraphics.strokeRect(
@@ -149,7 +149,7 @@ export default class {
       this.scene.ui.stageHeight
     );
 
-    this.mapHelper.drawSquares(this.borderGraphics, [
+    this.mapHelper.drawSquares(this.borderGraphics, this.scene.ui.squareWidth, [
       [this.scene.ui.stageSquareTLX, this.scene.ui.stageSquareTLY],
       [this.scene.ui.stageSquareTRX, this.scene.ui.stageSquareTRY],
       [this.scene.ui.stageSquareBLX, this.scene.ui.stageSquareBLY],

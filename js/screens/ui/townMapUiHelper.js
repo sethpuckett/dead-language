@@ -1,12 +1,17 @@
 import uiHelper from './uiHelper';
-import { townMap } from '../../config';
 
 export default (config) => {
   const u = uiHelper(config);
 
   return {
 
+    // Shared
+
     padding: u.padding,
+    borderWidth: u.w * 0.005,
+    squareWidth: u.w * 0.02,
+    flashLineWidth: u.w * 0.0025,
+    mapGridLineWidth: u.w * 0.0025,
 
     // Map
 
@@ -19,12 +24,12 @@ export default (config) => {
 
     get mapSquareTLX() { return this.mapX; },
     get mapSquareTLY() { return this.mapY; },
-    get mapSquareTRX() { return this.mapX + this.mapWidth - townMap.ui.squareWidth; },
+    get mapSquareTRX() { return this.mapX + this.mapWidth - this.squareWidth; },
     get mapSquareTRY() { return this.mapY; },
     get mapSquareBLX() { return this.mapX; },
-    get mapSquareBLY() { return this.mapY + this.mapHeight - townMap.ui.squareWidth; },
-    get mapSquareBRX() { return this.mapX + this.mapWidth - townMap.ui.squareWidth; },
-    get mapSquareBRY() { return this.mapY + this.mapHeight - townMap.ui.squareWidth; },
+    get mapSquareBLY() { return this.mapY + this.mapHeight - this.squareWidth; },
+    get mapSquareBRX() { return this.mapX + this.mapWidth - this.squareWidth; },
+    get mapSquareBRY() { return this.mapY + this.mapHeight - this.squareWidth; },
 
     get mapTitleX() { return this.mapX + this.mapWidth / 2; },
     get mapTitleY() { return this.mapY + u.paddingBig; },
@@ -43,6 +48,7 @@ export default (config) => {
 
     mapPinOrigin: u.center,
     mapSelectorOrigin: u.center,
+    requirementLineWidth: u.w * 0.004,
 
     // Lesson Info
 
@@ -56,18 +62,18 @@ export default (config) => {
     get lessonInfoSquareTLX() { return this.lessonInfoX; },
     get lessonInfoSquareTLY() { return this.lessonInfoY; },
     get lessonInfoSquareTRX() {
-      return this.lessonInfoX + this.lessonInfoWidth - townMap.ui.squareWidth;
+      return this.lessonInfoX + this.lessonInfoWidth - this.squareWidth;
     },
     get lessonInfoSquareTRY() { return this.lessonInfoY; },
     get lessonInfoSquareBLX() { return this.lessonInfoX; },
     get lessonInfoSquareBLY() {
-      return this.lessonInfoY + this.lessonInfoHeight - townMap.ui.squareWidth;
+      return this.lessonInfoY + this.lessonInfoHeight - this.squareWidth;
     },
     get lessonInfoSquareBRX() {
-      return this.lessonInfoX + this.lessonInfoWidth - townMap.ui.squareWidth;
+      return this.lessonInfoX + this.lessonInfoWidth - this.squareWidth;
     },
     get lessonInfoSquareBRY() {
-      return this.lessonInfoY + this.lessonInfoHeight - townMap.ui.squareWidth;
+      return this.lessonInfoY + this.lessonInfoHeight - this.squareWidth;
     },
 
     get lessonInfoTitleX() { return this.lessonInfoX + this.lessonInfoWidth / 2; },
@@ -91,12 +97,12 @@ export default (config) => {
 
     get stageSquareTLX() { return this.stageX; },
     get stageSquareTLY() { return this.stageY; },
-    get stageSquareTRX() { return this.stageX + this.stageWidth - townMap.ui.squareWidth; },
+    get stageSquareTRX() { return this.stageX + this.stageWidth - this.squareWidth; },
     get stageSquareTRY() { return this.stageY; },
     get stageSquareBLX() { return this.stageX; },
-    get stageSquareBLY() { return this.stageY + this.stageHeight - townMap.ui.squareWidth; },
-    get stageSquareBRX() { return this.stageX + this.stageWidth - townMap.ui.squareWidth; },
-    get stageSquareBRY() { return this.stageY + this.stageHeight - townMap.ui.squareWidth; },
+    get stageSquareBLY() { return this.stageY + this.stageHeight - this.squareWidth; },
+    get stageSquareBRX() { return this.stageX + this.stageWidth - this.squareWidth; },
+    get stageSquareBRY() { return this.stageY + this.stageHeight - this.squareWidth; },
 
     get stageTitleX() { return this.stageX + this.stageWidth / 2; },
     get stageTitleY() { return this.stageY + u.paddingBig; },
@@ -127,18 +133,18 @@ export default (config) => {
     get stageInfoSquareTLX() { return this.stageInfoX; },
     get stageInfoSquareTLY() { return this.stageInfoY; },
     get stageInfoSquareTRX() {
-      return this.stageInfoX + this.stageInfoWidth - townMap.ui.squareWidth;
+      return this.stageInfoX + this.stageInfoWidth - this.squareWidth;
     },
     get stageInfoSquareTRY() { return this.stageInfoY; },
     get stageInfoSquareBLX() { return this.stageInfoX; },
     get stageInfoSquareBLY() {
-      return this.stageInfoY + this.stageInfoHeight - townMap.ui.squareWidth;
+      return this.stageInfoY + this.stageInfoHeight - this.squareWidth;
     },
     get stageInfoSquareBRX() {
-      return this.stageInfoX + this.stageInfoWidth - townMap.ui.squareWidth;
+      return this.stageInfoX + this.stageInfoWidth - this.squareWidth;
     },
     get stageInfoSquareBRY() {
-      return this.stageInfoY + this.stageInfoHeight - townMap.ui.squareWidth;
+      return this.stageInfoY + this.stageInfoHeight - this.squareWidth;
     },
 
     get stageInfoTitleX() { return this.stageInfoX + this.stageInfoWidth / 2; },
@@ -186,18 +192,18 @@ export default (config) => {
     get instructionsSquareTLX() { return this.instructionsX; },
     get instructionsSquareTLY() { return this.instructionsY; },
     get instructionsSquareTRX() {
-      return this.instructionsX + this.instructionsWidth - townMap.ui.squareWidth;
+      return this.instructionsX + this.instructionsWidth - this.squareWidth;
     },
     get instructionsSquareTRY() { return this.instructionsY; },
     get instructionsSquareBLX() { return this.instructionsX; },
     get instructionsSquareBLY() {
-      return this.instructionsY + this.instructionsHeight - townMap.ui.squareWidth;
+      return this.instructionsY + this.instructionsHeight - this.squareWidth;
     },
     get instructionsSquareBRX() {
-      return this.instructionsX + this.instructionsWidth - townMap.ui.squareWidth;
+      return this.instructionsX + this.instructionsWidth - this.squareWidth;
     },
     get instructionsSquareBRY() {
-      return this.instructionsY + this.instructionsHeight - townMap.ui.squareWidth;
+      return this.instructionsY + this.instructionsHeight - this.squareWidth;
     },
 
     get instructionsTextX() { return this.instructionsX + this.instructionsWidth / 2; },

@@ -52,7 +52,7 @@ export default class {
 
   drawBorder(enabled) {
     const color = enabled ? townMap.ui.borderColor : townMap.ui.borderDisableColor;
-    this.borderGraphics.lineStyle(townMap.ui.borderWidth, color);
+    this.borderGraphics.lineStyle(this.scene.ui.borderWidth, color);
     this.borderGraphics.fillStyle(color);
 
     this.borderGraphics.strokeRect(
@@ -62,7 +62,7 @@ export default class {
       this.scene.ui.stageInfoHeight
     );
 
-    this.mapHelper.drawSquares(this.borderGraphics, [
+    this.mapHelper.drawSquares(this.borderGraphics, this.scene.ui.squareWidth, [
       [this.scene.ui.stageInfoSquareTLX, this.scene.ui.stageInfoSquareTLY],
       [this.scene.ui.stageInfoSquareTRX, this.scene.ui.stageInfoSquareTRY],
       [this.scene.ui.stageInfoSquareBLX, this.scene.ui.stageInfoSquareBLY],

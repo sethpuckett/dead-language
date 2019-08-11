@@ -18,7 +18,7 @@ export default class {
     this.requirementGraphics = this.scene.add.graphics();
     this.requirementGraphics.setDepth(depth.townMap.requirementLine);
     this.requirementGraphics.lineStyle(
-      townMap.ui.requirementLineWidth, townMap.ui.requirementLineColor
+      this.scene.ui.requirementLineWidth, townMap.ui.requirementLineColor
     );
   }
 
@@ -157,18 +157,38 @@ export default class {
     this.borderGraphics = this.scene.add.graphics();
     this.borderGraphics.setDepth(depth.townMap.border);
     const color = enabled ? townMap.ui.borderColor : townMap.ui.borderDisableColor;
-    this.borderGraphics.lineStyle(townMap.ui.borderWidth, color);
+    this.borderGraphics.lineStyle(this.scene.ui.borderWidth, color);
     this.borderGraphics.fillStyle(color);
 
     this.borderGraphics.strokeRect(
       this.scene.ui.mapX, this.scene.ui.mapY, this.scene.ui.mapWidth, this.scene.ui.mapHeight
     );
-    this.mapHelper.drawSquares(this.borderGraphics, [
+    this.mapHelper.drawSquares(this.borderGraphics, this.scene.ui.squareWidth, [
       [this.scene.ui.mapSquareTLX, this.scene.ui.mapSquareTLY],
       [this.scene.ui.mapSquareTRX, this.scene.ui.mapSquareTRY],
       [this.scene.ui.mapSquareBLX, this.scene.ui.mapSquareBLY],
       [this.scene.ui.mapSquareBRX, this.scene.ui.mapSquareBRY],
     ]);
+  }
+
+  drawFlashLines() {
+    this.clearFlashLines();
+
+    this.lineGraphics = this.scene.add.graphics();
+    this.lineGraphics.setDepth(depth.townMap.border);
+    const color = townMap.ui.borderColor;
+    this.lineGraphics.lineStyle(this.scene.ui.flashLineWidth, color);
+    this.lineGraphics.fillStyle(color);
+
+    this.lineGraphics.beginPath();
+    this.lineGraphics.moveTo(100, 100);
+    this.lineGraphics.lineTo(200, 200);
+    this.lineGraphics.closePath();
+    this.lineGraphics.strokePath();
+  }
+
+  clearFlashLines() {
+
   }
 
   createTitle() {
@@ -237,15 +257,15 @@ export default class {
   createMapGrid() {
     this.clearMapGrid();
     this.gridGraphics = this.scene.add.graphics();
-    this.gridGraphics.lineStyle(townMap.ui.mapGridWidth, townMap.ui.mapGridColor);
+    this.gridGraphics.lineStyle(this.scene.ui.mapGridLineWidth, townMap.ui.mapGridColor);
     this.gridGraphics.setDepth(depth.townMap.mapGrid);
 
-    this.cellWidth = (this.scene.ui.mapGridWidth - townMap.ui.squareWidth * 2
+    this.cellWidth = (this.scene.ui.mapGridWidth - this.scene.ui.squareWidth * 2
       - this.scene.ui.padding * 2) / MAP_X_CELL_COUNT;
-    this.cellHeight = (this.scene.ui.mapGridHeight - townMap.ui.squareWidth * 2
+    this.cellHeight = (this.scene.ui.mapGridHeight - this.scene.ui.squareWidth * 2
       - this.scene.ui.padding * 2) / MAP_Y_CELL_COUNT;
-    this.baseX = this.scene.ui.mapGridX + townMap.ui.squareWidth + this.scene.ui.padding;
-    this.baseY = this.scene.ui.mapGridY + townMap.ui.squareWidth + this.scene.ui.padding;
+    this.baseX = this.scene.ui.mapGridX + this.scene.ui.squareWidth + this.scene.ui.padding;
+    this.baseY = this.scene.ui.mapGridY + this.scene.ui.squareWidth + this.scene.ui.padding;
 
     for (let x = 0; x < MAP_X_CELL_COUNT; x += 1) {
       for (let y = 0; y < MAP_Y_CELL_COUNT; y += 1) {
@@ -285,8 +305,8 @@ export default class {
       const pin = this.scene.add.sprite(xPos, yPos, images.colorSquare, pinFrame);
       pin.setOrigin(this.scene.ui.mapPinOrigin);
       pin.setDepth(depth.townMap.lessonPin);
-      pin.displayWidth = this.cellWidth * townMap.ui.mapPinCellWidth;
-      pin.displayHeight = this.cellHeight * townMap.ui.mapPinCellWidth;
+      pin.displayWidth = this.cellWidth * townMap.ui.mapPinCellRatio;
+      pin.displayHeight = this.cellHeight * townMap.ui.mapPinCellRatio;
       this.pins.push(pin);
     });
   }

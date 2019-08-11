@@ -7,7 +7,7 @@ export default class {
     this.mapHelper = new TownMapHelper();
 
     this.borderGraphics = this.scene.add.graphics();
-    this.borderGraphics.lineStyle(townMap.ui.borderWidth, townMap.ui.borderColor);
+    this.borderGraphics.lineStyle(this.scene.ui.borderWidth, townMap.ui.borderColor);
     this.borderGraphics.fillStyle(townMap.ui.borderColor);
     this.borderGraphics.setDepth(depth.townMap.border);
   }
@@ -25,7 +25,7 @@ export default class {
       this.scene.ui.instructionsHeight
     );
 
-    this.mapHelper.drawSquares(this.borderGraphics, [
+    this.mapHelper.drawSquares(this.borderGraphics, this.scene.ui.squareWidth, [
       [this.scene.ui.instructionsSquareTLX, this.scene.ui.instructionsSquareTLY],
       [this.scene.ui.instructionsSquareTRX, this.scene.ui.instructionsSquareTRY],
       [this.scene.ui.instructionsSquareBLX, this.scene.ui.instructionsSquareBLY],
