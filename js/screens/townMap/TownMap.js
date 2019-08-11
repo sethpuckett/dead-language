@@ -273,7 +273,8 @@ export default class extends Phaser.Scene {
   }
 
   lessonChanged(lessonId) {
-    if (lessonId != null) {
+    const visible = this.mapManager.isLessonVisible(lessonId);
+    if (lessonId != null && visible) {
       this.lessonInfoManager.setLesson(lessonId);
       this.stageSelectManager.setLesson(lessonId);
     } else {

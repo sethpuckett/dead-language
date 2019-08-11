@@ -246,7 +246,7 @@ export default class {
   createLocation() {
     this.clearLocation();
     const location = this.getLessonLocation();
-    if (location != null) {
+    if (location != null && this.isLessonVisible(this.getLesson().id)) {
       this.mapLocation = this.scene.add.bitmapText(
         this.scene.ui.mapLocationX,
         this.scene.ui.mapLocationY,
@@ -309,6 +309,7 @@ export default class {
 
       const completed = this.progressManager.isLessonCompleted(lesson.id);
       const locked = this.progressManager.isLessonLocked(lesson.id);
+      const visible = this.isLessonVisible(lesson.id);
       let pinFrame = images.frames.colorSquareYellow;
       if (completed) {
         pinFrame = images.frames.colorSquareGreen;
@@ -316,12 +317,14 @@ export default class {
         pinFrame = images.frames.colorSquareRed;
       }
 
-      const pin = this.scene.add.sprite(xPos, yPos, images.colorSquare, pinFrame);
-      pin.setOrigin(this.scene.ui.mapPinOrigin);
-      pin.setDepth(depth.townMap.lessonPin);
-      pin.displayWidth = this.cellWidth * townMap.ui.mapPinCellRatio;
-      pin.displayHeight = this.cellHeight * townMap.ui.mapPinCellRatio;
-      this.pins.push(pin);
+      if (visible) {
+        const pin = this.scene.add.sprite(xPos, yPos, images.colorSquare, pinFrame);
+        pin.setOrigin(this.scene.ui.mapPinOrigin);
+        pin.setDepth(depth.townMap.lessonPin);
+        pin.displayWidth = this.cellWidth * townMap.ui.mapPinCellRatio;
+        pin.displayHeight = this.cellHeight * townMap.ui.mapPinCellRatio;
+        this.pins.push(pin);
+      }
     });
   }
 
@@ -414,20 +417,35 @@ export default class {
   drawRequirementLines() {
     lessonMap.forEach((mapInfo) => {
       const lesson = this.scene.sys.game.db.getLesson(mapInfo.id);
-      if (lesson.requirements != null) {
-        lesson.requirements.forEach((requiredLessonId) => {
-          const requireInfo = lessonMap.find(mi => mi.id === requiredLessonId);
-          const fromX = this.baseX + mapInfo.position.x * this.cellWidth + this.cellWidth / 2;
-          const fromY = this.baseY + mapInfo.position.y * this.cellHeight + this.cellHeight / 2;
-          const toX = this.baseX + requireInfo.position.x * this.cellWidth + this.cellWidth / 2;
-          const toY = this.baseY + requireInfo.position.y * this.cellHeight + this.cellHeight / 2;
-          this.requirementGraphics.beginPath();
-          this.requirementGraphics.moveTo(fromX, fromY);
-          this.requirementGraphics.lineTo(toX, toY);
-          this.requirementGraphics.closePath();
-          this.requirementGraphics.strokePath();
-        });
+      if (this.isLessonVisible(lesson.id)) {
+        if (lesson.requirements != null) {
+          lesson.requirements.forEach((requiredLessonId) => {
+            const requireInfo = lessonMap.find(mi => mi.id === requiredLessonId);
+            const fromX = this.baseX + mapInfo.position.x * this.cellWidth + this.cellWidth / 2;
+            const fromY = this.baseY + mapInfo.position.y * this.cellHeight + this.cellHeight / 2;
+            const toX = this.baseX + requireInfo.position.x * this.cellWidth + this.cellWidth / 2;
+            const toY = this.baseY + requireInfo.position.y * this.cellHeight + this.cellHeight / 2;
+            this.requirementGraphics.beginPath();
+            this.requirementGraphics.moveTo(fromX, fromY);
+            this.requirementGraphics.lineTo(toX, toY);
+            this.requirementGraphics.closePath();
+            this.requirementGraphics.strokePath();
+          });
+        }
       }
     });
+  }
+
+  isLessonVisible(lessonId) {
+    if (townMap.showAllLessons) {
+      return true;
+    }
+    if (lessonId == null) {
+      return false;
+    }
+    const completed = this.progressManager.isLessonCompleted(lessonId);
+    const locked = this.progressManager.isLessonLocked(lessonId);
+    const upcoming = this.progressManager.isLessonUpcoming(lessonId);
+    return completed || !locked || upcoming;
   }
 }

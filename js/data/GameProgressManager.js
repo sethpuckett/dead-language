@@ -74,6 +74,23 @@ export default class {
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }
 
+  isLessonUpcoming(lessonId) {
+    if (!this.db.isUserLoggedIn()) {
+      return false;
+    }
+
+    if (this.db.userProfileLoaded) {
+      const lesson = this.db.getLesson(lessonId);
+      const lessonLocked = this.isLessonLocked(lessonId);
+      if (lessonLocked) {
+        return lesson.requirements.some(r => !this.isLessonLocked(r));
+      }
+
+      return false;
+    }
+    throw Error('user profile has not been loaded. Call loadUserProfile() first');
+  }
+
   isModalSeen(modalId) {
     if (!this.db.isUserLoggedIn()) {
       return false;
