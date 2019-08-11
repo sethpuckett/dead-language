@@ -10,7 +10,7 @@ export default (config) => {
     padding: u.padding,
     borderWidth: u.w * 0.005,
     squareWidth: u.w * 0.02,
-    flashLineWidth: u.w * 0.0025,
+    flashLineWidth: u.w * 0.005,
     mapGridLineWidth: u.w * 0.0025,
 
     // Map
@@ -31,13 +31,30 @@ export default (config) => {
     get mapSquareBRX() { return this.mapX + this.mapWidth - this.squareWidth; },
     get mapSquareBRY() { return this.mapY + this.mapHeight - this.squareWidth; },
 
+    get mapFlashLineLTX() { return this.mapSquareTLX + this.squareWidth / 2; },
+    get mapFlashLineLBX() { return this.mapSquareBLX + this.squareWidth / 2; },
+    get mapFlashLineLTY() { return this.mapSquareTLY + this.squareWidth + u.padding; },
+    get mapFlashLineLBY() { return this.mapSquareBLY - u.padding; },
+    get mapFlashLineRTX() { return this.mapSquareTRX + this.squareWidth / 2; },
+    get mapFlashLineRBX() { return this.mapSquareBRX + this.squareWidth / 2; },
+    get mapFlashLineRTY() { return this.mapSquareTRY + this.squareWidth + u.padding; },
+    get mapFlashLineRBY() { return this.mapSquareBRY - u.padding; },
+    get mapFlashLineTLX() { return this.mapSquareTLX + this.squareWidth + u.padding; },
+    get mapFlashLineTRX() { return this.mapSquareTRX - u.padding; },
+    get mapFlashLineTLY() { return this.mapSquareTLY + this.squareWidth / 2; },
+    get mapFlashLineTRY() { return this.mapSquareTRY + this.squareWidth / 2; },
+    get mapFlashLineBLX() { return this.mapSquareBLX + this.squareWidth + u.padding; },
+    get mapFlashLineBRX() { return this.mapSquareBRX - u.padding; },
+    get mapFlashLineBLY() { return this.mapSquareBLY + this.squareWidth / 2; },
+    get mapFlashLineBRY() { return this.mapSquareBRY + this.squareWidth / 2; },
+
     get mapTitleX() { return this.mapX + this.mapWidth / 2; },
-    get mapTitleY() { return this.mapY + u.paddingBig; },
+    get mapTitleY() { return this.mapY + this.squareWidth + u.padding; },
     mapTitleOriginX: u.center,
     mapTitleOriginY: u.top,
 
     get mapLocationX() { return this.mapX + this.mapWidth / 2; },
-    get mapLocationY() { return this.mapY + this.mapHeight - u.paddingBig; },
+    get mapLocationY() { return this.mapY + this.mapHeight - this.squareWidth - u.padding; },
     mapLocationOriginX: u.center,
     mapLocationOriginY: u.bottom,
 
@@ -77,12 +94,12 @@ export default (config) => {
     },
 
     get lessonInfoTitleX() { return this.lessonInfoX + this.lessonInfoWidth / 2; },
-    get lessonInfoTitleY() { return this.lessonInfoY + u.paddingBig; },
+    get lessonInfoTitleY() { return this.lessonInfoY + this.squareWidth + u.padding; },
     lessonInfoTitleOriginX: u.center,
     lessonInfoTitleOriginY: u.top,
 
     get lessonInfoTextX() { return this.lessonInfoX + u.paddingBig; },
-    get lessonInfoTextY() { return this.lessonInfoY + u.h * 0.075; },
+    get lessonInfoTextY() { return this.lessonInfoY + u.h * 0.09; }, // TODO: this should be based on titleY
     lessonInfoTextOriginX: u.left,
     lessonInfoTextOriginY: u.top,
 
@@ -104,12 +121,29 @@ export default (config) => {
     get stageSquareBRX() { return this.stageX + this.stageWidth - this.squareWidth; },
     get stageSquareBRY() { return this.stageY + this.stageHeight - this.squareWidth; },
 
+    get stageFlashLineLTX() { return this.stageSquareTLX + this.squareWidth / 2; },
+    get stageFlashLineLBX() { return this.stageSquareBLX + this.squareWidth / 2; },
+    get stageFlashLineLTY() { return this.stageSquareTLY + this.squareWidth + u.padding; },
+    get stageFlashLineLBY() { return this.stageSquareBLY - u.padding; },
+    get stageFlashLineRTX() { return this.stageSquareTRX + this.squareWidth / 2; },
+    get stageFlashLineRBX() { return this.stageSquareBRX + this.squareWidth / 2; },
+    get stageFlashLineRTY() { return this.stageSquareTRY + this.squareWidth + u.padding; },
+    get stageFlashLineRBY() { return this.stageSquareBRY - u.padding; },
+    get stageFlashLineTLX() { return this.stageSquareTLX + this.squareWidth + u.padding; },
+    get stageFlashLineTRX() { return this.stageSquareTRX - u.padding; },
+    get stageFlashLineTLY() { return this.stageSquareTLY + this.squareWidth / 2; },
+    get stageFlashLineTRY() { return this.stageSquareTRY + this.squareWidth / 2; },
+    get stageFlashLineBLX() { return this.stageSquareBLX + this.squareWidth + u.padding; },
+    get stageFlashLineBRX() { return this.stageSquareBRX - u.padding; },
+    get stageFlashLineBLY() { return this.stageSquareBLY + this.squareWidth / 2; },
+    get stageFlashLineBRY() { return this.stageSquareBRY + this.squareWidth / 2; },
+
     get stageTitleX() { return this.stageX + this.stageWidth / 2; },
-    get stageTitleY() { return this.stageY + u.paddingBig; },
+    get stageTitleY() { return this.stageY + this.squareWidth + u.padding; },
     stageTitleOriginX: u.center,
     stageTitleOriginY: u.top,
 
-    get stageDotY() { return this.stageY + this.stageHeight * 0.66; },
+    get stageDotY() { return this.stageY + this.stageHeight * 0.6; },
     stageDotWidth: u.w_5p,
     stageReviewDotWidth: u.w * 0.065,
     stageDotSpaceWidth: u.w * 0.058,
@@ -148,7 +182,7 @@ export default (config) => {
     },
 
     get stageInfoTitleX() { return this.stageInfoX + this.stageInfoWidth / 2; },
-    get stageInfoTitleY() { return this.stageInfoY + u.paddingBig; },
+    get stageInfoTitleY() { return this.stageInfoY + this.squareWidth + u.padding; },
     stageInfoTitleOriginX: u.center,
     stageInfoTitleOriginY: u.top,
 

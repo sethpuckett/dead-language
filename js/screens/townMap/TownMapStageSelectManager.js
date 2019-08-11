@@ -37,6 +37,7 @@ export default class {
     this.clearTitle();
     this.clearStageSelector();
     this.drawBorder(false);
+    this.clearFlashLines();
     this.disableInputHandling();
   }
 
@@ -127,7 +128,11 @@ export default class {
       delay: townMap.selectorFlashDelay,
       callback: () => {
         this.selectorFlashOn = !this.selectorFlashOn;
-        this.drawBorder(this.selectorFlashOn);
+        if (this.selectorFlashOn) {
+          this.drawFlashLines();
+        } else {
+          this.clearFlashLines();
+        }
       },
       callbackScope: this,
       repeat: -1,
@@ -155,6 +160,35 @@ export default class {
       [this.scene.ui.stageSquareBLX, this.scene.ui.stageSquareBLY],
       [this.scene.ui.stageSquareBRX, this.scene.ui.stageSquareBRY],
     ]);
+  }
+
+  drawFlashLines() {
+    this.clearFlashLines();
+
+    this.lineGraphics = this.scene.add.graphics();
+    this.lineGraphics.setDepth(depth.townMap.border);
+    const color = townMap.ui.borderColor;
+    this.lineGraphics.lineStyle(this.scene.ui.flashLineWidth, color);
+    this.lineGraphics.fillStyle(color);
+
+    this.lineGraphics.beginPath();
+    this.lineGraphics.moveTo(this.scene.ui.stageFlashLineLTX, this.scene.ui.stageFlashLineLTY);
+    this.lineGraphics.lineTo(this.scene.ui.stageFlashLineLBX, this.scene.ui.stageFlashLineLBY);
+    this.lineGraphics.moveTo(this.scene.ui.stageFlashLineRTX, this.scene.ui.stageFlashLineRTY);
+    this.lineGraphics.lineTo(this.scene.ui.stageFlashLineRBX, this.scene.ui.stageFlashLineRBY);
+    this.lineGraphics.moveTo(this.scene.ui.stageFlashLineTLX, this.scene.ui.stageFlashLineTLY);
+    this.lineGraphics.lineTo(this.scene.ui.stageFlashLineTRX, this.scene.ui.stageFlashLineTRY);
+    this.lineGraphics.moveTo(this.scene.ui.stageFlashLineBLX, this.scene.ui.stageFlashLineBLY);
+    this.lineGraphics.lineTo(this.scene.ui.stageFlashLineBRX, this.scene.ui.stageFlashLineBRY);
+    this.lineGraphics.closePath();
+    this.lineGraphics.strokePath();
+  }
+
+  clearFlashLines() {
+    if (this.lineGraphics != null) {
+      this.lineGraphics.clear();
+      this.lineGraphics = null;
+    }
   }
 
   createTitle() {

@@ -49,6 +49,7 @@ export default class {
     this.clearFlashTimer();
     this.drawBorder(false);
     this.clearTitle();
+    this.clearFlashLines();
     this.disableInputHandling();
   }
 
@@ -145,7 +146,11 @@ export default class {
       delay: townMap.selectorFlashDelay,
       callback: () => {
         this.selectorFlashOn = !this.selectorFlashOn;
-        this.drawBorder(this.selectorFlashOn);
+        if (this.selectorFlashOn) {
+          this.drawFlashLines();
+        } else {
+          this.clearFlashLines();
+        }
       },
       callbackScope: this,
       repeat: -1,
@@ -181,14 +186,23 @@ export default class {
     this.lineGraphics.fillStyle(color);
 
     this.lineGraphics.beginPath();
-    this.lineGraphics.moveTo(100, 100);
-    this.lineGraphics.lineTo(200, 200);
+    this.lineGraphics.moveTo(this.scene.ui.mapFlashLineLTX, this.scene.ui.mapFlashLineLTY);
+    this.lineGraphics.lineTo(this.scene.ui.mapFlashLineLBX, this.scene.ui.mapFlashLineLBY);
+    this.lineGraphics.moveTo(this.scene.ui.mapFlashLineRTX, this.scene.ui.mapFlashLineRTY);
+    this.lineGraphics.lineTo(this.scene.ui.mapFlashLineRBX, this.scene.ui.mapFlashLineRBY);
+    this.lineGraphics.moveTo(this.scene.ui.mapFlashLineTLX, this.scene.ui.mapFlashLineTLY);
+    this.lineGraphics.lineTo(this.scene.ui.mapFlashLineTRX, this.scene.ui.mapFlashLineTRY);
+    this.lineGraphics.moveTo(this.scene.ui.mapFlashLineBLX, this.scene.ui.mapFlashLineBLY);
+    this.lineGraphics.lineTo(this.scene.ui.mapFlashLineBRX, this.scene.ui.mapFlashLineBRY);
     this.lineGraphics.closePath();
     this.lineGraphics.strokePath();
   }
 
   clearFlashLines() {
-
+    if (this.lineGraphics != null) {
+      this.lineGraphics.clear();
+      this.lineGraphics = null;
+    }
   }
 
   createTitle() {
