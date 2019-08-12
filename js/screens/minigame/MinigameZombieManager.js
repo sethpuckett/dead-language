@@ -54,6 +54,10 @@ export default class {
   applyZombieDamage(zombie) {
     this.damage += this.stageParameters.enemies.attackDamage;
     zombie.alive = false;
+    if (this.stageParameters.enemies.showAnswerOnAttack) {
+      zombie.answer = zombie.words[zombie.hits].language2;
+      zombie.showAnswer = true;
+    }
   }
 
   checkZombieAttack() {
@@ -67,8 +71,13 @@ export default class {
     this.zombies.filter(z => !z.alive).forEach((z) => {
       releasedWords = releasedWords.concat(z.words);
       z.text.destroy();
-      z.wordBgGraphics.destroy();
-      z.destroy();
+      if (z.showAnswer) {
+        z.visible = false;
+        this.showZombieAnswerWord(z);
+      } else {
+        z.wordBgGraphics.destroy();
+        z.destroy();
+      }
     });
     this.zombies = this.zombies.filter(z => z.alive);
     return releasedWords;
@@ -92,6 +101,7 @@ export default class {
     zombie.alive = true;
     zombie.moving = true;
     zombie.attacking = false;
+    zombie.showAnswer = false;
     zombie.hits = 0;
 
     this.setZombieWord(zombie);
@@ -139,6 +149,10 @@ export default class {
       const word = this.getCurrentZombieWord(z);
       if (guess === textHelper.cleanText(word.language1)) {
         if (killZombie) {
+          if (this.stageParameters.enemies.showAnswerOnMerc) {
+            z.answer = word.language2;
+            z.showAnswer = true;
+          }
           this.shootZombie(z, weapons.pistol);
         }
         return true;
@@ -271,6 +285,51 @@ export default class {
         animationHelper.zombieAnimation(zombie.image, this.getZombieMoveAnimation(zombie.type))
       );
     }
+  }
+
+  showZombieAnswerWord(zombie) {
+    zombie.text.destroy();
+    zombie.text = this.scene.add.bitmapText(
+      0, zombie.y + this.scene.ui.zombieWordMargin,
+      fonts.blueSkyWhite, zombie.answer,
+      minigame.fonts.zombieSize
+    );
+    zombie.text.x = zombie.x - zombie.text.width / 2;
+    zombie.text.setDepth(depth.minigame.zombieText + zombie.text.y - this.scene.ui.padding);
+    zombie.text.setTintFill(minigame.fonts.zombieTint);
+    this.setZombieWordBg(zombie);
+    this.setZombieAnswerTimers(zombie);
+  }
+
+  setZombieAnswerTimers(zombie) {
+    zombie.answerFlashOn = false;
+    zombie.answerFlashTimer = this.scene.time.addEvent({
+      delay: minigame.answerFlashDelay,
+      callback: (z) => {
+        z.answerFlashOn = !z.answerFlashOn;
+        if (z.answerFlashOn) {
+          z.text.setTintFill(minigame.fonts.zombieAnswerFlashTint);
+        } else {
+          z.text.setTintFill(minigame.fonts.zombieTint);
+        }
+      },
+      args: [zombie],
+      callbackScope: this,
+      repeat: -1,
+    });
+
+    zombie.answerDisplayTimer = this.scene.time.addEvent({
+      delay: minigame.answerDisplayTime,
+      callback: (z) => {
+        z.answerFlashTimer.destroy();
+        z.text.destroy();
+        z.wordBgGraphics.destroy();
+        z.destroy();
+      },
+      args: [zombie],
+      callbackScope: this,
+      repeat: 0,
+    });
   }
 
   setZombieWord(zombie) {
