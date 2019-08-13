@@ -18,6 +18,10 @@ const SPECIAL_ZOMBIE_IMAGES = [
   images.zombieSpecial1,
   images.zombieSpecial2,
 ];
+const REVIEW_ZOMBIE_IMAGES = [
+  images.zombieReview1,
+  images.zombieReview2,
+];
 
 export default class {
   constructor(scene, stageParameters) {
@@ -249,6 +253,9 @@ export default class {
   getZombieImage(enemyType) {
     if (enemyType === enemyTypes.sprinterZombie || enemyType === enemyTypes.bruiserZombie) {
       return Phaser.Math.RND.pick(SPECIAL_ZOMBIE_IMAGES);
+    }
+    if (enemyType === enemyTypes.reviewZombie) {
+      return Phaser.Math.RND.pick(REVIEW_ZOMBIE_IMAGES);
     }
 
     return Phaser.Math.RND.pick(NORMAL_ZOMBIE_IMAGES);

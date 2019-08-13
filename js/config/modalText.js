@@ -506,6 +506,38 @@ export default [
     ],
   },
   {
+    id: 'review-zombie-unlocked',
+    screen: screens.minigame,
+    checks: [
+      { checkType: modalChecks.itemUnlocked, checkValue: unlockableItems.reviewZombie },
+    ],
+    repeat: false,
+    text: [
+      [
+        'Are you ready to clear out the next area?',
+        'I hope you studied the new vocab.',
+      ],
+      [
+        'And I hope you haven\'t forgotten all the',
+        'vocab from the last lesson. You\'ve got to',
+        'keep that fresh in your mind, too, because',
+        'you will see it again.',
+      ],
+      [
+        'Sometimes zombies from areas you\'ve',
+        'already cleared will make their way to other',
+        'parts of town, and they\'ll bring their',
+        'vocab with them.',
+      ],
+      [
+        'So if you want to succeed you need to learn',
+        'all the new stuff AND remember all the old',
+        'stuff. It\'s a lot to ask, I know. But we\'re',
+        'counting on you. We know you can do it!',
+      ],
+    ],
+  },
+  {
     id: 'bruiser-unlocked',
     screen: screens.minigame,
     checks: [

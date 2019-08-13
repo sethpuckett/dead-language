@@ -21,6 +21,7 @@ export default class {
 
     const poolIndex = Phaser.Math.RND.between(0, this.availableContent.length - 1);
     const word = this.availableContent.splice(poolIndex, 1)[0];
+    word.review = false;
     this.reservedContent.push(word);
     return word;
   }

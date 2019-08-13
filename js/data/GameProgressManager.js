@@ -1,6 +1,7 @@
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import UnlockableManager from './UnlockableManager';
+import { gameTypes } from '../config';
 
 export default class {
   constructor(db) {
@@ -140,6 +141,11 @@ export default class {
       return stages != null ? stages : [];
     }
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
+  }
+
+  getCompletedNonReviewStages() {
+    const completedStages = this.getCompletedStages();
+    return completedStages.filter(s => this.getStageType(s) !== gameTypes.zombieAssaultReview.id);
   }
 
   getCompletedLessons() {

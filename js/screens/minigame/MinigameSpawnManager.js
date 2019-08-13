@@ -4,10 +4,11 @@ import enemyTypes from '../../config/enemyTypes';
 import UnlockableManager from '../../data/UnlockableManager';
 
 export default class {
-  constructor(scene, stageParams, vocabWordManager, startTime = 0) {
+  constructor(scene, stageParams, vocabWordManager, reviewVocabManager, startTime = 0) {
     this.scene = scene;
     this.stageParams = stageParams;
     this.vocab = vocabWordManager;
+    this.reviewVocabManager = reviewVocabManager;
     this.currentTime = startTime;
     this.nextSpawnTime = this.getSpawnDelay(startTime);
     this.prevSpawnColumn = 0;
@@ -31,7 +32,7 @@ export default class {
     const spawnConfig = { canSpawn: false };
     if (gameTime >= this.nextSpawnTime) {
       const enemyType = this.getRandomEnemyType(gameTime);
-      const words = this.vocab.getRandomWords(this.getWordCount(enemyType));
+      const words = this.getWords(enemyType);
       if (words != null) {
         spawnConfig.canSpawn = true;
         spawnConfig.enemyType = enemyType;
@@ -132,5 +133,19 @@ export default class {
       enemyType = enemyTypes.normalZombie;
     }
     return enemyType;
+  }
+
+  getWords(enemyType) {
+    const count = this.getWordCount(enemyType);
+
+    if (enemyType === enemyTypes.reviewZombie) {
+      const reviewWord = this.reviewVocabManager.getRandomReviewWord();
+      if (reviewWord != null) {
+        return [reviewWord];
+      }
+      return null;
+    }
+
+    return this.vocab.getRandomWords(count);
   }
 }

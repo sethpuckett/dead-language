@@ -19,11 +19,10 @@ export default [
     item: unlockableItems.mercenary,
     stage: lessons.basicVocab.stage3,
   },
-  // TODO: enable when review zombies are implemented
-  // {
-  //   item: unlockableItems.reviewZombie,
-  //   stage: lessons.basicVocab.review,
-  // },
+  {
+    item: unlockableItems.reviewZombie,
+    stage: lessons.basicVocab.review,
+  },
   {
     item: unlockableItems.bruiserZombie,
     stage: lessons.nouns1.stage1,

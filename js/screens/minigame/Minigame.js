@@ -15,6 +15,7 @@ import MinigameMercenaryManager from './MinigameMercenaryManager';
 import ModalChecker from '../modal/ModalChecker';
 import UnlockableManager from '../../data/UnlockableManager';
 import StageParameterManager from '../../gameContent/StageParameterManager';
+import ReviewVocabManager from '../../languageContent/ReviewVocabManager';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -33,11 +34,14 @@ export default class extends Phaser.Scene {
     this.modalChecker = new ModalChecker(this, stageId);
     this.unlockableManager = new UnlockableManager(this.sys.game.db);
     this.stageParameterManager = new StageParameterManager();
+    this.reviewVocabManager = new ReviewVocabManager(this.sys.game.db);
 
     this.currentLevel = this.stageParameterManager.getParameters(this.stageId);
 
     this.zombieManager = new MinigameZombieManager(this, this.currentLevel);
-    this.spawnManager = new MinigameSpawnManager(this, this.currentLevel, this.vocab);
+    this.spawnManager = new MinigameSpawnManager(
+      this, this.currentLevel, this.vocab, this.reviewVocabManager
+    );
     this.itemSpawnManager = new MinigameItemSpawnManager(this, this.currentLevel.items, this.vocab);
     this.ui = minigameUiHelper(this.sys.game.config);
 
@@ -75,7 +79,13 @@ export default class extends Phaser.Scene {
 
       this.zombieManager.moveZombies(delta);
       const releasedWords = this.zombieManager.destroyDeadZombies();
-      releasedWords.forEach(w => this.vocab.releaseWord(w));
+      releasedWords.forEach((w) => {
+        if (w.review) {
+          this.reviewVocabManager.releaseWord(w);
+        } else {
+          this.vocab.releaseWord(w);
+        }
+      });
       this.changeHealth(this.zombieManager.checkZombieAttack());
       if (this.health <= 0) {
         this.loseGame();

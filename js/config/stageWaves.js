@@ -12,9 +12,10 @@ export default [
         maxEnd: 45,
         end: 60,
         probabilities: [
-          { min: 1, max: 50, enemyType: enemyTypes.normalZombie },
-          { min: 51, max: 75, enemyType: enemyTypes.sprinterZombie },
-          { min: 76, max: 100, enemyType: enemyTypes.bruiserZombie },
+          { min: 1, max: 45, enemyType: enemyTypes.normalZombie },
+          { min: 46, max: 70, enemyType: enemyTypes.reviewZombie },
+          { min: 71, max: 85, enemyType: enemyTypes.sprinterZombie },
+          { min: 86, max: 100, enemyType: enemyTypes.bruiserZombie },
         ],
       },
       {
@@ -25,9 +26,10 @@ export default [
         maxEnd: 95,
         end: 120,
         probabilities: [
-          { min: 1, max: 50, enemyType: enemyTypes.normalZombie },
-          { min: 51, max: 75, enemyType: enemyTypes.sprinterZombie },
-          { min: 76, max: 100, enemyType: enemyTypes.bruiserZombie },
+          { min: 1, max: 45, enemyType: enemyTypes.normalZombie },
+          { min: 46, max: 70, enemyType: enemyTypes.reviewZombie },
+          { min: 71, max: 85, enemyType: enemyTypes.sprinterZombie },
+          { min: 86, max: 100, enemyType: enemyTypes.bruiserZombie },
         ],
       },
       {
@@ -38,9 +40,10 @@ export default [
         maxEnd: 165,
         end: 180,
         probabilities: [
-          { min: 1, max: 50, enemyType: enemyTypes.normalZombie },
-          { min: 51, max: 75, enemyType: enemyTypes.sprinterZombie },
-          { min: 76, max: 100, enemyType: enemyTypes.bruiserZombie },
+          { min: 1, max: 45, enemyType: enemyTypes.normalZombie },
+          { min: 46, max: 70, enemyType: enemyTypes.reviewZombie },
+          { min: 71, max: 85, enemyType: enemyTypes.sprinterZombie },
+          { min: 86, max: 100, enemyType: enemyTypes.bruiserZombie },
         ],
       },
     ],
@@ -131,9 +134,10 @@ export default [
         maxEnd: 40,
         end: 60,
         probabilities: [
-          { min: 1, max: 60, enemyType: enemyTypes.normalZombie },
-          { min: 61, max: 80, enemyType: enemyTypes.sprinterZombie },
-          { min: 81, max: 100, enemyType: enemyTypes.bruiserZombie },
+          { min: 1, max: 45, enemyType: enemyTypes.normalZombie },
+          { min: 46, max: 70, enemyType: enemyTypes.reviewZombie },
+          { min: 71, max: 85, enemyType: enemyTypes.sprinterZombie },
+          { min: 86, max: 100, enemyType: enemyTypes.bruiserZombie },
         ],
       },
       {
@@ -144,9 +148,10 @@ export default [
         maxEnd: 100,
         end: 120,
         probabilities: [
-          { min: 1, max: 60, enemyType: enemyTypes.normalZombie },
-          { min: 61, max: 80, enemyType: enemyTypes.sprinterZombie },
-          { min: 81, max: 100, enemyType: enemyTypes.bruiserZombie },
+          { min: 1, max: 45, enemyType: enemyTypes.normalZombie },
+          { min: 46, max: 70, enemyType: enemyTypes.reviewZombie },
+          { min: 71, max: 85, enemyType: enemyTypes.sprinterZombie },
+          { min: 86, max: 100, enemyType: enemyTypes.bruiserZombie },
         ],
       },
       {
@@ -157,9 +162,10 @@ export default [
         maxEnd: 160,
         end: 180,
         probabilities: [
-          { min: 1, max: 60, enemyType: enemyTypes.normalZombie },
-          { min: 61, max: 80, enemyType: enemyTypes.sprinterZombie },
-          { min: 81, max: 100, enemyType: enemyTypes.bruiserZombie },
+          { min: 1, max: 45, enemyType: enemyTypes.normalZombie },
+          { min: 46, max: 70, enemyType: enemyTypes.reviewZombie },
+          { min: 71, max: 85, enemyType: enemyTypes.sprinterZombie },
+          { min: 86, max: 100, enemyType: enemyTypes.bruiserZombie },
         ],
       },
     ],

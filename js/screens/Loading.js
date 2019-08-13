@@ -154,6 +154,18 @@ export default class extends Phaser.Scene {
       margin: 0,
       spacing: 0,
     });
+    this.load.spritesheet(images.zombieReview1, images.files.zombieReview1, {
+      frameWidth: images.frameSizes.zombie.width,
+      frameHeight: images.frameSizes.zombie.height,
+      margin: 0,
+      spacing: 0,
+    });
+    this.load.spritesheet(images.zombieReview2, images.files.zombieReview2, {
+      frameWidth: images.frameSizes.zombie.width,
+      frameHeight: images.frameSizes.zombie.height,
+      margin: 0,
+      spacing: 0,
+    });
     this.load.spritesheet(images.shotBlast, images.files.shotBlast, {
       frameWidth: images.frameSizes.shotBlast.width,
       frameHeight: images.frameSizes.shotBlast.height,
@@ -267,7 +279,7 @@ export default class extends Phaser.Scene {
 
     const ims = [
       im.zombieNormal1, im.zombieNormal2, im.zombieNormal3, im.zombieNormal4, im.zombieNormal5,
-      im.zombieNormal6, im.zombieSpecial1, im.zombieSpecial2,
+      im.zombieNormal6, im.zombieSpecial1, im.zombieSpecial2, im.zombieReview1, im.zombieReview2,
     ];
 
     ims.forEach((i) => {
