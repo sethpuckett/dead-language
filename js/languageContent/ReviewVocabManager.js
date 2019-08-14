@@ -33,9 +33,28 @@ export default class {
     if (word == null) {
       return;
     }
+
+    if (word.missed) {
+      this.addProblemWord(word);
+    } else {
+      this.removeProblemWord(word);
+    }
+
     const index = this.reservedWordIds.findIndex(r => r === word.id);
     if (index > -1) {
       this.reservedWordIds.splice(index, 1);
+    }
+  }
+
+  addProblemWord(word) {
+    if (!this.gameProgressManager.isWordInProblemVocab(word)) {
+      this.gameProgressManager.addProblemVocab(word);
+    }
+  }
+
+  removeProblemWord(word) {
+    if (this.gameProgressManager.isWordInProblemVocab(word)) {
+      this.gameProgressManager.removeProblemVocab(word);
     }
   }
 }

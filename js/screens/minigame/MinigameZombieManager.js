@@ -58,6 +58,7 @@ export default class {
   applyZombieDamage(zombie) {
     this.damage += this.stageParameters.enemies.attackDamage;
     zombie.alive = false;
+    zombie.words[zombie.hits].missed = true;
     if (this.stageParameters.enemies.showAnswerOnAttack) {
       zombie.answer = zombie.words[zombie.hits].language2;
       zombie.showAnswer = true;
@@ -124,6 +125,7 @@ export default class {
     this.zombies.some((z) => {
       const word = this.getCurrentZombieWord(z);
       if (guess === textHelper.cleanText(word.language2)) {
+        z.words[z.hits].missed = false;
         this.shootZombie(z, weapon);
         isCorrect = true;
       }
@@ -137,6 +139,7 @@ export default class {
         const alternatives = word.alternatives != null
           ? word.alternatives.map(w => textHelper.cleanText(w)) : null;
         if (alternatives != null && alternatives.includes(guess)) {
+          z.words[z.hits].missed = false;
           this.shootZombie(z, weapon);
           isCorrect = true;
         }
@@ -153,6 +156,7 @@ export default class {
       const word = this.getCurrentZombieWord(z);
       if (guess === textHelper.cleanText(word.language1)) {
         if (killZombie) {
+          z.words[z.hits].missed = true;
           if (this.stageParameters.enemies.showAnswerOnMerc) {
             z.answer = word.language2;
             z.showAnswer = true;

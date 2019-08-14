@@ -104,6 +104,12 @@ export default class {
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }
 
+  isWordInProblemVocab(wordEntry) {
+    const problemEntry = this.getProblemEntry(wordEntry);
+    const allProblemVocab = this.getProblemVocab();
+    return allProblemVocab.some(v => v.stage === problemEntry.stage && v.id === problemEntry.id);
+  }
+
   getStageType(stageId) {
     return this.db.getStage(stageId).type;
   }
@@ -160,6 +166,18 @@ export default class {
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }
 
+  getProblemVocab() {
+    if (!this.db.isUserLoggedIn()) {
+      return [];
+    }
+
+    if (this.db.userProfileLoaded) {
+      const problemVocab = this.db.userProfile.problemVocab;
+      return problemVocab != null ? problemVocab : [];
+    }
+    throw Error('user profile has not been loaded. Call loadUserProfile() first');
+  }
+
   saveMapPosition(lessonId, stageId, callback) {
     const updateObject = { mapState: { lesson: lessonId, stage: stageId } };
     this.updateUserProfile(updateObject, callback);
@@ -185,6 +203,18 @@ export default class {
     this.updateUserProfile(updateObject, callback);
   }
 
+  addProblemVocab(wordEntry, callback) {
+    const problemEntry = this.getProblemEntry(wordEntry);
+    const updateObject = { problemVocab: firebase.firestore.FieldValue.arrayUnion(problemEntry) };
+    this.updateUserProfile(updateObject, callback);
+  }
+
+  removeProblemVocab(wordEntry, callback) {
+    const problemEntry = this.getProblemEntry(wordEntry);
+    const updateObject = { problemVocab: firebase.firestore.FieldValue.arrayRemove(problemEntry) };
+    this.updateUserProfile(updateObject, callback);
+  }
+
   // Private
 
   // callback will be passed true if data saves, false otherwise
@@ -201,5 +231,9 @@ export default class {
     } else if (callback != null) {
       callback(false);
     }
+  }
+
+  getProblemEntry(wordEntry) {
+    return { stage: wordEntry.stage, id: wordEntry.id };
   }
 }
