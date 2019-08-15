@@ -178,6 +178,11 @@ export default class {
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }
 
+  getVocabWord(stageId, id) {
+    const stage = this.db.getStage(stageId);
+    return stage.vocab.find(v => v.id === id);
+  }
+
   saveMapPosition(lessonId, stageId, callback) {
     const updateObject = { mapState: { lesson: lessonId, stage: stageId } };
     this.updateUserProfile(updateObject, callback);

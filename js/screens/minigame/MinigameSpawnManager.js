@@ -98,8 +98,8 @@ export default class {
   }
 
   getFallSpeed(enemyType) {
-    let speed = this.scene.currentLevel.baseFallSpeed + Phaser.Math.RND.between(
-      -this.scene.currentLevel.fallRange, this.scene.currentLevel.fallRange
+    let speed = this.scene.stageParameters.baseFallSpeed + Phaser.Math.RND.between(
+      -this.scene.stageParameters.fallRange, this.scene.stageParameters.fallRange
     );
 
     if (enemyType === enemyTypes.sprinterZombie) {

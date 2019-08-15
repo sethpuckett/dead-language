@@ -10,7 +10,7 @@ export default class {
     if (mercAttempt) {
       this.setStatus(canAfford);
       if (canAfford) {
-        this.scene.cash -= this.scene.currentLevel.mercenaryCost;
+        this.scene.cash -= this.scene.stageParameters.mercenaryCost;
         this.scene.hudManager.setCash(this.scene.cash);
       }
     }

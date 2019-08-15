@@ -12,8 +12,8 @@ export default [
         maxEnd: 45,
         end: 60,
         probabilities: [
-          { min: 1, max: 5, enemyType: enemyTypes.normalZombie },
-          { min: 6, max: 70, enemyType: enemyTypes.reviewZombie },
+          { min: 1, max: 45, enemyType: enemyTypes.normalZombie },
+          { min: 46, max: 100, enemyType: enemyTypes.reviewZombie },
           { min: 71, max: 85, enemyType: enemyTypes.sprinterZombie },
           { min: 86, max: 100, enemyType: enemyTypes.bruiserZombie },
         ],

@@ -14,6 +14,7 @@ export default [
     mercenaryEnabled: true,
     mercenaryCost: 100,
     enemies: {
+      problemVocabPercentage: 0.25,
       showAnswerOnAttack: true,
       showAnswerOnMerc: true,
       attackDamage: 2,

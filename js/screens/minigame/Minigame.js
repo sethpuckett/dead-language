@@ -34,25 +34,25 @@ export default class extends Phaser.Scene {
     this.modalChecker = new ModalChecker(this, stageId);
     this.unlockableManager = new UnlockableManager(this.sys.game.db);
     this.stageParameterManager = new StageParameterManager();
-    this.reviewVocabManager = new ReviewVocabManager(this.sys.game.db);
 
-    this.currentLevel = this.stageParameterManager.getParameters(this.stageId);
+    this.stageParameters = this.stageParameterManager.getParameters(this.stageId);
 
-    this.zombieManager = new MinigameZombieManager(this, this.currentLevel);
+    this.reviewVocabManager = new ReviewVocabManager(this.sys.game.db, this.stageParameters);
+    this.zombieManager = new MinigameZombieManager(this, this.stageParameters);
     this.spawnManager = new MinigameSpawnManager(
-      this, this.currentLevel, this.vocab, this.reviewVocabManager
+      this, this.stageParameters, this.vocab, this.reviewVocabManager
     );
-    this.itemSpawnManager = new MinigameItemSpawnManager(this, this.currentLevel.items, this.vocab);
+    this.itemSpawnManager = new MinigameItemSpawnManager(this, this.stageParameters.items, this.vocab);
     this.ui = minigameUiHelper(this.sys.game.config);
 
     this.score = 0;
-    this.cash = this.currentLevel.startCash;
-    this.health = this.currentLevel.startHealth;
-    this.weapon = this.currentLevel.weapons.default;
+    this.cash = this.stageParameters.startCash;
+    this.health = this.stageParameters.startHealth;
+    this.weapon = this.stageParameters.weapons.default;
     this.ammo = 0;
     this.maxAmmo = 0;
     this.mercenaryEnabled = this.unlockableManager.isUnlocked(unlockableItems.mercenary)
-      && this.currentLevel.mercenaryEnabled;
+      && this.stageParameters.mercenaryEnabled;
     this.inputHandled = false;
   }
 
@@ -106,12 +106,12 @@ export default class extends Phaser.Scene {
     }
     this.hudManager.createHud({
       ...hudConfig,
-      startHealth: this.currentLevel.startHealth,
-      maxHealth: this.currentLevel.maxHealth,
-      startCash: this.currentLevel.startCash,
+      startHealth: this.stageParameters.startHealth,
+      maxHealth: this.stageParameters.maxHealth,
+      startCash: this.stageParameters.startCash,
     });
     this.hudManager.setSubmitCallback(this.submitAnswer);
-    this.hudManager.setWeapon(this.currentLevel.weapons.default, 0);
+    this.hudManager.setWeapon(this.stageParameters.weapons.default, 0);
   }
 
   createBackground() {
@@ -140,7 +140,7 @@ export default class extends Phaser.Scene {
 
   createTimers() {
     this.gameTimer = this.time.addEvent({
-      delay: this.currentLevel.gameTime * 1000,
+      delay: this.stageParameters.gameTime * 1000,
       callback: this.gameTimerFinish,
       callbackScope: this,
       paused: true,
@@ -186,7 +186,7 @@ export default class extends Phaser.Scene {
     }
 
     this.health += amount;
-    this.health = Math.min(this.health, this.currentLevel.maxHealth);
+    this.health = Math.min(this.health, this.stageParameters.maxHealth);
     this.hudManager.setHealth(this.health);
   }
 
@@ -206,7 +206,7 @@ export default class extends Phaser.Scene {
   }
 
   updateGameTime() {
-    const remaining = this.currentLevel.gameTime - this.gameTimer.getElapsedSeconds();
+    const remaining = this.stageParameters.gameTime - this.gameTimer.getElapsedSeconds();
     this.hudManager.setGameTime(remaining);
   }
 
@@ -219,7 +219,7 @@ export default class extends Phaser.Scene {
     let mercKill = false;
     let mercAttempt = false;
     if (!isCorrect && this.mercenaryEnabled) {
-      const canAffordMerc = this.cash >= this.currentLevel.mercenaryCost;
+      const canAffordMerc = this.cash >= this.stageParameters.mercenaryCost;
       mercAttempt = this.mercenaryManager.checkGuess(guess, canAffordMerc);
       if (mercAttempt) {
         shotFired = false;
@@ -307,7 +307,7 @@ export default class extends Phaser.Scene {
     this.hudManager.updateAmmo(this.ammo, this.maxAmmo);
     if (this.ammo <= 0) {
       this.maxAmmo = 0;
-      this.weapon = this.currentLevel.weapons.default;
+      this.weapon = this.stageParameters.weapons.default;
       this.hudManager.setWeapon(this.weapon, 0);
     }
   }
