@@ -167,6 +167,6 @@ export default class extends Phaser.Scene {
   }
 
   allowTargetPractice() {
-    return this.progressManager.getStageType(this.stageId) === gameTypes.zombieAssault.id;
+    return this.progressManager.getStageType(this.stageId) === gameTypes.zombieAssault;
   }
 }

@@ -151,7 +151,7 @@ export default class {
 
   getCompletedNonReviewStages() {
     const completedStages = this.getCompletedStages();
-    return completedStages.filter(s => this.getStageType(s) !== gameTypes.zombieAssaultReview.id);
+    return completedStages.filter(s => this.getStageType(s) !== gameTypes.zombieAssaultReview);
   }
 
   getCompletedLessons() {

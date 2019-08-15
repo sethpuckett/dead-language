@@ -82,10 +82,10 @@ export default class {
 
       switch (stage.type) {
         // TODO: handle review
-        case gameTypes.zombieAssault.id:
+        case gameTypes.zombieAssault:
           this.createZombieAssaultStageInfo(maintainAnimations, cleared);
           break;
-        case gameTypes.zombieAssaultReview.id:
+        case gameTypes.zombieAssaultReview:
           this.createZombieAssaultReviewStageInfo(maintainAnimations, cleared);
           break;
         default:
@@ -110,7 +110,7 @@ export default class {
     this.stageInfoType.setTintFill(townMap.fonts.stageInfoTypeColor);
     this.stageInfoType.setCenterAlign();
     this.stageInfoType.setTintFill(townMap.fonts.stageInfoTypeColor);
-
+    const x = gameTypes.zombieAssault;
     const subtitleText = cleared ? townMap.clearedText : gameTypeHelper.getDescription(stageType);
     this.stageInfoSubtitle = this.scene.add.bitmapText(
       this.scene.ui.stageInfoSubtitleX,
@@ -127,7 +127,7 @@ export default class {
   }
 
   createZombieAssaultStageInfo(animationsMaintained, cleared) {
-    this.createCommonStageInfo(gameTypes.zombieAssault.id, cleared);
+    this.createCommonStageInfo(gameTypes.zombieAssault, cleared);
 
     this.stageInfoTitle = this.scene.add.bitmapText(
       this.scene.ui.stageInfoTitleX,
@@ -185,7 +185,7 @@ export default class {
   }
 
   createZombieAssaultReviewStageInfo(animationsMaintained, cleared) {
-    this.createCommonStageInfo(gameTypes.zombieAssaultReview.id, cleared);
+    this.createCommonStageInfo(gameTypes.zombieAssaultReview, cleared);
 
     this.stageInfoTitle = this.scene.add.bitmapText(
       this.scene.ui.stageInfoTitleX,

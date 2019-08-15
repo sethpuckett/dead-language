@@ -215,7 +215,7 @@ export default class extends Phaser.Scene {
     const cleared = this.progressManager.isStageCompleted(stageId);
     const unlocked = this.progressManager.isStageUnlocked(stageId);
 
-    if (stageType !== gameTypes.zombieAssaultReview.id) {
+    if (stageType !== gameTypes.zombieAssaultReview) {
       if (unlocked) {
         this.createStageSelectedModal(cleared);
       } else {

@@ -251,7 +251,7 @@ export default class extends Phaser.Scene {
 
   getVocab() {
     const stageType = this.progressManager.getStageType(this.stageId);
-    if (stageType !== gameTypes.zombieAssaultReview.id) {
+    if (stageType !== gameTypes.zombieAssaultReview) {
       return this.sys.game.db.getStage(this.stageId).vocab;
     }
 

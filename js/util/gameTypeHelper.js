@@ -1,8 +1,8 @@
 import { gameTypes } from '../config';
 
 export default {
-  getName: id => gameTypes[Object.keys(gameTypes).find(key => gameTypes[key].id === id)].name,
-  getDescription: id => gameTypes[
-    Object.keys(gameTypes).find(key => gameTypes[key].id === id)
-  ].description,
+  getName: id => gameTypes.names[Object.keys(gameTypes).find(key => gameTypes[key] === id)],
+  getDescription: id => gameTypes.descriptions[
+    Object.keys(gameTypes).find(key => gameTypes[key] === id)
+  ],
 };

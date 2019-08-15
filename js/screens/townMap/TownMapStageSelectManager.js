@@ -234,10 +234,10 @@ export default class {
         this.stageIcons.push(dot);
 
         const gameType = this.scene.game.db.getStage(stageId).type;
-        if (gameType === gameTypes.zombieAssault.id) {
+        if (gameType === gameTypes.zombieAssault) {
           dot.displayWidth = this.scene.ui.stageDotWidth;
           dot.displayHeight = this.scene.ui.stageDotWidth;
-        } else if (gameType === gameTypes.zombieAssaultReview.id) {
+        } else if (gameType === gameTypes.zombieAssaultReview) {
           dot.displayWidth = this.scene.ui.stageReviewDotWidth;
           dot.displayHeight = this.scene.ui.stageReviewDotWidth;
         }
@@ -294,7 +294,7 @@ export default class {
   }
 
   setSelectorSize() {
-    if (this.getStageType() === gameTypes.zombieAssaultReview.id) {
+    if (this.getStageType() === gameTypes.zombieAssaultReview) {
       this.stageSelector.displayWidth = this.scene.ui.stageSelectorReviewWidth;
       this.stageSelector.displayHeight = this.scene.ui.stageSelectorReviewWidth;
     } else {
