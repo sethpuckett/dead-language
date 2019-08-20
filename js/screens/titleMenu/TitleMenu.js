@@ -6,6 +6,9 @@ import TitleSpawnManager from './TitleSpawnManager';
 import ModalHelper from '../modal/ModalHelper';
 import GameProgressManager from '../../data/GameProgressManager';
 
+const START = 'start';
+const OPTIONS = 'options';
+
 export default class extends Phaser.Scene {
   constructor() {
     super({ key: screens.titleMenu });
@@ -21,10 +24,11 @@ export default class extends Phaser.Scene {
     this.selectedOption = '';
 
     if (this.progressManager.isNewGame()) {
-      this.menuOptions.push({ text: 'New Game', key: 'start' });
+      this.menuOptions.push({ text: titleMenu.menu.newGame, key: START });
     } else {
-      this.menuOptions.push({ text: 'Continue Game', key: 'start' });
+      this.menuOptions.push({ text: titleMenu.menu.continueGame, key: START });
     }
+    this.menuOptions.push({ text: titleMenu.menu.options, key: OPTIONS });
   }
 
   create() {
@@ -80,8 +84,10 @@ export default class extends Phaser.Scene {
 
   fadeCallback(_camera, progress) {
     if (progress === 1) {
-      if (this.selectedOption === 'start') {
+      if (this.selectedOption === START) {
         this.startGame();
+      } else if (this.selectedOption === OPTIONS) {
+        this.scene.start(screens.optionsMenu);
       }
     }
   }

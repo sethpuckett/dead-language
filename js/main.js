@@ -7,6 +7,7 @@ import Endgame from './screens/Endgame';
 import VocabStudy from './screens/vocabStudy/VocabStudy';
 import TownMap from './screens/townMap/TownMap';
 import Story from './screens/Story';
+import OptionsMenu from './screens/optionsMenu/OptionsMenu';
 import WebManager from './web/WebManager';
 
 const phaserConfig = {
@@ -24,6 +25,7 @@ const phaserConfig = {
     VocabStudy,
     TownMap,
     Story,
+    OptionsMenu,
   ],
 };
 

@@ -7,4 +7,5 @@ export default {
   vocabStudy: 'VocabStudy',
   townMap: 'TownMap',
   story: 'Story',
+  optionsMenu: 'OptionsMenu',
 };

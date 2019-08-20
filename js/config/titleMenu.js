@@ -7,6 +7,11 @@ export default {
   baseBackRunSpeed: 35,
   backRunRange: 2,
   screenFadeTime: 750,
+  menu: {
+    newGame: 'New Game',
+    continueGame: 'Continue Game',
+    options: 'Options',
+  },
   fonts: {
     textSize: 22,
     textTint: 0xffffff,
