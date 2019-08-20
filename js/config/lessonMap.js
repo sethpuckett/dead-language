@@ -61,4 +61,9 @@ export default [
     location: 'Antique Shop',
     position: { x: 0, y: 2 },
   },
+  {
+    id: lessons.nature.name,
+    location: 'Hillside Park',
+    position: { x: 4, y: 2 },
+  },
 ];

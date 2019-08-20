@@ -87,4 +87,12 @@ export default {
     stage4: 'when-and-where-4',
     review: 'when-and-where-review',
   },
+  nature: {
+    name: 'lesson-nature',
+    stage1: 'nature-1',
+    stage2: 'nature-2',
+    stage3: 'nature-3',
+    stage4: 'nature-4',
+    review: 'nature-review',
+  },
 };
