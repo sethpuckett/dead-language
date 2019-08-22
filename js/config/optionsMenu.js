@@ -1,4 +1,5 @@
 export default {
+  screenFadeTime: 750,
   labels: {
     music: 'Music',
     soundEffects: 'Sound Effects',

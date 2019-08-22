@@ -139,12 +139,12 @@ export default class extends Phaser.Scene {
       this.decrementOptionSelection();
     } else if (e.keyCode === this.keys.DOWN.keyCode) {
       this.incrementOptionSelection();
-    } else if (e.keyCode === this.keys.SPACE.keyCode
-              || e.keyCode === this.keys.ENTER.keyCode
-              || e.keyCode === this.keys.RIGHT.keyCode) {
+    } else if (e.keyCode === this.keys.RIGHT.keyCode) {
       this.incrementValueSelection();
     } else if (e.keyCode === this.keys.LEFT.keyCode) {
       this.decrementValueSelection();
+    } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
+      this.optionSelected();
     }
   }
 
@@ -229,5 +229,21 @@ export default class extends Phaser.Scene {
     selected.graphics.lineTo(endX, endY);
     selected.graphics.closePath();
     selected.graphics.strokePath();
+  }
+
+  optionSelected() {
+    if (this.getSelectedOptionKey() === RETURN) {
+      this.cameras.main.fade(optionsMenu.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
+    }
+  }
+
+  getSelectedOptionKey() {
+    return this.menuStates[this.selectedOption].key;
+  }
+
+  fadeCallback(_camera, progress) {
+    if (progress === 1) {
+      this.scene.start(screens.titleMenu);
+    }
   }
 }
