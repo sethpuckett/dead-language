@@ -7,7 +7,9 @@ export default {
     return: 'Save and Exit',
   },
   fonts: {
-    textSize: 22,
-    textTint: 0xffffff,
+    labelSize: 22,
+    labelTint: 0xffffff,
+    optionSize: 22,
+    optionTint: 0xffff22,
   },
 };

@@ -63,11 +63,11 @@ export default class extends Phaser.Scene {
         this.ui.menuLabelBaseX, labelY,
         fonts.blueSkyWhite,
         option.label,
-        optionsMenu.fonts.textSize
+        optionsMenu.fonts.labelSize
       );
       labelText.setOrigin(this.ui.menuLabelOriginX, this.ui.menuLabelOriginY);
       labelText.setDepth(depth.optionsMenu.text);
-      labelText.setTintFill(optionsMenu.fonts.textTint);
+      labelText.setTintFill(optionsMenu.fonts.labelTint);
 
       let totalValueWidth = 0;
       option.values.forEach((value) => {
@@ -77,11 +77,11 @@ export default class extends Phaser.Scene {
           valueX, valueY,
           fonts.blueSkyWhite,
           value,
-          optionsMenu.fonts.textSize
+          optionsMenu.fonts.optionSize
         );
         valueText.setOrigin(this.ui.menuValueOriginX, this.ui.menuValueOriginY);
         valueText.setDepth(depth.optionsMenu.text);
-        valueText.setTintFill(optionsMenu.fonts.textTint);
+        valueText.setTintFill(optionsMenu.fonts.optionTint);
         const bounds = valueText.getTextBounds().global;
 
         totalValueWidth += bounds.width + this.ui.menuValueHorizontalPadding;
@@ -94,11 +94,11 @@ export default class extends Phaser.Scene {
       this.ui.returnOptionX, returnY,
       fonts.blueSkyWhite,
       optionsMenu.labels.return,
-      optionsMenu.fonts.textSize
+      optionsMenu.fonts.labelSize
     );
     returnText.setOrigin(this.ui.returnOptionOriginX, this.ui.returnOptionOriginY);
     returnText.setDepth(depth.optionsMenu.text);
-    returnText.setTintFill(optionsMenu.fonts.textTint);
+    returnText.setTintFill(optionsMenu.fonts.labelTint);
   }
 
   createInput() {
