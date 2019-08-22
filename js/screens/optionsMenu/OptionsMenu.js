@@ -19,29 +19,36 @@ const BLOOD = 'blood';
 const BLOOD_VALUES = [RED, GREEN, OFF];
 const RETURN = 'return';
 
-
 export default class extends Phaser.Scene {
   constructor() {
     super({ key: screens.optionsMenu });
   }
 
   init() {
-    this.currentSelection = 0;
+    this.selectedOption = 0;
     this.menuOptions = [
       { key: MUSIC, label: optionsMenu.labels.music, values: MUSIC_VALUES },
       { key: SOUND_EFFECTS, label: optionsMenu.labels.soundEffects, values: SOUND_EFFECTS_VALUES },
       { key: TEXT_SIZE, label: optionsMenu.labels.textSize, values: TEXT_SIZE_VALUES },
       { key: BLOOD, label: optionsMenu.labels.blood, values: BLOOD_VALUES },
     ];
+    // TODO: load persisted values from DB
+    this.selectedValues = [
+      { key: MUSIC, selectedIndex: 0, value: ON },
+      { key: SOUND_EFFECTS, selectedIndex: 0, value: ON },
+      { key: TEXT_SIZE, selectedIndex: 0, value: NORMAL },
+      { key: BLOOD, selectedIndex: 0, value: RED },
+    ];
   }
 
   create() {
     this.ui = optionsMenuUiHelper(this.sys.game.config);
+    this.createGraphics();
     this.createBackground();
     this.createMenu();
+    this.createOptionSelector();
+    this.createAllValueSelectors();
     this.createInput();
-    this.updateMenuSelection();
-    // this.scene.start(screens.townMap);
   }
 
   createBackground() {
@@ -56,7 +63,19 @@ export default class extends Phaser.Scene {
     this.background.setDepth(depth.optionsMenu.background);
   }
 
+  createGraphics() {
+    this.optionSelectorGraphics = this.add.graphics();
+    this.optionSelectorGraphics.setDepth(depth.optionsMenu.selector);
+
+    this.selectedValues.forEach((value) => {
+      const valueSelectedGraphics = this.add.graphics();
+      valueSelectedGraphics.setDepth(depth.optionsMenu.selector);
+      value.graphics = valueSelectedGraphics;
+    });
+  }
+
   createMenu() {
+    this.menuStates = [];
     this.menuOptions.forEach((option, i) => {
       const labelY = this.ui.menuBaseY + (this.ui.menuVerticalPadding * i);
       const labelText = this.add.bitmapText(
@@ -69,6 +88,7 @@ export default class extends Phaser.Scene {
       labelText.setDepth(depth.optionsMenu.text);
       labelText.setTintFill(optionsMenu.fonts.labelTint);
 
+      const valueTexts = [];
       let totalValueWidth = 0;
       option.values.forEach((value) => {
         const valueX = this.ui.menuValueBaseX + totalValueWidth;
@@ -85,7 +105,11 @@ export default class extends Phaser.Scene {
         const bounds = valueText.getTextBounds().global;
 
         totalValueWidth += bounds.width + this.ui.menuValueHorizontalPadding;
+
+        valueTexts.push(valueText);
       });
+      const menuState = { key: option.key, label: labelText, selectedIndex: 0, values: valueTexts };
+      this.menuStates.push(menuState);
     });
 
     const returnY = this.ui.menuBaseY + (this.ui.menuVerticalPadding * this.menuOptions.length)
@@ -99,6 +123,8 @@ export default class extends Phaser.Scene {
     returnText.setOrigin(this.ui.returnOptionOriginX, this.ui.returnOptionOriginY);
     returnText.setDepth(depth.optionsMenu.text);
     returnText.setTintFill(optionsMenu.fonts.labelTint);
+
+    this.menuStates.push({ key: RETURN, label: returnText });
   }
 
   createInput() {
@@ -110,29 +136,98 @@ export default class extends Phaser.Scene {
 
   handleKeyDown(e) {
     if (e.keyCode === this.keys.UP.keyCode) {
-      this.decrementMenuSelection();
+      this.decrementOptionSelection();
     } else if (e.keyCode === this.keys.DOWN.keyCode) {
-      this.incrementMenuSelection();
+      this.incrementOptionSelection();
     } else if (e.keyCode === this.keys.SPACE.keyCode
               || e.keyCode === this.keys.ENTER.keyCode
               || e.keyCode === this.keys.RIGHT.keyCode) {
-      // TODO: increment selected option
+      this.incrementValueSelection();
     } else if (e.keyCode === this.keys.LEFT.keyCode) {
-      // TODO: decrement selected options
+      this.decrementValueSelection();
     }
   }
 
-  decrementMenuSelection() {
-    this.currentSelection = Math.max(this.currentSelection - 1, 0);
-    this.updateMenuSelection();
+  decrementOptionSelection() {
+    this.selectedOption = Math.max(this.selectedOption - 1, 0);
+    this.createOptionSelector();
   }
 
-  incrementMenuSelection() {
-    this.currentSelection = Math.min(this.currentSelection + 1, this.menuOptions.length - 1);
-    this.updateMenuSelection();
+  incrementOptionSelection() {
+    this.selectedOption = Math.min(this.selectedOption + 1, this.menuStates.length - 1);
+    this.createOptionSelector();
   }
 
-  updateMenuSelection() {
-    // this.selector.y = this.ui.selectY + (this.ui.selectVerticalPadding * this.currentSelection);
+  decrementValueSelection() {
+    const menuState = this.menuStates[this.selectedOption];
+    menuState.selectedIndex = Math.max(menuState.selectedIndex - 1, 0);
+    const selectedValue = this.selectedValues.find(v => v.key === menuState.key);
+    selectedValue.value = menuState.values[menuState.selectedIndex].text;
+    this.createValueSelector(menuState.key);
+  }
+
+  incrementValueSelection() {
+    const menuState = this.menuStates[this.selectedOption];
+    menuState.selectedIndex = Math.min(menuState.selectedIndex + 1, menuState.values.length - 1);
+    const selectedValue = this.selectedValues.find(v => v.key === menuState.key);
+    selectedValue.value = menuState.values[menuState.selectedIndex].text;
+    this.createValueSelector(menuState.key);
+  }
+
+  clearOptionSelector() {
+    this.optionSelectorGraphics.clear();
+  }
+
+  createOptionSelector() {
+    this.clearOptionSelector();
+
+    const menuLabel = this.menuStates[this.selectedOption].label;
+    const bounds = menuLabel.getTextBounds().global;
+
+    const startX = bounds.x;
+    const endX = bounds.x + bounds.width;
+    const startY = bounds.y + bounds.height + this.ui.selectorPadding;
+    const endY = startY;
+
+    this.optionSelectorGraphics.lineStyle(
+      this.ui.selectorWidth, optionsMenu.ui.optionSelectorColor
+    );
+    this.optionSelectorGraphics.beginPath();
+    this.optionSelectorGraphics.moveTo(startX, startY);
+    this.optionSelectorGraphics.lineTo(endX, endY);
+    this.optionSelectorGraphics.closePath();
+    this.optionSelectorGraphics.strokePath();
+  }
+
+  clearAllValueSelectors() {
+    this.menuOptions.forEach(o => this.clearValueSelector(o.key));
+  }
+
+  createAllValueSelectors() {
+    this.menuOptions.forEach(o => this.createValueSelector(o.key));
+  }
+
+  clearValueSelector(key) {
+    this.selectedValues.find(v => v.key === key).graphics.clear();
+  }
+
+  createValueSelector(key) {
+    this.clearValueSelector(key);
+    const menuState = this.menuStates.find(m => m.key === key);
+    const selected = this.selectedValues.find(s => s.key === key);
+    const value = menuState.values.find(v => v.text === selected.value);
+    const valueBounds = value.getTextBounds().global;
+
+    const startX = valueBounds.x;
+    const endX = valueBounds.x + valueBounds.width;
+    const startY = valueBounds.y + valueBounds.height + this.ui.selectorPadding;
+    const endY = startY;
+
+    selected.graphics.lineStyle(this.ui.selectorWidth, optionsMenu.ui.valueSelectorColor);
+    selected.graphics.beginPath();
+    selected.graphics.moveTo(startX, startY);
+    selected.graphics.lineTo(endX, endY);
+    selected.graphics.closePath();
+    selected.graphics.strokePath();
   }
 }

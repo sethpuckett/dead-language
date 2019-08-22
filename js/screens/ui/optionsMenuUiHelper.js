@@ -27,6 +27,7 @@ export default (config) => {
     returnOptionOriginY: u.top,
     returnOptionVerticalPadding: u.h_10p,
 
-    valueSelectorRatio: 1.15,
+    selectorPadding: u.padding,
+    selectorWidth: u.h * 0.01,
   };
 };
