@@ -27,3 +27,4 @@ export { default as enemyTypes } from './enemyTypes';
 export { default as unlockableItems } from './unlockableItems';
 export { default as stageWaves } from './stageWaves';
 export { default as stageParameterMap } from './stageParameterMap';
+export { default as optionsMenu } from './optionsMenu';

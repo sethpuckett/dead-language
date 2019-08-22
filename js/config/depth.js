@@ -63,4 +63,9 @@ export default {
     background: 0,
     text: 1,
   },
+  optionsMenu: {
+    background: 0,
+    text: 1,
+    selector: 2,
+  },
 };
