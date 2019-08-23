@@ -66,4 +66,9 @@ export default [
     location: 'Hillside Park',
     position: { x: 4, y: 2 },
   },
+  {
+    id: lessons.bodyAndHealth.name,
+    location: 'Hillside Medical Center',
+    position: { x: 3, y: 3 },
+  },
 ];

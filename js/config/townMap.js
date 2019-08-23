@@ -5,7 +5,7 @@ export default {
   lockedText: 'Locked!',
   screenFadeTime: 750,
   selectorFlashDelay: 350,
-  showAllLessons: false,
+  showAllLessons: true,
   ui: {
     borderColor: 0xffffff,
     mapGridColor: 0x222222,

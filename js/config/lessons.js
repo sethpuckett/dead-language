@@ -95,4 +95,13 @@ export default {
     stage4: 'nature-4',
     review: 'nature-review',
   },
+  bodyAndHealth: {
+    name: 'lesson-body-and-health',
+    stage1: 'body-and-health-1',
+    stage2: 'body-and-health-2',
+    stage3: 'body-and-health-3',
+    stage4: 'body-and-health-4',
+    stage5: 'body-and-health-5',
+    review: 'body-and-health-review',
+  },
 };
