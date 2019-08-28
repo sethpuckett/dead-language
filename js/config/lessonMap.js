@@ -71,4 +71,9 @@ export default [
     location: 'Hillside Medical Center',
     position: { x: 3, y: 3 },
   },
+  {
+    id: lessons.animals.name,
+    location: 'Hillside Pet Store',
+    position: { x: 4, y: 3 },
+  },
 ];

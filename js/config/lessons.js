@@ -104,4 +104,13 @@ export default {
     stage5: 'body-and-health-5',
     review: 'body-and-health-review',
   },
+  animals: {
+    name: 'lesson-animals',
+    stage1: 'animals-1',
+    stage2: 'animals-2',
+    stage3: 'animals-3',
+    stage4: 'animals-4',
+    stage5: 'animals-5',
+    review: 'animals-review',
+  },
 };
