@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { screens, images, depth, fonts, optionsMenu } from '../../config';
 import optionsMenuUiHelper from '../ui/optionsMenuUiHelper';
+import UserOptionsManager from '../../data/UserOptionsManager';
 
 const ON = 'On';
 const OFF = 'Off';
@@ -25,6 +26,8 @@ export default class extends Phaser.Scene {
   }
 
   init() {
+    this.userOptionsManager = new UserOptionsManager(this.sys.game.db);
+
     this.selectedOption = 0;
     this.menuOptions = [
       { key: MUSIC, label: optionsMenu.labels.music, values: MUSIC_VALUES },
@@ -233,7 +236,9 @@ export default class extends Phaser.Scene {
 
   optionSelected() {
     if (this.getSelectedOptionKey() === RETURN) {
-      this.cameras.main.fade(optionsMenu.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
+      this.userOptionsManager.setOptions(this.selectedValues, () => {
+        this.cameras.main.fade(optionsMenu.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
+      });
     }
   }
 
