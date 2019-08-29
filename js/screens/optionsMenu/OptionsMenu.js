@@ -12,9 +12,9 @@ const GREEN = 'Green';
 
 const MUSIC = 'music';
 const MUSIC_VALUES = [ON, OFF];
-const SOUND_EFFECTS = 'sound-effects';
+const SOUND_EFFECTS = 'soundEffects';
 const SOUND_EFFECTS_VALUES = [ON, OFF];
-const TEXT_SIZE = 'text-size';
+const TEXT_SIZE = 'textSize';
 const TEXT_SIZE_VALUES = [NORMAL, LARGE];
 const BLOOD = 'blood';
 const BLOOD_VALUES = [RED, GREEN, OFF];
@@ -35,17 +35,11 @@ export default class extends Phaser.Scene {
       { key: TEXT_SIZE, label: optionsMenu.labels.textSize, values: TEXT_SIZE_VALUES },
       { key: BLOOD, label: optionsMenu.labels.blood, values: BLOOD_VALUES },
     ];
-    // TODO: load persisted values from DB
-    this.selectedValues = [
-      { key: MUSIC, selectedIndex: 0, value: ON },
-      { key: SOUND_EFFECTS, selectedIndex: 0, value: ON },
-      { key: TEXT_SIZE, selectedIndex: 0, value: NORMAL },
-      { key: BLOOD, selectedIndex: 0, value: RED },
-    ];
   }
 
   create() {
     this.ui = optionsMenuUiHelper(this.sys.game.config);
+    this.loadUserOptions();
     this.createGraphics();
     this.createBackground();
     this.createMenu();
@@ -111,7 +105,7 @@ export default class extends Phaser.Scene {
 
         valueTexts.push(valueText);
       });
-      const menuState = { key: option.key, label: labelText, selectedIndex: 0, values: valueTexts };
+      const menuState = { key: option.key, label: labelText, values: valueTexts };
       this.menuStates.push(menuState);
     });
 
@@ -128,6 +122,21 @@ export default class extends Phaser.Scene {
     returnText.setTintFill(optionsMenu.fonts.labelTint);
 
     this.menuStates.push({ key: RETURN, label: returnText });
+  }
+
+  loadUserOptions() {
+    this.selectedValues = [
+      { key: MUSIC }, { key: SOUND_EFFECTS }, { key: TEXT_SIZE }, { key: BLOOD },
+    ];
+
+    this.selectedValues.forEach((v) => {
+      const value = this.userOptionsManager.getOptionValue(v.key);
+      const menuOption = this.menuOptions.find(o => o.key === v.key);
+      const index = menuOption.values.findIndex(o => o === value);
+
+      v.selectedIndex = index;
+      v.value = value;
+    });
   }
 
   createInput() {
@@ -163,17 +172,19 @@ export default class extends Phaser.Scene {
 
   decrementValueSelection() {
     const menuState = this.menuStates[this.selectedOption];
-    menuState.selectedIndex = Math.max(menuState.selectedIndex - 1, 0);
     const selectedValue = this.selectedValues.find(v => v.key === menuState.key);
-    selectedValue.value = menuState.values[menuState.selectedIndex].text;
+    selectedValue.selectedIndex = Math.max(selectedValue.selectedIndex - 1, 0);
+    selectedValue.value = menuState.values[selectedValue.selectedIndex].text;
     this.createValueSelector(menuState.key);
   }
 
   incrementValueSelection() {
     const menuState = this.menuStates[this.selectedOption];
-    menuState.selectedIndex = Math.min(menuState.selectedIndex + 1, menuState.values.length - 1);
     const selectedValue = this.selectedValues.find(v => v.key === menuState.key);
-    selectedValue.value = menuState.values[menuState.selectedIndex].text;
+    selectedValue.selectedIndex = Math.min(
+      selectedValue.selectedIndex + 1, menuState.values.length - 1
+    );
+    selectedValue.value = menuState.values[selectedValue.selectedIndex].text;
     this.createValueSelector(menuState.key);
   }
 

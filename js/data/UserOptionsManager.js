@@ -2,9 +2,9 @@ import 'firebase/firestore';
 
 const MUSIC = 'music';
 const MUSIC_DEFAULT = 'On';
-const SOUND_EFFECTS = 'sound-effects';
+const SOUND_EFFECTS = 'soundEffects';
 const SOUND_EFFECTS_DEFAULT = 'On';
-const TEXT_SIZE = 'text-size';
+const TEXT_SIZE = 'textSize';
 const TEXT_SIZE_DEFAULT = 'Normal';
 const BLOOD = 'blood';
 const BLOOD_DEFAULT = 'Red';
@@ -36,8 +36,9 @@ export default class {
         value = options[key];
       }
       if (value == null) {
-        return this.defaults[key];
+        value = this.defaults[key];
       }
+      return value;
     }
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }
