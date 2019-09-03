@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { animations, loading, debug, screens, images, fonts } from '../config';
+import { animations, loading, debug, screens, images, fonts, audio } from '../config';
 import loadingUiHelper from './ui/loadingUiHelper';
 import { animationHelper } from '../util';
 
@@ -78,6 +78,9 @@ export default class extends Phaser.Scene {
       margin: 0,
       spacing: 0,
     });
+
+    this.load.audio(audio.music.carousingEveryNight, audio.music.files.carousingEveryNight);
+
     this.load.image(images.watch, images.files.watch);
     this.load.image(images.goldCoin, images.files.goldCoin);
     this.load.image(images.skull, images.files.skull);

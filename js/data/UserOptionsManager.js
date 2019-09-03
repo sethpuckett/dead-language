@@ -25,22 +25,17 @@ export default class {
     if (!VALID_KEYS.includes(key)) {
       throw Error(`Invalid option key: ${key}`);
     }
-    if (!this.db.isUserLoggedIn()) {
-      return false;
-    }
 
-    if (this.db.userProfileLoaded) {
+    let value = this.defaults[key];
+
+    if (this.db.isUserLoggedIn() && this.db.userProfileLoaded) {
       const options = this.db.userProfile.options;
-      let value = null;
       if (options != null) {
         value = options[key];
       }
-      if (value == null) {
-        value = this.defaults[key];
-      }
-      return value;
     }
-    throw Error('user profile has not been loaded. Call loadUserProfile() first');
+
+    return value;
   }
 
   // options: [{ key: string, value: string }, ...]
