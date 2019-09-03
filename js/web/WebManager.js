@@ -4,6 +4,8 @@ import * as firebaseui from 'firebaseui';
 import DatabaseManager from '../data/DatabaseManager';
 import firebaseConfig from './firebaseConfig';
 
+const RESTART_DELAY = 2000;
+
 export default class WebManager {
   constructor(phaserConfig) {
     this.phaserConfig = phaserConfig;
@@ -22,11 +24,12 @@ export default class WebManager {
       if (user) {
         this.showUserProfileUi(user);
         this.authUi.reset();
+        new Promise(res => setTimeout(res, RESTART_DELAY)).then(() => this.restartGame());
       } else {
         this.showLoginUi();
         this.authUi.start('#firebaseui-auth-container', firebaseConfig.ui);
+        this.restartGame();
       }
-      this.restartGame();
     });
 
     // sign out the user and update the auth ui

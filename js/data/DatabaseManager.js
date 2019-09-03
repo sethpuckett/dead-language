@@ -45,6 +45,9 @@ export default class {
     }
 
     this.db.collection('users').doc(this.getCurrentUserId()).get().then((profile) => {
+      if (profile.data() == null) {
+        throw Error(`Cannot load user profile for user: ${this.getCurrentUserId()}`);
+      }
       this.userProfile = profile.data();
       this.userProfileLoaded = true;
       if (callback != null) {
