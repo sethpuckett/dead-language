@@ -1,5 +1,9 @@
 import UserOptionsManager from '../data/UserOptionsManager';
 
+const PLAYING = 'playing';
+const STOPPED = 'stopped';
+const PAUSED = 'paused';
+
 export default class {
   constructor(scene) {
     this.scene = scene;
@@ -7,6 +11,7 @@ export default class {
 
     this.music = null;
     this.sounds = {};
+    this.musicState = STOPPED;
   }
 
   setMusic(key) {
@@ -20,11 +25,27 @@ export default class {
   playMusic() {
     if (this.optionsManager.musicEnabled()) {
       this.music.play({ loop: true });
+      this.musicState = PLAYING;
     }
   }
 
   stopMusic() {
     this.music.stop();
+    this.musicState = STOPPED;
+  }
+
+  pauseMusic() {
+    this.music.pause();
+    this.musicState = PAUSED;
+  }
+
+  resumeMusic() {
+    if (this.musicState === STOPPED) {
+      this.music.play({ loop: true });
+    } else if (this.musicState === PAUSED) {
+      this.music.resume();
+    }
+    this.musicState = PLAYING;
   }
 
   playSound(key) {

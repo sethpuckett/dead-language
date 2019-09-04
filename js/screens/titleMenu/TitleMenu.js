@@ -60,7 +60,7 @@ export default class extends Phaser.Scene {
   }
 
   createAudio() {
-    this.audioManager.addSound(titleMenu.audio.menuClick);
+    this.audioManager.addSound(titleMenu.audio.menuMove);
     this.audioManager.addSound(titleMenu.audio.menuSelect);
   }
 
@@ -79,13 +79,13 @@ export default class extends Phaser.Scene {
 
   decrementMenuSelection() {
     this.currentSelection = Math.max(this.currentSelection - 1, 0);
-    this.audioManager.playSound(titleMenu.audio.menuClick);
+    this.audioManager.playSound(titleMenu.audio.menuMove);
     this.updateMenuSelection();
   }
 
   incrementMenuSelection() {
     this.currentSelection = Math.min(this.currentSelection + 1, this.menuOptions.length - 1);
-    this.audioManager.playSound(titleMenu.audio.menuClick);
+    this.audioManager.playSound(titleMenu.audio.menuMove);
     this.updateMenuSelection();
   }
 

@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { screens, images, depth, fonts, optionsMenu, userOptions } from '../../config';
 import optionsMenuUiHelper from '../ui/optionsMenuUiHelper';
 import UserOptionsManager from '../../data/UserOptionsManager';
+import AudioManager from '../../audio/AudioManager';
 
 const MUSIC_VALUES = [userOptions.values.on, userOptions.values.off];
 const SOUND_EFFECTS_VALUES = [userOptions.values.on, userOptions.values.off];
@@ -16,11 +17,16 @@ export default class extends Phaser.Scene {
 
   init() {
     this.userOptionsManager = new UserOptionsManager(this.sys.game.db);
+    this.AudioManager = new AudioManager(this);
 
     this.selectedOption = 0;
     this.menuOptions = [
       { key: userOptions.music, label: optionsMenu.labels.music, values: MUSIC_VALUES },
-      { key: userOptions.soundEffects, label: optionsMenu.labels.soundEffects, values: SOUND_EFFECTS_VALUES },
+      {
+        key: userOptions.soundEffects,
+        label: optionsMenu.labels.soundEffects,
+        values: SOUND_EFFECTS_VALUES,
+      },
       { key: userOptions.textSize, label: optionsMenu.labels.textSize, values: TEXT_SIZE_VALUES },
       { key: userOptions.blood, label: optionsMenu.labels.blood, values: BLOOD_VALUES },
     ];
@@ -35,6 +41,13 @@ export default class extends Phaser.Scene {
     this.createOptionSelector();
     this.createAllValueSelectors();
     this.createInput();
+    this.createAudio();
+
+    this.AudioManager.playMusic();
+  }
+
+  createAudio() {
+    this.AudioManager.setMusic(optionsMenu.audio.backgroundMusic);
   }
 
   createBackground() {
@@ -167,6 +180,9 @@ export default class extends Phaser.Scene {
     const selectedValue = this.selectedValues.find(v => v.key === menuState.key);
     selectedValue.selectedIndex = Math.max(selectedValue.selectedIndex - 1, 0);
     selectedValue.value = menuState.values[selectedValue.selectedIndex].text;
+    if (menuState.key === userOptions.music) {
+      this.setMusicState();
+    }
     this.createValueSelector(menuState.key);
   }
 
@@ -177,6 +193,9 @@ export default class extends Phaser.Scene {
       selectedValue.selectedIndex + 1, menuState.values.length - 1
     );
     selectedValue.value = menuState.values[selectedValue.selectedIndex].text;
+    if (menuState.key === userOptions.music) {
+      this.setMusicState();
+    }
     this.createValueSelector(menuState.key);
   }
 
@@ -251,7 +270,17 @@ export default class extends Phaser.Scene {
 
   fadeCallback(_camera, progress) {
     if (progress === 1) {
+      this.AudioManager.stopMusic();
       this.scene.start(screens.titleMenu);
+    }
+  }
+
+  setMusicState() {
+    const musicValue = this.selectedValues.find(v => v.key === userOptions.music).value;
+    if (musicValue === userOptions.values.on) {
+      this.AudioManager.resumeMusic();
+    } else if (musicValue === userOptions.values.off) {
+      this.AudioManager.pauseMusic();
     }
   }
 }

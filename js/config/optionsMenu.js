@@ -1,3 +1,5 @@
+import audio from './audio';
+
 export default {
   screenFadeTime: 750,
   labels: {
@@ -6,6 +8,9 @@ export default {
     textSize: 'Text Size',
     blood: 'Blood',
     return: 'Save and Exit',
+  },
+  audio: {
+    backgroundMusic: audio.music.catchTheMystery,
   },
   ui: {
     optionSelectorColor: 0xffff22,

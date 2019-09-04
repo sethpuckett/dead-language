@@ -10,8 +10,8 @@ export default {
   backRunRange: 2,
   screenFadeTime: 750,
   audio: {
-    menuClick: audio.menuClick,
-    menuSelect: audio.menuSelect,
+    menuMove: audio.menuMove,
+    menuSelect: audio.menuSelectShoot,
   },
   menu: {
     newGame: 'New Game',
