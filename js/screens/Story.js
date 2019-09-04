@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { images, depth, story, screens } from '../config';
 import storyUiHelper from './ui/storyUiHelper';
 import MultiModal from './modal/MultiModal';
+import AudioManager from '../audio/AudioManager';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -19,6 +20,8 @@ export default class extends Phaser.Scene {
       throw Error('Story screen requires modalConfig and nextScreen init params');
     }
 
+    this.audioManager = new AudioManager(this);
+
     this.modalConfig = params.modalConfig;
     this.nextScreen = params.nextScreen;
   }
@@ -26,7 +29,10 @@ export default class extends Phaser.Scene {
   create() {
     this.ui = storyUiHelper(this.sys.game.config);
     this.createBackground();
+    this.createAudio();
     this.createModal();
+
+    this.audioManager.playMusic();
   }
 
   createBackground() {
@@ -41,6 +47,10 @@ export default class extends Phaser.Scene {
     this.background.setDepth(depth.story.background);
   }
 
+  createAudio() {
+    this.audioManager.setMusic(story.audio.backgroundMusic);
+  }
+
   createModal() {
     this.modal = new MultiModal(this, this.modalConfig.text, false);
     this.modal.draw();
@@ -51,6 +61,7 @@ export default class extends Phaser.Scene {
 
   fadeCallback(_camera, progress) {
     if (progress === 1) {
+      this.audioManager.stopMusic();
       this.scene.start(this.nextScreen);
     }
   }
