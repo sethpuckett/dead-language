@@ -5,6 +5,7 @@ import TitleZombieManager from './TitleZombieManager';
 import TitleSpawnManager from './TitleSpawnManager';
 import ModalHelper from '../modal/ModalHelper';
 import GameProgressManager from '../../data/GameProgressManager';
+import AudioManager from '../../audio/AudioManager';
 
 const START = 'start';
 const OPTIONS = 'options';
@@ -19,6 +20,7 @@ export default class extends Phaser.Scene {
     this.spawnManager = new TitleSpawnManager(this);
     this.progressManager = new GameProgressManager(this.sys.game.db);
     this.modalHelper = new ModalHelper(this);
+    this.audioManager = new AudioManager(this);
     this.menuOptions = [];
     this.currentSelection = 0;
     this.selectedOption = '';
@@ -58,9 +60,8 @@ export default class extends Phaser.Scene {
   }
 
   createAudio() {
-    this.audio = {};
-    this.audio.menuClick = this.sound.add(titleMenu.audio.menuClick);
-    this.audio.menuSelect = this.sound.add(titleMenu.audio.menuSelect);
+    this.audioManager.addSound(titleMenu.audio.menuClick);
+    this.audioManager.addSound(titleMenu.audio.menuSelect);
   }
 
   handleKeyDown(e) {
@@ -70,7 +71,7 @@ export default class extends Phaser.Scene {
       this.incrementMenuSelection();
     } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
       this.selectedOption = this.menuOptions[this.currentSelection].key;
-      this.audio.menuSelect.play();
+      this.audioManager.playSound(titleMenu.audio.menuSelect);
       this.selector.setFrame(1);
       this.cameras.main.fade(titleMenu.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
     }
@@ -78,13 +79,13 @@ export default class extends Phaser.Scene {
 
   decrementMenuSelection() {
     this.currentSelection = Math.max(this.currentSelection - 1, 0);
-    this.audio.menuClick.play();
+    this.audioManager.playSound(titleMenu.audio.menuClick);
     this.updateMenuSelection();
   }
 
   incrementMenuSelection() {
     this.currentSelection = Math.min(this.currentSelection + 1, this.menuOptions.length - 1);
-    this.audio.menuClick.play();
+    this.audioManager.playSound(titleMenu.audio.menuClick);
     this.updateMenuSelection();
   }
 

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { townMap, screens, gameTypes, audio } from '../../config';
+import { townMap, screens, gameTypes } from '../../config';
 import MultiModal from '../modal/MultiModal';
 import ChoiceModal from '../modal/ChoiceModal';
 import townMapUiHelper from '../ui/townMapUiHelper';
@@ -12,6 +12,7 @@ import TownMapInstructionsManager from './TownMapInstructionsManager';
 import GameProgressManager from '../../data/GameProgressManager';
 import ModalChecker from '../modal/ModalChecker';
 import ModalHelper from '../modal/ModalHelper';
+import AudioManager from '../../audio/AudioManager';
 
 const LESSON_SELECT = 'lesson-select';
 const STAGE_SELECT = 'stage-select';
@@ -37,6 +38,7 @@ export default class extends Phaser.Scene {
     this.progressManager = new GameProgressManager(this.sys.game.db);
     this.modalChecker = new ModalChecker(this);
     this.modalHelper = new ModalHelper(this);
+    this.audioManager = new AudioManager(this);
 
     this.selectState = LESSON_SELECT;
   }
@@ -49,7 +51,7 @@ export default class extends Phaser.Scene {
     this.createInstructions();
     this.createAudio();
 
-    this.startMusic();
+    this.audioManager.playMusic();
     this.setSelectedPosition();
     this.checkStartModal();
   }
@@ -81,15 +83,7 @@ export default class extends Phaser.Scene {
   }
 
   createAudio() {
-    this.music = this.sound.add(townMap.audio.backgroundMusic);
-  }
-
-  startMusic() {
-    this.music.play({ loop: true });
-  }
-
-  stopMusic() {
-    this.music.stop();
+    this.audioManager.setMusic(townMap.audio.backgroundMusic);
   }
 
   setSelectedPosition() {
@@ -319,7 +313,7 @@ export default class extends Phaser.Scene {
   }
 
   lessonSelectCancelled() {
-    this.stopMusic();
+    this.audioManager.stopMusic();
     this.scene.start(screens.titleMenu);
   }
 
@@ -328,7 +322,7 @@ export default class extends Phaser.Scene {
       const lessonId = this.mapManager.getLessonId();
       const stageId = this.stageSelectManager.getStageId();
       this.progressManager.saveMapPosition(lessonId, stageId);
-      this.stopMusic();
+      this.audioManager.stopMusic();
       this.scene.start(this.nextScreen, stageId);
     }
   }

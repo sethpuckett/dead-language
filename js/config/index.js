@@ -29,3 +29,4 @@ export { default as stageWaves } from './stageWaves';
 export { default as stageParameterMap } from './stageParameterMap';
 export { default as optionsMenu } from './optionsMenu';
 export { default as audio } from './audio';
+export { default as userOptions } from './userOptions';

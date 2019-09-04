@@ -21,6 +21,14 @@ export default class {
     this.defaults[BLOOD] = BLOOD_DEFAULT;
   }
 
+  musicEnabled() {
+    return this.getOptionValue(MUSIC) === 'On';
+  }
+
+  soundEffectsEnabled() {
+    return this.getOptionValue(SOUND_EFFECTS) === 'On';
+  }
+
   getOptionValue(key) {
     if (!VALID_KEYS.includes(key)) {
       throw Error(`Invalid option key: ${key}`);
