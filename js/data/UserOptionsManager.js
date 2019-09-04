@@ -1,32 +1,21 @@
 import 'firebase/firestore';
+import { userOptions } from '../config';
 
-const MUSIC = 'music';
-const MUSIC_DEFAULT = 'On';
-const SOUND_EFFECTS = 'soundEffects';
-const SOUND_EFFECTS_DEFAULT = 'On';
-const TEXT_SIZE = 'textSize';
-const TEXT_SIZE_DEFAULT = 'Normal';
-const BLOOD = 'blood';
-const BLOOD_DEFAULT = 'Red';
-const VALID_KEYS = [MUSIC, SOUND_EFFECTS, TEXT_SIZE, BLOOD];
+const VALID_KEYS = [
+  userOptions.music, userOptions.soundEffects, userOptions.textSize, userOptions.blood,
+];
 
 export default class {
   constructor(db) {
     this.db = db;
-
-    this.defaults = {};
-    this.defaults[MUSIC] = MUSIC_DEFAULT;
-    this.defaults[SOUND_EFFECTS] = SOUND_EFFECTS_DEFAULT;
-    this.defaults[TEXT_SIZE] = TEXT_SIZE_DEFAULT;
-    this.defaults[BLOOD] = BLOOD_DEFAULT;
   }
 
   musicEnabled() {
-    return this.getOptionValue(MUSIC) === 'On';
+    return this.getOptionValue(userOptions.music) === userOptions.values.on;
   }
 
   soundEffectsEnabled() {
-    return this.getOptionValue(SOUND_EFFECTS) === 'On';
+    return this.getOptionValue(userOptions.soundEffects) === userOptions.values.on;
   }
 
   getOptionValue(key) {
@@ -34,7 +23,7 @@ export default class {
       throw Error(`Invalid option key: ${key}`);
     }
 
-    let value = this.defaults[key];
+    let value = userOptions.defaults[key];
 
     if (this.db.isUserLoggedIn() && this.db.userProfileLoaded) {
       const options = this.db.userProfile.options;
@@ -61,10 +50,10 @@ export default class {
 
     const updateObject = {
       options: {
-        music: options.find(o => o.key === MUSIC).value,
-        soundEffects: options.find(o => o.key === SOUND_EFFECTS).value,
-        textSize: options.find(o => o.key === TEXT_SIZE).value,
-        blood: options.find(o => o.key === BLOOD).value,
+        music: options.find(o => o.key === userOptions.music).value,
+        soundEffects: options.find(o => o.key === userOptions.soundEffects).value,
+        textSize: options.find(o => o.key === userOptions.textSize).value,
+        blood: options.find(o => o.key === userOptions.blood).value,
       },
     };
     this.updateUserProfile(updateObject, callback);

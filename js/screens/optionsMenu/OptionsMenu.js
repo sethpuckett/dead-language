@@ -1,23 +1,12 @@
 import Phaser from 'phaser';
-import { screens, images, depth, fonts, optionsMenu } from '../../config';
+import { screens, images, depth, fonts, optionsMenu, userOptions } from '../../config';
 import optionsMenuUiHelper from '../ui/optionsMenuUiHelper';
 import UserOptionsManager from '../../data/UserOptionsManager';
 
-const ON = 'On';
-const OFF = 'Off';
-const NORMAL = 'Normal';
-const LARGE = 'Large';
-const RED = 'Red';
-const GREEN = 'Green';
-
-const MUSIC = 'music';
-const MUSIC_VALUES = [ON, OFF];
-const SOUND_EFFECTS = 'soundEffects';
-const SOUND_EFFECTS_VALUES = [ON, OFF];
-const TEXT_SIZE = 'textSize';
-const TEXT_SIZE_VALUES = [NORMAL, LARGE];
-const BLOOD = 'blood';
-const BLOOD_VALUES = [RED, GREEN, OFF];
+const MUSIC_VALUES = [userOptions.values.on, userOptions.values.off];
+const SOUND_EFFECTS_VALUES = [userOptions.values.on, userOptions.values.off];
+const TEXT_SIZE_VALUES = [userOptions.values.normal, userOptions.values.large];
+const BLOOD_VALUES = [userOptions.values.red, userOptions.values.green, userOptions.values.off];
 const RETURN = 'return';
 
 export default class extends Phaser.Scene {
@@ -30,10 +19,10 @@ export default class extends Phaser.Scene {
 
     this.selectedOption = 0;
     this.menuOptions = [
-      { key: MUSIC, label: optionsMenu.labels.music, values: MUSIC_VALUES },
-      { key: SOUND_EFFECTS, label: optionsMenu.labels.soundEffects, values: SOUND_EFFECTS_VALUES },
-      { key: TEXT_SIZE, label: optionsMenu.labels.textSize, values: TEXT_SIZE_VALUES },
-      { key: BLOOD, label: optionsMenu.labels.blood, values: BLOOD_VALUES },
+      { key: userOptions.music, label: optionsMenu.labels.music, values: MUSIC_VALUES },
+      { key: userOptions.soundEffects, label: optionsMenu.labels.soundEffects, values: SOUND_EFFECTS_VALUES },
+      { key: userOptions.textSize, label: optionsMenu.labels.textSize, values: TEXT_SIZE_VALUES },
+      { key: userOptions.blood, label: optionsMenu.labels.blood, values: BLOOD_VALUES },
     ];
   }
 
@@ -126,7 +115,10 @@ export default class extends Phaser.Scene {
 
   loadUserOptions() {
     this.selectedValues = [
-      { key: MUSIC }, { key: SOUND_EFFECTS }, { key: TEXT_SIZE }, { key: BLOOD },
+      { key: userOptions.music },
+      { key: userOptions.soundEffects },
+      { key: userOptions.textSize },
+      { key: userOptions.blood },
     ];
 
     this.selectedValues.forEach((v) => {
