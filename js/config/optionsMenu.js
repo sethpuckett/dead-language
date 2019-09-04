@@ -11,6 +11,7 @@ export default {
   },
   audio: {
     backgroundMusic: audio.music.catchTheMystery,
+    menuMove: audio.menuMove,
   },
   ui: {
     optionSelectorColor: 0xffff22,

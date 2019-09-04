@@ -48,8 +48,8 @@ export default class {
     this.musicState = PLAYING;
   }
 
-  playSound(key) {
-    if (this.optionsManager.soundEffectsEnabled()) {
+  playSound(key, override = false) {
+    if (this.optionsManager.soundEffectsEnabled() || override) {
       this.sounds[key].play();
     }
   }
