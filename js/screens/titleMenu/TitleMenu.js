@@ -37,6 +37,7 @@ export default class extends Phaser.Scene {
     this.createMenu();
     this.createInstructions();
     this.createInput();
+    this.createAudio();
     this.updateMenuSelection();
   }
 
@@ -56,6 +57,12 @@ export default class extends Phaser.Scene {
     this.input.keyboard.on('keydown', this.handleKeyDown, this);
   }
 
+  createAudio() {
+    this.audio = {};
+    this.audio.menuClick = this.sound.add(titleMenu.audio.menuClick);
+    this.audio.menuSelect = this.sound.add(titleMenu.audio.menuSelect);
+  }
+
   handleKeyDown(e) {
     if (e.keyCode === this.keys.UP.keyCode) {
       this.decrementMenuSelection();
@@ -63,6 +70,7 @@ export default class extends Phaser.Scene {
       this.incrementMenuSelection();
     } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
       this.selectedOption = this.menuOptions[this.currentSelection].key;
+      this.audio.menuSelect.play();
       this.selector.setFrame(1);
       this.cameras.main.fade(titleMenu.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
     }
@@ -70,11 +78,13 @@ export default class extends Phaser.Scene {
 
   decrementMenuSelection() {
     this.currentSelection = Math.max(this.currentSelection - 1, 0);
+    this.audio.menuClick.play();
     this.updateMenuSelection();
   }
 
   incrementMenuSelection() {
     this.currentSelection = Math.min(this.currentSelection + 1, this.menuOptions.length - 1);
+    this.audio.menuClick.play();
     this.updateMenuSelection();
   }
 

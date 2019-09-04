@@ -1,3 +1,5 @@
+import audio from './audio';
+
 export default {
   spawnRows: 3,
   baseSpawnRate: 3000,
@@ -7,6 +9,10 @@ export default {
   baseBackRunSpeed: 35,
   backRunRange: 2,
   screenFadeTime: 750,
+  audio: {
+    menuClick: audio.menuClick,
+    menuSelect: audio.menuSelect,
+  },
   menu: {
     newGame: 'New Game',
     continueGame: 'Continue Game',
