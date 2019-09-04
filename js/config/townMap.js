@@ -1,3 +1,5 @@
+import audio from './audio';
+
 export default {
   mapTitleText: 'Choose a Location',
   stageTitleText: 'Choose a Stage',
@@ -12,6 +14,9 @@ export default {
     borderDisableColor: 0x222222,
     mapPinCellRatio: 0.5,
     requirementLineColor: 0xffffff,
+  },
+  audio: {
+    backgroundMusic: audio.music.inTheBackPocket,
   },
   choiceModals: {
     stageSelected: {

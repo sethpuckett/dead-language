@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { townMap, screens, gameTypes } from '../../config';
+import { townMap, screens, gameTypes, audio } from '../../config';
 import MultiModal from '../modal/MultiModal';
 import ChoiceModal from '../modal/ChoiceModal';
 import townMapUiHelper from '../ui/townMapUiHelper';
@@ -47,6 +47,9 @@ export default class extends Phaser.Scene {
     this.createStageSelect();
     this.createStageInfo();
     this.createInstructions();
+    this.createAudio();
+
+    this.startMusic();
     this.setSelectedPosition();
     this.checkStartModal();
   }
@@ -75,6 +78,18 @@ export default class extends Phaser.Scene {
 
   createInstructions() {
     this.instructionsManager.initialize();
+  }
+
+  createAudio() {
+    this.music = this.sound.add(townMap.audio.backgroundMusic);
+  }
+
+  startMusic() {
+    this.music.play({ loop: true });
+  }
+
+  stopMusic() {
+    this.music.stop();
   }
 
   setSelectedPosition() {
@@ -304,6 +319,7 @@ export default class extends Phaser.Scene {
   }
 
   lessonSelectCancelled() {
+    this.stopMusic();
     this.scene.start(screens.titleMenu);
   }
 
@@ -312,6 +328,7 @@ export default class extends Phaser.Scene {
       const lessonId = this.mapManager.getLessonId();
       const stageId = this.stageSelectManager.getStageId();
       this.progressManager.saveMapPosition(lessonId, stageId);
+      this.stopMusic();
       this.scene.start(this.nextScreen, stageId);
     }
   }

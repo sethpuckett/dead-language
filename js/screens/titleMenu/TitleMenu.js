@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { images, titleMenu, fonts, screens, depth, audio } from '../../config';
+import { images, titleMenu, fonts, screens, depth } from '../../config';
 import titleMenuUiHelper from '../ui/titleMenuUiHelper';
 import TitleZombieManager from './TitleZombieManager';
 import TitleSpawnManager from './TitleSpawnManager';
@@ -37,7 +37,6 @@ export default class extends Phaser.Scene {
     this.createMenu();
     this.createInstructions();
     this.createInput();
-    this.createAudio();
     this.updateMenuSelection();
   }
 
@@ -48,12 +47,6 @@ export default class extends Phaser.Scene {
     }
     this.zombieManager.moveZombies(delta);
     this.zombieManager.destroyDeadZombies();
-  }
-
-  createAudio() {
-    this.music = this.sound.add(audio.music.carousingEveryNight);
-
-    this.music.play({ loop: true });
   }
 
   createInput() {
