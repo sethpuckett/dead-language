@@ -101,7 +101,7 @@ export default [
         'Now, we can\'t just go running into town',
         'without a plan. We need to clear this place',
         'out area by area. Let\'s start with the "Front',
-        'Gate. I\'ve marked it in yellow on your map.',
+        'Gate". I\'ve marked it in yellow on your map.',
       ],
       [
         'Try selecting the "Front Gate" on the map and',
