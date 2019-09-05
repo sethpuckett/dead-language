@@ -1,4 +1,5 @@
 export default {
+  musicDelay: 0.2,
   menuMove: 'menu-move',
   menuSelectShoot: 'menu-select-shoot',
   menuSelectWave: 'menu-select-wave',
@@ -6,6 +7,7 @@ export default {
   click: 'click',
   buzz: 'buzz',
   thud: 'thud',
+  glassBreak: 'glass-break',
   files: {
     menuMove: 'assets/audio/menu-move.wav',
     menuSelectShoot: 'assets/audio/menu-select-shoot.wav',
@@ -14,15 +16,18 @@ export default {
     buzz: 'assets/audio/buzz.wav',
     click: 'assets/audio/click.wav',
     thud: 'assets/audio/thud.wav',
+    glassBreak: 'assets/audio/glass-break.wav',
   },
   music: {
     carousingEveryNight: 'carousing-every-night',
     inTheBackPocket: 'in-the-back-pocket',
     catchTheMystery: 'catch-the-mystery',
+    inEarlyTime: 'in-early-time',
     files: {
       carousingEveryNight: 'assets/audio/carousing-every-night.mp3',
       inTheBackPocket: 'assets/audio/in-the-back-pocket.mp3',
       catchTheMystery: 'assets/audio/catch-the-mystery.mp3',
+      inEarlyTime: 'assets/audio/in-early-time.mp3',
     },
   },
 };

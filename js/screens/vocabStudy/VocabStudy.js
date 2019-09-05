@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { images, vocabStudy, screens, fonts, depth, animations } from '../../config';
-import { textHelper } from '../../util';
+import { textHelper, util } from '../../util';
 import vocabStudyUiHelper from '../ui/vocabStudyUiHelper';
 import HudManager from '../HudManager';
 import HudStatusManager from '../HudStatusManager';
@@ -9,6 +9,7 @@ import VocabStudyMenuManager from './VocabStudyMenuManager';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import Modal from '../modal/Modal';
 import ModalChecker from '../modal/ModalChecker';
+import AudioManager from '../../audio/AudioManager';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -24,6 +25,7 @@ export default class extends Phaser.Scene {
     this.vocabManager = new VocabStudyVocabManager(this, this.sys.game.db.getStage(stageId).vocab);
     this.vocabWordManager = new VocabWordManager(this.sys.game.db.getStage(stageId).vocab);
     this.ModalChecker = new ModalChecker(this);
+    this.audioManager = new AudioManager(this);
     this.menuManager = new VocabStudyMenuManager(this, {
       hideLanguage1() { this.vocabManager.hideLanguage1(); },
       hideLanguage2() { this.vocabManager.hideLanguage2(); },
@@ -42,7 +44,10 @@ export default class extends Phaser.Scene {
     this.menuManager.createMenu();
     this.createBackground();
     this.createStatus();
+    this.createAudio();
     this.checkStartModal();
+
+    this.audioManager.playMusic();
   }
 
   checkStartModal() {
@@ -57,6 +62,13 @@ export default class extends Phaser.Scene {
     this.ModalChecker.checkModal();
   }
 
+  createAudio() {
+    this.audioManager.setMusic(vocabStudy.audio.music.backgroundMusic);
+
+    const sounds = util.unique(Object.values(vocabStudy.audio.soundEffects));
+    sounds.forEach(s => this.audioManager.addSound(s));
+  }
+
   createPracticeModal() {
     this.menuManager.disableInputHandling();
     this.practiceModal = new Modal(this, vocabStudy.modals.practice);
@@ -65,6 +77,7 @@ export default class extends Phaser.Scene {
     this.practiceModal.setCloseCallback(() => {
       this.practiceModal.disableInputHandling();
       this.menuManager.enableInputHandling();
+      this.audioManager.playSound(vocabStudy.audio.soundEffects.practiceModalClear);
       this.startTargetPractice();
     });
   }
@@ -111,6 +124,7 @@ export default class extends Phaser.Scene {
   startGame() {
     this.cameras.main.fade(vocabStudy.screenFadeTime, 0, 0, 0, false, (_c, progress) => {
       if (progress === 1) {
+        this.audioManager.stopMusic();
         this.scene.start(screens.minigame, this.stageId);
       }
     });
@@ -128,6 +142,7 @@ export default class extends Phaser.Scene {
     this.hudManager.disableInputHandling();
     this.disableInputHandling();
     this.hideBottle();
+    this.audioManager.playSound(vocabStudy.audio.soundEffects.quitPractice);
     this.statusManager.setStatus({ message: vocabStudy.statusMessages.start });
   }
 
@@ -241,6 +256,7 @@ export default class extends Phaser.Scene {
   returnToMap() {
     this.cameras.main.fade(vocabStudy.screenFadeTime, 0, 0, 0, false, (_c, progress) => {
       if (progress === 1) {
+        this.audioManager.stopMusic();
         this.scene.start(screens.townMap);
       }
     });
@@ -257,6 +273,7 @@ export default class extends Phaser.Scene {
         message: vocabStudy.statusMessages.hit,
         displayTime: vocabStudy.practiceWordBuffer,
       });
+      this.audioManager.playSound(vocabStudy.audio.soundEffects.guessCorrect);
       this.showBottleExplode();
     } else {
       this.vocabManager.showEntryWrong(this.practiceWord);
@@ -264,6 +281,7 @@ export default class extends Phaser.Scene {
         message: vocabStudy.statusMessages.miss,
         displayTime: vocabStudy.practiceWordBuffer,
       });
+      this.audioManager.playSound(vocabStudy.audio.soundEffects.guessWrong);
       this.showMissedShot();
     }
 

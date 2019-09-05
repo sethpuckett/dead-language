@@ -242,18 +242,23 @@ export default class {
     if (e.keyCode === this.keys.UP.keyCode
         && (this.selectedOption === 4 || this.selectedOption === 5 || this.selectedOption === 6)) {
       this.selectedOption -= 3;
+      this.scene.audioManager.playSound(vocabStudy.audio.soundEffects.menuMove);
     } else if (e.keyCode === this.keys.DOWN.keyCode
         && (this.selectedOption === 1 || this.selectedOption === 2 || this.selectedOption === 3)) {
       this.selectedOption += 3;
+      this.scene.audioManager.playSound(vocabStudy.audio.soundEffects.menuMove);
     } else if (e.keyCode === this.keys.LEFT.keyCode
         && (this.selectedOption === 2 || this.selectedOption === 3
             || this.selectedOption === 5 || this.selectedOption === 6)) {
       this.selectedOption -= 1;
+      this.scene.audioManager.playSound(vocabStudy.audio.soundEffects.menuMove);
     } else if (e.keyCode === this.keys.RIGHT.keyCode
         && (this.selectedOption === 1 || this.selectedOption === 2
             || this.selectedOption === 4 || this.selectedOption === 5)) {
       this.selectedOption += 1;
+      this.scene.audioManager.playSound(vocabStudy.audio.soundEffects.menuMove);
     } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
+      this.scene.audioManager.playSound(vocabStudy.audio.soundEffects.menuSelect);
       this.selectOption();
       return;
     }

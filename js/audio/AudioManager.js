@@ -1,4 +1,5 @@
 import UserOptionsManager from '../data/UserOptionsManager';
+import { audio } from '../config';
 
 const PLAYING = 'playing';
 const STOPPED = 'stopped';
@@ -24,7 +25,7 @@ export default class {
 
   playMusic() {
     if (this.optionsManager.musicEnabled()) {
-      this.music.play({ loop: true });
+      this.music.play({ loop: true, delay: audio.musicDelay });
       this.musicState = PLAYING;
     }
   }
@@ -41,7 +42,7 @@ export default class {
 
   resumeMusic() {
     if (this.musicState === STOPPED) {
-      this.music.play({ loop: true });
+      this.music.play({ loop: true, delay: audio.musicDelay });
     } else if (this.musicState === PAUSED) {
       this.music.resume();
     }

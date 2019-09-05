@@ -82,6 +82,7 @@ export default class extends Phaser.Scene {
     this.load.audio(audio.music.carousingEveryNight, audio.music.files.carousingEveryNight);
     this.load.audio(audio.music.inTheBackPocket, audio.music.files.inTheBackPocket);
     this.load.audio(audio.music.catchTheMystery, audio.music.files.catchTheMystery);
+    this.load.audio(audio.music.inEarlyTime, audio.music.files.inEarlyTime);
     this.load.audio(audio.menuMove, audio.files.menuMove);
     this.load.audio(audio.menuSelectShoot, audio.files.menuSelectShoot);
     this.load.audio(audio.menuSelectWave, audio.files.menuSelectWave);
@@ -89,6 +90,7 @@ export default class extends Phaser.Scene {
     this.load.audio(audio.buzz, audio.files.buzz);
     this.load.audio(audio.click, audio.files.click);
     this.load.audio(audio.thud, audio.files.thud);
+    this.load.audio(audio.glassBreak, audio.files.glassBreak);
 
     this.load.image(images.watch, images.files.watch);
     this.load.image(images.goldCoin, images.files.goldCoin);

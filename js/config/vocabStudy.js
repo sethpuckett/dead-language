@@ -1,3 +1,6 @@
+import audio from './audio';
+import { join } from 'path';
+
 export default {
   screenFadeTime: 750,
   practiceWordBuffer: 1250,
@@ -27,6 +30,19 @@ export default {
       textInput: false,
       hudBuffer: true,
       handleInput: false,
+    },
+  },
+  audio: {
+    music: {
+      backgroundMusic: audio.music.inEarlyTime,
+    },
+    soundEffects: {
+      menuMove: audio.menuMove,
+      menuSelect: audio.menuSelectWave,
+      practiceModalClear: audio.thud,
+      guessCorrect: audio.glassBreak,
+      guessWrong: audio.thud,
+      quitPractice: audio.menuBackout,
     },
   },
   statusMessages: {
