@@ -13,6 +13,7 @@ import GameProgressManager from '../../data/GameProgressManager';
 import ModalChecker from '../modal/ModalChecker';
 import ModalHelper from '../modal/ModalHelper';
 import AudioManager from '../../audio/AudioManager';
+import { util } from '../../util';
 
 const LESSON_SELECT = 'lesson-select';
 const STAGE_SELECT = 'stage-select';
@@ -83,7 +84,10 @@ export default class extends Phaser.Scene {
   }
 
   createAudio() {
-    this.audioManager.setMusic(townMap.audio.backgroundMusic);
+    this.audioManager.setMusic(townMap.audio.music.backgroundMusic);
+
+    const sounds = util.unique(Object.values(townMap.audio.soundEffects));
+    sounds.forEach(s => this.audioManager.addSound(s));
   }
 
   setSelectedPosition() {
@@ -185,6 +189,7 @@ export default class extends Phaser.Scene {
       );
     });
     this.stageModal.setCancelCallback(() => {
+      this.audioManager.playSound(townMap.audio.soundEffects.stageSelectedModalBackout);
       this.stageModal.disableInputHandling();
       this.stageModal.close();
       this.stageSelectManager.enableInputHandling();
@@ -226,11 +231,13 @@ export default class extends Phaser.Scene {
 
     if (stageType !== gameTypes.zombieAssaultReview) {
       if (unlocked) {
+        this.audioManager.playSound(townMap.audio.soundEffects.stageSelect);
         this.createStageSelectedModal(cleared);
       } else {
         this.createStageLockedModal();
       }
     } else if (unlocked) {
+      this.audioManager.playSound(townMap.audio.soundEffects.stageSelect);
       this.createReviewStageSelectedModal(cleared);
     } else {
       this.createStageLockedModal();
@@ -239,20 +246,24 @@ export default class extends Phaser.Scene {
 
   createStageLockedModal() {
     this.disableInputHandling();
+    this.audioManager.playSound(townMap.audio.soundEffects.stageLockedModal);
     const config = this.modalHelper.getModalConfig(STAGE_LOCKED);
     this.stageLockedModal = new MultiModal(this, config.text);
     this.stageLockedModal.draw();
     this.stageLockedModal.setCloseCallback(() => {
+      this.audioManager.playSound(townMap.audio.soundEffects.stageLockedModalBackout);
       this.assignControl(STAGE_SELECT);
     });
   }
 
   createLessonLockedModal() {
     this.disableInputHandling();
+    this.audioManager.playSound(townMap.audio.soundEffects.lessonLockedModal);
     const config = this.modalHelper.getModalConfig(LESSON_LOCKED);
     this.lessonLockedModal = new MultiModal(this, config.text);
     this.lessonLockedModal.draw();
     this.lessonLockedModal.setCloseCallback(() => {
+      this.audioManager.playSound(townMap.audio.soundEffects.lessonLockedModalBackout);
       this.assignControl(LESSON_SELECT);
     });
   }
@@ -278,6 +289,7 @@ export default class extends Phaser.Scene {
   }
 
   stageSelectCancelled() {
+    this.audioManager.playSound(townMap.audio.soundEffects.stageSelectBackout);
     this.assignControl(LESSON_SELECT);
   }
 
@@ -296,6 +308,7 @@ export default class extends Phaser.Scene {
     if (lessonId != null) {
       const locked = this.progressManager.isLessonLocked(lessonId);
       if (!locked) {
+        this.audioManager.playSound(townMap.audio.soundEffects.mapGridSelect);
         this.stageSelectManager.setLesson(lessonId);
         this.stageInfoManager.setStage(
           this.stageSelectManager.getStageId(),
@@ -313,8 +326,17 @@ export default class extends Phaser.Scene {
   }
 
   lessonSelectCancelled() {
-    this.audioManager.stopMusic();
-    this.scene.start(screens.titleMenu);
+    this.audioManager.playSound(townMap.audio.soundEffects.lessonSelectBackout);
+    this.cameras.main.fade(
+      townMap.screenFadeTime, 0, 0, 0, false, this.lessonSelectCanceledFadeCallback
+    );
+  }
+
+  lessonSelectCanceledFadeCallback(_camera, progress) {
+    if (progress === 1) {
+      this.audioManager.stopMusic();
+      this.scene.start(screens.titleMenu);
+    }
   }
 
   stageSelectedFadeCallback(_camera, progress) {

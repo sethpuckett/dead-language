@@ -381,21 +381,25 @@ export default class {
 
   moveSelectedCellUp() {
     this.selectedCell.y = Math.max(this.selectedCell.y - 1, 0);
+    this.scene.audioManager.playSound(townMap.audio.soundEffects.mapGridMove);
     this.updateLessonSelector();
   }
 
   moveSelectedCellDown() {
     this.selectedCell.y = Math.min(this.selectedCell.y + 1, MAP_Y_CELL_COUNT - 1);
+    this.scene.audioManager.playSound(townMap.audio.soundEffects.mapGridMove);
     this.updateLessonSelector();
   }
 
   moveSelectedCellLeft() {
     this.selectedCell.x = Math.max(this.selectedCell.x - 1, 0);
+    this.scene.audioManager.playSound(townMap.audio.soundEffects.mapGridMove);
     this.updateLessonSelector();
   }
 
   moveSelectedCellRight() {
     this.selectedCell.x = Math.min(this.selectedCell.x + 1, MAP_X_CELL_COUNT - 1);
+    this.scene.audioManager.playSound(townMap.audio.soundEffects.mapGridMove);
     this.updateLessonSelector();
   }
 

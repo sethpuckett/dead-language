@@ -1,9 +1,19 @@
 export default {
   menuMove: 'menu-move',
   menuSelectShoot: 'menu-select-shoot',
+  menuSelectWave: 'menu-select-wave',
+  menuBackout: 'menu-backout',
+  click: 'click',
+  buzz: 'buzz',
+  thud: 'thud',
   files: {
     menuMove: 'assets/audio/menu-move.wav',
     menuSelectShoot: 'assets/audio/menu-select-shoot.wav',
+    menuSelectWave: 'assets/audio/menu-select-wave.wav',
+    menuBackout: 'assets/audio/menu-backout.wav',
+    buzz: 'assets/audio/buzz.wav',
+    click: 'assets/audio/click.wav',
+    thud: 'assets/audio/thud.wav',
   },
   music: {
     carousingEveryNight: 'carousing-every-night',

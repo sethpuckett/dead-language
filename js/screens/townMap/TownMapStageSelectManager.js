@@ -335,11 +335,13 @@ export default class {
   }
 
   decrementSelectedStage() {
+    this.scene.audioManager.playSound(townMap.audio.soundEffects.stageMove);
     this.selectedStageIndex = Math.max(this.selectedStageIndex - 1, 0);
     this.updateStageSelector();
   }
 
   incrementSelectedStage() {
+    this.scene.audioManager.playSound(townMap.audio.soundEffects.stageMove);
     this.selectedStageIndex = Math.min(this.selectedStageIndex + 1, this.lesson.stages.length - 1);
     this.updateStageSelector();
   }

@@ -16,7 +16,22 @@ export default {
     requirementLineColor: 0xffffff,
   },
   audio: {
-    backgroundMusic: audio.music.inTheBackPocket,
+    music: {
+      backgroundMusic: audio.music.inTheBackPocket,
+    },
+    soundEffects: {
+      mapGridMove: audio.menuMove,
+      mapGridSelect: audio.menuSelectWave,
+      stageMove: audio.menuMove,
+      stageSelect: audio.menuSelectWave,
+      stageSelectBackout: audio.menuBackout,
+      lessonSelectBackout: audio.menuBackout,
+      stageSelectedModalBackout: audio.thud,
+      stageLockedModal: audio.buzz,
+      stageLockedModalBackout: audio.thud,
+      lessonLockedModal: audio.buzz,
+      lessonLockedModalBackout: audio.thud,
+    },
   },
   choiceModals: {
     stageSelected: {

@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import { fonts, depth, choiceModal, images } from '../../config';
 import choiceModalUiHelper from '../ui/choiceModalUiHelper';
+import AudioManager from '../../audio/AudioManager';
+import { util } from '../../util';
 
 const MIN_WIDTH = 450;
 
@@ -10,6 +12,7 @@ export default class {
     this.textContent = textContent;
     this.choices = choices;
     this.ui = choiceModalUiHelper(this.scene.sys.game.config);
+    this.audioManager = new AudioManager(this.scene);
 
     this.selectedIndex = 0;
   }
@@ -20,6 +23,7 @@ export default class {
     this.createFade();
     this.createBackground();
     this.createBorder();
+    this.createAudio();
     this.createSelector();
   }
 
@@ -75,6 +79,11 @@ export default class {
   }
 
   // private
+
+  createAudio() {
+    const sounds = util.unique(Object.values(choiceModal.audio));
+    sounds.forEach(s => this.audioManager.addSound(s));
+  }
 
   createFade() {
     this.fade = this.scene.add.graphics();
@@ -226,6 +235,7 @@ export default class {
   }
 
   optionSelected() {
+    this.audioManager.playSound(choiceModal.audio.menuSelect);
     this.close();
     this.closeCallback(this.selectedIndex);
   }
@@ -250,11 +260,13 @@ export default class {
   }
 
   decrementSelection() {
+    this.audioManager.playSound(choiceModal.audio.menuMove);
     this.selectedIndex = Math.max(this.selectedIndex - 1, 0);
     this.updateSelector();
   }
 
   incrementSelection() {
+    this.audioManager.playSound(choiceModal.audio.menuMove);
     this.selectedIndex = Math.min(this.selectedIndex + 1, this.choices.length - 1);
     this.updateSelector();
   }

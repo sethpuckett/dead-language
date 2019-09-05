@@ -1,3 +1,5 @@
+import audio from './audio';
+
 export default {
   fadeColor: 0x000000,
   fadeAlpha: 0.85,
@@ -7,4 +9,8 @@ export default {
   choiceColor: 0xffff22,
   textFontSize: 12,
   choiceFontSize: 18,
+  audio: {
+    menuMove: audio.menuMove,
+    menuSelect: audio.menuSelectShoot,
+  },
 };

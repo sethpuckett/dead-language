@@ -6,4 +6,6 @@ export default {
     }
     return a;
   },
+
+  unique: a => [...new Set(a)],
 };
