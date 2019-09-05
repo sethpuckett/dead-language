@@ -283,7 +283,7 @@ export default class extends Phaser.Scene {
   setMusicState() {
     const musicValue = this.selectedValues.find(v => v.key === userOptions.music).value;
     if (musicValue === userOptions.values.on) {
-      this.AudioManager.resumeMusic();
+      this.AudioManager.playMusic(true);
     } else if (musicValue === userOptions.values.off) {
       this.AudioManager.pauseMusic();
     }

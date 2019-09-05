@@ -23,9 +23,13 @@ export default class {
     this.sounds[key] = this.scene.sound.add(key);
   }
 
-  playMusic() {
-    if (this.optionsManager.musicEnabled()) {
-      this.music.play({ loop: true, delay: audio.musicDelay });
+  playMusic(override = false) {
+    if (this.optionsManager.musicEnabled() || override) {
+      if (this.musicState === STOPPED) {
+        this.music.play({ loop: true, delay: audio.musicDelay });
+      } else if (this.musicState === PAUSED) {
+        this.music.resume();
+      }
       this.musicState = PLAYING;
     }
   }
@@ -36,17 +40,10 @@ export default class {
   }
 
   pauseMusic() {
-    this.music.pause();
-    this.musicState = PAUSED;
-  }
-
-  resumeMusic() {
-    if (this.musicState === STOPPED) {
-      this.music.play({ loop: true, delay: audio.musicDelay });
-    } else if (this.musicState === PAUSED) {
-      this.music.resume();
+    if (this.musicState === PLAYING) {
+      this.music.pause();
+      this.musicState = PAUSED;
     }
-    this.musicState = PLAYING;
   }
 
   playSound(key, override = false) {
