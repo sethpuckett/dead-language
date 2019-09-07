@@ -113,4 +113,13 @@ export default {
     stage5: 'animals-5',
     review: 'animals-review',
   },
+  science: {
+    name: 'lesson-science',
+    stage1: 'science-1',
+    stage2: 'science-2',
+    stage3: 'science-3',
+    stage4: 'science-4',
+    stage5: 'science-5',
+    review: 'science-review',
+  },
 };

@@ -76,4 +76,9 @@ export default [
     location: 'Hillside Pet Store',
     position: { x: 4, y: 3 },
   },
+  {
+    id: lessons.science.name,
+    location: 'Hillside Lab',
+    position: { x: 2, y: 4 },
+  },
 ];
