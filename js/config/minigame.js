@@ -1,3 +1,5 @@
+import audio from './audio';
+
 export default {
   zombieColumns: 18,
   sidePaddingPercent: 20,
@@ -12,6 +14,15 @@ export default {
   answerFlashDelay: 75,
   answerDisplayTime: 1250,
   bigZombieSizeModifier: 1.25,
+  audio: {
+    music: {
+      zombieAssaultBackgroundMusicIntro: audio.music.zombieAssaultIntro,
+      zombieAssaultBackgroundMusicLoop: audio.music.zombieAssaultLoop,
+    },
+    soundEffects: {
+
+    },
+  },
   fonts: {
     zombieSize: 10,
     zombieTint: 0xffffff,

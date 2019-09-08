@@ -16,6 +16,7 @@ import ModalChecker from '../modal/ModalChecker';
 import UnlockableManager from '../../data/UnlockableManager';
 import StageParameterManager from '../../gameContent/StageParameterManager';
 import ReviewVocabManager from '../../languageContent/ReviewVocabManager';
+import AudioManager from '../../audio/AudioManager';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -34,6 +35,7 @@ export default class extends Phaser.Scene {
     this.modalChecker = new ModalChecker(this, stageId);
     this.unlockableManager = new UnlockableManager(this.sys.game.db);
     this.stageParameterManager = new StageParameterManager();
+    this.audioManager = new AudioManager(this);
 
     this.stageParameters = this.stageParameterManager.getParameters(this.stageId);
 
@@ -42,7 +44,9 @@ export default class extends Phaser.Scene {
     this.spawnManager = new MinigameSpawnManager(
       this, this.stageParameters, this.vocab, this.reviewVocabManager
     );
-    this.itemSpawnManager = new MinigameItemSpawnManager(this, this.stageParameters.items, this.vocab);
+    this.itemSpawnManager = new MinigameItemSpawnManager(
+      this, this.stageParameters.items, this.vocab
+    );
     this.ui = minigameUiHelper(this.sys.game.config);
 
     this.score = 0;
@@ -61,6 +65,9 @@ export default class extends Phaser.Scene {
     this.createBackground();
     this.createCollisions();
     this.createTimers();
+    this.createAudio();
+
+    this.audioManager.playMusic();
     this.checkStartModal();
   }
 
@@ -96,6 +103,16 @@ export default class extends Phaser.Scene {
         this.vocab.releaseWord(i.word);
         this.itemSpawnManager.releaseSlot(i.slotNumber);
       });
+    }
+  }
+
+  createAudio() {
+    if (this.isReviewStage()) {
+      this.audioManager.setMusicIntro(minigame.audio.music.zombieAssaultBackgroundMusicIntro);
+      this.audioManager.setMusic(minigame.audio.music.zombieAssaultBackgroundMusicLoop);
+    } else {
+      this.audioManager.setMusicIntro(minigame.audio.music.zombieAssaultBackgroundMusicIntro);
+      this.audioManager.setMusic(minigame.audio.music.zombieAssaultBackgroundMusicLoop);
     }
   }
 
@@ -171,6 +188,7 @@ export default class extends Phaser.Scene {
     const releasedWords = this.zombieManager.destroyAllZombies();
     releasedWords.forEach(w => this.vocab.releaseWord(w));
     this.progressManager.saveStageCompleted(this.stageId, () => {
+      this.audioManager.stopMusic();
       this.scene.start(screens.endgame, { status: endgame.win, stageId: this.stageId });
     });
   }
@@ -202,6 +220,7 @@ export default class extends Phaser.Scene {
   }
 
   loseGame() {
+    this.audioManager.stopMusic();
     this.scene.start(screens.endgame, { status: endgame.lose, stageId: this.stageId });
   }
 
@@ -250,8 +269,7 @@ export default class extends Phaser.Scene {
   }
 
   getVocab() {
-    const stageType = this.progressManager.getStageType(this.stageId);
-    if (stageType !== gameTypes.zombieAssaultReview) {
+    if (!this.isReviewStage()) {
       return this.sys.game.db.getStage(this.stageId).vocab;
     }
 
@@ -297,6 +315,7 @@ export default class extends Phaser.Scene {
       this.hudManager.enableInputHandling();
       this.enableInputHandling();
       if (keyCode === this.keys.ESC.keyCode) {
+        this.audioManager.stopMusic();
         this.scene.start(screens.endgame, { status: endgame.lose, stageId: this.stageId });
       }
     });
@@ -310,5 +329,10 @@ export default class extends Phaser.Scene {
       this.weapon = this.stageParameters.weapons.default;
       this.hudManager.setWeapon(this.weapon, 0);
     }
+  }
+
+  isReviewStage() {
+    const stageType = this.progressManager.getStageType(this.stageId);
+    return stageType === gameTypes.zombieAssaultReview;
   }
 }

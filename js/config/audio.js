@@ -23,11 +23,15 @@ export default {
     inTheBackPocket: 'in-the-back-pocket',
     catchTheMystery: 'catch-the-mystery',
     inEarlyTime: 'in-early-time',
+    zombieAssaultIntro: 'zombie-assault-intro',
+    zombieAssaultLoop: 'zombie-assault-loop',
     files: {
       carousingEveryNight: 'assets/audio/carousing-every-night.mp3',
       inTheBackPocket: 'assets/audio/in-the-back-pocket.mp3',
       catchTheMystery: 'assets/audio/catch-the-mystery.mp3',
       inEarlyTime: 'assets/audio/in-early-time.mp3',
+      zombieAssaultIntro: 'assets/audio/zombie-assault-intro.mp3',
+      zombieAssaultLoop: 'assets/audio/zombie-assault-loop.mp3',
     },
   },
 };
