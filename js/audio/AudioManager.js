@@ -73,7 +73,7 @@ export default class {
   playMusicIntro() {
     this.musicIntro.on('complete', () => this.playMainMusicLoop());
     this.musicState = INTRO_PLAYING;
-    this.musicIntro.play();
+    this.musicIntro.play({ delay: audio.musicDelay });
   }
 
   resumeMusicIntro() {
@@ -88,7 +88,8 @@ export default class {
 
   playMainMusicLoop() {
     this.musicState = PLAYING;
-    this.music.play({ loop: true, delay: audio.musicDelay });
+    const musicDelay = this.musicIntro != null ? 0 : audio.musicDelay;
+    this.music.play({ loop: true, delay: musicDelay });
   }
 
   resumeMainMusicLoop() {

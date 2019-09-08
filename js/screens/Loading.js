@@ -85,6 +85,10 @@ export default class extends Phaser.Scene {
     this.load.audio(audio.music.inEarlyTime, audio.music.files.inEarlyTime);
     this.load.audio(audio.music.zombieAssaultIntro, audio.music.files.zombieAssaultIntro);
     this.load.audio(audio.music.zombieAssaultLoop, audio.music.files.zombieAssaultLoop);
+    this.load.audio(
+      audio.music.zombieAssaultReviewIntro, audio.music.files.zombieAssaultReviewIntro
+    );
+    this.load.audio(audio.music.zombieAssaultReviewLoop, audio.music.files.zombieAssaultReviewLoop);
     this.load.audio(audio.menuMove, audio.files.menuMove);
     this.load.audio(audio.menuSelectShoot, audio.files.menuSelectShoot);
     this.load.audio(audio.menuSelectWave, audio.files.menuSelectWave);

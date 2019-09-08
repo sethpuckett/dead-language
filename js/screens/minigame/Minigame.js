@@ -108,8 +108,8 @@ export default class extends Phaser.Scene {
 
   createAudio() {
     if (this.isReviewStage()) {
-      this.audioManager.setMusicIntro(minigame.audio.music.zombieAssaultBackgroundMusicIntro);
-      this.audioManager.setMusic(minigame.audio.music.zombieAssaultBackgroundMusicLoop);
+      this.audioManager.setMusicIntro(minigame.audio.music.zombieAssaultReviewBackgroundMusicIntro);
+      this.audioManager.setMusic(minigame.audio.music.zombieAssaultReviewBackgroundMusicLoop);
     } else {
       this.audioManager.setMusicIntro(minigame.audio.music.zombieAssaultBackgroundMusicIntro);
       this.audioManager.setMusic(minigame.audio.music.zombieAssaultBackgroundMusicLoop);

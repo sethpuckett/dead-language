@@ -25,6 +25,8 @@ export default {
     inEarlyTime: 'in-early-time',
     zombieAssaultIntro: 'zombie-assault-intro',
     zombieAssaultLoop: 'zombie-assault-loop',
+    zombieAssaultReviewIntro: 'zombie-assault-review-intro',
+    zombieAssaultReviewLoop: 'zombie-assault-review-loop',
     files: {
       carousingEveryNight: 'assets/audio/carousing-every-night.mp3',
       inTheBackPocket: 'assets/audio/in-the-back-pocket.mp3',
@@ -32,6 +34,8 @@ export default {
       inEarlyTime: 'assets/audio/in-early-time.mp3',
       zombieAssaultIntro: 'assets/audio/zombie-assault-intro.mp3',
       zombieAssaultLoop: 'assets/audio/zombie-assault-loop.mp3',
+      zombieAssaultReviewIntro: 'assets/audio/zombie-assault-review-intro.mp3',
+      zombieAssaultReviewLoop: 'assets/audio/zombie-assault-review-loop.mp3',
     },
   },
 };

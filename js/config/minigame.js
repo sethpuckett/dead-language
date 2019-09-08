@@ -18,6 +18,8 @@ export default {
     music: {
       zombieAssaultBackgroundMusicIntro: audio.music.zombieAssaultIntro,
       zombieAssaultBackgroundMusicLoop: audio.music.zombieAssaultLoop,
+      zombieAssaultReviewBackgroundMusicIntro: audio.music.zombieAssaultReviewIntro,
+      zombieAssaultReviewBackgroundMusicLoop: audio.music.zombieAssaultReviewLoop,
     },
     soundEffects: {
 
