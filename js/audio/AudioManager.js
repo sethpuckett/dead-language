@@ -19,15 +19,27 @@ export default class {
   }
 
   setMusicIntro(key) {
+    if (key === audio.none) {
+      return;
+    }
+
     this.musicIntro = this.scene.sound.add(key);
   }
 
   setMusic(key) {
+    if (key === audio.none) {
+      return;
+    }
+
     this.music = this.scene.sound.add(key);
   }
 
-  addSound(key) {
-    this.sounds[key] = this.scene.sound.add(key);
+  addSound(key, config) {
+    if (key === audio.none) {
+      return;
+    }
+
+    this.sounds[key] = this.scene.sound.add(key, config);
   }
 
   playMusic(override = false) {
@@ -63,6 +75,10 @@ export default class {
   }
 
   playSound(key, override = false) {
+    if (key === audio.none) {
+      return;
+    }
+
     if (this.optionsManager.soundEffectsEnabled() || override) {
       this.sounds[key].play();
     }

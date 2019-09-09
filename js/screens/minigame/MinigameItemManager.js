@@ -62,6 +62,7 @@ export default class {
     });
 
     this.items.push(item);
+    this.scene.audioManager.playSound(minigame.audio.soundEffects.itemSpawn);
   }
 
   checkGuess(text) {

@@ -22,8 +22,23 @@ export default {
       zombieAssaultReviewBackgroundMusicLoop: audio.music.zombieAssaultReviewLoop,
     },
     soundEffects: {
-
+      shotMiss: audio.shotMiss,
+      pistolHit: audio.hitPistol,
+      shotgunHit: audio.hitShotgun,
+      itemSpawn: audio.itemSpawn,
+      itemGet: audio.itemGet,
+      zombieAttack: audio.zombieAttack,
+      mercenaryAttack: audio.mercHit,
+      mercenaryRefuse: audio.buzz,
+      outOfAmmo: audio.none,
+      normalZombieSpawn: audio.none,
+      specialZombieSpawn: audio.none,
+      // zombieOnscreen: audio.thud,
+      // multiZombieOnscreen: audio.thud,
     },
+    config: [
+      { key: audio.outOfAmmo, value: { detune: -1200, rate: 2 } },
+    ],
   },
   fonts: {
     zombieSize: 10,

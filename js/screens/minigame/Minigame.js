@@ -17,6 +17,7 @@ import UnlockableManager from '../../data/UnlockableManager';
 import StageParameterManager from '../../gameContent/StageParameterManager';
 import ReviewVocabManager from '../../languageContent/ReviewVocabManager';
 import AudioManager from '../../audio/AudioManager';
+import { util } from '../../util';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -114,6 +115,13 @@ export default class extends Phaser.Scene {
       this.audioManager.setMusicIntro(minigame.audio.music.zombieAssaultBackgroundMusicIntro);
       this.audioManager.setMusic(minigame.audio.music.zombieAssaultBackgroundMusicLoop);
     }
+
+    const sounds = util.unique(Object.values(minigame.audio.soundEffects));
+    sounds.forEach((key) => {
+      const configEntry = minigame.audio.config.find(c => c.key === key);
+      const config = configEntry != null ? configEntry.value : null;
+      this.audioManager.addSound(key, config);
+    });
   }
 
   createHud() {
@@ -244,6 +252,9 @@ export default class extends Phaser.Scene {
         shotFired = false;
         if (canAffordMerc) {
           mercKill = true;
+          this.audioManager.playSound(minigame.audio.soundEffects.mercenaryAttack);
+        } else {
+          this.audioManager.playSound(minigame.audio.soundEffects.mercenaryRefuse);
         }
       }
     }
@@ -252,8 +263,11 @@ export default class extends Phaser.Scene {
     if (!isCorrect && !mercKill) {
       const itemConfig = this.itemManager.checkGuess(guess);
       if (itemConfig != null) {
+        this.audioManager.playSound(minigame.audio.soundEffects.itemGet);
         this.itemEffectManager.applyItem(itemConfig.itemType);
         shotFired = false;
+      } else { // missed shot
+        this.audioManager.playSound(minigame.audio.soundEffects.shotMiss);
       }
     }
 
@@ -263,7 +277,7 @@ export default class extends Phaser.Scene {
     this.hudManager.setKillValue(this.score);
     this.hudManager.clearTextEntry();
 
-    if (shotFired) {
+    if (shotFired && this.ammo > 0) {
       this.updateAmmo(this.ammo - 1);
     }
   }
@@ -325,6 +339,7 @@ export default class extends Phaser.Scene {
     this.ammo = newCount;
     this.hudManager.updateAmmo(this.ammo, this.maxAmmo);
     if (this.ammo <= 0) {
+      this.audioManager.playSound(minigame.audio.soundEffects.outOfAmmo);
       this.maxAmmo = 0;
       this.weapon = this.stageParameters.weapons.default;
       this.hudManager.setWeapon(this.weapon, 0);

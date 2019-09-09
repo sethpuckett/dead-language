@@ -97,6 +97,14 @@ export default class extends Phaser.Scene {
     this.load.audio(audio.click, audio.files.click);
     this.load.audio(audio.thud, audio.files.thud);
     this.load.audio(audio.glassBreak, audio.files.glassBreak);
+    this.load.audio(audio.hitPistol, audio.files.hitPistol);
+    this.load.audio(audio.hitShotgun, audio.files.hitShotgun);
+    this.load.audio(audio.itemGet, audio.files.itemGet);
+    this.load.audio(audio.itemSpawn, audio.files.itemSpawn);
+    this.load.audio(audio.zombieAttack, audio.files.zombieAttack);
+    this.load.audio(audio.mercHit, audio.files.mercHit);
+    this.load.audio(audio.shotMiss, audio.files.shotMiss);
+    this.load.audio(audio.outOfAmmo, audio.files.outOfAmmo);
 
     this.load.image(images.watch, images.files.watch);
     this.load.image(images.goldCoin, images.files.goldCoin);

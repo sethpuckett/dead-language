@@ -56,6 +56,7 @@ export default class {
   }
 
   applyZombieDamage(zombie) {
+    this.scene.audioManager.playSound(minigame.audio.soundEffects.zombieAttack);
     this.damage += this.stageParameters.enemies.attackDamage;
     zombie.alive = false;
     zombie.words[zombie.hits].missed = true;
@@ -115,6 +116,22 @@ export default class {
     zombie.play(animationHelper.zombieAnimation(image, animation));
     zombie.on('animationcomplete', this.zombieAnimationComplete, this);
     this.zombies.push(zombie);
+    this.playZombieSpawnSound(spawnConfig.enemyType);
+  }
+
+  playZombieSpawnSound(enemyType) {
+    switch (enemyType) {
+      case enemyTypes.normalZombie:
+      case enemyTypes.reviewZombie:
+        this.scene.audioManager.playSound(minigame.audio.soundEffects.normalZombieSpawn);
+        break;
+      case enemyTypes.sprinterZombie:
+      case enemyTypes.bruiserZombie:
+        this.scene.audioManager.playSound(minigame.audio.soundEffects.specialZombieSpawn);
+        break;
+      default:
+        break;
+    }
   }
 
   checkGuess(text, weapon) {
@@ -196,10 +213,25 @@ export default class {
     zombie.hits += 1;
     zombie.health -= weapons.damage[weapon];
 
+    this.playShootZombieSound(weapon);
+
     if (zombie.health <= 0) {
       this.killShotZombie(zombie);
     } else {
       this.injuryShotZombie(zombie);
+    }
+  }
+
+  playShootZombieSound(weapon) {
+    switch (weapon) {
+      case weapons.pistol:
+        this.scene.audioManager.playSound(minigame.audio.soundEffects.pistolHit);
+        break;
+      case weapons.shotgun:
+        this.scene.audioManager.playSound(minigame.audio.soundEffects.shotgunHit);
+        break;
+      default:
+        break;
     }
   }
 
