@@ -333,13 +333,14 @@ export default class extends Phaser.Scene {
   }
 
   lessonSelectCanceledFadeCallback(_camera, progress) {
+    this.audioManager.setMusicVolume(1 - progress);
     if (progress === 1) {
-      this.audioManager.stopMusic();
       this.scene.start(screens.titleMenu);
     }
   }
 
   stageSelectedFadeCallback(_camera, progress) {
+    this.audioManager.setMusicVolume(1 - progress);
     if (progress === 1) {
       const lessonId = this.mapManager.getLessonId();
       const stageId = this.stageSelectManager.getStageId();

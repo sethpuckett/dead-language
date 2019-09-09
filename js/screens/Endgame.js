@@ -175,6 +175,7 @@ export default class extends Phaser.Scene {
   }
 
   fadeCallback(_camera, progress) {
+    this.audioManager.setMusicVolume(1 - progress);
     if (progress === 1) {
       this.audioManager.stopMusic();
       if (this.selectedOption === MAP) {

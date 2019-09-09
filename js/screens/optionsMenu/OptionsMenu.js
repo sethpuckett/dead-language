@@ -17,7 +17,7 @@ export default class extends Phaser.Scene {
 
   init() {
     this.userOptionsManager = new UserOptionsManager(this.sys.game.db);
-    this.AudioManager = new AudioManager(this);
+    this.audioManager = new AudioManager(this);
 
     this.selectedOption = 0;
     this.menuOptions = [
@@ -43,12 +43,12 @@ export default class extends Phaser.Scene {
     this.createInput();
     this.createAudio();
 
-    this.AudioManager.playMusic();
+    this.audioManager.playMusic();
   }
 
   createAudio() {
-    this.AudioManager.setMusic(optionsMenu.audio.backgroundMusic);
-    this.AudioManager.addSound(optionsMenu.audio.menuMove);
+    this.audioManager.setMusic(optionsMenu.audio.backgroundMusic);
+    this.audioManager.addSound(optionsMenu.audio.menuMove);
   }
 
   createBackground() {
@@ -274,8 +274,9 @@ export default class extends Phaser.Scene {
   }
 
   fadeCallback(_camera, progress) {
+    this.audioManager.setMusicVolume(1 - progress);
     if (progress === 1) {
-      this.AudioManager.stopMusic();
+      this.audioManager.stopMusic();
       this.scene.start(screens.titleMenu);
     }
   }
@@ -283,16 +284,16 @@ export default class extends Phaser.Scene {
   setMusicState() {
     const musicValue = this.selectedValues.find(v => v.key === userOptions.music).value;
     if (musicValue === userOptions.values.on) {
-      this.AudioManager.playMusic(true);
+      this.audioManager.playMusic(true);
     } else if (musicValue === userOptions.values.off) {
-      this.AudioManager.pauseMusic();
+      this.audioManager.pauseMusic();
     }
   }
 
   playMenuMove() {
     const soundValue = this.selectedValues.find(v => v.key === userOptions.soundEffects).value;
     if (soundValue === userOptions.values.on) {
-      this.AudioManager.playSound(optionsMenu.audio.menuMove, true);
+      this.audioManager.playSound(optionsMenu.audio.menuMove, true);
     }
   }
 }

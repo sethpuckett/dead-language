@@ -68,6 +68,13 @@ export default class {
     }
   }
 
+  setMusicVolume(volume) {
+    if (this.musicIntro != null) {
+      this.musicIntro.setVolume(volume);
+    }
+    this.music.setVolume(volume);
+  }
+
   stopMusic() {
     this.musicState = STOPPED;
     if (this.musicIntro != null) {

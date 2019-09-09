@@ -123,6 +123,7 @@ export default class extends Phaser.Scene {
 
   startGame() {
     this.cameras.main.fade(vocabStudy.screenFadeTime, 0, 0, 0, false, (_c, progress) => {
+      this.audioManager.setMusicVolume(1 - progress);
       if (progress === 1) {
         this.audioManager.stopMusic();
         this.scene.start(screens.minigame, this.stageId);
@@ -255,6 +256,7 @@ export default class extends Phaser.Scene {
 
   returnToMap() {
     this.cameras.main.fade(vocabStudy.screenFadeTime, 0, 0, 0, false, (_c, progress) => {
+      this.audioManager.setMusicVolume(1 - progress);
       if (progress === 1) {
         this.audioManager.stopMusic();
         this.scene.start(screens.townMap);
