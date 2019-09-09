@@ -1,5 +1,6 @@
 import UserOptionsManager from '../data/UserOptionsManager';
 import { audio } from '../config';
+import { util } from '../util';
 
 const INTRO_PLAYING = 'intro-playing';
 const INTRO_PAUSED = 'intro-paused';
@@ -18,20 +19,20 @@ export default class {
     this.musicState = STOPPED;
   }
 
-  setMusicIntro(key) {
+  setMusicIntro(key, config) {
     if (key === audio.none) {
       return;
     }
 
-    this.musicIntro = this.scene.sound.add(key);
+    this.musicIntro = this.scene.sound.add(key, config);
   }
 
-  setMusic(key) {
+  setMusic(key, config) {
     if (key === audio.none) {
       return;
     }
 
-    this.music = this.scene.sound.add(key);
+    this.music = this.scene.sound.add(key, config);
   }
 
   addSound(key, config) {
@@ -40,6 +41,15 @@ export default class {
     }
 
     this.sounds[key] = this.scene.sound.add(key, config);
+  }
+
+  addAllSounds(keys, configs) {
+    const uniqueKeys = util.unique(Object.values(keys));
+    uniqueKeys.forEach((key) => {
+      const configEntry = configs != null ? configs.find(c => c.key === key) : null;
+      const config = configEntry != null ? configEntry.value : null;
+      this.addSound(key, config);
+    });
   }
 
   playMusic(override = false) {

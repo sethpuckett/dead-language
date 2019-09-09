@@ -44,6 +44,9 @@ export default {
     zombieAssaultLoop: 'zombie-assault-loop',
     zombieAssaultReviewIntro: 'zombie-assault-review-intro',
     zombieAssaultReviewLoop: 'zombie-assault-review-loop',
+    cheerfulPiano: 'cheerful-piano',
+    outOfMyDreams: 'out-of-my-dreams',
+    theLameDuck: 'the-lame-duck',
     files: {
       carousingEveryNight: 'assets/audio/carousing-every-night.mp3',
       inTheBackPocket: 'assets/audio/in-the-back-pocket.mp3',
@@ -53,6 +56,9 @@ export default {
       zombieAssaultLoop: 'assets/audio/zombie-assault-loop.mp3',
       zombieAssaultReviewIntro: 'assets/audio/zombie-assault-review-intro.mp3',
       zombieAssaultReviewLoop: 'assets/audio/zombie-assault-review-loop.mp3',
+      cheerfulPiano: 'assets/audio/cheerful-piano.mp3',
+      outOfMyDreams: 'assets/audio/out-of-my-dreams.mp3',
+      theLameDuck: 'assets/audio/the-lame-duck.mp3',
     },
   },
 };

@@ -17,7 +17,6 @@ import UnlockableManager from '../../data/UnlockableManager';
 import StageParameterManager from '../../gameContent/StageParameterManager';
 import ReviewVocabManager from '../../languageContent/ReviewVocabManager';
 import AudioManager from '../../audio/AudioManager';
-import { util } from '../../util';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -116,12 +115,7 @@ export default class extends Phaser.Scene {
       this.audioManager.setMusic(minigame.audio.music.zombieAssaultBackgroundMusicLoop);
     }
 
-    const sounds = util.unique(Object.values(minigame.audio.soundEffects));
-    sounds.forEach((key) => {
-      const configEntry = minigame.audio.config.find(c => c.key === key);
-      const config = configEntry != null ? configEntry.value : null;
-      this.audioManager.addSound(key, config);
-    });
+    this.audioManager.addAllSounds(minigame.audio.soundEffects, minigame.audio.config);
   }
 
   createHud() {

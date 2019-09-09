@@ -3,6 +3,7 @@ import { fonts, endgame, screens, images, depth, gameTypes } from '../config';
 import endgameUiHelper from './ui/endgameUiHelper';
 import ModalChecker from './modal/ModalChecker';
 import GameProgressManager from '../data/GameProgressManager';
+import AudioManager from '../audio/AudioManager';
 
 const MAP = 'map';
 const REDO = 'redo';
@@ -28,6 +29,7 @@ export default class extends Phaser.Scene {
     }
 
     this.ModalChecker = new ModalChecker(this, this.stageId, this.won);
+    this.audioManager = new AudioManager(this);
   }
 
   create() {
@@ -35,8 +37,11 @@ export default class extends Phaser.Scene {
     this.showBackground();
     this.showStatus();
     this.createMenu();
+    this.createAudio();
     this.enableInputHandling();
     this.updateMenuSelection();
+
+    this.audioManager.playMusic();
     this.checkStartModal();
   }
 
@@ -64,6 +69,18 @@ export default class extends Phaser.Scene {
     statusLabel.setOrigin(this.ui.statusLabelOrigin);
     statusLabel.setDepth(depth.endgame.text);
     statusLabel.setTintFill(endgame.fonts.statusTint);
+  }
+
+  createAudio() {
+    if (this.won) {
+      this.audioManager.setMusic(endgame.audio.music.winMusic, endgame.audio.musicConfig.winMusic);
+    } else {
+      this.audioManager.setMusic(
+        endgame.audio.music.loseMusic, endgame.audio.musicConfig.loseMusic
+      );
+    }
+
+    this.audioManager.addAllSounds(endgame.audio.soundEffects);
   }
 
   createMenu() {
@@ -134,6 +151,7 @@ export default class extends Phaser.Scene {
     } else if (e.keyCode === this.keys.DOWN.keyCode) {
       this.incrementMenuSelection();
     } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
+      this.audioManager.playSound(endgame.audio.soundEffects.menuSelect);
       this.selectedOption = this.options[this.currentSelection].key;
       this.selector.setFrame(1);
       this.cameras.main.fade(endgame.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
@@ -141,11 +159,13 @@ export default class extends Phaser.Scene {
   }
 
   decrementMenuSelection() {
+    this.audioManager.playSound(endgame.audio.soundEffects.menuMove);
     this.currentSelection = Math.max(this.currentSelection - 1, 0);
     this.updateMenuSelection();
   }
 
   incrementMenuSelection() {
+    this.audioManager.playSound(endgame.audio.soundEffects.menuMove);
     this.currentSelection = Math.min(this.currentSelection + 1, this.options.length - 1);
     this.updateMenuSelection();
   }
@@ -156,6 +176,7 @@ export default class extends Phaser.Scene {
 
   fadeCallback(_camera, progress) {
     if (progress === 1) {
+      this.audioManager.stopMusic();
       if (this.selectedOption === MAP) {
         this.scene.start(screens.townMap);
       } else if (this.selectedOption === PRACTICE) {

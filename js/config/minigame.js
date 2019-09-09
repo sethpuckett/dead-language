@@ -33,8 +33,6 @@ export default {
       outOfAmmo: audio.none,
       normalZombieSpawn: audio.none,
       specialZombieSpawn: audio.none,
-      // zombieOnscreen: audio.thud,
-      // multiZombieOnscreen: audio.thud,
     },
     config: [
       { key: audio.outOfAmmo, value: { detune: -1200, rate: 2 } },
