@@ -40,6 +40,7 @@ export default class extends Phaser.Scene {
     this.createInstructions();
     this.createInput();
     this.createAudio();
+    this.createLoginPrompt();
     this.updateMenuSelection();
   }
 
@@ -50,6 +51,41 @@ export default class extends Phaser.Scene {
     }
     this.zombieManager.moveZombies(delta);
     this.zombieManager.destroyDeadZombies();
+  }
+
+  createLoginPrompt() {
+    if (!this.sys.game.db.isUserLoggedIn()) {
+      this.loginPointer = this.add.sprite(
+        this.ui.loginPointerX,
+        this.ui.loginPointerY,
+        images.pointingHand,
+      );
+      this.loginPointer.setOrigin(this.ui.loginPointerOriginX, this.ui.loginPointerOriginY);
+      this.loginPointer.setDisplaySize(this.ui.loginPointerWidth, this.ui.loginPointerWidth);
+      this.loginPointer.setRotation(titleMenu.loginPointerRotation);
+
+      this.tweens.add({
+        targets: this.loginPointer,
+        yoyo: true,
+        repeat: -1,
+        ease: 'Power1',
+        duration: titleMenu.loginPointerExpansionDuration,
+        displayWidth: this.ui.loginPointerWidth * titleMenu.loginPointerExpansionFactor,
+        displayHeight: this.ui.loginPointerWidth * titleMenu.loginPointerExpansionFactor,
+      });
+
+      this.loginText = this.add.bitmapText(
+        this.ui.loginTextX,
+        this.ui.loginTextY,
+        fonts.blueSkyWhite,
+        titleMenu.loginText,
+        titleMenu.fonts.loginSize
+      );
+      this.loginText.setOrigin(this.ui.loginTextOriginX, this.ui.loginTextOriginY);
+      this.loginText.setDepth(depth.titleMenu.text);
+      this.loginText.setTintFill(titleMenu.fonts.loginTint);
+      this.loginText.setRightAlign();
+    }
   }
 
   createInput() {

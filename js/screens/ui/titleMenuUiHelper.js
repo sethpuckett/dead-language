@@ -1,4 +1,5 @@
 import uiHelper from './uiHelper';
+import { titleMenu } from '../../config';
 
 export default (config) => {
   const u = uiHelper(config);
@@ -37,5 +38,16 @@ export default (config) => {
     zombieFrontWidth: u.w * 0.09,
     zombieBackWidth: u.w * 0.05,
     zombieOrigin: u.center,
+
+    get loginPointerX() { return u.w - u.w * 0.02 - this.loginPointerWidth / 2; },
+    get loginPointerY() { return u.w * 0.02 + this.loginPointerWidth / 2; },
+    loginPointerWidth: u.w * 0.05,
+    loginPointerOriginX: u.center,
+    loginPointerOriginY: u.center,
+
+    get loginTextX() { return this.loginPointerX - (this.loginPointerWidth * titleMenu.loginPointerExpansionFactor) / 2 - (u.w * 0.02); },
+    get loginTextY() { return u.w * 0.03; },
+    loginTextOriginX: u.right,
+    loginTextOriginY: u.top,
   };
 };

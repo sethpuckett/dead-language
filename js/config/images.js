@@ -62,6 +62,7 @@ export default {
   popWhite: 'pop-white',
   foodTier1: 'food-tier-1',
   storyScreenBackground: 'story-screen-background',
+  pointingHand: 'pointing-hand',
   files: {
     zombieNormal1: 'assets/images/zombie-normal-1.png',
     zombieNormal2: 'assets/images/zombie-normal-2.png',
@@ -124,6 +125,7 @@ export default {
     popWhite: 'assets/images/pop-white.png',
     foodTier1: 'assets/images/food-tier-1.png',
     storyScreenBackground: '/assets/images/story-screen-background.png',
+    pointingHand: 'assets/images/pointing-hand.png',
   },
   frames: {
     healthFull: 0,
