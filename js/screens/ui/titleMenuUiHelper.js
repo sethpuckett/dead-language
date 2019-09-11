@@ -41,11 +41,15 @@ export default (config) => {
 
     get loginPointerX() { return u.w - u.w * 0.02 - this.loginPointerWidth / 2; },
     get loginPointerY() { return u.w * 0.02 + this.loginPointerWidth / 2; },
-    loginPointerWidth: u.w * 0.05,
+    loginPointerWidth: u.w * 0.06,
     loginPointerOriginX: u.center,
     loginPointerOriginY: u.center,
 
-    get loginTextX() { return this.loginPointerX - (this.loginPointerWidth * titleMenu.loginPointerExpansionFactor) / 2 - (u.w * 0.02); },
+    get loginTextX() {
+      return this.loginPointerX
+        - (this.loginPointerWidth * titleMenu.loginPointerExpansionFactor) / 2
+        - (u.w * 0.02);
+    },
     get loginTextY() { return u.w * 0.03; },
     loginTextOriginX: u.right,
     loginTextOriginY: u.top,
