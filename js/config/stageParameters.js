@@ -43,6 +43,21 @@ export default [
     },
   },
   {
+    id: 'demo',
+    waveId: 'waves-demo',
+    mercenaryEnabled: false,
+    items: {
+      foodTier1HealAmount: 1,
+      baseSpawnRate: 10000,
+      spawnRange: 2000,
+      lifeTime: 8000,
+      warnTime: 2500,
+      probabilities: [
+        { min: 1, max: 100, itemType: minigameItems.foodTier1 },
+      ],
+    },
+  },
+  {
     id: 'basic-vocab',
     waveId: 'waves-basic-vocab',
     gameTime: 120,

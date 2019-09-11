@@ -1,4 +1,8 @@
 export default {
+  demo: {
+    name: 'lesson-demo',
+    stage1: 'demo-1',
+  },
   basicVocab: {
     name: 'lesson-basic-vocab',
     stage1: 'basic-vocab-1',

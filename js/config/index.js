@@ -30,3 +30,4 @@ export { default as stageParameterMap } from './stageParameterMap';
 export { default as optionsMenu } from './optionsMenu';
 export { default as audio } from './audio';
 export { default as userOptions } from './userOptions';
+export { default as lessons } from './lessons';

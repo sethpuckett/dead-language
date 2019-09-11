@@ -1,6 +1,7 @@
 import lessons from './lessons';
 
 export default [
+  { stage: lessons.demo.stage1, availableParameters: ['demo'] },
   { stage: lessons.basicVocab.stage1, availableParameters: ['basic-vocab'] },
   { stage: lessons.basicVocab.stage2, availableParameters: ['basic-vocab'] },
   { stage: lessons.basicVocab.stage3, availableParameters: ['basic-vocab'] },

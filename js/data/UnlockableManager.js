@@ -1,8 +1,9 @@
 import unlockableItemMap from '../config/unlockableItemMap';
-import { enemyTypes } from '../config';
+import { unlockableItems } from '../config';
 
 // TODO: Move this to db
-const GLOBAL_UNLOCKED_ITEMS = [enemyTypes.normalZombie];
+const GLOBAL_UNLOCKED_ITEMS = [unlockableItems.normalZombie];
+const DEMO_UNLOCKED_ITEMS = [unlockableItems.sprinterZombie, unlockableItems.foodTier1];
 
 export default class {
   constructor(db) {
@@ -11,7 +12,8 @@ export default class {
 
   isUnlocked(itemType) {
     if (!this.db.isUserLoggedIn()) {
-      return false;
+      return GLOBAL_UNLOCKED_ITEMS.includes(itemType)
+        || DEMO_UNLOCKED_ITEMS.includes(itemType);
     }
 
     if (this.db.userProfileLoaded) {
@@ -24,7 +26,7 @@ export default class {
 
   getUnlockedItems() {
     if (!this.db.isUserLoggedIn()) {
-      return [];
+      return GLOBAL_UNLOCKED_ITEMS.concat(DEMO_UNLOCKED_ITEMS);
     }
 
     if (this.db.userProfileLoaded) {

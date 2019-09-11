@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { images, titleMenu, fonts, screens, depth } from '../../config';
+import { images, titleMenu, fonts, screens, depth, lessons } from '../../config';
 import titleMenuUiHelper from '../ui/titleMenuUiHelper';
 import TitleZombieManager from './TitleZombieManager';
 import TitleSpawnManager from './TitleSpawnManager';
@@ -181,7 +181,10 @@ export default class extends Phaser.Scene {
   }
 
   startGame() {
-    if (this.progressManager.isNewGame()) {
+    if (!this.sys.game.db.isUserLoggedIn()) {
+      // demo mode
+      this.scene.start(screens.minigame, lessons.demo.stage1);
+    } else if (this.progressManager.isNewGame()) {
       this.scene.start(screens.story, {
         // TODO: don't hard code the id here
         modalConfig: this.modalHelper.getModalConfig('game-intro'),

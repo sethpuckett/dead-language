@@ -49,6 +49,47 @@ export default [
     ],
   },
   {
+    id: 'waves-demo',
+    waves: [
+      {
+        baseSpawnRate: 3000,
+        spawnRange: 500,
+        start: 0,
+        maxStart: 0,
+        maxEnd: 55,
+        end: 60,
+        probabilities: [
+          { min: 1, max: 85, enemyType: enemyTypes.normalZombie },
+          { min: 86, max: 100, enemyType: enemyTypes.sprinterZombie },
+        ],
+      },
+      {
+        baseSpawnRate: 2400,
+        spawnRange: 500,
+        start: 60,
+        maxStart: 65,
+        maxEnd: 115,
+        end: 120,
+        probabilities: [
+          { min: 1, max: 80, enemyType: enemyTypes.normalZombie },
+          { min: 81, max: 100, enemyType: enemyTypes.sprinterZombie },
+        ],
+      },
+      {
+        baseSpawnRate: 1700,
+        spawnRange: 500,
+        start: 120,
+        maxStart: 125,
+        maxEnd: 175,
+        end: 180,
+        probabilities: [
+          { min: 1, max: 75, enemyType: enemyTypes.normalZombie },
+          { min: 76, max: 100, enemyType: enemyTypes.sprinterZombie },
+        ],
+      },
+    ],
+  },
+  {
     id: 'waves-basic-vocab',
     waves: [
       {

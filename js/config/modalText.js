@@ -140,6 +140,7 @@ export default [
     id: 'minigame-intro',
     screen: screens.minigame,
     checks: [
+      { checkType: modalChecks.loggedIn },
       { checkType: modalChecks.completedStageCount, checkValue: 0 },
     ],
     repeat: true,
@@ -302,6 +303,7 @@ export default [
     id: 'sprinter-unlocked',
     screen: screens.minigame,
     checks: [
+      { checkType: modalChecks.loggedIn },
       { checkType: modalChecks.itemUnlocked, checkValue: unlockableItems.sprinterZombie },
     ],
     repeat: false,
@@ -340,6 +342,7 @@ export default [
     id: 'food-unlocked',
     screen: screens.minigame,
     checks: [
+      { checkType: modalChecks.loggedIn },
       { checkType: modalChecks.itemUnlocked, checkValue: unlockableItems.foodTier1 },
     ],
     repeat: false,
@@ -373,6 +376,7 @@ export default [
     id: 'mercenary-unlocked',
     screen: screens.minigame,
     checks: [
+      { checkType: modalChecks.loggedIn },
       { checkType: modalChecks.itemUnlocked, checkValue: unlockableItems.mercenary },
     ],
     repeat: false,
@@ -509,6 +513,7 @@ export default [
     id: 'review-zombie-unlocked',
     screen: screens.minigame,
     checks: [
+      { checkType: modalChecks.loggedIn },
       { checkType: modalChecks.itemUnlocked, checkValue: unlockableItems.reviewZombie },
     ],
     repeat: false,
@@ -541,6 +546,7 @@ export default [
     id: 'bruiser-unlocked',
     screen: screens.minigame,
     checks: [
+      { checkType: modalChecks.loggedIn },
       { checkType: modalChecks.itemUnlocked, checkValue: unlockableItems.bruiserZombie },
     ],
     repeat: false,
@@ -585,6 +591,7 @@ export default [
     id: 'shotgun-unlocked',
     screen: screens.minigame,
     checks: [
+      { checkType: modalChecks.loggedIn },
       { checkType: modalChecks.itemUnlocked, checkValue: unlockableItems.shotgun },
     ],
     repeat: false,
