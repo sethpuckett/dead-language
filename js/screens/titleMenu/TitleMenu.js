@@ -25,7 +25,9 @@ export default class extends Phaser.Scene {
     this.currentSelection = 0;
     this.selectedOption = '';
 
-    if (this.progressManager.isNewGame()) {
+    if (!this.sys.game.db.isUserLoggedIn()) {
+      this.menuOptions.push({ text: titleMenu.menu.playDemo, key: START });
+    } else if (this.progressManager.isNewGame()) {
       this.menuOptions.push({ text: titleMenu.menu.newGame, key: START });
     } else {
       this.menuOptions.push({ text: titleMenu.menu.continueGame, key: START });

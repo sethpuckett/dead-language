@@ -20,6 +20,7 @@ export default {
   menu: {
     newGame: 'New Game',
     continueGame: 'Continue Game',
+    playDemo: 'Play Demo',
     options: 'Options',
   },
   fonts: {
