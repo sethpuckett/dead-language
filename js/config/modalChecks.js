@@ -7,5 +7,6 @@ export default {
   lessonCompleted: 'lesson-completed',
   gameType: 'game-type',
   itemUnlocked: 'item-unlocked',
+  loggedOut: 'logged-out',
   default: 'default',
 };

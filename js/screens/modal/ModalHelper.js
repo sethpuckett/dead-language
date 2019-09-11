@@ -83,6 +83,10 @@ export default class {
       return this.unlockableManager.isUnlocked(check.checkValue);
     }
 
+    if (check.checkType === modalChecks.loggedOut) {
+      return !this.scene.sys.game.db.isUserLoggedIn();
+    }
+
     if (check.checkType === modalChecks.default) {
       return includeDefault;
     }

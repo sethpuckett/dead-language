@@ -630,4 +630,15 @@ export default [
       ],
     ],
   },
+  {
+    id: 'demo-minigame',
+    screen: screens.minigame,
+    checks: [
+      { checkType: modalChecks.loggedOut },
+    ],
+    repeat: false,
+    text: [
+      'Test',
+    ],
+  },
 ];
