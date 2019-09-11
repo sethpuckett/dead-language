@@ -11,7 +11,7 @@ const STOPPED = 'stopped';
 export default class {
   constructor(scene) {
     this.scene = scene;
-    this.optionsManager = new UserOptionsManager(this.scene.sys.game.db);
+    this.optionsManager = new UserOptionsManager(this.scene.sys.game);
 
     this.musicIntro = null;
     this.music = null;

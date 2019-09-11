@@ -16,7 +16,7 @@ export default class extends Phaser.Scene {
   }
 
   init() {
-    this.userOptionsManager = new UserOptionsManager(this.sys.game.db);
+    this.userOptionsManager = new UserOptionsManager(this.sys.game);
     this.audioManager = new AudioManager(this);
 
     this.selectedOption = 0;

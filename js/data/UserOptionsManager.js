@@ -6,8 +6,9 @@ const VALID_KEYS = [
 ];
 
 export default class {
-  constructor(db) {
-    this.db = db;
+  constructor(game) {
+    this.game = game;
+    this.db = game.db;
   }
 
   musicEnabled() {
@@ -24,12 +25,16 @@ export default class {
     }
 
     let value = userOptions.defaults[key];
+    let options = null;
 
     if (this.db.isUserLoggedIn() && this.db.userProfileLoaded) {
-      const options = this.db.userProfile.options;
-      if (options != null) {
-        value = options[key];
-      }
+      options = this.db.userProfile.options;
+    } else {
+      options = this.getLocalUserOptions();
+    }
+
+    if (options != null) {
+      value = options[key];
     }
 
     return value;
@@ -48,6 +53,44 @@ export default class {
       }
     });
 
+    if (this.db.isUserLoggedIn() && this.db.userProfileLoaded) {
+      this.savePersistedUserOptions(options, callback);
+    } else {
+      this.saveLocalUserOptions(options, callback);
+    }
+  }
+
+  // Private
+
+  getLocalUserOptions() {
+    if (this.game.localUserOptions == null) {
+      this.createLocalUserOptions();
+    }
+
+    return this.game.localUserOptions;
+  }
+
+  createLocalUserOptions() {
+    this.game.localUserOptions = {
+      music: userOptions.defaults[userOptions.music],
+      soundEffects: userOptions.defaults[userOptions.soundEffects],
+      textSize: userOptions.defaults[userOptions.textSize],
+      blood: userOptions.defaults[userOptions.blood],
+    };
+  }
+
+  saveLocalUserOptions(options, callback) {
+    this.game.localUserOptions = {
+      music: options.find(o => o.key === userOptions.music).value,
+      soundEffects: options.find(o => o.key === userOptions.soundEffects).value,
+      textSize: options.find(o => o.key === userOptions.textSize).value,
+      blood: options.find(o => o.key === userOptions.blood).value,
+    };
+
+    callback();
+  }
+
+  savePersistedUserOptions(options, callback) {
     const updateObject = {
       options: {
         music: options.find(o => o.key === userOptions.music).value,
@@ -58,8 +101,6 @@ export default class {
     };
     this.updateUserProfile(updateObject, callback);
   }
-
-  // Private
 
   // callback will be passed true if data saves, false otherwise
   updateUserProfile(updateObject, callback) {
