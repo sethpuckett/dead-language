@@ -2,6 +2,7 @@ import screens from './screens';
 import modalChecks from './modalChecks';
 import unlockableItems from './unlockableItems';
 import lessons from './lessons';
+import { game } from '../config';
 
 export default [
   {
@@ -645,7 +646,44 @@ export default [
     ],
     repeat: false,
     text: [
-      'Test',
+      [
+        'Dead Language is a fast-paced zombie',
+        'shoot-em-up and language study game. The',
+        'undead hordes are on the march and it\'s up to',
+        'you to keep them at bay.',
+      ],
+      [
+        'In this game you don\'t aim and shoot',
+        'directly. Instead, you blast the zombies by',
+        `translating ${game.language2} vocabulary.`,
+        'Under each zombie is a word written out in',
+        `${game.language1}. Type out the ${game.language2}`,
+        'translation and hit \'Enter\' to take \'em out.',
+      ],
+      [
+        'This demo contains 20 basic vocabulary words',
+        'for you to practice. The full game contains',
+        'thousands of words for you to learn, stage',
+        'by stage.',
+      ],
+      [
+        'The full game also includes a helpful study',
+        'mode so you can learn and practice the vocab',
+        'before taking on the zombies. There are tons',
+        'of items and weapons to collect throughout',
+        'the game, as well as different types of',
+        'enemies to discover.',
+      ],
+      [
+        'If you like the demo you can unlock the full',
+        'game by creating an account. It\'s completely',
+        'free! Just click the Sign In button to get',
+        'started.',
+      ],
+      [
+        'Okay, that\'s enough gabbing.',
+        'Here come the zombies!',
+      ],
     ],
   },
 ];
