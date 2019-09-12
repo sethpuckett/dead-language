@@ -644,7 +644,7 @@ export default [
     checks: [
       { checkType: modalChecks.loggedOut },
     ],
-    repeat: false,
+    repeat: true,
     text: [
       [
         'Dead Language is a fast-paced zombie',
@@ -683,6 +683,58 @@ export default [
       [
         'Okay, that\'s enough gabbing.',
         'Bring on the zombies!',
+      ],
+    ],
+  },
+  {
+    id: 'demo-win',
+    screen: screens.endgame,
+    checks: [
+      { checkType: modalChecks.loggedOut },
+      { checkType: modalChecks.stageWon },
+    ],
+    repeat: true,
+    text: [
+      [
+        'Congratulations! You did it! you stopped',
+        'the zombie horde... for now!',
+      ],
+      [
+        'But this is just the beginning. There\'s a',
+        'whole town of zombies waiting just ahead.',
+        'And more zombies means more vocab to master.',
+        'Not to mention additional items, weapons, and',
+        'enemies to discover.',
+      ],
+      [
+        'So what are you waiting for? Log in and let\'s',
+        'get started!',
+      ],
+    ],
+  },
+  {
+    id: 'demo-loss',
+    screen: screens.endgame,
+    checks: [
+      { checkType: modalChecks.loggedOut },
+      { checkType: modalChecks.stageLost },
+    ],
+    repeat: true,
+    text: [
+      [
+        'Oh no! There\'s too many of them! We\'ll have',
+        'to retreat... for now!',
+      ],
+      [
+        'But this is just the beginning. There\'s a',
+        'whole town of zombies waiting just ahead.',
+        'And more zombies means more vocab to master.',
+        'Not to mention additional items, weapons, and',
+        'enemies to discover.',
+      ],
+      [
+        'So what are you waiting for? Log in and let\'s',
+        'get started!',
       ],
     ],
   },

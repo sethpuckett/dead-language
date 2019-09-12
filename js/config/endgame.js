@@ -3,8 +3,8 @@ import audio from './audio';
 export default {
   win: 'win',
   lose: 'lose',
-  winText: 'You Win!',
-  loseText: 'You Lose!',
+  winText: 'You did it!',
+  loseText: 'Let\'s get out of here!',
   screenFadeTime: 750,
   audio: {
     music: {
@@ -25,5 +25,11 @@ export default {
     statusTint: 0xffff22,
     menuSize: 22,
     menuTint: 0xffffff,
+  },
+  menu: {
+    returnToMap: 'Return to Map',
+    tryAgain: 'Try Again',
+    targetPractice: 'Target Practice',
+    returnToTitle: 'Return to Title',
   },
 };

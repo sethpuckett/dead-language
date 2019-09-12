@@ -8,6 +8,7 @@ import AudioManager from '../audio/AudioManager';
 const MAP = 'map';
 const REDO = 'redo';
 const PRACTICE = 'practice';
+const TITLE = 'title';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -22,10 +23,17 @@ export default class extends Phaser.Scene {
     this.won = this.params.status === endgame.win;
     this.stageId = this.params.stageId;
 
-    this.winOptions = [{ text: 'Return to Map', key: MAP }];
-    this.loseOptions = [{ text: 'Try Again', key: REDO }, { text: 'Return to Map', key: MAP }];
-    if (this.allowTargetPractice()) {
-      this.loseOptions.push({ text: 'Target Practice', key: PRACTICE });
+    if (this.sys.game.db.isUserLoggedIn()) {
+      this.winOptions = [{ text: endgame.menu.returnToMap, key: MAP }];
+      this.loseOptions = [
+        { text: endgame.menu.tryAgain, key: REDO }, { text: endgame.menu.returnToMap, key: MAP }
+      ];
+      if (this.allowTargetPractice()) {
+        this.loseOptions.push({ text: endgame.menu.targetPractice, key: PRACTICE });
+      }
+    } else {
+      this.winOptions = [{ text: endgame.menu.returnToTitle, key: TITLE }];
+      this.loseOptions = [{ text: endgame.menu.returnToTitle, key: TITLE }];
     }
 
     this.ModalChecker = new ModalChecker(this, this.stageId, this.won);
@@ -184,6 +192,8 @@ export default class extends Phaser.Scene {
         this.scene.start(screens.vocabStudy, this.params.stageId);
       } else if (this.selectedOption === REDO) {
         this.scene.start(screens.minigame, this.params.stageId);
+      } else if (this.selectedOption === TITLE) {
+        this.scene.start(screens.titleMenu);
       }
     }
   }
