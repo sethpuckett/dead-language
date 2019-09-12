@@ -663,15 +663,15 @@ export default [
       [
         'This demo contains 20 basic vocabulary words',
         'for you to practice. The full game contains',
-        'thousands of words for you to learn, stage',
-        'by stage.',
+        'thousands more for you to learn and master,',
+        'stage by stage.',
       ],
       [
         'The full game also includes a helpful study',
-        'mode so you can learn and practice the vocab',
-        'before taking on the zombies. There are tons',
+        'mode so you can learn and practice before',
+        'taking on the zombies. There are tons',
         'of items and weapons to collect throughout',
-        'the game, as well as different types of',
+        'the game as well as different types of',
         'enemies to discover.',
       ],
       [
@@ -682,7 +682,7 @@ export default [
       ],
       [
         'Okay, that\'s enough gabbing.',
-        'Here come the zombies!',
+        'Bring on the zombies!',
       ],
     ],
   },
