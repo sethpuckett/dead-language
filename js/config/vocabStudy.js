@@ -1,5 +1,4 @@
 import audio from './audio';
-import { join } from 'path';
 
 export default {
   screenFadeTime: 750,
@@ -12,6 +11,7 @@ export default {
     menuOptionSize: 11,
     menuOptionTint: 0xffffff,
     practiceWordSize: 10,
+    practiceWordSizeLarge: 14,
     practiceWordTint: 0xffffff,
     practiceWordCorrectTint: 0x22dd22,
     practiceWordWrongTint: 0xdd2222,

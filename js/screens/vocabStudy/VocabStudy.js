@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { images, vocabStudy, screens, fonts, depth, animations } from '../../config';
+import { images, vocabStudy, screens, fonts, depth, animations, userOptions } from '../../config';
 import { textHelper, util } from '../../util';
 import vocabStudyUiHelper from '../ui/vocabStudyUiHelper';
 import HudManager from '../HudManager';
@@ -10,6 +10,7 @@ import VocabWordManager from '../../languageContent/VocabWordManager';
 import Modal from '../modal/Modal';
 import ModalChecker from '../modal/ModalChecker';
 import AudioManager from '../../audio/AudioManager';
+import UserOptionsManager from '../../data/UserOptionsManager';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -26,6 +27,7 @@ export default class extends Phaser.Scene {
     this.vocabWordManager = new VocabWordManager(this.sys.game.db.getStage(stageId).vocab);
     this.ModalChecker = new ModalChecker(this);
     this.audioManager = new AudioManager(this);
+    this.userOptionsManager = new UserOptionsManager(this.sys.game);
     this.menuManager = new VocabStudyMenuManager(this, {
       hideLanguage1() { this.vocabManager.hideLanguage1(); },
       hideLanguage2() { this.vocabManager.hideLanguage2(); },
@@ -172,7 +174,7 @@ export default class extends Phaser.Scene {
       this.ui.practiceVocabY,
       fonts.blueSkyWhite,
       this.practiceWord.language1,
-      vocabStudy.fonts.practiceWordSize
+      this.getFontSize(),
     );
     this.practiceWordText.setOrigin(this.ui.practiceVocabOriginX, this.ui.practiceVocabOriginY);
     this.practiceWordText.setDepth(depth.vocabStudy.word);
@@ -330,5 +332,11 @@ export default class extends Phaser.Scene {
     if (e.keyCode === this.keys.ESC.keyCode && this.inPracticeMode) {
       this.endTargetPractice();
     }
+  }
+
+  getFontSize() {
+    const sizeOption = this.userOptionsManager.getOptionValue(userOptions.textSize);
+    return sizeOption === userOptions.values.normal
+      ? vocabStudy.fonts.practiceWordSize : vocabStudy.fonts.practiceWordSizeLarge;
   }
 }

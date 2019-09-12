@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
-import { animations, depth, images, minigame, fonts, hud, weapons } from '../../config';
+import { animations, depth, images, minigame, fonts, hud, weapons, userOptions } from '../../config';
 import { animationHelper, textHelper } from '../../util';
 import enemyTypes from '../../config/enemyTypes';
+import UserOptionsManager from '../../data/UserOptionsManager';
 
 const SPAWN_Y = -35;
 const SPLATTER_OFFSET = -5;
@@ -27,6 +28,8 @@ export default class {
   constructor(scene, stageParameters) {
     this.scene = scene;
     this.stageParameters = stageParameters;
+
+    this.userOptionsManager = new UserOptionsManager(this.scene.sys.game);
 
     this.totalDistance = scene.sys.game.config.height - hud.height;
     this.zombies = [];
@@ -335,7 +338,7 @@ export default class {
     zombie.text = this.scene.add.bitmapText(
       0, zombie.y + this.scene.ui.zombieWordMargin,
       fonts.blueSkyWhite, zombie.answer,
-      minigame.fonts.zombieSize
+      this.getFontSize()
     );
     zombie.text.x = zombie.x - zombie.text.width / 2;
     zombie.text.setDepth(depth.minigame.zombieText + zombie.text.y - this.scene.ui.padding);
@@ -383,7 +386,7 @@ export default class {
     zombie.text = this.scene.add.bitmapText(
       0, zombie.y + this.scene.ui.zombieWordMargin,
       fonts.blueSkyWhite, zombie.words[zombie.hits].language1,
-      minigame.fonts.zombieSize
+      this.getFontSize()
     );
     zombie.text.x = zombie.x - zombie.text.width / 2;
     zombie.text.setDepth(depth.minigame.zombieText + zombie.text.y - this.scene.ui.padding);
@@ -407,5 +410,11 @@ export default class {
 
   getCurrentZombieWord(zombie) {
     return zombie.words[zombie.hits];
+  }
+
+  getFontSize() {
+    const sizeOption = this.userOptionsManager.getOptionValue(userOptions.textSize);
+    return sizeOption === userOptions.values.normal
+      ? minigame.fonts.zombieSize : minigame.fonts.zombieSizeLarge;
   }
 }

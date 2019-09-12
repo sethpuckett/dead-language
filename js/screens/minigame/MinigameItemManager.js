@@ -1,12 +1,15 @@
 import Phaser from 'phaser';
-import { fonts, minigame, minigameItems, images, depth, animations } from '../../config';
+import { fonts, minigame, minigameItems, images, depth, animations, userOptions } from '../../config';
 import { textHelper } from '../../util';
+import UserOptionsManager from '../../data/UserOptionsManager';
 
 const FOOD_TIER_1_TYPE_COUNT = 12;
 
 export default class {
   constructor(scene) {
     this.scene = scene;
+
+    this.userOptionsManager = new UserOptionsManager(this.scene.sys.game);
 
     this.items = [];
     this.destroyedItems = [];
@@ -32,7 +35,7 @@ export default class {
     item.text = this.scene.add.bitmapText(
       item.x, item.y + item.height / 2 + this.scene.ui.itemWordBuffer,
       fonts.blueSkyWhite, item.word.language1,
-      minigame.fonts.itemSize
+      this.getFontSize()
     );
     item.text.setOrigin(this.scene.ui.itemWordOriginX, this.scene.ui.itemWordOriginY);
     item.text.setTintFill(minigame.fonts.itemTint);
@@ -183,5 +186,11 @@ export default class {
       item.flashTimer.destroy();
     }
     item.destroy();
+  }
+
+  getFontSize() {
+    const sizeOption = this.userOptionsManager.getOptionValue(userOptions.textSize);
+    return sizeOption === userOptions.values.normal
+      ? minigame.fonts.itemSize : minigame.fonts.itemSizeLarge;
   }
 }
