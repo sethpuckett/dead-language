@@ -247,11 +247,14 @@ export default class {
     zombie.play(animationHelper.zombieAnimation(zombie.image, animations.zombieDie));
 
     // TODO: don't hard code scale here
-    this.scene.add.sprite(
-      this.getSplatterLocation(zombie.x),
-      zombie.y,
-      this.getSplatterImage()
-    ).setDepth(depth.minigame.splatter).setScale(2);
+    const splatterImage = this.getSplatterImage();
+    if (splatterImage != null) {
+      this.scene.add.sprite(
+        this.getSplatterLocation(zombie.x),
+        zombie.y,
+        splatterImage
+      ).setDepth(depth.minigame.splatter).setScale(2);
+    }
   }
 
   getMovement(speed, delta) {
@@ -260,7 +263,15 @@ export default class {
 
   getSplatterImage() {
     const index = Phaser.Math.RND.between(1, minigame.splatterVarieties);
-    return `${images.bloodSplatter}-${index}`;
+    const colorOption = this.userOptionsManager.getOptionValue(userOptions.blood);
+    let baseImage = null;
+    if (colorOption === userOptions.values.red) {
+      baseImage = images.bloodSplatter;
+    } else if (colorOption === userOptions.values.green) {
+      baseImage = images.bloodSplatterGreen;
+    }
+
+    return baseImage != null ? `${baseImage}-${index}` : null;
   }
 
   getSplatterLocation(x) {
@@ -302,11 +313,23 @@ export default class {
 
   // returns { image: image, animation: animation }
   getShotImageConfig(weaponType) {
+    let config = null;
+    const colorOption = this.userOptionsManager.getOptionValue(userOptions.blood);
     if (weaponType === weapons.shotgun) {
-      return { image: images.shotgunBlast, animation: animations.shotgunBlastExplode };
+      if (colorOption === userOptions.values.green) {
+        config = {
+          image: images.shotgunBlastGreen, animation: animations.shotgunBlastGreenExplode,
+        };
+      } else {
+        config = { image: images.shotgunBlast, animation: animations.shotgunBlastExplode };
+      }
+    } else if (colorOption === userOptions.values.green) {
+      config = { image: images.shotBlastGreen, animation: animations.shotBlastGreenExplode };
+    } else {
+      config = { image: images.shotBlast, animation: animations.shotBlastExplode };
     }
 
-    return { image: images.shotBlast, animation: animations.shotBlastExplode };
+    return config;
   }
 
   getZombieMoveAnimation(enemyType) {

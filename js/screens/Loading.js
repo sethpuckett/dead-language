@@ -358,7 +358,7 @@ export default class extends Phaser.Scene {
       frames: this.anims.generateFrameNames(
         images.shotgunBlastGreen, { frames: animations.frames.shotgunBlastGreenExplode }
       ),
-      frameRate: animations.frameRates.shotgunBlastGreenExplode,
+      frameRate: animations.frameRates.shotBlastExplode,
       repeat: 0,
     });
 
