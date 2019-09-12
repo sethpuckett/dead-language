@@ -16,11 +16,11 @@ export default [
     location: 'Administration Building',
     position: { x: 1, y: 1 },
   },
-  // {
-  //   id: lessons.numbers2.name,
-  //   location: 'Accounting Office',
-  //   position: { : 0, y: 1 },
-  // },
+  {
+    id: lessons.ordinalNumbers.name,
+    location: 'Accounting Office',
+    position: { x: 0, y: 1 },
+  },
   {
     id: lessons.adjectives1.name,
     location: 'Econo-lux Apartments',
@@ -80,5 +80,10 @@ export default [
     id: lessons.science.name,
     location: 'Hillside Lab',
     position: { x: 2, y: 4 },
+  },
+  {
+    id: lessons.fashion.name,
+    location: 'Hillside Outlet Mall',
+    position: { x: 4, y: 1 },
   },
 ];
