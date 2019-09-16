@@ -10,72 +10,134 @@
   <link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
 </head>
 <body>
-  <header>
-    <div id="header-left"></div>
-    <div id="header-title"></div>
-    <div id="header-right">
-      <div id="sign-in-modal" class="modal-container">
-        <input id="modal-toggle" type="checkbox">
-        <button id="sign-in-button">Sign in or register</button>
-        <div class="modal-backdrop">
-          <div class="modal-content">
-              <div id="firebaseui-auth-container"></div>
-              <div id="auth-loader">Loading...</div>
+  <div id="main-content">
+    <header>
+      <div id="header-left"></div>
+      <div id="header-title"></div>
+      <div id="header-right">
+        <div id="sign-in-modal" class="modal-container">
+          <input id="modal-toggle" type="checkbox">
+          <button id="sign-in-button">Sign in or register</button>
+          <div class="modal-backdrop">
+            <div class="modal-content">
+                <div id="firebaseui-auth-container"></div>
+                <div id="auth-loader">Loading...</div>
+            </div>
+          </div>
+        </div>
+        <div id="user-info">
+          <div class="user-info-username">
+            Logged in as: <span id="username"></span>
+          </div>
+          <button id="sign-out-button">Sign out</button>
+        </div>
+      </div>
+    </header>
+    <div id="game-row">
+      <div id="game-left-buffer" class="game-buffer"></div>
+      <div id="game-container"></div>
+      <div id="game-right-buffer" class="game-buffer"></div>
+    </div>
+  </div>
+  <div id="web">
+    <div class="web-row web-row-light">
+      <div class="web-content-container-wide">
+          <div class="web-content">
+            <div class="quote">
+              <div class="quote-text">
+                Knowledge of languages is the doorway to wisdom.
+              </div>
+              <div class="quote-author">
+                - Roger Bacon
+              </div>
+            </div>
+            <div class="quote">
+              <div class="quote-text">
+                They're coming to get you, Barbara.
+              </div>
+              <div class="quote-author">
+                - Johnny, <span class="italic">Night of the Living Dead</span>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="web-row web-row-dark">
+      <div class="web-content-container">
+        <div class="web-content">
+          <div class="sprite-box">
+            <img src="assets/images/web/zombie-green-stand.png" />
+          </div>
+          <div class="web-text">
+            <p>
+              Sick of flashcards? Can't stay awake for your Spanish 101 podcast? Then Dead Language is just what you need! Who says learning a new language needs to be a chore? Dead Language combines fast-paced, zombie blasting mayhem and Spanish language review in one mind-melting edu-tainment package! It's loaded with thousands of vocab words across dozens of stages to help you build your vocabulary without falling asleep at the keyboard.
+            </p>
           </div>
         </div>
       </div>
-      <div id="user-info">
-        <div class="user-info-username">
-          Logged in as: <span id="username"></span>
+    </div>
+    <div class="web-row web-row-light">
+      <div class="web-content-container">
+        <div class="web-content">
+          <div class="web-text">
+            <p>
+                Dead Language is in the early stages of development. I'm still working out bugs and balance issues. More features and content are coming every day. Check back for updates.
+            </p>
+            <p>
+              <strong>I would love to get your feedback.</strong> What do you like? What don't you like? Is something confusing? Did you find a bug? Does the game crash on your system? I want to make this a fun study tool and I can't do that without your help. So please shoot me an email at <a href="mailto:seth@deadlanguage.io">seth@deadlanguage.io</a> or reach out on Twitter with any comments you have.
+            </p>
+          </div>
+          <div class="sprite-box">
+            <img src="assets/images/web/shotgun.png" />
+          </div>
         </div>
-        <button id="sign-out-button">Sign out</button>
       </div>
     </div>
-  </header>
-  <div id="game-row">
-    <div id="game-left-buffer" class="game-buffer"></div>
-    <div id="game-container"></div>
-    <div id="game-right-buffer" class="game-buffer"></div>
-  </div>
-    <div id="web-content">
-      <h1>About</h1>
-      <p>
-        Sick of flashcards? Can't stay awake for your Spanish 101 podcast? Then Dead Language is just what you need! Who says learning a new language needs to be a chore? Dead Language combines fast-paced, zombie blasting mayhem and Spanish language review in one mind-melting edu-tainment package! It's loaded with games to help you practice vocab, spelling, conjugation, grammar, reading comprehension, and more! And all while dispensing righteous, gory justice to legions of undead abominations.
-      </p>
-      <p>
-        ...That's the plan anyway. Dead Language is still in the early stages of development, but I'm adding new things every day. Check back for more updates!
-      </p>
-      <p>
-        <strong>I would love to get your feedback.</strong> What do you like? What don't you like? Is something confusing? Did you find a bug? Does the game crash on your system? I want to make this a fun study tool and I can't do that without your help. So please shoot me an email at <a href="mailto:seth@deadlanguage.io">seth@deadlanguage.io</a> or reach out on Twitter with any comments you have.
-      </p>
-      <p>
-        Here are a few of the features I've got in the pipeline:
-        <ul>
-          <li>Additional levels with additional vocab</li>
-          <li>Power-ups and additional weapons</li>
-          <li>More types of zombies with different abilities</li>
-          <li>Music and sound effects</li>
-          <li>Additional minigames to practice grammar, reading comprehension, accent placement, etc.</li>
-          <li>User accounts to save progress & statistics</li>
-          <li>A 'smart' study system that will remember the vocab that gives you trouble</li>
-          <li>Options (font size, volume, enable/disable blood, etc.)</li>
-        </ul>
-      </p>
-      <p>
-        You can track my progress and see all the latest updates on the development log at <a href="https://www.log.deadlanguage.io">log.deadlanguage.io</a>.
-      </p>
-      <h1>
-        Links
-      </h1>
-      <ul>
-        <li><a href="https://www.instagram.com/deadlanguagegame/" target="_blank">Instagram</a>: Follow Dead Language on Instagram.</li>
-        <li><a href="https://twitter.com/deadlanguageio" target="_blank">Twitter</a>: Follow Dead Language on Twitter.</li>
-        <li><a href="https://www.log.deadlanguage.io" target="_blank">Dev Log</a>: Follow the development progress on the Dead Language development log.</li>
-        <li><a href="https://www.sethpuckett.com/" target="_blank">Seth's Site</a>: Find out more about me and what I'm up to.</li>
-        <li><a href="https://twitter.com/sethpuckett" target="_blank">Seth's Twitter</a>: Follow me for updates about this and other projects.</li>
-        <li><a href="https://github.com/sethpuckett/dead-language" target="_blank">Github Repo</a>: The source code for Dead Language.</li>
-      </ul>
+    <div class="web-row web-row-dark">
+      <div class="web-content-container">
+        <div class="web-content">
+          <div class="sprite-box">
+            <img src="assets/images/web/meat.png" />
+          </div>
+          <div class="web-text">
+            <p>
+              Here are a few features still in the pipeline:
+              <ul>
+                <li>Additional game modes to practice accent placement, gendered nouns, verb conjugation, and Spanish to English translation</li>
+                <li>Challenge stages and never-ending mode for players looking to turn up the difficulty</li>
+                <li>Additional power-ups, weapons, and enemy types</li>
+                <li>Statistics to help players focus on the vocab that gives them trouble</li>
+                <li>Downloadable/offline mode</li>
+                <li>Achievements</li>
+              </ul>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="web-row web-row-light">
+      <div class="web-content-container">
+        <div class="web-content">
+          <div class="web-text">
+            <p>
+              Follow along or reach out on social media and the blog!
+            </p>
+            <ul>
+              <li><a href="https://www.instagram.com/deadlanguagegame/" target="_blank">Instagram</a>: Follow Dead Language on Instagram.</li>
+              <li><a href="https://twitter.com/deadlanguageio" target="_blank">Twitter</a>: Follow Dead Language on Twitter.</li>
+              <li><a href="https://www.log.deadlanguage.io" target="_blank">Dev Log</a>: Follow the development progress on the Dead Language development log.</li>
+              <li><a href="https://www.sethpuckett.com/" target="_blank">Seth's Site</a>: Find out more about me and what I'm up to.</li>
+              <li><a href="https://twitter.com/sethpuckett" target="_blank">Seth's Twitter</a>: Follow me for updates about this and other projects.</li>
+              <li><a href="https://github.com/sethpuckett/dead-language" target="_blank">Github Repo</a>: The source code for Dead Language.</li>
+            </ul>
+          </div>
+          <div class="sprite-box">
+            <img src="assets/images/web/zombie-red-stand.png" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <footer>
     <div id="copyright">© 2019 Seth Puckett</div>
   </footer>
