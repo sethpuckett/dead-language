@@ -7,7 +7,7 @@
 }
 
 body {
-
+  font-family: 'Playfair Display', serif;
 }
 
 /******************************************
@@ -228,19 +228,19 @@ canvas {
 }
 
 .quote {
-  flex: 1 1 0px
+  flex: 1 1 0px;
 }
 
 .quote .quote-text {
   text-align: right;
-  font-size: 30px;
+  font-size: 28px;
   padding-bottom: 10px;
   font-style: italic;
 }
 
 .quote .quote-author {
   text-align: right;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .italic {
