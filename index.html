@@ -13,9 +13,7 @@
 <body>
   <div id="main-content">
     <header>
-      <div id="header-left"></div>
-      <div id="header-title"></div>
-      <div id="header-right">
+      <div id="header-sign-in">
         <div id="sign-in-modal" class="modal-container">
           <input id="modal-toggle" type="checkbox">
           <button id="sign-in-button">Sign in or register</button>
@@ -27,8 +25,8 @@
           </div>
         </div>
         <div id="user-info">
-          <div class="user-info-username">
-            Logged in as: <span id="username"></span>
+          <div id="user-info-username">
+            <span id="username-label">Logged in as: </span><span id="username"></span>
           </div>
           <button id="sign-out-button">Sign out</button>
         </div>
@@ -39,11 +37,21 @@
       <div id="game-container"></div>
       <div id="game-right-buffer" class="game-buffer"></div>
     </div>
+    <div id="mobile-warning">
+      <p>
+        Dead Language is meant to be played on a full size screen and requires a keyboard. Sorry mobile users!
+      </p>
+    </div>
+    <div id="more-info">
+      <p>
+        Scroll down for more info
+      </p>
+    </div>
   </div>
   <div id="web">
     <div class="web-row web-row-light">
       <div class="web-content-container-wide">
-          <div class="web-content">
+          <div class="web-content-no-reverse">
             <div class="quote">
               <div class="quote-text">
                 Knowledge of languages is the doorway to wisdom.
