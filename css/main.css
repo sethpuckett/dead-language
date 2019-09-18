@@ -11,11 +11,27 @@ body {
 }
 
 /******************************************
+* Header
+******************************************/
+
+header {
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#header-sign-in {
+  width: 100%;
+  text-align: right;
+  padding-top: 10px;
+  padding-right: 10px;
+}
+
+/******************************************
 * Auth
 ******************************************/
 
 .modal-container {
-  padding-top: 10px;
   position: relative;
   width: 250px;
 }
@@ -98,7 +114,7 @@ body {
   display: none;
 }
 
-.user-info-username {
+#user-info-username {
   display: inline-block;
   padding-right: 5px;
 }
@@ -147,23 +163,12 @@ body {
   display: block;
 }
 
-/******************************************
-* Header
-******************************************/
-
-header {
-  height: 60px;
-  display: flex;
-  justify-content: space-between;
+#more-info {
+  display: none;
 }
 
-#header-title {
-  padding: 1em;
-  flex-shrink: 0;
-}
-
-header h1 {
-  margin: 0;
+#mobile-warning {
+  display: none;
 }
 
 /******************************************
@@ -227,6 +232,11 @@ canvas {
   justify-content: center;
 }
 
+.web-content-no-reverse {
+  display: flex;
+  justify-content: center;
+}
+
 .quote {
   flex: 1 1 0px;
 }
@@ -278,4 +288,115 @@ footer {
 
 #copyright {
   margin: auto;
+}
+
+/************************
+* Media Queries
+************************/
+
+@media screen and (max-width: 767px) {
+
+  header {
+    height: 100px;
+  }
+
+  #sign-in-modal {
+    width: 100%;
+  }
+
+  #sign-in-button {
+    width: 100%;
+  }
+
+  #username-label {
+    display: none;
+  }
+
+  #user-info {
+    width: 100%;
+    text-align: center;
+  }
+
+  #user-info-username {
+    width: 100%;
+    display: block;
+    padding-bottom: 5px;
+  }
+
+  #sign-out-button {
+    width: 100%;
+    display: block;
+  }
+
+  #game-left-buffer {
+    display: none;
+  }
+
+  #game-right-buffer {
+    display: none;
+  }
+
+  #game-container {
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  #mobile-warning {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 25px;
+    display: block;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  #more-info {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 25px;
+    display: block;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .web-content-container {
+    width: 80%;
+  }
+
+  .web-content-container-wide {
+    width: 90%;
+  }
+
+  .web-content {
+    flex-direction: column;
+  }
+
+  .web-content-no-reverse {
+    flex-direction: column;
+  }
+
+  .quote {
+    padding-bottom: 50px;
+  }
+
+  .quote .quote-text {
+    font-size: 20px;
+  }
+
+  .quote .quote-author {
+    font-size: 14px;
+  }
+
+  .web-text {
+    font-size: 16px;
+  }
+
+  .sprite-box img {
+    width: 33%;
+  }
+
+  .web-row-light .web-content {
+    flex-direction: column-reverse;
+  }
 }
