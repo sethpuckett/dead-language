@@ -4,12 +4,7 @@ export default [
   {
     id: lessons.basicVocab.name,
     location: 'The Front Gate',
-    position: { x: 0, y: 0 },
-  },
-  {
-    id: lessons.nouns1.name,
-    location: 'Storage Sheds',
-    position: { x: 1, y: 0 },
+    position: { x: 0, y: 2 },
   },
   {
     id: lessons.numbers1.name,
@@ -19,8 +14,41 @@ export default [
   {
     id: lessons.ordinalNumbers.name,
     location: 'Accounting Office',
-    position: { x: 0, y: 1 },
+    position: { x: 0, y: 0 },
   },
+  {
+    id: lessons.food1.name,
+    location: 'The Rusty Spoon Diner',
+    position: { x: 3, y: 1 },
+  },
+  {
+    id: lessons.food2.name,
+    location: 'Goat and Thistle Pub',
+    position: { x: 4, y: 1 },
+  },
+  {
+    id: lessons.food3.name,
+    location: 'Luca\'s Pizzeria',
+    position: { x: 6, y: 1 },
+  },
+  {
+    id: lessons.food4.name,
+    location: 'Le Gros Cochon Brasserie',
+    position: { x: 6, y: 1 },
+  },
+
+
+
+
+
+
+
+  {
+    id: lessons.nouns1.name,
+    location: 'Storage Sheds',
+    position: { x: 1, y: 0 },
+  },
+
   {
     id: lessons.adjectives1.name,
     location: 'Econo-lux Apartments',
@@ -40,11 +68,6 @@ export default [
     id: lessons.aroundTheHouse.name,
     location: 'Hillside Apartments',
     position: { x: 3, y: 2 },
-  },
-  {
-    id: lessons.food1.name,
-    location: 'Rusty Spoon Restaurant',
-    position: { x: 2, y: 2 },
   },
   {
     id: lessons.school.name,
