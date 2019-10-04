@@ -8,7 +8,7 @@ export default [
     waves: [],
     maxHealth: 20,
     startHealth: 20,
-    startCash: 500,
+    startCash: 200,
     baseFallSpeed: 60,
     fallRange: 8,
     mercenaryEnabled: true,

@@ -33,8 +33,8 @@ export default [
   },
   {
     id: lessons.food4.name,
-    location: 'Le Gros Cochon Brasserie',
-    position: { x: 6, y: 1 },
+    location: 'Le Gros Cochon Cafe',
+    position: { x: 8, y: 1 },
   },
   {
     id: lessons.aroundTheHouse1.name,
@@ -43,7 +43,7 @@ export default [
   },
   {
     id: lessons.aroundTheHouse2.name,
-    location: 'The Lofts at Dictionary Bay',
+    location: 'Dictionary Bay Lofts',
     position: { x: 2, y: 4 },
   },
   {
@@ -53,13 +53,13 @@ export default [
   },
   {
     id: lessons.school2.name,
-    location: 'Dictionary Bay University',
+    location: 'Dictionary Bay College',
     position: { x: 0, y: 3 },
   },
   {
     id: lessons.office.name,
     location: 'Business Center',
-    position: { x: 3, y: 0 },
+    position: { x: 2, y: 0 },
   },
   {
     id: lessons.whenAndWhere.name,
@@ -102,7 +102,7 @@ export default [
     position: { x: 1, y: 4 },
   },
   {
-    id: lessons.science1.name,
+    id: lessons.science2.name,
     location: 'Research Facility',
     position: { x: 0, y: 4 },
   },
@@ -158,7 +158,7 @@ export default [
   },
   {
     id: lessons.nouns7.name,
-    location: 'Assisted Living Complex',
+    location: 'Assisted Living Suites',
     position: { x: 8, y: 4 },
   },
   {
@@ -214,16 +214,16 @@ export default [
   {
     id: lessons.verbs3.name,
     location: 'Swimming Pool',
-    position: { x: 3, y: 0 },
+    position: { x: 5, y: 1 },
   },
   {
     id: lessons.verbs4.name,
     location: 'Flight School',
-    position: { x: 3, y: 0 },
+    position: { x: 7, y: 1 },
   },
   {
     id: lessons.verbs5.name,
     location: 'Boating Club',
-    position: { x: 3, y: 0 },
+    position: { x: 8, y: 0 },
   },
 ];

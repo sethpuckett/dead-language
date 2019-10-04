@@ -3,7 +3,7 @@ import TownMapHelper from './TownMapHelper';
 import GameProgressManager from '../../data/GameProgressManager';
 
 const MAP_X_CELL_COUNT = 9;
-const MAP_Y_CELL_COUNT = 6;
+const MAP_Y_CELL_COUNT = 5;
 
 export default class {
   constructor(scene) {

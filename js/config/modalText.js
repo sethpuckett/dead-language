@@ -12,7 +12,7 @@ export default [
         '¡Hola! ¿Estás despierto?',
       ],
       [
-        'Oops! Sorry! I forgot that your Spanish',
+        'Oh! Sorry! I forgot that your Spanish',
         'still needs some work. No te preocupes.',
         'You\'ll get the hang of it.',
       ],
@@ -22,8 +22,7 @@ export default [
       [
         'Tired? Yo también. Everyone is tired.',
         'Running from the zombies is hard work.',
-        'But I suppose it\'s better than',
-        'the alternative!',
+        'But it\'s better than the alternative!',
       ],
       [
         'I don\'t know how much longer we can',
@@ -32,13 +31,10 @@ export default [
         'there every day.',
       ],
       [
-        'But enough gloom and doom. I came over here',
-        'to tell you that we\'ve got some good news',
-        'for a change.',
-      ],
-      [
-        'The scouts came back and they found something.',
-        'Something big!',
+        'But all that is about to change. I came over to',
+        'tell you that I\'ve got some good news for a',
+        'change. The scouts came back and they found',
+        'something. Something big!',
       ],
       [
         'It\'s a town. Some kind of gated community.',
@@ -49,29 +45,20 @@ export default [
         'thing out.',
       ],
       [
-        'It\'s better than running around out here',
-        'in the open, scavenging for food, and never',
-        'knowing when we\'re going to run into more of',
-        'those creatures.',
-      ],
-      [
         'There\'s just one catch. The whole town is',
         'still crawling with muertos. We\'ll have',
         'to clear them out before we can make much',
         'use of the place.',
       ],
       [
-        'But I think we can do it. We\'ve got the people.',
-        'We\'ve got the guns. And the scouts were able',
-        'to map out the whole town. If we move in',
-        'strategically and clear it out area by area',
-        'we might just have a chance.',
+        'But I think we can do it. We\'ve got the people',
+        'and we\'ve got the firepower.',
       ],
       [
         'Anyway, it\'s the best hope we\'ve got.',
         'So, what do you say? Are you in? The others',
         'are gearing up right now. Grab your pack,',
-        'get your gun, and let\'s go kill some zombies!',
+        'get your gun, and let\'s go blast some muertos!',
         '¡Vamos!',
       ],
     ],
@@ -87,12 +74,12 @@ export default [
       [
         'This is the town map. From here you can see',
         'all the areas we\'ve cleared out along with',
-        'all the areas that are still infested.',
+        'the areas that are still infested.',
       ],
       [
-        'Each area has it\'s own category of vocab',
-        'that you\'ll need to learn if you want to',
-        'stand a chance against those muertos.',
+        'Each area has it\'s own set of vocabulary',
+        'words that you\'ll need to learn in order to',
+        'clear out the muertos.',
       ],
       [
         'As you can see we\'ve got our work cut out',
@@ -105,8 +92,8 @@ export default [
         'Gate". I\'ve marked it in yellow on your map.',
       ],
       [
-        'Try selecting the "Front Gate" on the map and',
-        'I\'ll show you what we need to do.',
+        'Select the "Front Gate" on the map and',
+        'let\'s get started.',
       ],
     ],
   },
@@ -151,8 +138,8 @@ export default [
         'I sure hope you got enough practice.',
       ],
       [
-        'They\'re vile, disgusting creatures, but',
-        'try to stay calm when you see them.',
+        'They\'re vile creatures, but try to stay calm',
+        'when you see them.',
       ],
       [
         'Remember your target practice. Shooting a',
@@ -168,8 +155,8 @@ export default [
       ],
       [
         'And keep an eye on that timer at the bottom',
-        'of the screen. You just need to survive',
-        'until that reaches \'0\'.',
+        'of the screen. You just need to blast muertos',
+        'until that reaches \'0\' to complete the stage.',
       ],
       [
         'Okay! Here they come! ¡Ten cuidado!',
@@ -202,10 +189,9 @@ export default [
         'hide either language if it helps you study.',
       ],
       [
-        'You can also practice if you want to test',
-        'your skills before taking on the zombies.',
-        'Select "Practice" and I\'ll set up some',
-        'bottles for your to shoot at.',
+        'When you think you know the words you can test',
+        'your knowledge by shooting at some bottles.',
+        'Select "Practice" and I\'ll set them up for you.',
       ],
       [
         'Just type the translation for the word under',
@@ -241,9 +227,8 @@ export default [
         'start. I really think we have a chance!',
       ],
       [
-        'On this screen you can check out your stats for',
-        'the last stage. When you\'re ready to move',
-        'on head back to the map and see what\'s next.',
+        'When you\'re ready to move on head back to the',
+        'map and let\'s see what\'s next.',
       ],
       [
         'Oh, and just a heads up... I got some news',
@@ -285,7 +270,7 @@ export default [
         'Whoa, slow down! The enthusiasm is great,',
         'but we should clear these stages out in',
         'order. You\'ve still got some work to',
-        'do before you take this one on.',
+        'do before you head in there.',
       ],
     ],
   },
@@ -294,7 +279,7 @@ export default [
     text: [
       [
         'Ten cuidado! That area\'s still too',
-        'dangerous. You\'ll never make it there alive!',
+        'dangerous. We\'ll never make it there!',
         'I marked the spots we can get to in yellow on',
         'the map. Stick to those!',
       ],
@@ -318,14 +303,14 @@ export default [
         'that they\'re slow, right?',
       ],
       [
-        'Well, not any more. We\'ve gotten reports of',
-        'running zombies! You can\'t miss them. They\'re',
+        'Well, not any more. We\'ve received reports of',
+        'running muertos! You can\'t miss them. They\'re',
         'bright red and they\'re a lot faster than anything',
         'we\'ve seen before.',
       ],
       [
-        'The scouts have been calling them Sprinters.',
-        'If you spot a Sprinter take it out immediately.',
+        'The scouts have been calling them sprinters.',
+        'If you spot a sprinter take it out immediately.',
         'If you hesitate they\'ll be right on top of us.',
       ],
       [
@@ -387,27 +372,24 @@ export default [
         'Is your head spinning yet?',
       ],
       [
-        'I know it can be hard to remember every',
-        'single vocab word all by yourself. And',
-        'there are only going to be more as we',
-        'make our way into town.',
+        'I know it can be hard to remember every single',
+        'vocab word. And there are only going to more as',
+        'we make our way into town.',
       ],
       [
-        'But don\'t give up yet. Some help just',
-        'arrived. It seems a mysterious stranger',
-        'has seen what we\'re up to and has offered',
-        'some assistance... for a price.',
+        'But don\'t give up yet. Some help just arrived.',
+        'It seems a mysterious stranger has seen what',
+        'we\'re up to and has offered some assistance...',
+        'for a price.',
       ],
       [
-        'She\'s what you might call a mercenary.',
-        'She\'s willing to kill any zombies that',
-        'are giving you trouble, as long as you can',
-        'afford her services.',
+        'She\'s what you might call a mercenary. She\'s',
+        'willing to kill any zombies that are giving you',
+        'trouble, as long as you can afford her services.',
       ],
       [
-        'And what does she want? The same thing that',
-        'all mercenaries want... dinero! Cold, hard,',
-        'cash.',
+        'And what does she want? The same thing that all',
+        'mercenaries want... dinero! Cold, hard, cash.',
       ],
       [
         'I don\'t know what she\'s planning to do with',
@@ -416,7 +398,7 @@ export default [
         'business.',
       ],
       [
-        'So here\'s how it works. Before you can take',
+        'Here\'s how it works. Before you can take',
         'advantage of the mercenary\'s services you',
         'need to find some money. It\'s bound to be',
         'lying around out there. Pick it up just like',
@@ -424,17 +406,11 @@ export default [
         'translation and it\'s yours.',
       ],
       [
-        'The mercenary\'s standard rate is $100 per',
-        'zombie. Once you have enough cash you can',
-        'call on her to shoot any zombie that you can',
-        'see. This could be helpful if there\'s some',
-        'vocab that you just can\'t remember.',
-      ],
-      [
-        'Calling her is easy enough. Just type the English',
-        'word under the zombie you want her to take out',
-        'and press \'Enter\'. She\'ll take your cash',
-        'and eliminate the zombie.',
+        'Once you have some cash calling her is easy',
+        'enough. Just type the English word under the',
+        'zombie you want her to take out and press',
+        '\'Enter\'. She\'ll take your cash and eliminate',
+        'the muerto.',
       ],
       [
         'It\'s a good idea to keep some money on hand',
@@ -443,8 +419,8 @@ export default [
         'to keep an eye out for any more lying around.',
       ],
       [
-        'Alright, that\'s enough chit-chat. Get out',
-        'there kill some zombies.',
+        'Alright, that\'s enough chit-chat. Time to get',
+        'back out there.',
       ],
     ],
   },
@@ -490,7 +466,7 @@ export default [
     repeat: false,
     text: [
       [
-        '¡Hurra! You did it! The front gate is clear.',
+        'You did it! The front gate is clear.',
       ],
       [
         'But we can\'t stop now. There\'s still a lot',
@@ -530,16 +506,14 @@ export default [
         'you will see it again.',
       ],
       [
-        'Sometimes zombies from areas you\'ve',
-        'already cleared will make their way to other',
-        'parts of town, and they\'ll bring their',
-        'vocab with them.',
+        'The scouts are reporting that there are pale',
+        'zombies in this area that have review vocab',
+        'from the last area.',
       ],
       [
-        'So if you want to succeed you need to learn',
-        'all the new stuff AND remember all the old',
-        'stuff. It\'s a lot to ask, I know. But we\'re',
-        'counting on you. We know you can do it!',
+        'You will continue to see vocab from all cleared',
+        'areas show up as review vocab later in the game.',
+        'So don\'t forget it!',
       ],
     ],
   },
@@ -557,10 +531,9 @@ export default [
         'scouts and it\'s not good.',
       ],
       [
-        'Those damn zombies throw something new at us',
-        'at every turn. The scouts say there\'s',
-        'something out there now that\'s even worse',
-        'than the Sprinters.',
+        'There\'s a new type of zombie out there that\'s',
+        'even worse than the Sprinters. Those muertos',
+        'throw something new at us at every turn. ',
       ],
       [
         'They say these new zombies are big. Real big.',
@@ -571,20 +544,18 @@ export default [
         'zombies.',
       ],
       [
-        'In fact, they are reporting that it',
-        'takes three shots to kill each one of these',
-        'monsters. And three shots means three vocab',
-        'words. I hope you got enough practice!',
+        'In fact, it takes three shots to kill each one',
+        'of these monsters. And three shots means three',
+        'vocab words. I hope you got enough practice!',
       ],
       [
         'Thankfully there\'s not a lot of them... yet.',
         'But if you see one take it out quickly. It',
         'will take some time to bring down one of',
-        'those suckers, so don\'t wait too long.',
+        'those bestias, so don\'t wait too long.',
       ],
       [
         'Alright, that\'s all the news for now.',
-        '¡Buena suerte!',
       ],
     ],
   },
@@ -606,10 +577,9 @@ export default [
         'this town might have exactly what we need.',
       ],
       [
-        'You see, what we need is more firepower.',
         'That pistol is great for your average muerto,',
         'but when it comes to Bruisers what we really',
-        'need are... Shotguns! And it just so happens',
+        'need are shotguns! And it just so happens',
         'that this town is full of them!',
       ],
       [
@@ -625,12 +595,11 @@ export default [
         'kill Bruisers with a single blast.',
       ],
       [
-        'But be careful, unlike your pistol the',
-        'shotgun has limited ammo. There\'s no sense',
-        'wasting good shotgun ammo on a regular',
-        'zombie when your pistol works just as well.',
-        'If you can try to save the big guns for the',
-        'Bruisers.',
+        'But unlike your pistol the shotgun has limited',
+        'ammo. There\'s no sense wasting good shotgun',
+        'ammo on a regular zombie when your pistol works',
+        'just as well. So try to save the big guns for',
+        'the Bruisers.',
       ],
       [
         'Alright, that\'s enough for now. Happy',
@@ -681,7 +650,7 @@ export default [
         'started.',
       ],
       [
-        'Okay, that\'s enough gabbing.',
+        'Okay, that\'s enough talking.',
         'Bring on the zombies!',
       ],
     ],

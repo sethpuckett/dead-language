@@ -18,7 +18,7 @@ export default (config) => {
     mapX: u.paddingBig,
     mapY: u.paddingBig,
     mapWidth: u.w_60p - u.paddingBig * 2,
-    mapHeight: u.h_66p - u.paddingBig * 2,
+    mapHeight: u.h_60p - u.paddingBig * 2,
     mapOriginX: u.left,
     mapOriginY: u.top,
 
