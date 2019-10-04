@@ -10,6 +10,12 @@ body {
   font-family: 'Playfair Display', serif;
 }
 
+strong {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+
 /******************************************
 * Header
 ******************************************/
@@ -276,6 +282,10 @@ canvas {
   padding-top: 25px;
 }
 
+.web-text .large-text {
+  font-size: 24px;
+}
+
 .web-embed {
   flex: 3 3;
   text-align: center;
@@ -397,6 +407,10 @@ footer {
 
   .web-text {
     font-size: 16px;
+  }
+
+  .web-text .large-text {
+    font-size: 20px;
   }
 
   .sprite-box img {
