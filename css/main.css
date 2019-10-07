@@ -187,7 +187,7 @@ header {
 }
 
 #game-container {
-  width: 60%;
+  flex-basis: 60%;
   border: 20px solid black;
   border-image: url('../assets/images/web/border.png');
   border-image-slice: 30 36 36 30;
@@ -197,6 +197,33 @@ header {
 canvas {
   width: 100%;
   border-radius: 10px;
+}
+
+/******************************************
+* Game Buffers
+******************************************/
+
+#game-left-buffer, #game-right-buffer {
+  flex-basis: 20%;
+}
+
+#game-left-buffer {
+  position: relative;
+}
+
+/******************************************
+* More Info
+******************************************/
+
+#more-info-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+#more-info-text {
+  font-size: 14px;
 }
 
 /******************************************
