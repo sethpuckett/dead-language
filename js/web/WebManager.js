@@ -4,7 +4,7 @@ import * as firebaseui from 'firebaseui';
 import DatabaseManager from '../data/DatabaseManager';
 import firebaseConfig from './firebaseConfig';
 
-const RESTART_DELAY = 4000;
+const RESTART_DELAY = 6000;
 
 export default class WebManager {
   constructor(phaserConfig) {
