@@ -23,6 +23,7 @@ export default class WebManager {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.showUserProfileUi(user);
+        this.hideMoreInfo();
         this.authUi.reset();
         new Promise(res => setTimeout(res, RESTART_DELAY)).then(() => this.restartGame());
       } else {
@@ -75,5 +76,9 @@ export default class WebManager {
     document.getElementById('sign-in-modal').style.display = 'none';
     document.getElementById('user-info').style.display = 'inline-block';
     document.getElementById('username').innerHTML = user.email;
+  }
+
+  hideMoreInfo() {
+    document.getElementById('more-info-container').style.display = 'none';
   }
 }
