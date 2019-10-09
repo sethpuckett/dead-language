@@ -31,9 +31,8 @@ export default [
         'there every day.',
       ],
       [
-        'But all that is about to change. I came over to',
-        'tell you that I\'ve got some good news for a',
-        'change. The scouts came back and they found',
+        'But all that is about to change. I\'ve got some',
+        'good news. The scouts came back and they found',
         'something. Something big!',
       ],
       [
@@ -73,11 +72,11 @@ export default [
     text: [
       [
         'This is the town map. From here you can see',
-        'all the areas we\'ve cleared out along with',
-        'the areas that are still infested.',
+        'all the areas we\'ve cleared out so far along',
+        'with the upcoming areas we\'ve scouted.',
       ],
       [
-        'Each area has it\'s own set of vocabulary',
+        'Each location has it\'s own set of vocabulary',
         'words that you\'ll need to learn in order to',
         'clear out the muertos.',
       ],
