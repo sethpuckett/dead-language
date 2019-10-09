@@ -203,7 +203,7 @@ export default [
   },
   {
     id: lessons.verbs1.name,
-    location: 'Gym',
+    location: 'Neighborhood Gym',
     position: { x: 2, y: 1 },
   },
   {
