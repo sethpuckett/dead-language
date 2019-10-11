@@ -2,6 +2,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import UnlockableManager from './UnlockableManager';
 import { gameTypes } from '../config';
+import { util } from '../util';
 
 export default class {
   constructor(db) {
@@ -191,7 +192,7 @@ export default class {
   saveStageCompleted(stageId, callback) {
     const lesson = this.db.getLessonForStage(stageId);
     const lessonCompleted = lesson.stages.every(s => s === stageId || this.isStageCompleted(s));
-    const unlockedItems = this.unlockableManager.getUnlockedItemsForStage(stageId);
+    const unlockedItems = this.getAllUnlockedItems(stageId);
     const updateObject = { stagesCompleted: firebase.firestore.FieldValue.arrayUnion(stageId) };
     if (lessonCompleted) {
       updateObject.lessonsCompleted = firebase.firestore.FieldValue.arrayUnion(lesson.id);
@@ -240,5 +241,21 @@ export default class {
 
   getProblemEntry(wordEntry) {
     return { stage: wordEntry.stage, id: wordEntry.id };
+  }
+
+  getAllUnlockedItems(currentStageId = null) {
+    const completedStages = this.getCompletedStages();
+    let allUnlockedItems = completedStages.reduce((total, current) => {
+      const combine = total.concat(this.unlockableManager.getUnlockedItemsForStage(current));
+      return util.unique(combine);
+    }, []);
+
+    if (currentStageId != null) {
+      allUnlockedItems = allUnlockedItems.concat(
+        this.unlockableManager.getUnlockedItemsForStage(currentStageId)
+      );
+    }
+
+    return allUnlockedItems;
   }
 }
