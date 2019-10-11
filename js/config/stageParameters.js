@@ -4,7 +4,7 @@ export default [
   {
     id: 'base',
     gameTime: 180,
-    waveId: 'base-180',
+    waveId: 'waves-base-180',
     waves: [],
     maxHealth: 20,
     startHealth: 20,
@@ -41,6 +41,11 @@ export default [
         { min: 67, max: 100, itemType: minigameItems.shotgun },
       ],
     },
+  },
+  {
+    id: 'base-review',
+    waveId: 'waves-base-210-review',
+    gameTime: 210,
   },
   {
     id: 'demo',

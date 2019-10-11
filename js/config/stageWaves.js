@@ -2,7 +2,7 @@ import enemyTypes from './enemyTypes';
 
 export default [
   {
-    id: 'base-180',
+    id: 'waves-base-180',
     waves: [
       {
         baseSpawnRate: 2500,
@@ -44,6 +44,50 @@ export default [
           { min: 46, max: 70, enemyType: enemyTypes.reviewZombie },
           { min: 71, max: 85, enemyType: enemyTypes.sprinterZombie },
           { min: 86, max: 100, enemyType: enemyTypes.bruiserZombie },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'waves-base-210-review',
+    waves: [
+      {
+        baseSpawnRate: 2500,
+        spawnRange: 500,
+        start: 0,
+        maxStart: 10,
+        maxEnd: 50,
+        end: 60,
+        probabilities: [
+          { min: 1, max: 60, enemyType: enemyTypes.normalZombie },
+          { min: 61, max: 80, enemyType: enemyTypes.sprinterZombie },
+          { min: 81, max: 100, enemyType: enemyTypes.bruiserZombie },
+        ],
+      },
+      {
+        baseSpawnRate: 2200,
+        spawnRange: 500,
+        start: 60,
+        maxStart: 70,
+        maxEnd: 110,
+        end: 120,
+        probabilities: [
+          { min: 1, max: 60, enemyType: enemyTypes.normalZombie },
+          { min: 61, max: 80, enemyType: enemyTypes.sprinterZombie },
+          { min: 81, max: 100, enemyType: enemyTypes.bruiserZombie },
+        ],
+      },
+      {
+        baseSpawnRate: 1800,
+        spawnRange: 500,
+        start: 120,
+        maxStart: 130,
+        maxEnd: 190,
+        end: 210,
+        probabilities: [
+          { min: 1, max: 60, enemyType: enemyTypes.normalZombie },
+          { min: 61, max: 80, enemyType: enemyTypes.sprinterZombie },
+          { min: 81, max: 100, enemyType: enemyTypes.bruiserZombie },
         ],
       },
     ],
