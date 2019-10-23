@@ -10,5 +10,10 @@ export default (config) => {
     backgroundImageHeight: u.h,
     backgroundImageOriginX: u.left,
     backgroundImageOriginY: u.top,
+
+    loadingLabelX: u.w_2,
+    loadingLabelY: u.h_2,
+    loadingLabelOriginX: u.left,
+    loadingLabelOriginY: u.center,
   };
 };
