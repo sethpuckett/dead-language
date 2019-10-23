@@ -4,8 +4,6 @@ import * as firebaseui from 'firebaseui';
 import DatabaseManager from '../data/DatabaseManager';
 import firebaseConfig from './firebaseConfig';
 
-const RESTART_DELAY = 6500;
-
 export default class WebManager {
   constructor(phaserConfig) {
     this.phaserConfig = phaserConfig;
@@ -25,7 +23,7 @@ export default class WebManager {
         this.showUserProfileUi(user);
         this.hideMoreInfo();
         this.authUi.reset();
-        new Promise(res => setTimeout(res, RESTART_DELAY)).then(() => this.restartGame());
+        this.restartGame();
       } else {
         this.showLoginUi();
         this.authUi.start('#firebaseui-auth-container', firebaseConfig.ui);
@@ -52,6 +50,7 @@ export default class WebManager {
   createGame() {
     window.game = new Phaser.Game(this.phaserConfig);
     window.game.db = new DatabaseManager();
+    window.game.web = this;
     window.game.fullyLoaded = false;
   }
 

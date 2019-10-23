@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
+import LoginState from './LoginState';
 
 export default class {
   constructor() {
@@ -36,22 +37,27 @@ export default class {
     });
   }
 
+  // callback will be called with a LoginState value
   loadUserProfile(callback, context) {
     if (!this.isUserLoggedIn()) {
       if (callback != null) {
-        callback.call(context);
+        callback.call(context, LoginState.LOGGED_OUT);
       }
       return;
     }
 
     this.db.collection('users').doc(this.getCurrentUserId()).get().then((profile) => {
+      // user is logged in, but does not yet have an entry in the 'users' collection
       if (profile.data() == null) {
-        throw Error(`Cannot load user profile for user: ${this.getCurrentUserId()}`);
-      }
-      this.userProfile = profile.data();
-      this.userProfileLoaded = true;
-      if (callback != null) {
-        callback.call(context);
+        if (callback != null) {
+          callback.call(context, LoginState.REGISTERING);
+        }
+      } else {
+        this.userProfile = profile.data();
+        this.userProfileLoaded = true;
+        if (callback != null) {
+          callback.call(context, LoginState.LOGGED_IN);
+        }
       }
     });
   }

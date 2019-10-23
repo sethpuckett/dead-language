@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { images, fonts, screens } from '../config';
+import LogInState from '../data/LoginState';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -7,14 +8,38 @@ export default class extends Phaser.Scene {
   }
 
   preload() {
+    this.startOnLoadComplete = false;
+
     this.load.bitmapFont(
       fonts.blueSkyWhite, fonts.files.blueSkyWhitePng, fonts.files.blueSkyWhiteFnt
     );
 
     this.load.image(images.titleScreenBackground, images.files.titleScreenBackground);
+
+    this.sys.game.db.loadUserProfile(this.onProfileLoad, this);
   }
 
   create() {
-    this.scene.start(screens.loading);
+    if (this.nextScene != null) {
+      this.startNextScene();
+    } else {
+      this.startOnLoadComplete = true;
+    }
+  }
+
+  onProfileLoad(loginState) {
+    if (loginState === LogInState.REGISTERING) {
+      this.nextScene = screens.registration;
+    } else {
+      this.nextScene = screens.loading;
+    }
+
+    if (this.startOnLoadComplete) {
+      this.startNextScene();
+    }
+  }
+
+  startNextScene() {
+    this.scene.start(this.nextScene);
   }
 }
