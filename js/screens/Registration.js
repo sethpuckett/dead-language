@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
-import { images, depth, screens } from '../config';
+import { images, depth, screens, registration } from '../config';
 import registrationUiHelper from './ui/registrationUiHelper';
+import LogInState from '../data/LoginState';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -31,6 +32,17 @@ export default class extends Phaser.Scene {
   }
 
   checkRegistration() {
-    new Promise(res => setTimeout(res, 5000)).then(() => this.sys.game.web.restartGame());
+    this.time.addEvent({
+      loop: true,
+      delay: registration.delayTime,
+      callbackScope: this,
+      callback: () => {
+        this.sys.game.db.loadUserProfile((loginState) => {
+          if (loginState !== LogInState.REGISTERING) {
+            this.sys.game.web.restartGame();
+          }
+        }, this);
+      },
+    });
   }
 }

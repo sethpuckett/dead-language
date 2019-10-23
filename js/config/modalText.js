@@ -2,7 +2,7 @@ import screens from './screens';
 import modalChecks from './modalChecks';
 import unlockableItems from './unlockableItems';
 import lessons from './lessons';
-import { game } from '../config';
+import game from './game';
 
 export default [
   {
