@@ -68,4 +68,8 @@ export default {
     text: 1,
     selector: 2,
   },
+  registration: {
+    background: 0,
+    text: 1,
+  },
 };

@@ -8,6 +8,7 @@ import VocabStudy from './screens/vocabStudy/VocabStudy';
 import TownMap from './screens/townMap/TownMap';
 import Story from './screens/Story';
 import OptionsMenu from './screens/optionsMenu/OptionsMenu';
+import Registration from './screens/Registration';
 import WebManager from './web/WebManager';
 
 const phaserConfig = {
@@ -26,6 +27,7 @@ const phaserConfig = {
     TownMap,
     Story,
     OptionsMenu,
+    Registration,
   ],
 };
 
