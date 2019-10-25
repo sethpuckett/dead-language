@@ -7,4 +7,5 @@ export default {
   fontSize: 12,
   flashDelay: 500,
   pressAnyKeyText: 'PRESS ANY KEY TO CONTINUE',
+  closeDelay: 350,
 };

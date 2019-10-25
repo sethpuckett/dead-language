@@ -2,8 +2,6 @@ import Phaser from 'phaser';
 import { modal, fonts, depth } from '../../config';
 import modalUiHelper from '../ui/modalUiHelper';
 
-const MIN_WIDTH = 450;
-
 export default class {
   constructor(scene, textContent, fadeEnabled = true) {
     this.scene = scene;
@@ -51,7 +49,13 @@ export default class {
 
   enableInputClose() {
     this.createPressAnyKey();
-    this.scene.input.keyboard.on('keydown', this.close, this);
+
+    // enable input after delay to prevent accidental clicks
+    this.scene.time.addEvent({
+      delay: modal.closeDelay,
+      callbackScope: this,
+      callback: () => { this.scene.input.keyboard.on('keydown', this.close, this); },
+    });
   }
 
   disableInputHandling() {
