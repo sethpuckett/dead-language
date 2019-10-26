@@ -164,7 +164,7 @@ export default class {
   createText() {
     const yBase = this.getChoiceTextYBase() - this.ui.textMargin;
     this.text = this.scene.add.bitmapText(
-      this.ui.w / 2, yBase, fonts.blueSkyWhite, this.textContent, choiceModal.textFontSize
+      this.ui.w / 2, yBase, fonts.blueSky, this.textContent, choiceModal.textFontSize
     );
     this.text.setOrigin(this.ui.textOriginX, this.ui.textOriginY);
     this.text.setCenterAlign();
@@ -180,7 +180,7 @@ export default class {
       const text = this.scene.add.bitmapText(
         this.ui.choiceTextX,
         this.getChoiceTextYBase() + yOffset,
-        fonts.blueSkyWhite,
+        fonts.blueSky,
         choice,
         choiceModal.choiceFontSize
       );

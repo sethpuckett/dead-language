@@ -34,7 +34,7 @@ export default class {
     item.setDepth(depth.minigame.item);
     item.text = this.scene.add.bitmapText(
       item.x, item.y + item.height / 2 + this.scene.ui.itemWordBuffer,
-      fonts.blueSkyWhite, item.word.language1,
+      fonts.blueSky, item.word.language1,
       this.getFontSize()
     );
     item.text.setOrigin(this.scene.ui.itemWordOriginX, this.scene.ui.itemWordOriginY);

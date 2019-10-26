@@ -197,7 +197,7 @@ export default class {
     this.stageTitle = this.scene.add.bitmapText(
       this.scene.ui.stageTitleX,
       this.scene.ui.stageTitleY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       townMap.stageTitleText,
       townMap.fonts.stageTitleSize
     );

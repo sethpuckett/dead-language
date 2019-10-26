@@ -35,7 +35,7 @@ export default class extends Phaser.Scene {
     this.loadingLabel = this.add.bitmapText(
       0, // X is calculated below (dynamic due to animated ellipses)
       this.ui.loadingLabelY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       registration.loadingText,
       registration.fonts.loadingSize
     );

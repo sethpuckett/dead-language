@@ -37,7 +37,7 @@ export default class {
     this.instructionsText = this.scene.add.bitmapText(
       this.scene.ui.instructionsTextX,
       this.scene.ui.instructionsTextY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       townMap.statusMessages.instructions,
       townMap.fonts.instructionsSize
     );

@@ -101,7 +101,7 @@ export default class {
     this.option1Text = this.scene.add.bitmapText(
       this.ui.menuOption1TextX,
       this.ui.menuOption1TextY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       `Hide ${game.language1}`,
       vocabStudy.fonts.menuOptionSize
     );
@@ -112,7 +112,7 @@ export default class {
     this.option2Text = this.scene.add.bitmapText(
       this.ui.menuOption2TextX,
       this.ui.menuOption2TextY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       `Hide ${game.language2}`,
       vocabStudy.fonts.menuOptionSize
     );
@@ -123,7 +123,7 @@ export default class {
     this.option3Text = this.scene.add.bitmapText(
       this.ui.menuOption3TextX,
       this.ui.menuOption3TextY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       'Show All',
       vocabStudy.fonts.menuOptionSize
     );
@@ -134,7 +134,7 @@ export default class {
     this.option4Text = this.scene.add.bitmapText(
       this.ui.menuOption4TextX,
       this.ui.menuOption4TextY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       'Practice',
       vocabStudy.fonts.menuOptionSize
     );
@@ -145,7 +145,7 @@ export default class {
     this.option5Text = this.scene.add.bitmapText(
       this.ui.menuOption5TextX,
       this.ui.menuOption5TextY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       'Back to Map',
       vocabStudy.fonts.menuOptionSize
     );
@@ -156,7 +156,7 @@ export default class {
     this.option6Text = this.scene.add.bitmapText(
       this.ui.menuOption6TextX,
       this.ui.menuOption6TextY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       'Start Game',
       vocabStudy.fonts.menuOptionSize
     );

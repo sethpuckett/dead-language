@@ -360,7 +360,7 @@ export default class {
     zombie.text.destroy();
     zombie.text = this.scene.add.bitmapText(
       0, zombie.y + this.scene.ui.zombieWordMargin,
-      fonts.blueSkyWhite, zombie.answer,
+      fonts.blueSky, zombie.answer,
       this.getFontSize()
     );
     zombie.text.x = zombie.x - zombie.text.width / 2;
@@ -408,7 +408,7 @@ export default class {
 
     zombie.text = this.scene.add.bitmapText(
       0, zombie.y + this.scene.ui.zombieWordMargin,
-      fonts.blueSkyWhite, zombie.words[zombie.hits].language1,
+      fonts.blueSky, zombie.words[zombie.hits].language1,
       this.getFontSize()
     );
     zombie.text.x = zombie.x - zombie.text.width / 2;

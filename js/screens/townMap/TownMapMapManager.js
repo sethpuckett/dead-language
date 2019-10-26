@@ -211,7 +211,7 @@ export default class {
     this.mapTitle = this.scene.add.bitmapText(
       this.scene.ui.mapTitleX,
       this.scene.ui.mapTitleY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       townMap.mapTitleText,
       townMap.fonts.mapTitleSize
     );
@@ -250,7 +250,7 @@ export default class {
       this.mapLocation = this.scene.add.bitmapText(
         this.scene.ui.mapLocationX,
         this.scene.ui.mapLocationY,
-        fonts.blueSkyWhite,
+        fonts.blueSky,
         location,
         townMap.fonts.mapLocationSize
       );

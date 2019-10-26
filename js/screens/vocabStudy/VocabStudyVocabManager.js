@@ -44,7 +44,7 @@ export default class {
       const l1 = this.scene.add.bitmapText(
         vocab1X,
         this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset),
-        fonts.blueSkyWhite,
+        fonts.blueSky,
         c.language1,
         fontSize
       );
@@ -53,7 +53,7 @@ export default class {
       const l2 = this.scene.add.bitmapText(
         vocab2X,
         this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset),
-        fonts.blueSkyWhite,
+        fonts.blueSky,
         this.vocab.l2WithGender(c),
         fontSize
       );
@@ -62,7 +62,7 @@ export default class {
       const dots = this.scene.add.bitmapText(
         (vocab1X + l1.width + vocab2X - l2.width) / 2,
         this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset),
-        fonts.blueSkyWhite,
+        fonts.blueSky,
         ' . '.repeat(dotCount),
         vocabStudy.fonts.dotSize
       );

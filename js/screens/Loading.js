@@ -48,7 +48,7 @@ export default class extends Phaser.Scene {
     const loadingText = this.add.bitmapText(
       this.ui.loadingTextX,
       this.ui.loadingTextY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       'LOADING',
       loading.fonts.loadingTextSize
     );

@@ -60,7 +60,7 @@ export default class {
       this.lessonInfoTitle = this.scene.add.bitmapText(
         this.scene.ui.lessonInfoTitleX,
         this.scene.ui.lessonInfoTitleY,
-        fonts.blueSkyWhite,
+        fonts.blueSky,
         lesson.name,
         townMap.fonts.lessonInfoTitleSize
       );
@@ -73,7 +73,7 @@ export default class {
       this.lessonInfoText = this.scene.add.bitmapText(
         this.scene.ui.lessonInfoTextX,
         this.scene.ui.lessonInfoTextY,
-        fonts.blueSkyWhite,
+        fonts.blueSky,
         lesson.info,
         townMap.fonts.lessonInfoTextSize
       );

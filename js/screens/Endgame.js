@@ -70,7 +70,7 @@ export default class extends Phaser.Scene {
     const statusLabel = this.add.bitmapText(
       this.ui.statusLabelX,
       this.ui.statusLabelY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       statusText,
       endgame.fonts.statusSize
     );
@@ -98,7 +98,7 @@ export default class extends Phaser.Scene {
       const text = this.add.bitmapText(
         this.ui.menuTextX,
         this.ui.menuTextY + (this.ui.menuTextVerticalPadding * i),
-        fonts.blueSkyWhite,
+        fonts.blueSky,
         o.text,
         endgame.fonts.menuSize
       );

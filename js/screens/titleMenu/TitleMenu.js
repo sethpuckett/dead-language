@@ -79,7 +79,7 @@ export default class extends Phaser.Scene {
       this.loginText = this.add.bitmapText(
         this.ui.loginTextX,
         this.ui.loginTextY,
-        fonts.blueSkyWhite,
+        fonts.blueSky,
         titleMenu.loginText,
         titleMenu.fonts.loginSize
       );
@@ -145,7 +145,7 @@ export default class extends Phaser.Scene {
     this.instructionText = this.add.bitmapText(
       this.ui.instructionsX,
       this.ui.instructionsY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       titleMenu.instructions,
       titleMenu.fonts.instructionsSize
     );
@@ -159,7 +159,7 @@ export default class extends Phaser.Scene {
       const text = this.add.bitmapText(
         this.ui.textX,
         this.ui.textY + (this.ui.textVerticalPadding * i),
-        fonts.blueSkyWhite,
+        fonts.blueSky,
         o.text,
         titleMenu.fonts.textSize
       );

@@ -44,12 +44,12 @@ export default class {
         ? this.ui.statusMessageMaxWidth : this.ui.statusMessageNoImageMaxWidth;
 
       this.statusText = this.scene.add.bitmapText(
-        x, y, fonts.blueSkyWhite, config.message, hud.fonts.statusSize
+        x, y, fonts.blueSky, config.message, hud.fonts.statusSize
       );
       if (this.statusText.width > maxWidth) {
         this.statusText.destroy();
         this.statusText = this.scene.add.bitmapText(
-          x, y, fonts.blueSkyWhite, config.message, hud.fonts.statusSizeSmall
+          x, y, fonts.blueSky, config.message, hud.fonts.statusSizeSmall
         );
       }
       this.statusText.setOrigin(this.ui.statusMessageOriginX, this.ui.statusMessageOriginY);

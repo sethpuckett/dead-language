@@ -172,7 +172,7 @@ export default class extends Phaser.Scene {
     this.practiceWordText = this.add.bitmapText(
       this.ui.practiceVocabX,
       this.ui.practiceVocabY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       this.practiceWord.language1,
       this.getFontSize(),
     );

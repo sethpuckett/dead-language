@@ -1,7 +1,10 @@
 export default {
-  blueSkyWhite: 'blue-sky-white',
+  blueSky: 'blue-sky',
+  futuraHeavy: 'futura-heavy',
   files: {
-    blueSkyWhitePng: 'assets/fonts/blue-sky-white.png',
-    blueSkyWhiteFnt: 'assets/fonts/blue-sky-white.fnt',
+    blueSkyPng: 'assets/fonts/blue-sky.png',
+    blueSkyFnt: 'assets/fonts/blue-sky.fnt',
+    futuraHeavyPng: 'assets/fonts/futura-heavy.png',
+    futuraHeavyFnt: 'assets/fonts/futura-heavy.fnt',
   },
 };

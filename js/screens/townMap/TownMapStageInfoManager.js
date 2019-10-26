@@ -100,7 +100,7 @@ export default class {
     this.stageInfoType = this.scene.add.bitmapText(
       this.scene.ui.stageInfoTypeX,
       this.scene.ui.stageInfoTypeY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       gameTypeHelper.getName(stageType),
       townMap.fonts.stageInfoTypeSize
     );
@@ -115,7 +115,7 @@ export default class {
     this.stageInfoSubtitle = this.scene.add.bitmapText(
       this.scene.ui.stageInfoSubtitleX,
       this.scene.ui.stageInfoSubtitleY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       subtitleText,
       townMap.fonts.stageInfoSubtitleSize
     );
@@ -132,7 +132,7 @@ export default class {
     this.stageInfoTitle = this.scene.add.bitmapText(
       this.scene.ui.stageInfoTitleX,
       this.scene.ui.stageInfoTitleY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       `Stage ${this.stageNumber.toString().padStart(2, '0')}`,
       townMap.fonts.stageInfoTitleSize
     );
@@ -190,7 +190,7 @@ export default class {
     this.stageInfoTitle = this.scene.add.bitmapText(
       this.scene.ui.stageInfoTitleX,
       this.scene.ui.stageInfoTitleY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       'Lesson Review',
       townMap.fonts.stageInfoTitleSize
     );

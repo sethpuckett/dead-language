@@ -80,7 +80,7 @@ export default class extends Phaser.Scene {
       const labelY = this.ui.menuBaseY + (this.ui.menuVerticalPadding * i);
       const labelText = this.add.bitmapText(
         this.ui.menuLabelBaseX, labelY,
-        fonts.blueSkyWhite,
+        fonts.blueSky,
         option.label,
         optionsMenu.fonts.labelSize
       );
@@ -95,7 +95,7 @@ export default class extends Phaser.Scene {
         const valueY = this.ui.menuBaseY + (this.ui.menuVerticalPadding * i);
         const valueText = this.add.bitmapText(
           valueX, valueY,
-          fonts.blueSkyWhite,
+          fonts.blueSky,
           value,
           optionsMenu.fonts.optionSize
         );
@@ -116,7 +116,7 @@ export default class extends Phaser.Scene {
                     + this.ui.returnOptionVerticalPadding;
     const returnText = this.add.bitmapText(
       this.ui.returnOptionX, returnY,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       optionsMenu.labels.return,
       optionsMenu.fonts.labelSize
     );

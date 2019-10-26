@@ -72,7 +72,7 @@ export default class {
     this.anyKeyText = this.scene.add.bitmapText(
       this.ui.w / 2,
       this.bgRect.y + this.bgRect.height - this.ui.cornerSquareWidth - this.ui.padding,
-      fonts.blueSkyWhite,
+      fonts.blueSky,
       modal.pressAnyKeyText,
       modal.fontSize
     );
@@ -170,7 +170,7 @@ export default class {
 
   createText() {
     this.text = this.scene.add.bitmapText(
-      this.ui.w / 2, this.ui.h / 2, fonts.blueSkyWhite, this.textContent, modal.fontSize
+      this.ui.w / 2, this.ui.h / 2, fonts.blueSky, this.textContent, modal.fontSize
     );
     this.text.setOrigin(this.ui.textOrigin);
     this.text.setCenterAlign();
