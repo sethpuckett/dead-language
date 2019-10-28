@@ -3,6 +3,7 @@ export default {
   soundEffects: 'soundEffects',
   textSize: 'textSize',
   blood: 'blood',
+  font: 'font',
   values: {
     on: 'On',
     off: 'Off',
@@ -10,11 +11,14 @@ export default {
     large: 'Large',
     red: 'Red',
     green: 'Green',
+    pixel: 'Pixel',
+    smooth: 'Smooth',
   },
   defaults: {
     music: 'On',
     soundEffects: 'On',
     textSize: 'Normal',
     blood: 'Red',
+    font: 'Pixel',
   },
 };

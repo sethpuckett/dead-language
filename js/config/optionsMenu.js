@@ -5,6 +5,7 @@ export default {
   labels: {
     music: 'Music',
     soundEffects: 'Sound Effects',
+    font: 'Font',
     textSize: 'Text Size',
     blood: 'Blood',
     return: 'Save and Exit',

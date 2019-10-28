@@ -8,6 +8,7 @@ const MUSIC_VALUES = [userOptions.values.on, userOptions.values.off];
 const SOUND_EFFECTS_VALUES = [userOptions.values.on, userOptions.values.off];
 const TEXT_SIZE_VALUES = [userOptions.values.normal, userOptions.values.large];
 const BLOOD_VALUES = [userOptions.values.red, userOptions.values.green, userOptions.values.off];
+const FONT_VALUES = [userOptions.values.pixel, userOptions.values.smooth];
 const RETURN = 'return';
 
 export default class extends Phaser.Scene {
@@ -27,6 +28,7 @@ export default class extends Phaser.Scene {
         label: optionsMenu.labels.soundEffects,
         values: SOUND_EFFECTS_VALUES,
       },
+      { key: userOptions.font, label: optionsMenu.labels.font, values: FONT_VALUES },
       { key: userOptions.textSize, label: optionsMenu.labels.textSize, values: TEXT_SIZE_VALUES },
       { key: userOptions.blood, label: optionsMenu.labels.blood, values: BLOOD_VALUES },
     ];
@@ -131,6 +133,7 @@ export default class extends Phaser.Scene {
     this.selectedValues = [
       { key: userOptions.music },
       { key: userOptions.soundEffects },
+      { key: userOptions.font },
       { key: userOptions.textSize },
       { key: userOptions.blood },
     ];
