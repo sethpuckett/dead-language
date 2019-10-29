@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { images, vocabStudy, screens, fonts, depth, animations, userOptions } from '../../config';
+import { images, vocabStudy, screens, depth, animations, userOptions } from '../../config';
 import { textHelper, util } from '../../util';
 import vocabStudyUiHelper from '../ui/vocabStudyUiHelper';
 import HudManager from '../HudManager';
@@ -27,7 +27,7 @@ export default class extends Phaser.Scene {
     this.vocabWordManager = new VocabWordManager(this.sys.game.db.getStage(stageId).vocab);
     this.ModalChecker = new ModalChecker(this);
     this.audioManager = new AudioManager(this);
-    this.userOptionsManager = new UserOptionsManager(this.sys.game);
+    this.optionsManager = new UserOptionsManager(this.sys.game);
     this.menuManager = new VocabStudyMenuManager(this, {
       hideLanguage1() { this.vocabManager.hideLanguage1(); },
       hideLanguage2() { this.vocabManager.hideLanguage2(); },
@@ -172,7 +172,7 @@ export default class extends Phaser.Scene {
     this.practiceWordText = this.add.bitmapText(
       this.ui.practiceVocabX,
       this.ui.practiceVocabY,
-      fonts.blueSky,
+      this.optionsManager.getSelectedFont(),
       this.practiceWord.language1,
       this.getFontSize(),
     );
@@ -335,7 +335,7 @@ export default class extends Phaser.Scene {
   }
 
   getFontSize() {
-    const sizeOption = this.userOptionsManager.getOptionValue(userOptions.textSize);
+    const sizeOption = this.optionsManager.getOptionValue(userOptions.textSize);
     return sizeOption === userOptions.values.normal
       ? vocabStudy.fonts.practiceWordSize : vocabStudy.fonts.practiceWordSizeLarge;
   }

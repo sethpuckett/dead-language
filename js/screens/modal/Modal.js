@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { modal, fonts, depth } from '../../config';
 import modalUiHelper from '../ui/modalUiHelper';
+import UserOptionsManager from '../../data/UserOptionsManager';
 
 export default class {
   constructor(scene, textContent, fadeEnabled = true) {
@@ -8,6 +9,7 @@ export default class {
     this.textContent = textContent;
     this.fadeEnabled = fadeEnabled;
     this.ui = modalUiHelper(this.scene.sys.game.config);
+    this.optionsManager = new UserOptionsManager(this.scene.sys.game);
   }
 
   draw() {
@@ -72,7 +74,7 @@ export default class {
     this.anyKeyText = this.scene.add.bitmapText(
       this.ui.w / 2,
       this.bgRect.y + this.bgRect.height - this.ui.cornerSquareWidth - this.ui.padding,
-      fonts.blueSky,
+      this.optionsManager.getSelectedFont(),
       modal.pressAnyKeyText,
       modal.fontSize
     );
@@ -170,7 +172,11 @@ export default class {
 
   createText() {
     this.text = this.scene.add.bitmapText(
-      this.ui.w / 2, this.ui.h / 2, fonts.blueSky, this.textContent, modal.fontSize
+      this.ui.w / 2,
+      this.ui.h / 2,
+      this.optionsManager.getSelectedFont(),
+      this.textContent,
+      modal.fontSize
     );
     this.text.setOrigin(this.ui.textOrigin);
     this.text.setCenterAlign();

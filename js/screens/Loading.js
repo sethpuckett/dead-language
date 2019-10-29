@@ -52,7 +52,7 @@ export default class extends Phaser.Scene {
       this.ui.loadingTextY,
       this.optionsManager.getSelectedFont(),
       'LOADING',
-      loading.fonts.loadingTextSize * this.optionsManager.getSelectedFontScaleModifier(),
+      loading.fonts.loadingTextSize,
     );
     loadingText.setOrigin(this.ui.loadingTextOrigin);
     loadingText.setTintFill(loading.fonts.loadingTextTint);

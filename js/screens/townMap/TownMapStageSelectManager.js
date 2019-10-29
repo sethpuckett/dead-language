@@ -1,12 +1,15 @@
 import { fonts, townMap, images, depth, gameTypes } from '../../config';
 import TownMapHelper from './TownMapHelper';
 import GameProgressManager from '../../data/GameProgressManager';
+import UserOptionsManager from '../../data/UserOptionsManager';
 
 export default class {
   constructor(scene) {
     this.scene = scene;
     this.mapHelper = new TownMapHelper();
     this.progressManager = new GameProgressManager(this.scene.sys.game.db);
+    this.optionsManager = new UserOptionsManager(this.scene.sys.game);
+
     this.selectedStageIndex = 0;
     this.inputHandled = false;
     this.enabled = false;
@@ -196,8 +199,8 @@ export default class {
 
     this.stageTitle = this.scene.add.bitmapText(
       this.scene.ui.stageTitleX,
-      this.scene.ui.stageTitleY,
-      fonts.blueSky,
+      this.scene.ui.stageTitleY + this.optionsManager.getSelectedFontYOffset(),
+      this.optionsManager.getSelectedFont(),
       townMap.stageTitleText,
       townMap.fonts.stageTitleSize
     );

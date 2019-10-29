@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import hudUiHelper from './ui/hudUiHelper';
-import { depth, images, fonts, hud } from '../config';
+import { depth, images, hud } from '../config';
 import { keyboardHelper, weaponHelper } from '../util';
 import UserOptionsManager from '../data/UserOptionsManager';
 
@@ -125,7 +125,7 @@ export default class {
         this.ui.killValueY,
         this.optionsManager.getSelectedFont(),
         '000',
-        hud.fonts.killSize * this.optionsManager.getSelectedFontScaleModifier(),
+        hud.fonts.killSize,
       );
       this.killValue.setOrigin(this.ui.killValueOriginX, this.ui.killValueOriginY);
       this.killValue.setDepth(depth.hud.ui);
@@ -145,7 +145,7 @@ export default class {
         this.ui.cashValueY,
         this.optionsManager.getSelectedFont(),
         `$${config.startCash}`,
-        hud.fonts.cashSize * this.optionsManager.getSelectedFontScaleModifier(),
+        hud.fonts.cashSize,
       );
       this.cashValue.setOrigin(this.ui.cashValueOriginX, this.ui.cashValueOriginY);
       this.cashValue.setDepth(depth.hud.ui);
@@ -165,7 +165,7 @@ export default class {
         this.ui.timerValueY,
         this.optionsManager.getSelectedFont(),
         '',
-        hud.fonts.timerSize * this.optionsManager.getSelectedFontScaleModifier(),
+        hud.fonts.timerSize,
       );
       this.timerValue.setOrigin(this.ui.timerValueOriginX, this.ui.timerValueOriginY);
       this.timerValue.setDepth(depth.hud.ui);
@@ -288,10 +288,10 @@ export default class {
       this.textEntryGraphics.setDepth(depth.hud.ui);
       this.textEntry = this.scene.add.bitmapText(
         this.ui.textEntryX,
-        this.ui.textEntryY,
+        this.ui.textEntryY + this.optionsManager.getSelectedFontYOffset(),
         this.optionsManager.getSelectedFont(),
         '',
-        hud.fonts.textEntrySize * this.optionsManager.getSelectedFontScaleModifier(),
+        hud.fonts.textEntrySize,
       );
       this.textEntry.setOrigin(this.ui.textEntryOriginX, this.ui.textEntryOriginY);
       this.textEntry.setDepth(depth.hud.entryText);

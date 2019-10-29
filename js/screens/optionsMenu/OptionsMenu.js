@@ -17,7 +17,7 @@ export default class extends Phaser.Scene {
   }
 
   init() {
-    this.userOptionsManager = new UserOptionsManager(this.sys.game);
+    this.optionsManager = new UserOptionsManager(this.sys.game);
     this.audioManager = new AudioManager(this);
 
     this.selectedOption = 0;
@@ -81,8 +81,9 @@ export default class extends Phaser.Scene {
     this.menuOptions.forEach((option, i) => {
       const labelY = this.ui.menuBaseY + (this.ui.menuVerticalPadding * i);
       const labelText = this.add.bitmapText(
-        this.ui.menuLabelBaseX, labelY,
-        fonts.blueSky,
+        this.ui.menuLabelBaseX,
+        labelY,
+        this.optionsManager.getSelectedFont(),
         option.label,
         optionsMenu.fonts.labelSize
       );
@@ -96,8 +97,9 @@ export default class extends Phaser.Scene {
         const valueX = this.ui.menuValueBaseX + totalValueWidth;
         const valueY = this.ui.menuBaseY + (this.ui.menuVerticalPadding * i);
         const valueText = this.add.bitmapText(
-          valueX, valueY,
-          fonts.blueSky,
+          valueX,
+          valueY,
+          this.optionsManager.getSelectedFont(),
           value,
           optionsMenu.fonts.optionSize
         );
@@ -118,7 +120,7 @@ export default class extends Phaser.Scene {
                     + this.ui.returnOptionVerticalPadding;
     const returnText = this.add.bitmapText(
       this.ui.returnOptionX, returnY,
-      fonts.blueSky,
+      this.optionsManager.getSelectedFont(),
       optionsMenu.labels.return,
       optionsMenu.fonts.labelSize
     );
@@ -139,7 +141,7 @@ export default class extends Phaser.Scene {
     ];
 
     this.selectedValues.forEach((v) => {
-      const value = this.userOptionsManager.getOptionValue(v.key);
+      const value = this.optionsManager.getOptionValue(v.key);
       const menuOption = this.menuOptions.find(o => o.key === v.key);
       const index = menuOption.values.findIndex(o => o === value);
 
@@ -266,7 +268,7 @@ export default class extends Phaser.Scene {
 
   optionSelected() {
     if (this.getSelectedOptionKey() === RETURN) {
-      this.userOptionsManager.setOptions(this.selectedValues, () => {
+      this.optionsManager.setOptions(this.selectedValues, () => {
         this.cameras.main.fade(optionsMenu.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
       });
     }

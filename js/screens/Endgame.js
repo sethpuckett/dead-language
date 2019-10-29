@@ -74,7 +74,7 @@ export default class extends Phaser.Scene {
       this.ui.statusLabelY,
       this.optionsManager.getSelectedFont(),
       statusText,
-      endgame.fonts.statusSize * this.optionsManager.getSelectedFontScaleModifier(),
+      endgame.fonts.statusSize,
     );
     statusLabel.setOrigin(this.ui.statusLabelOrigin);
     statusLabel.setDepth(depth.endgame.text);
@@ -99,10 +99,12 @@ export default class extends Phaser.Scene {
     this.options.forEach((o, i) => {
       const text = this.add.bitmapText(
         this.ui.menuTextX,
-        this.ui.menuTextY + (this.ui.menuTextVerticalPadding * i),
+        this.ui.menuTextY
+          + (this.ui.menuTextVerticalPadding * i)
+          + this.optionsManager.getSelectedFontYOffset(),
         this.optionsManager.getSelectedFont(),
         o.text,
-        endgame.fonts.menuSize * this.optionsManager.getSelectedFontScaleModifier(),
+        endgame.fonts.menuSize,
       );
       text.setOrigin(this.ui.menuTextOriginX, this.ui.menuTextOriginY);
       text.setDepth(depth.endgame.text);

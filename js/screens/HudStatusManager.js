@@ -50,7 +50,7 @@ export default class {
         y,
         this.optionsManager.getSelectedFont(),
         config.message,
-        hud.fonts.statusSize * this.optionsManager.getSelectedFontScaleModifier(),
+        hud.fonts.statusSize,
       );
       if (this.statusText.width > maxWidth) {
         this.statusText.destroy();
@@ -59,7 +59,7 @@ export default class {
           y,
           this.optionsManager.getSelectedFont(),
           config.message,
-          hud.fonts.statusSizeSmall * this.optionsManager.getSelectedFontScaleModifier(),
+          hud.fonts.statusSizeSmall,
         );
       }
       this.statusText.setOrigin(this.ui.statusMessageOriginX, this.ui.statusMessageOriginY);

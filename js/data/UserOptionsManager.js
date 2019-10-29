@@ -35,13 +35,13 @@ export default class {
     throw Error(`Invalid selected font option: ${selectedFontOption}`);
   }
 
-  getSelectedFontScaleModifier() {
+  getSelectedFontYOffset() {
     const selectedFontOption = this.getOptionValue(userOptions.font);
     if (selectedFontOption === userOptions.values.pixel) {
-      return userOptions.fontScales.pixel;
+      return userOptions.fontYOffsets.pixel;
     }
     if (selectedFontOption === userOptions.values.smooth) {
-      return userOptions.fontScales.smooth;
+      return userOptions.fontYOffsets.smooth;
     }
 
     throw Error(`Invalid selected font option: ${selectedFontOption}`);

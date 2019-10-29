@@ -2,6 +2,7 @@ import { util } from '../../util';
 import { vocabStudy, fonts } from '../../config';
 import VocabWordManager from '../../languageContent/VocabWordManager';
 import vocabStudyUiHelper from '../ui/vocabStudyUiHelper';
+import UserOptionsManager from '../../data/UserOptionsManager';
 
 const BIG_FONT_MAX_LENGTH = 22;
 const DOT_COUNT_MODIFIER = 26;
@@ -12,6 +13,7 @@ export default class {
     this.scene = scene;
     this.vocab = new VocabWordManager(vocab);
     this.ui = vocabStudyUiHelper(this.scene.sys.game.config);
+    this.optionsManager = new UserOptionsManager(this.scene.sys.game);
   }
 
   createVocab() {
@@ -44,7 +46,7 @@ export default class {
       const l1 = this.scene.add.bitmapText(
         vocab1X,
         this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset),
-        fonts.blueSky,
+        this.optionsManager.getSelectedFont(),
         c.language1,
         fontSize
       );
@@ -53,7 +55,7 @@ export default class {
       const l2 = this.scene.add.bitmapText(
         vocab2X,
         this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset),
-        fonts.blueSky,
+        this.optionsManager.getSelectedFont(),
         this.vocab.l2WithGender(c),
         fontSize
       );
@@ -62,7 +64,7 @@ export default class {
       const dots = this.scene.add.bitmapText(
         (vocab1X + l1.width + vocab2X - l2.width) / 2,
         this.ui.vocabY + (this.ui.vocabVerticalPadding * yOffset),
-        fonts.blueSky,
+        this.optionsManager.getSelectedFont(),
         ' . '.repeat(dotCount),
         vocabStudy.fonts.dotSize
       );

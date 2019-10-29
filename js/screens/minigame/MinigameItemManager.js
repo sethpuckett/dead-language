@@ -36,7 +36,7 @@ export default class {
       item.x, item.y + item.height / 2 + this.scene.ui.itemWordBuffer,
       this.optionsManager.getSelectedFont(),
       item.word.language1,
-      this.getFontSize() * this.optionsManager.getSelectedFontScaleModifier(),
+      this.getFontSize(),
     );
     item.text.setOrigin(this.scene.ui.itemWordOriginX, this.scene.ui.itemWordOriginY);
     item.text.setTintFill(minigame.fonts.itemTint);
