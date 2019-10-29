@@ -2,11 +2,13 @@ import Phaser from 'phaser';
 import hudUiHelper from './ui/hudUiHelper';
 import { depth, images, fonts, hud } from '../config';
 import { keyboardHelper, weaponHelper } from '../util';
+import UserOptionsManager from '../data/UserOptionsManager';
 
 export default class {
   constructor(scene) {
     this.scene = scene;
 
+    this.optionsManager = new UserOptionsManager(this.scene.sys.game);
     this.ui = hudUiHelper(this.scene.sys.game.config);
     this.textInputShown = false;
     this.inputHandled = false;
@@ -119,7 +121,11 @@ export default class {
       this.killIcon.setOrigin(this.ui.killIconOriginX, this.ui.killIconOriginY);
       this.killIcon.setDepth(depth.hud.ui);
       this.killValue = this.scene.add.bitmapText(
-        this.ui.killValueX, this.ui.killValueY, fonts.blueSky, '000', hud.fonts.killSize
+        this.ui.killValueX,
+        this.ui.killValueY,
+        this.optionsManager.getSelectedFont(),
+        '000',
+        hud.fonts.killSize * this.optionsManager.getSelectedFontScaleModifier(),
       );
       this.killValue.setOrigin(this.ui.killValueOriginX, this.ui.killValueOriginY);
       this.killValue.setDepth(depth.hud.ui);
@@ -135,7 +141,11 @@ export default class {
       this.cashIcon.setOrigin(this.ui.cashIconOriginX, this.ui.cashIconOriginY);
       this.cashIcon.setDepth(depth.hud.ui);
       this.cashValue = this.scene.add.bitmapText(
-        this.ui.cashValueX, this.ui.cashValueY, fonts.blueSky, `$${config.startCash}`, hud.fonts.cashSize
+        this.ui.cashValueX,
+        this.ui.cashValueY,
+        this.optionsManager.getSelectedFont(),
+        `$${config.startCash}`,
+        hud.fonts.cashSize * this.optionsManager.getSelectedFontScaleModifier(),
       );
       this.cashValue.setOrigin(this.ui.cashValueOriginX, this.ui.cashValueOriginY);
       this.cashValue.setDepth(depth.hud.ui);
@@ -151,7 +161,11 @@ export default class {
       this.timerIcon.setOrigin(this.ui.timerIconOriginX, this.ui.timerIconOriginY);
       this.timerIcon.setDepth(depth.hud.ui);
       this.timerValue = this.scene.add.bitmapText(
-        this.ui.timerValueX, this.ui.timerValueY, fonts.blueSky, '', hud.fonts.timerSize
+        this.ui.timerValueX,
+        this.ui.timerValueY,
+        this.optionsManager.getSelectedFont(),
+        '',
+        hud.fonts.timerSize * this.optionsManager.getSelectedFontScaleModifier(),
       );
       this.timerValue.setOrigin(this.ui.timerValueOriginX, this.ui.timerValueOriginY);
       this.timerValue.setDepth(depth.hud.ui);
@@ -273,7 +287,11 @@ export default class {
       this.textEntryGraphics.fillRectShape(this.textEntryArea);
       this.textEntryGraphics.setDepth(depth.hud.ui);
       this.textEntry = this.scene.add.bitmapText(
-        this.ui.textEntryX, this.ui.textEntryY, fonts.blueSky, '', hud.fonts.textEntrySize
+        this.ui.textEntryX,
+        this.ui.textEntryY,
+        this.optionsManager.getSelectedFont(),
+        '',
+        hud.fonts.textEntrySize * this.optionsManager.getSelectedFontScaleModifier(),
       );
       this.textEntry.setOrigin(this.ui.textEntryOriginX, this.ui.textEntryOriginY);
       this.textEntry.setDepth(depth.hud.entryText);

@@ -10,9 +10,8 @@ export default class extends Phaser.Scene {
   preload() {
     this.startOnLoadComplete = false;
 
-    this.load.bitmapFont(
-      fonts.blueSky, fonts.files.blueSkyPng, fonts.files.blueSkyFnt
-    );
+    this.load.bitmapFont(fonts.blueSky, fonts.files.blueSkyPng, fonts.files.blueSkyFnt);
+    this.load.bitmapFont(fonts.verdana, fonts.files.verdanaPng, fonts.files.verdanaFnt);
 
     this.load.image(images.titleScreenBackground, images.files.titleScreenBackground);
 

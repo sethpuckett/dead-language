@@ -39,12 +39,12 @@ export default {
     ],
   },
   fonts: {
-    zombieSize: 10,
-    zombieSizeLarge: 14,
+    zombieSize: 14,
+    zombieSizeLarge: 18,
     zombieTint: 0xffffff,
     zombieAnswerFlashTint: 0xff5555,
-    itemSize: 10,
-    itemSizeLarge: 14,
+    itemSize: 14,
+    itemSizeLarge: 18,
     itemTint: 0xffffff,
   },
   ui: {

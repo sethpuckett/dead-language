@@ -1,10 +1,10 @@
 export default {
   blueSky: 'blue-sky',
-  futuraHeavy: 'futura-heavy',
+  verdana: 'verdana',
   files: {
     blueSkyPng: 'assets/fonts/blue-sky.png',
     blueSkyFnt: 'assets/fonts/blue-sky.fnt',
-    futuraHeavyPng: 'assets/fonts/futura-heavy.png',
-    futuraHeavyFnt: 'assets/fonts/futura-heavy.fnt',
+    verdanaPng: 'assets/fonts/verdana.png',
+    verdanaFnt: 'assets/fonts/verdana.fnt',
   },
 };

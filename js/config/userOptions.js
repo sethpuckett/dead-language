@@ -21,4 +21,8 @@ export default {
     blood: 'Red',
     font: 'Pixel',
   },
+  fontScales: {
+    pixel: 1,
+    smooth: 1,
+  },
 };

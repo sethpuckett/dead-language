@@ -1,5 +1,5 @@
 import 'firebase/firestore';
-import { userOptions } from '../config';
+import { userOptions, fonts } from '../config';
 
 const VALID_KEYS = [
   userOptions.music,
@@ -21,6 +21,30 @@ export default class {
 
   soundEffectsEnabled() {
     return this.getOptionValue(userOptions.soundEffects) === userOptions.values.on;
+  }
+
+  getSelectedFont() {
+    const selectedFontOption = this.getOptionValue(userOptions.font);
+    if (selectedFontOption === userOptions.values.pixel) {
+      return fonts.blueSky;
+    }
+    if (selectedFontOption === userOptions.values.smooth) {
+      return fonts.verdana;
+    }
+
+    throw Error(`Invalid selected font option: ${selectedFontOption}`);
+  }
+
+  getSelectedFontScaleModifier() {
+    const selectedFontOption = this.getOptionValue(userOptions.font);
+    if (selectedFontOption === userOptions.values.pixel) {
+      return userOptions.fontScales.pixel;
+    }
+    if (selectedFontOption === userOptions.values.smooth) {
+      return userOptions.fontScales.smooth;
+    }
+
+    throw Error(`Invalid selected font option: ${selectedFontOption}`);
   }
 
   getOptionValue(key) {

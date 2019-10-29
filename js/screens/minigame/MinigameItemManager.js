@@ -9,7 +9,7 @@ export default class {
   constructor(scene) {
     this.scene = scene;
 
-    this.userOptionsManager = new UserOptionsManager(this.scene.sys.game);
+    this.optionsManager = new UserOptionsManager(this.scene.sys.game);
 
     this.items = [];
     this.destroyedItems = [];
@@ -34,8 +34,9 @@ export default class {
     item.setDepth(depth.minigame.item);
     item.text = this.scene.add.bitmapText(
       item.x, item.y + item.height / 2 + this.scene.ui.itemWordBuffer,
-      fonts.blueSky, item.word.language1,
-      this.getFontSize()
+      this.optionsManager.getSelectedFont(),
+      item.word.language1,
+      this.getFontSize() * this.optionsManager.getSelectedFontScaleModifier(),
     );
     item.text.setOrigin(this.scene.ui.itemWordOriginX, this.scene.ui.itemWordOriginY);
     item.text.setTintFill(minigame.fonts.itemTint);
@@ -189,7 +190,7 @@ export default class {
   }
 
   getFontSize() {
-    const sizeOption = this.userOptionsManager.getOptionValue(userOptions.textSize);
+    const sizeOption = this.optionsManager.getOptionValue(userOptions.textSize);
     return sizeOption === userOptions.values.normal
       ? minigame.fonts.itemSize : minigame.fonts.itemSizeLarge;
   }
