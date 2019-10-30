@@ -8,6 +8,7 @@ const MUSIC_VALUES = [userOptions.values.on, userOptions.values.off];
 const SOUND_EFFECTS_VALUES = [userOptions.values.on, userOptions.values.off];
 const TEXT_SIZE_VALUES = [userOptions.values.normal, userOptions.values.large];
 const BLOOD_VALUES = [userOptions.values.red, userOptions.values.green, userOptions.values.off];
+const FONT_VALUES = [userOptions.values.pixel, userOptions.values.smooth];
 const RETURN = 'return';
 
 export default class extends Phaser.Scene {
@@ -16,7 +17,7 @@ export default class extends Phaser.Scene {
   }
 
   init() {
-    this.userOptionsManager = new UserOptionsManager(this.sys.game);
+    this.optionsManager = new UserOptionsManager(this.sys.game);
     this.audioManager = new AudioManager(this);
 
     this.selectedOption = 0;
@@ -27,6 +28,7 @@ export default class extends Phaser.Scene {
         label: optionsMenu.labels.soundEffects,
         values: SOUND_EFFECTS_VALUES,
       },
+      { key: userOptions.font, label: optionsMenu.labels.font, values: FONT_VALUES },
       { key: userOptions.textSize, label: optionsMenu.labels.textSize, values: TEXT_SIZE_VALUES },
       { key: userOptions.blood, label: optionsMenu.labels.blood, values: BLOOD_VALUES },
     ];
@@ -74,19 +76,35 @@ export default class extends Phaser.Scene {
     });
   }
 
+  clearMenu() {
+    if (this.menuBitmapTexts != null) {
+      this.menuBitmapTexts.forEach((text) => {
+        text.destroy();
+      });
+
+      this.menuBitmapTexts = null;
+    }
+  }
+
   createMenu() {
+    this.clearMenu();
+
+    const fontValue = this.selectedValues.find(v => v.key === userOptions.font).value;
+    this.menuBitmapTexts = [];
     this.menuStates = [];
     this.menuOptions.forEach((option, i) => {
       const labelY = this.ui.menuBaseY + (this.ui.menuVerticalPadding * i);
       const labelText = this.add.bitmapText(
-        this.ui.menuLabelBaseX, labelY,
-        fonts.blueSkyWhite,
+        this.ui.menuLabelBaseX,
+        labelY,
+        this.optionsManager.getFontForUserOption(fontValue),
         option.label,
         optionsMenu.fonts.labelSize
       );
       labelText.setOrigin(this.ui.menuLabelOriginX, this.ui.menuLabelOriginY);
       labelText.setDepth(depth.optionsMenu.text);
       labelText.setTintFill(optionsMenu.fonts.labelTint);
+      this.menuBitmapTexts.push(labelText);
 
       const valueTexts = [];
       let totalValueWidth = 0;
@@ -94,8 +112,9 @@ export default class extends Phaser.Scene {
         const valueX = this.ui.menuValueBaseX + totalValueWidth;
         const valueY = this.ui.menuBaseY + (this.ui.menuVerticalPadding * i);
         const valueText = this.add.bitmapText(
-          valueX, valueY,
-          fonts.blueSkyWhite,
+          valueX,
+          valueY,
+          this.optionsManager.getFontForUserOption(fontValue),
           value,
           optionsMenu.fonts.optionSize
         );
@@ -107,6 +126,7 @@ export default class extends Phaser.Scene {
         totalValueWidth += bounds.width + this.ui.menuValueHorizontalPadding;
 
         valueTexts.push(valueText);
+        this.menuBitmapTexts.push(valueText);
       });
       const menuState = { key: option.key, label: labelText, values: valueTexts };
       this.menuStates.push(menuState);
@@ -116,13 +136,14 @@ export default class extends Phaser.Scene {
                     + this.ui.returnOptionVerticalPadding;
     const returnText = this.add.bitmapText(
       this.ui.returnOptionX, returnY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getFontForUserOption(fontValue),
       optionsMenu.labels.return,
       optionsMenu.fonts.labelSize
     );
     returnText.setOrigin(this.ui.returnOptionOriginX, this.ui.returnOptionOriginY);
     returnText.setDepth(depth.optionsMenu.text);
     returnText.setTintFill(optionsMenu.fonts.labelTint);
+    this.menuBitmapTexts.push(returnText);
 
     this.menuStates.push({ key: RETURN, label: returnText });
   }
@@ -131,12 +152,13 @@ export default class extends Phaser.Scene {
     this.selectedValues = [
       { key: userOptions.music },
       { key: userOptions.soundEffects },
+      { key: userOptions.font },
       { key: userOptions.textSize },
       { key: userOptions.blood },
     ];
 
     this.selectedValues.forEach((v) => {
-      const value = this.userOptionsManager.getOptionValue(v.key);
+      const value = this.optionsManager.getOptionValue(v.key);
       const menuOption = this.menuOptions.find(o => o.key === v.key);
       const index = menuOption.values.findIndex(o => o === value);
 
@@ -186,6 +208,10 @@ export default class extends Phaser.Scene {
     this.playMenuMove();
     if (menuState.key === userOptions.music) {
       this.setMusicState();
+    } else if (menuState.key === userOptions.font) {
+      this.createMenu();
+      this.createOptionSelector();
+      this.createAllValueSelectors();
     }
     this.createValueSelector(menuState.key);
   }
@@ -200,6 +226,10 @@ export default class extends Phaser.Scene {
     this.playMenuMove();
     if (menuState.key === userOptions.music) {
       this.setMusicState();
+    } else if (menuState.key === userOptions.font) {
+      this.createMenu();
+      this.createOptionSelector();
+      this.createAllValueSelectors();
     }
     this.createValueSelector(menuState.key);
   }
@@ -263,7 +293,7 @@ export default class extends Phaser.Scene {
 
   optionSelected() {
     if (this.getSelectedOptionKey() === RETURN) {
-      this.userOptionsManager.setOptions(this.selectedValues, () => {
+      this.optionsManager.setOptions(this.selectedValues, () => {
         this.cameras.main.fade(optionsMenu.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
       });
     }

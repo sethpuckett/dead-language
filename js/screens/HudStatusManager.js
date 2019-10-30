@@ -1,11 +1,13 @@
 /* eslint-disable prefer-destructuring */
 import hudUiHelper from './ui/hudUiHelper';
 import { hud, fonts, images, depth } from '../config';
+import UserOptionsManager from '../data/UserOptionsManager';
 
 export default class {
   constructor(scene) {
     this.scene = scene;
     this.ui = hudUiHelper(this.scene.sys.game.config);
+    this.optionsManager = new UserOptionsManager(this.scene.sys.game);
   }
 
   /*
@@ -44,12 +46,20 @@ export default class {
         ? this.ui.statusMessageMaxWidth : this.ui.statusMessageNoImageMaxWidth;
 
       this.statusText = this.scene.add.bitmapText(
-        x, y, fonts.blueSkyWhite, config.message, hud.fonts.statusSize
+        x,
+        y,
+        this.optionsManager.getSelectedFont(),
+        config.message,
+        hud.fonts.statusSize,
       );
       if (this.statusText.width > maxWidth) {
         this.statusText.destroy();
         this.statusText = this.scene.add.bitmapText(
-          x, y, fonts.blueSkyWhite, config.message, hud.fonts.statusSizeSmall
+          x,
+          y,
+          this.optionsManager.getSelectedFont(),
+          config.message,
+          hud.fonts.statusSizeSmall,
         );
       }
       this.statusText.setOrigin(this.ui.statusMessageOriginX, this.ui.statusMessageOriginY);

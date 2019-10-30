@@ -1,8 +1,12 @@
 import 'firebase/firestore';
-import { userOptions } from '../config';
+import { userOptions, fonts } from '../config';
 
 const VALID_KEYS = [
-  userOptions.music, userOptions.soundEffects, userOptions.textSize, userOptions.blood,
+  userOptions.music,
+  userOptions.soundEffects,
+  userOptions.font,
+  userOptions.textSize,
+  userOptions.blood,
 ];
 
 export default class {
@@ -19,6 +23,34 @@ export default class {
     return this.getOptionValue(userOptions.soundEffects) === userOptions.values.on;
   }
 
+  getSelectedFont() {
+    const selectedFontOption = this.getOptionValue(userOptions.font);
+    return this.getFontForUserOption(selectedFontOption);
+  }
+
+  getFontForUserOption(value) {
+    if (value === userOptions.values.pixel) {
+      return fonts.blueSky;
+    }
+    if (value === userOptions.values.smooth) {
+      return fonts.verdana;
+    }
+
+    throw Error(`Invalid selected font option: ${value}`);
+  }
+
+  getSelectedFontYOffset() {
+    const selectedFontOption = this.getOptionValue(userOptions.font);
+    if (selectedFontOption === userOptions.values.pixel) {
+      return userOptions.fontYOffsets.pixel;
+    }
+    if (selectedFontOption === userOptions.values.smooth) {
+      return userOptions.fontYOffsets.smooth;
+    }
+
+    throw Error(`Invalid selected font option: ${selectedFontOption}`);
+  }
+
   getOptionValue(key) {
     if (!VALID_KEYS.includes(key)) {
       throw Error(`Invalid option key: ${key}`);
@@ -33,7 +65,7 @@ export default class {
       options = this.getLocalUserOptions();
     }
 
-    if (options != null) {
+    if (options != null && options[key] != null) {
       value = options[key];
     }
 
@@ -74,6 +106,7 @@ export default class {
     this.game.localUserOptions = {
       music: userOptions.defaults[userOptions.music],
       soundEffects: userOptions.defaults[userOptions.soundEffects],
+      font: userOptions.defaults[userOptions.font],
       textSize: userOptions.defaults[userOptions.textSize],
       blood: userOptions.defaults[userOptions.blood],
     };
@@ -83,6 +116,7 @@ export default class {
     this.game.localUserOptions = {
       music: options.find(o => o.key === userOptions.music).value,
       soundEffects: options.find(o => o.key === userOptions.soundEffects).value,
+      font: options.find(o => o.key === userOptions.font).value,
       textSize: options.find(o => o.key === userOptions.textSize).value,
       blood: options.find(o => o.key === userOptions.blood).value,
     };
@@ -95,6 +129,7 @@ export default class {
       options: {
         music: options.find(o => o.key === userOptions.music).value,
         soundEffects: options.find(o => o.key === userOptions.soundEffects).value,
+        font: options.find(o => o.key === userOptions.font).value,
         textSize: options.find(o => o.key === userOptions.textSize).value,
         blood: options.find(o => o.key === userOptions.blood).value,
       },

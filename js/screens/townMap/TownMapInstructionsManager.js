@@ -1,10 +1,12 @@
 import { fonts, townMap, depth } from '../../config';
 import TownMapHelper from './TownMapHelper';
+import UserOptionsManager from '../../data/UserOptionsManager';
 
 export default class {
   constructor(scene) {
     this.scene = scene;
     this.mapHelper = new TownMapHelper();
+    this.optionsManager = new UserOptionsManager(this.scene.sys.game);
 
     this.borderGraphics = this.scene.add.graphics();
     this.borderGraphics.lineStyle(this.scene.ui.borderWidth, townMap.ui.borderColor);
@@ -37,7 +39,7 @@ export default class {
     this.instructionsText = this.scene.add.bitmapText(
       this.scene.ui.instructionsTextX,
       this.scene.ui.instructionsTextY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       townMap.statusMessages.instructions,
       townMap.fonts.instructionsSize
     );

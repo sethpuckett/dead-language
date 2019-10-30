@@ -1,5 +1,6 @@
 import { fonts, images, vocabStudy, game } from '../../config';
 import vocabStudyUiHelper from '../ui/vocabStudyUiHelper';
+import UserOptionsManager from '../../data/UserOptionsManager';
 
 const HIDE_LANGUAGE_1 = 1;
 const HIDE_LANGUAGE_2 = 2;
@@ -29,6 +30,7 @@ export default class {
     this.startGame = callbackConfig.startGame;
     this.inputHandled = true;
 
+    this.optionsManager = new UserOptionsManager(this.scene.sys.game);
     this.ui = vocabStudyUiHelper(this.scene.sys.game.config);
     this.selectedOption = RETURN_TO_MAP;
   }
@@ -101,7 +103,7 @@ export default class {
     this.option1Text = this.scene.add.bitmapText(
       this.ui.menuOption1TextX,
       this.ui.menuOption1TextY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       `Hide ${game.language1}`,
       vocabStudy.fonts.menuOptionSize
     );
@@ -112,7 +114,7 @@ export default class {
     this.option2Text = this.scene.add.bitmapText(
       this.ui.menuOption2TextX,
       this.ui.menuOption2TextY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       `Hide ${game.language2}`,
       vocabStudy.fonts.menuOptionSize
     );
@@ -123,7 +125,7 @@ export default class {
     this.option3Text = this.scene.add.bitmapText(
       this.ui.menuOption3TextX,
       this.ui.menuOption3TextY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       'Show All',
       vocabStudy.fonts.menuOptionSize
     );
@@ -134,7 +136,7 @@ export default class {
     this.option4Text = this.scene.add.bitmapText(
       this.ui.menuOption4TextX,
       this.ui.menuOption4TextY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       'Practice',
       vocabStudy.fonts.menuOptionSize
     );
@@ -145,7 +147,7 @@ export default class {
     this.option5Text = this.scene.add.bitmapText(
       this.ui.menuOption5TextX,
       this.ui.menuOption5TextY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       'Back to Map',
       vocabStudy.fonts.menuOptionSize
     );
@@ -156,7 +158,7 @@ export default class {
     this.option6Text = this.scene.add.bitmapText(
       this.ui.menuOption6TextX,
       this.ui.menuOption6TextY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       'Start Game',
       vocabStudy.fonts.menuOptionSize
     );

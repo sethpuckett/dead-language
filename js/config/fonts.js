@@ -1,7 +1,10 @@
 export default {
-  blueSkyWhite: 'blue-sky-white',
+  blueSky: 'blue-sky',
+  verdana: 'verdana',
   files: {
-    blueSkyWhitePng: 'assets/fonts/blue-sky-white.png',
-    blueSkyWhiteFnt: 'assets/fonts/blue-sky-white.fnt',
+    blueSkyPng: 'assets/fonts/blue-sky.png',
+    blueSkyFnt: 'assets/fonts/blue-sky.fnt',
+    verdanaPng: 'assets/fonts/verdana.png',
+    verdanaFnt: 'assets/fonts/verdana.fnt',
   },
 };

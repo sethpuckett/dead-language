@@ -1,6 +1,7 @@
 import { townMap, depth, lessonMap, images, fonts } from '../../config';
 import TownMapHelper from './TownMapHelper';
 import GameProgressManager from '../../data/GameProgressManager';
+import UserOptionsManager from '../../data/UserOptionsManager';
 
 const MAP_X_CELL_COUNT = 9;
 const MAP_Y_CELL_COUNT = 5;
@@ -10,6 +11,7 @@ export default class {
     this.scene = scene;
     this.mapHelper = new TownMapHelper();
     this.progressManager = new GameProgressManager(this.scene.sys.game.db);
+    this.optionsManager = new UserOptionsManager(this.scene.sys.game);
 
     this.selectedCell = { x: 0, y: 0 };
     this.inputHandled = false;
@@ -211,7 +213,7 @@ export default class {
     this.mapTitle = this.scene.add.bitmapText(
       this.scene.ui.mapTitleX,
       this.scene.ui.mapTitleY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       townMap.mapTitleText,
       townMap.fonts.mapTitleSize
     );
@@ -250,7 +252,7 @@ export default class {
       this.mapLocation = this.scene.add.bitmapText(
         this.scene.ui.mapLocationX,
         this.scene.ui.mapLocationY,
-        fonts.blueSkyWhite,
+        this.optionsManager.getSelectedFont(),
         location,
         townMap.fonts.mapLocationSize
       );

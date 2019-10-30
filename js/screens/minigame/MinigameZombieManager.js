@@ -29,7 +29,7 @@ export default class {
     this.scene = scene;
     this.stageParameters = stageParameters;
 
-    this.userOptionsManager = new UserOptionsManager(this.scene.sys.game);
+    this.optionsManager = new UserOptionsManager(this.scene.sys.game);
 
     this.totalDistance = scene.sys.game.config.height - hud.height;
     this.zombies = [];
@@ -263,7 +263,7 @@ export default class {
 
   getSplatterImage() {
     const index = Phaser.Math.RND.between(1, minigame.splatterVarieties);
-    const colorOption = this.userOptionsManager.getOptionValue(userOptions.blood);
+    const colorOption = this.optionsManager.getOptionValue(userOptions.blood);
     let baseImage = null;
     if (colorOption === userOptions.values.red) {
       baseImage = images.bloodSplatter;
@@ -314,7 +314,7 @@ export default class {
   // returns { image: image, animation: animation }
   getShotImageConfig(weaponType) {
     let config = null;
-    const colorOption = this.userOptionsManager.getOptionValue(userOptions.blood);
+    const colorOption = this.optionsManager.getOptionValue(userOptions.blood);
     if (weaponType === weapons.shotgun) {
       if (colorOption === userOptions.values.green) {
         config = {
@@ -360,7 +360,8 @@ export default class {
     zombie.text.destroy();
     zombie.text = this.scene.add.bitmapText(
       0, zombie.y + this.scene.ui.zombieWordMargin,
-      fonts.blueSkyWhite, zombie.answer,
+      this.optionsManager.getSelectedFont(),
+      zombie.answer,
       this.getFontSize()
     );
     zombie.text.x = zombie.x - zombie.text.width / 2;
@@ -408,7 +409,8 @@ export default class {
 
     zombie.text = this.scene.add.bitmapText(
       0, zombie.y + this.scene.ui.zombieWordMargin,
-      fonts.blueSkyWhite, zombie.words[zombie.hits].language1,
+      this.optionsManager.getSelectedFont(),
+      zombie.words[zombie.hits].language1,
       this.getFontSize()
     );
     zombie.text.x = zombie.x - zombie.text.width / 2;
@@ -436,7 +438,7 @@ export default class {
   }
 
   getFontSize() {
-    const sizeOption = this.userOptionsManager.getOptionValue(userOptions.textSize);
+    const sizeOption = this.optionsManager.getOptionValue(userOptions.textSize);
     return sizeOption === userOptions.values.normal
       ? minigame.fonts.zombieSize : minigame.fonts.zombieSizeLarge;
   }

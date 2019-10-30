@@ -4,6 +4,7 @@ import endgameUiHelper from './ui/endgameUiHelper';
 import ModalChecker from './modal/ModalChecker';
 import GameProgressManager from '../data/GameProgressManager';
 import AudioManager from '../audio/AudioManager';
+import UserOptionsManager from '../data/UserOptionsManager';
 
 const MAP = 'map';
 const REDO = 'redo';
@@ -17,6 +18,7 @@ export default class extends Phaser.Scene {
 
   init(params) {
     this.progressManager = new GameProgressManager(this.sys.game.db);
+    this.optionsManager = new UserOptionsManager(this.sys.game);
     this.params = params;
     this.currentSelection = 0;
     this.inputHandled = false;
@@ -70,9 +72,9 @@ export default class extends Phaser.Scene {
     const statusLabel = this.add.bitmapText(
       this.ui.statusLabelX,
       this.ui.statusLabelY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       statusText,
-      endgame.fonts.statusSize
+      endgame.fonts.statusSize,
     );
     statusLabel.setOrigin(this.ui.statusLabelOrigin);
     statusLabel.setDepth(depth.endgame.text);
@@ -97,10 +99,12 @@ export default class extends Phaser.Scene {
     this.options.forEach((o, i) => {
       const text = this.add.bitmapText(
         this.ui.menuTextX,
-        this.ui.menuTextY + (this.ui.menuTextVerticalPadding * i),
-        fonts.blueSkyWhite,
+        this.ui.menuTextY
+          + (this.ui.menuTextVerticalPadding * i)
+          + this.optionsManager.getSelectedFontYOffset(),
+        this.optionsManager.getSelectedFont(),
         o.text,
-        endgame.fonts.menuSize
+        endgame.fonts.menuSize,
       );
       text.setOrigin(this.ui.menuTextOriginX, this.ui.menuTextOriginY);
       text.setDepth(depth.endgame.text);

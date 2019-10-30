@@ -11,7 +11,7 @@ export default {
     timerTint: 0xffffff,
     textEntrySize: 18,
     textEntryTint: 0xffffff,
-    statusSize: 14,
+    statusSize: 12,
     statusSizeSmall: 11,
     statusTint: 0xffffff,
   },

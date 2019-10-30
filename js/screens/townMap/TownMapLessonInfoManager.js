@@ -1,10 +1,12 @@
-import { fonts, townMap, depth } from '../../config';
+import { townMap, depth } from '../../config';
 import TownMapHelper from './TownMapHelper';
+import UserOptionsManager from '../../data/UserOptionsManager';
 
 export default class {
   constructor(scene) {
     this.scene = scene;
     this.mapHelper = new TownMapHelper();
+    this.optionsManager = new UserOptionsManager(this.scene.sys.game);
 
     this.borderGraphics = this.scene.add.graphics();
     this.borderGraphics.setDepth(depth.townMap.border);
@@ -59,8 +61,8 @@ export default class {
       const lesson = this.scene.sys.game.db.getLesson(this.lessonId);
       this.lessonInfoTitle = this.scene.add.bitmapText(
         this.scene.ui.lessonInfoTitleX,
-        this.scene.ui.lessonInfoTitleY,
-        fonts.blueSkyWhite,
+        this.scene.ui.lessonInfoTitleY + this.optionsManager.getSelectedFontYOffset(),
+        this.optionsManager.getSelectedFont(),
         lesson.name,
         townMap.fonts.lessonInfoTitleSize
       );
@@ -72,8 +74,8 @@ export default class {
 
       this.lessonInfoText = this.scene.add.bitmapText(
         this.scene.ui.lessonInfoTextX,
-        this.scene.ui.lessonInfoTextY,
-        fonts.blueSkyWhite,
+        this.scene.ui.lessonInfoTextY + this.optionsManager.getSelectedFontYOffset(),
+        this.optionsManager.getSelectedFont(),
         lesson.info,
         townMap.fonts.lessonInfoTextSize
       );

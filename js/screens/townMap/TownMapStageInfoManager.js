@@ -2,6 +2,7 @@ import { fonts, townMap, images, animations, depth, gameTypes } from '../../conf
 import TownMapHelper from './TownMapHelper';
 import { animationHelper, gameTypeHelper } from '../../util';
 import GameProgressManager from '../../data/GameProgressManager';
+import UserOptionsManager from '../../data/UserOptionsManager';
 
 const ZOMBIE_IMAGE_SCALE = 2.5;
 
@@ -10,6 +11,7 @@ export default class {
     this.scene = scene;
     this.mapHelper = new TownMapHelper();
     this.progressManager = new GameProgressManager(this.scene.sys.game.db);
+    this.optionsManager = new UserOptionsManager(this.scene.sys.game);
 
     this.borderGraphics = this.scene.add.graphics();
     this.borderGraphics.setDepth(depth.townMap.border);
@@ -100,7 +102,7 @@ export default class {
     this.stageInfoType = this.scene.add.bitmapText(
       this.scene.ui.stageInfoTypeX,
       this.scene.ui.stageInfoTypeY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       gameTypeHelper.getName(stageType),
       townMap.fonts.stageInfoTypeSize
     );
@@ -115,7 +117,7 @@ export default class {
     this.stageInfoSubtitle = this.scene.add.bitmapText(
       this.scene.ui.stageInfoSubtitleX,
       this.scene.ui.stageInfoSubtitleY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       subtitleText,
       townMap.fonts.stageInfoSubtitleSize
     );
@@ -132,7 +134,7 @@ export default class {
     this.stageInfoTitle = this.scene.add.bitmapText(
       this.scene.ui.stageInfoTitleX,
       this.scene.ui.stageInfoTitleY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       `Stage ${this.stageNumber.toString().padStart(2, '0')}`,
       townMap.fonts.stageInfoTitleSize
     );
@@ -190,7 +192,7 @@ export default class {
     this.stageInfoTitle = this.scene.add.bitmapText(
       this.scene.ui.stageInfoTitleX,
       this.scene.ui.stageInfoTitleY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       'Lesson Review',
       townMap.fonts.stageInfoTitleSize
     );

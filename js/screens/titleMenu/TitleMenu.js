@@ -1,11 +1,12 @@
 import Phaser from 'phaser';
-import { images, titleMenu, fonts, screens, depth, lessons } from '../../config';
+import { images, titleMenu, screens, depth, lessons } from '../../config';
 import titleMenuUiHelper from '../ui/titleMenuUiHelper';
 import TitleZombieManager from './TitleZombieManager';
 import TitleSpawnManager from './TitleSpawnManager';
 import ModalHelper from '../modal/ModalHelper';
 import GameProgressManager from '../../data/GameProgressManager';
 import AudioManager from '../../audio/AudioManager';
+import UserOptionsManager from '../../data/UserOptionsManager';
 
 const START = 'start';
 const OPTIONS = 'options';
@@ -21,6 +22,7 @@ export default class extends Phaser.Scene {
     this.progressManager = new GameProgressManager(this.sys.game.db);
     this.modalHelper = new ModalHelper(this);
     this.audioManager = new AudioManager(this);
+    this.optionsManager = new UserOptionsManager(this.sys.game);
     this.menuOptions = [];
     this.currentSelection = 0;
     this.selectedOption = '';
@@ -79,7 +81,7 @@ export default class extends Phaser.Scene {
       this.loginText = this.add.bitmapText(
         this.ui.loginTextX,
         this.ui.loginTextY,
-        fonts.blueSkyWhite,
+        this.optionsManager.getSelectedFont(),
         titleMenu.loginText,
         titleMenu.fonts.loginSize
       );
@@ -145,7 +147,7 @@ export default class extends Phaser.Scene {
     this.instructionText = this.add.bitmapText(
       this.ui.instructionsX,
       this.ui.instructionsY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       titleMenu.instructions,
       titleMenu.fonts.instructionsSize
     );
@@ -158,8 +160,10 @@ export default class extends Phaser.Scene {
     this.menuOptions.forEach((o, i) => {
       const text = this.add.bitmapText(
         this.ui.textX,
-        this.ui.textY + (this.ui.textVerticalPadding * i),
-        fonts.blueSkyWhite,
+        this.ui.textY
+          + (this.ui.textVerticalPadding * i)
+          + this.optionsManager.getSelectedFontYOffset(),
+        this.optionsManager.getSelectedFont(),
         o.text,
         titleMenu.fonts.textSize
       );

@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { animations, loading, debug, screens, images, fonts, audio } from '../config';
 import loadingUiHelper from './ui/loadingUiHelper';
 import { animationHelper } from '../util';
+import UserOptionsManager from '../data/UserOptionsManager';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -9,6 +10,7 @@ export default class extends Phaser.Scene {
   }
 
   preload() {
+    this.optionsManager = new UserOptionsManager(this.sys.game);
     this.sys.game.db.loadLessons(this.tryStart, this);
     this.sys.game.db.loadStages(this.tryStart, this);
     this.ui = loadingUiHelper(this.sys.game.config);
@@ -48,9 +50,9 @@ export default class extends Phaser.Scene {
     const loadingText = this.add.bitmapText(
       this.ui.loadingTextX,
       this.ui.loadingTextY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       'LOADING',
-      loading.fonts.loadingTextSize
+      loading.fonts.loadingTextSize,
     );
     loadingText.setOrigin(this.ui.loadingTextOrigin);
     loadingText.setTintFill(loading.fonts.loadingTextTint);

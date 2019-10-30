@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { images, depth, screens, registration, fonts } from '../config';
 import registrationUiHelper from './ui/registrationUiHelper';
 import LogInState from '../data/LoginState';
+import UserOptionsManager from '../data/UserOptionsManager';
 
 const ELLIPSES_STATES = ['', '.', '..', '...'];
 
@@ -13,6 +14,7 @@ export default class extends Phaser.Scene {
   create() {
     this.ellipsesStateIndex = 0;
 
+    this.optionsManager = new UserOptionsManager(this.sys.game);
     this.ui = registrationUiHelper(this.sys.game.config);
     this.createBackground();
     this.createText();
@@ -35,7 +37,7 @@ export default class extends Phaser.Scene {
     this.loadingLabel = this.add.bitmapText(
       0, // X is calculated below (dynamic due to animated ellipses)
       this.ui.loadingLabelY,
-      fonts.blueSkyWhite,
+      this.optionsManager.getSelectedFont(),
       registration.loadingText,
       registration.fonts.loadingSize
     );

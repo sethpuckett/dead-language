@@ -3,6 +3,7 @@ import { fonts, depth, choiceModal, images } from '../../config';
 import choiceModalUiHelper from '../ui/choiceModalUiHelper';
 import AudioManager from '../../audio/AudioManager';
 import { util } from '../../util';
+import UserOptionsManager from '../../data/UserOptionsManager';
 
 const MIN_WIDTH = 450;
 
@@ -13,6 +14,7 @@ export default class {
     this.choices = choices;
     this.ui = choiceModalUiHelper(this.scene.sys.game.config);
     this.audioManager = new AudioManager(this.scene);
+    this.optionsManager = new UserOptionsManager(this.scene.sys.game);
 
     this.selectedIndex = 0;
   }
@@ -164,7 +166,10 @@ export default class {
   createText() {
     const yBase = this.getChoiceTextYBase() - this.ui.textMargin;
     this.text = this.scene.add.bitmapText(
-      this.ui.w / 2, yBase, fonts.blueSkyWhite, this.textContent, choiceModal.textFontSize
+      this.ui.w / 2,
+      yBase,
+      this.optionsManager.getSelectedFont(),
+      this.textContent, choiceModal.textFontSize
     );
     this.text.setOrigin(this.ui.textOriginX, this.ui.textOriginY);
     this.text.setCenterAlign();
@@ -180,7 +185,7 @@ export default class {
       const text = this.scene.add.bitmapText(
         this.ui.choiceTextX,
         this.getChoiceTextYBase() + yOffset,
-        fonts.blueSkyWhite,
+        this.optionsManager.getSelectedFont(),
         choice,
         choiceModal.choiceFontSize
       );
