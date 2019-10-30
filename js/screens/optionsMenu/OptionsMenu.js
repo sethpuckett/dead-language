@@ -76,20 +76,35 @@ export default class extends Phaser.Scene {
     });
   }
 
+  clearMenu() {
+    if (this.menuBitmapTexts != null) {
+      this.menuBitmapTexts.forEach((text) => {
+        text.destroy();
+      });
+
+      this.menuBitmapTexts = null;
+    }
+  }
+
   createMenu() {
+    this.clearMenu();
+
+    const fontValue = this.selectedValues.find(v => v.key === userOptions.font).value;
+    this.menuBitmapTexts = [];
     this.menuStates = [];
     this.menuOptions.forEach((option, i) => {
       const labelY = this.ui.menuBaseY + (this.ui.menuVerticalPadding * i);
       const labelText = this.add.bitmapText(
         this.ui.menuLabelBaseX,
         labelY,
-        this.optionsManager.getSelectedFont(),
+        this.optionsManager.getFontForUserOption(fontValue),
         option.label,
         optionsMenu.fonts.labelSize
       );
       labelText.setOrigin(this.ui.menuLabelOriginX, this.ui.menuLabelOriginY);
       labelText.setDepth(depth.optionsMenu.text);
       labelText.setTintFill(optionsMenu.fonts.labelTint);
+      this.menuBitmapTexts.push(labelText);
 
       const valueTexts = [];
       let totalValueWidth = 0;
@@ -99,7 +114,7 @@ export default class extends Phaser.Scene {
         const valueText = this.add.bitmapText(
           valueX,
           valueY,
-          this.optionsManager.getSelectedFont(),
+          this.optionsManager.getFontForUserOption(fontValue),
           value,
           optionsMenu.fonts.optionSize
         );
@@ -111,6 +126,7 @@ export default class extends Phaser.Scene {
         totalValueWidth += bounds.width + this.ui.menuValueHorizontalPadding;
 
         valueTexts.push(valueText);
+        this.menuBitmapTexts.push(valueText);
       });
       const menuState = { key: option.key, label: labelText, values: valueTexts };
       this.menuStates.push(menuState);
@@ -120,13 +136,14 @@ export default class extends Phaser.Scene {
                     + this.ui.returnOptionVerticalPadding;
     const returnText = this.add.bitmapText(
       this.ui.returnOptionX, returnY,
-      this.optionsManager.getSelectedFont(),
+      this.optionsManager.getFontForUserOption(fontValue),
       optionsMenu.labels.return,
       optionsMenu.fonts.labelSize
     );
     returnText.setOrigin(this.ui.returnOptionOriginX, this.ui.returnOptionOriginY);
     returnText.setDepth(depth.optionsMenu.text);
     returnText.setTintFill(optionsMenu.fonts.labelTint);
+    this.menuBitmapTexts.push(returnText);
 
     this.menuStates.push({ key: RETURN, label: returnText });
   }
@@ -191,6 +208,10 @@ export default class extends Phaser.Scene {
     this.playMenuMove();
     if (menuState.key === userOptions.music) {
       this.setMusicState();
+    } else if (menuState.key === userOptions.font) {
+      this.createMenu();
+      this.createOptionSelector();
+      this.createAllValueSelectors();
     }
     this.createValueSelector(menuState.key);
   }
@@ -205,6 +226,10 @@ export default class extends Phaser.Scene {
     this.playMenuMove();
     if (menuState.key === userOptions.music) {
       this.setMusicState();
+    } else if (menuState.key === userOptions.font) {
+      this.createMenu();
+      this.createOptionSelector();
+      this.createAllValueSelectors();
     }
     this.createValueSelector(menuState.key);
   }

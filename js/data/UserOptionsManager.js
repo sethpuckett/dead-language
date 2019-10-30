@@ -25,14 +25,18 @@ export default class {
 
   getSelectedFont() {
     const selectedFontOption = this.getOptionValue(userOptions.font);
-    if (selectedFontOption === userOptions.values.pixel) {
+    return this.getFontForUserOption(selectedFontOption);
+  }
+
+  getFontForUserOption(value) {
+    if (value === userOptions.values.pixel) {
       return fonts.blueSky;
     }
-    if (selectedFontOption === userOptions.values.smooth) {
+    if (value === userOptions.values.smooth) {
       return fonts.verdana;
     }
 
-    throw Error(`Invalid selected font option: ${selectedFontOption}`);
+    throw Error(`Invalid selected font option: ${value}`);
   }
 
   getSelectedFontYOffset() {
