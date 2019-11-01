@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { modal, fonts, depth } from '../../config';
+import { modal, depth } from '../../config';
 import modalUiHelper from '../ui/modalUiHelper';
 import UserOptionsManager from '../../data/UserOptionsManager';
 
