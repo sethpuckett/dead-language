@@ -1,5 +1,7 @@
 export default {
   musicDelay: 0.2,
+  musicDefaultVolume: 0.4,
+  soundEffectsDefaultVolume: 0.6,
   none: 'none',
   menuMove: 'menu-move',
   menuSelectShoot: 'menu-select-shoot',
