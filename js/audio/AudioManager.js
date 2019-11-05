@@ -68,11 +68,12 @@ export default class {
     }
   }
 
-  setMusicVolume(volume) {
+  setMusicVolume(relativeVolume) {
+    const actualVolume = audio.musicDefaultVolume * relativeVolume;
     if (this.musicIntro != null) {
-      this.musicIntro.setVolume(volume);
+      this.musicIntro.setVolume(actualVolume);
     }
-    this.music.setVolume(volume);
+    this.music.setVolume(actualVolume);
   }
 
   stopMusic() {
@@ -97,7 +98,9 @@ export default class {
     }
 
     if (this.optionsManager.soundEffectsEnabled() || override) {
-      this.sounds[key].play();
+      this.sounds[key].play({
+        volume: audio.soundEffectsDefaultVolume,
+      });
     }
   }
 
@@ -106,7 +109,10 @@ export default class {
   playMusicIntro() {
     this.musicIntro.on('complete', () => this.playMainMusicLoop());
     this.musicState = INTRO_PLAYING;
-    this.musicIntro.play({ delay: audio.musicDelay });
+    this.musicIntro.play({
+      delay: audio.musicDelay,
+      volume: audio.musicDefaultVolume,
+    });
   }
 
   resumeMusicIntro() {
@@ -122,7 +128,11 @@ export default class {
   playMainMusicLoop() {
     this.musicState = PLAYING;
     const musicDelay = this.musicIntro != null ? 0 : audio.musicDelay;
-    this.music.play({ loop: true, delay: musicDelay });
+    this.music.play({
+      loop: true,
+      delay: musicDelay,
+      volume: audio.musicDefaultVolume,
+    });
   }
 
   resumeMainMusicLoop() {
