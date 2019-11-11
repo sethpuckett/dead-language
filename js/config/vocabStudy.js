@@ -4,9 +4,10 @@ export default {
   screenFadeTime: 750,
   practiceWordBuffer: 1250,
   fonts: {
-    vocabSize: 11,
-    vocabSizeSmall: 8,
-    dotSize: 9,
+    vocabSize: 13,
+    vocabSizeSmallPixel: 10,
+    vocabSizeSmallSmooth: 11,
+    dotSize: 10,
     vocabTint: 0xffffff,
     menuOptionSize: 11,
     menuOptionTint: 0xffffff,

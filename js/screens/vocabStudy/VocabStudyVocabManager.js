@@ -4,8 +4,11 @@ import VocabWordManager from '../../languageContent/VocabWordManager';
 import vocabStudyUiHelper from '../ui/vocabStudyUiHelper';
 import UserOptionsManager from '../../data/UserOptionsManager';
 
-const BIG_FONT_MAX_LENGTH = 22;
-const DOT_COUNT_MODIFIER = 26;
+const BIG_FONT_MAX_LENGTH = 21;
+const DOT_COUNT_MODIFIER_PIXEL = 23;
+const DOT_COUNT_MODIFIER_SMOOTH = 23;
+const DOT_COUNT_DIVIDER_PIXEL = 3;
+const DOT_COUNT_DIVIDER_SMOOTH = 2;
 
 
 export default class {
@@ -24,10 +27,11 @@ export default class {
     const vocabContent = [...this.vocab.content];
     util.shuffleArray(vocabContent);
     vocabContent.forEach((c, i) => {
-      const textLength = c.language1.length + this.vocab.l2WithGender(c).length;
-      const fontSize = textLength <= BIG_FONT_MAX_LENGTH
-        ? vocabStudy.fonts.vocabSize : vocabStudy.fonts.vocabSizeSmall;
-      const dotCount = Math.ceil(Math.max((DOT_COUNT_MODIFIER - textLength) / 4, 0));
+      const length = c.language1.length + this.vocab.l2WithGender(c).length;
+      const fontSize = this.getFontSize(length);
+      const dotCount = Math.floor(
+        Math.max((this.getDotModifier() - length) / this.getDotDivider(), 0)
+      );
 
       let vocab1X = 0;
       let vocab2X = 0;
@@ -145,5 +149,43 @@ export default class {
     this.language1Group.getChildren().forEach((t) => { t.visible = false; });
     this.dotsGroup.getChildren().forEach((t) => { t.visible = false; });
     this.language2Group.getChildren().forEach((t) => { t.visible = false; });
+  }
+
+  getDotModifier() {
+    const font = this.optionsManager.getSelectedFont();
+    if (font === fonts.blueSky) {
+      return DOT_COUNT_MODIFIER_PIXEL;
+    }
+    if (font === fonts.verdana) {
+      return DOT_COUNT_MODIFIER_SMOOTH;
+    }
+    throw Error(`Invalid font: ${font}`);
+  }
+
+  getDotDivider() {
+    const font = this.optionsManager.getSelectedFont();
+    if (font === fonts.blueSky) {
+      return DOT_COUNT_DIVIDER_PIXEL;
+    }
+    if (font === fonts.verdana) {
+      return DOT_COUNT_DIVIDER_SMOOTH;
+    }
+    throw Error(`Invalid font: ${font}`);
+  }
+
+  getFontSize(textLength) {
+    const useBigFont = textLength <= BIG_FONT_MAX_LENGTH;
+    if (useBigFont) {
+      return vocabStudy.fonts.vocabSize;
+    }
+
+    const font = this.optionsManager.getSelectedFont();
+    if (font === fonts.blueSky) {
+      return vocabStudy.fonts.vocabSizeSmallPixel;
+    }
+    if (font === fonts.verdana) {
+      return vocabStudy.fonts.vocabSizeSmallSmooth;
+    }
+    throw Error(`Invalid font: ${font}`);
   }
 }
