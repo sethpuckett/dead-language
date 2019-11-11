@@ -6,10 +6,12 @@ export default (config) => {
   const u = uiHelper(config);
   const hudUi = hudUiHelper(config);
 
+  const vocabAreaWidth = u.w * 0.395;
+
   return {
     vocabLeft1X: u.padding,
-    vocabLeft2X: u.w_33p - u.padding,
-    vocabRight1X: u.w_66p + u.padding,
+    vocabLeft2X: vocabAreaWidth - u.padding,
+    vocabRight1X: u.w - vocabAreaWidth + u.padding,
     vocabRight2X: u.w - u.padding,
     vocab1OriginX: u.left,
     vocab1OriginY: u.top,
@@ -20,9 +22,9 @@ export default (config) => {
     dotsOriginX: u.center,
     dotsOriginY: u.top,
 
-    grassX: u.w_33p + u.padding,
+    grassX: vocabAreaWidth + u.padding,
     grassY: 0,
-    grassWidth: u.w_33p - (u.padding * 2),
+    grassWidth: u.w - (vocabAreaWidth * 2) - (u.padding * 2),
     get grassHeight() { return (u.h - hud.height - hud.bufferHeight); },
     grassOriginX: u.left,
     grassOriginY: u.top,
@@ -79,13 +81,13 @@ export default (config) => {
     shotBlastBottleOriginX: u.center,
     shotBlastBottleOriginY: u.bottom,
 
-    missBlastLeftMinX: u.w_35p,
+    missBlastLeftMinX: vocabAreaWidth + (u.padding * 2),
     missBlastLeftMinY: u.padding,
-    missBlastLeftMaxX: u.w_2 - u.w_5p,
+    missBlastLeftMaxX: u.w_2 - u.w * 0.04,
     missBlastLeftMaxY: u.h_25p,
-    missBlastRightMinX: u.w_2 + u.w_5p,
+    missBlastRightMinX: u.w_2 + u.w * 0.04,
     missBlastRightMinY: u.padding,
-    missBlastRightMaxX: u.w * 0.64,
+    missBlastRightMaxX: u.w - vocabAreaWidth - (u.padding * 2),
     missBlastRightMaxY: u.h_25p,
     missBlastOrigin: u.center,
   };
