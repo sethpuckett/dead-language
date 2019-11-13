@@ -22,9 +22,14 @@ export default {
   },
   fonts: {
     statusSize: 32,
-    statusTint: 0xffff22,
+    statusTint: 0xffffff,
     menuSize: 22,
     menuTint: 0xffffff,
+    statSize: 18,
+    statTint: 0xffff22,
+  },
+  stats: {
+    zombieKillLabel: 'Zombies killed',
   },
   menu: {
     returnToMap: 'Return to Map',

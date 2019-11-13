@@ -191,7 +191,7 @@ export default class extends Phaser.Scene {
     releasedWords.forEach(w => this.vocab.releaseWord(w));
     this.progressManager.saveStageCompleted(this.stageId, () => {
       this.audioManager.stopMusic();
-      this.scene.start(screens.endgame, { status: endgame.win, stageId: this.stageId });
+      this.scene.start(screens.endgame, this.getEndgameParams(true));
     });
   }
 
@@ -223,7 +223,7 @@ export default class extends Phaser.Scene {
 
   loseGame() {
     this.audioManager.stopMusic();
-    this.scene.start(screens.endgame, { status: endgame.lose, stageId: this.stageId });
+    this.scene.start(screens.endgame, this.getEndgameParams(false));
   }
 
   updateGameTime() {
@@ -324,7 +324,7 @@ export default class extends Phaser.Scene {
       this.enableInputHandling();
       if (keyCode === this.keys.ESC.keyCode) {
         this.audioManager.stopMusic();
-        this.scene.start(screens.endgame, { status: endgame.lose, stageId: this.stageId });
+        this.scene.start(screens.endgame, this.getEndgameParams(false));
       }
     });
   }
@@ -343,5 +343,15 @@ export default class extends Phaser.Scene {
   isReviewStage() {
     const stageType = this.progressManager.getStageType(this.stageId);
     return stageType === gameTypes.zombieAssaultReview;
+  }
+
+  getEndgameParams(won) {
+    const endgameStatus = won ? endgame.win : endgame.lose;
+
+    return {
+      status: endgameStatus,
+      zombiesKilled: this.score,
+      stageId: this.stageId,
+    };
   }
 }

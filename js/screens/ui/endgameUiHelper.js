@@ -12,11 +12,20 @@ export default (config) => {
     backgroundImageOriginY: u.top,
 
     statusLabelX: u.w_2,
-    statusLabelY: u.h_40p,
+    statusLabelY: u.h_15p,
     statusLabelOrigin: u.center,
 
+    leftStatLabelX: u.w_5p,
+    leftStatValueX: u.w_40p,
+    rightStatLabelX: u.w_50p,
+    rightStatValueX: u.w_85p,
+    get statBaseY() { return this.statusLabelY + u.h_10p; },
+    statVerticalPadding: u.h * 0.075,
+    statOriginX: u.left,
+    statOriginY: u.top,
+
     menuTextX: u.w_40p,
-    get menuTextY() { return this.statusLabelY + u.h_10p; },
+    menuTextY: u.h_75p,
     menuTextOriginX: u.left,
     menuTextOriginY: u.top,
     menuTextVerticalPadding: u.h * 0.075,
