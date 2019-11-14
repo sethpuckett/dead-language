@@ -50,6 +50,7 @@ export default class extends Phaser.Scene {
     this.ui = minigameUiHelper(this.sys.game.config);
 
     this.score = 0;
+    this.hitsTaken = 0;
     this.cash = this.stageParameters.startCash;
     this.health = this.stageParameters.startHealth;
     this.weapon = this.stageParameters.weapons.default;
@@ -197,6 +198,7 @@ export default class extends Phaser.Scene {
 
   changeHealth(amount) {
     if (amount < 0) {
+      this.hitsTaken += 1;
       this.cameraDamageEffect();
       this.statusManager.setStatus({
         image: images.zombieFace,
@@ -349,9 +351,10 @@ export default class extends Phaser.Scene {
     const endgameStatus = won ? endgame.win : endgame.lose;
 
     return {
+      stageId: this.stageId,
       status: endgameStatus,
       zombiesKilled: this.score,
-      stageId: this.stageId,
+      hitsTaken: this.hitsTaken,
     };
   }
 }
