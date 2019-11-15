@@ -11,6 +11,7 @@ export default class {
   drawStats() {
     this.drawZombiesKilled(0);
     this.drawHitsTaken(1);
+    this.drawCashCollected(2);
   }
 
   drawZombiesKilled(statIndex) {
@@ -22,6 +23,12 @@ export default class {
   drawHitsTaken(statIndex) {
     const labelText = endgame.stats.hitsTakenLabel;
     const valueText = this.params.hitsTaken;
+    this.drawStat(statIndex, labelText, valueText);
+  }
+
+  drawCashCollected(statIndex) {
+    const labelText = endgame.stats.cashCollectedLabel;
+    const valueText = `$${this.params.cashCollected}`;
     this.drawStat(statIndex, labelText, valueText);
   }
 

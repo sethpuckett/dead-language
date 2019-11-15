@@ -31,6 +31,7 @@ export default {
   stats: {
     zombieKillLabel: 'Zombies killed',
     hitsTakenLabel: 'Hits taken',
+    cashCollectedLabel: 'Cash collected',
   },
   menu: {
     returnToMap: 'Return to Map',

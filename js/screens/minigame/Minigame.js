@@ -51,6 +51,7 @@ export default class extends Phaser.Scene {
 
     this.score = 0;
     this.hitsTaken = 0;
+    this.cashCollected = 0;
     this.cash = this.stageParameters.startCash;
     this.health = this.stageParameters.startHealth;
     this.weapon = this.stageParameters.weapons.default;
@@ -355,6 +356,7 @@ export default class extends Phaser.Scene {
       status: endgameStatus,
       zombiesKilled: this.score,
       hitsTaken: this.hitsTaken,
+      cashCollected: this.cashCollected,
     };
   }
 }

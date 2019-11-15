@@ -9,6 +9,7 @@ export default class {
     switch (itemType) {
       case minigameItems.cash:
         this.scene.cash += this.scene.stageParameters.items.cashAmount;
+        this.scene.cashCollected += this.scene.stageParameters.items.cashAmount;
         this.scene.hudManager.setCash(this.scene.cash);
         this.scene.statusManager.setStatus({
           message: minigame.statusMessages.cashReceived,
