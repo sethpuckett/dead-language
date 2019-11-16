@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { fonts, minigame, minigameItems, images, depth, animations, userOptions } from '../../config';
+import { minigame, minigameItems, images, depth, animations, userOptions } from '../../config';
 import { textHelper } from '../../util';
 import UserOptionsManager from '../../data/UserOptionsManager';
 

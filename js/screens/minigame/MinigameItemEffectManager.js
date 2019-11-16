@@ -17,6 +17,7 @@ export default class {
         });
         break;
       case minigameItems.foodTier1:
+        this.scene.foodEaten += 1;
         this.scene.changeHealth(this.scene.stageParameters.items.foodTier1HealAmount);
         this.scene.statusManager.setStatus({
           message: minigame.statusMessages.foodTier1Received,

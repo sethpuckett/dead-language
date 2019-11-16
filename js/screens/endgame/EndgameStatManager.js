@@ -12,6 +12,7 @@ export default class {
     this.drawZombiesKilled(0);
     this.drawHitsTaken(1);
     this.drawCashCollected(2);
+    this.drawFoodEaten(3);
   }
 
   drawZombiesKilled(statIndex) {
@@ -29,6 +30,12 @@ export default class {
   drawCashCollected(statIndex) {
     const labelText = endgame.stats.cashCollectedLabel;
     const valueText = `$${this.params.cashCollected}`;
+    this.drawStat(statIndex, labelText, valueText);
+  }
+
+  drawFoodEaten(statIndex) {
+    const labelText = endgame.stats.foodEatenLabel;
+    const valueText = this.params.foodEaten;
     this.drawStat(statIndex, labelText, valueText);
   }
 

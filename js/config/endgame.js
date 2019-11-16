@@ -32,6 +32,7 @@ export default {
     zombieKillLabel: 'Zombies killed',
     hitsTakenLabel: 'Hits taken',
     cashCollectedLabel: 'Cash collected',
+    foodEatenLabel: 'Food eaten',
   },
   menu: {
     returnToMap: 'Return to Map',
