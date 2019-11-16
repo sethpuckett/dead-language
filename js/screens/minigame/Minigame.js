@@ -53,6 +53,7 @@ export default class extends Phaser.Scene {
     this.hitsTaken = 0;
     this.cashCollected = 0;
     this.foodEaten = 0;
+    this.mercenaryKills = 0;
     this.cash = this.stageParameters.startCash;
     this.health = this.stageParameters.startHealth;
     this.weapon = this.stageParameters.weapons.default;
@@ -359,6 +360,7 @@ export default class extends Phaser.Scene {
       hitsTaken: this.hitsTaken,
       cashCollected: this.cashCollected,
       foodEaten: this.foodEaten,
+      mercenaryKills: this.mercenaryKills,
     };
   }
 }

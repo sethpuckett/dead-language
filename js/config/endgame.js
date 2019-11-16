@@ -33,6 +33,7 @@ export default {
     hitsTakenLabel: 'Hits taken',
     cashCollectedLabel: 'Cash collected',
     foodEatenLabel: 'Food eaten',
+    mercenaryKillsLabel: 'Mercenary kills',
   },
   menu: {
     returnToMap: 'Return to Map',
