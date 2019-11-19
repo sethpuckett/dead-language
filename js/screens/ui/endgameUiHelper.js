@@ -16,9 +16,9 @@ export default (config) => {
     statusLabelOrigin: u.center,
 
     leftStatLabelX: u.w_5p,
-    leftStatValueX: u.w_45p,
+    leftStatValueX: u.w_40p,
     rightStatLabelX: u.w_50p,
-    rightStatValueX: u.w_90p,
+    rightStatValueX: u.w_85p,
     get statBaseY() { return this.statusLabelY + u.h_10p; },
     statVerticalPadding: u.h * 0.075,
     statOriginX: u.left,

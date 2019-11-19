@@ -25,7 +25,7 @@ export default {
     statusTint: 0xffffff,
     menuSize: 22,
     menuTint: 0xffffff,
-    statSize: 18,
+    statSize: 15,
     statTint: 0xffff22,
   },
   stats: {
@@ -34,6 +34,7 @@ export default {
     cashCollectedLabel: 'Cash collected',
     foodEatenLabel: 'Food eaten',
     mercenaryKillsLabel: 'Mercenary kills',
+    shotsFiredLabel: 'Shots fired',
   },
   menu: {
     returnToMap: 'Return to Map',
