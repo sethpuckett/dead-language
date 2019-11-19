@@ -33,9 +33,10 @@ export default {
     hitsTakenLabel: 'Hits taken',
     cashCollectedLabel: 'Cash collected',
     foodEatenLabel: 'Food eaten',
-    mercenaryKillsLabel: 'Mercenary shots',
+    mercenaryKillsLabel: 'Merc payments',
     shotsFiredLabel: 'Shots fired',
     accuracyLabel: 'Accuracy',
+    gradeLabel: 'Grade',
   },
   menu: {
     returnToMap: 'Return to Map',

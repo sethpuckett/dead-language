@@ -1,4 +1,5 @@
 import { endgame, depth } from '../../config';
+import GameStatManager from '../../gameStats/GameStatManager';
 
 const STATS_PER_SIDE = 5;
 
@@ -6,6 +7,7 @@ export default class {
   constructor(scene, params) {
     this.scene = scene;
     this.params = params;
+    this.gameStatManager = new GameStatManager();
   }
 
   drawStats() {
@@ -16,6 +18,7 @@ export default class {
     this.drawMercenaryKills(4);
     this.drawShotsFired(5);
     this.drawAccuracy(6);
+    this.drawGrade(7);
   }
 
   drawZombiesKilled(statIndex) {
@@ -61,6 +64,12 @@ export default class {
       percent = ((this.params.shotsHit / this.params.shotsFired) * 100).toFixed(1);
     }
     const valueText = `${percent}%`;
+    this.drawStat(statIndex, labelText, valueText);
+  }
+
+  drawGrade(statIndex) {
+    const labelText = endgame.stats.gradeLabel;
+    const valueText = this.gameStatManager.calculateLetterGrade(this.params);
     this.drawStat(statIndex, labelText, valueText);
   }
 
