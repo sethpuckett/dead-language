@@ -55,6 +55,7 @@ export default class extends Phaser.Scene {
     this.foodEaten = 0;
     this.mercenaryKills = 0;
     this.shotsFired = 0;
+    this.shotsHit = 0;
     this.cash = this.stageParameters.startCash;
     this.health = this.stageParameters.startHealth;
     this.weapon = this.stageParameters.weapons.default;
@@ -279,6 +280,10 @@ export default class extends Phaser.Scene {
 
     if (shotFired) {
       this.shotsFired += 1;
+
+      if (isCorrect) {
+        this.shotsHit += 1;
+      }
     }
     if (shotFired && this.ammo > 0) {
       this.updateAmmo(this.ammo - 1);
@@ -366,6 +371,7 @@ export default class extends Phaser.Scene {
       foodEaten: this.foodEaten,
       mercenaryKills: this.mercenaryKills,
       shotsFired: this.shotsFired,
+      shotsHit: this.shotsHit,
     };
   }
 }

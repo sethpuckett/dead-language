@@ -15,6 +15,7 @@ export default class {
     this.drawFoodEaten(3);
     this.drawMercenaryKills(4);
     this.drawShotsFired(5);
+    this.drawAccuracy(6);
   }
 
   drawZombiesKilled(statIndex) {
@@ -50,6 +51,16 @@ export default class {
   drawShotsFired(statIndex) {
     const labelText = endgame.stats.shotsFiredLabel;
     const valueText = this.params.shotsFired;
+    this.drawStat(statIndex, labelText, valueText);
+  }
+
+  drawAccuracy(statIndex) {
+    const labelText = endgame.stats.accuracyLabel;
+    let percent = 0;
+    if (this.params.shotsFired > 0) {
+      percent = ((this.params.shotsHit / this.params.shotsFired) * 100).toFixed(1);
+    }
+    const valueText = `${percent}%`;
     this.drawStat(statIndex, labelText, valueText);
   }
 
