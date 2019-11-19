@@ -1,7 +1,6 @@
 import { letterGrades, endgame } from '../config';
 
 export default class {
-
   /*
   Params are the same as those for the Endgame screen
   Params: {

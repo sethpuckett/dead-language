@@ -17,7 +17,7 @@ export default (config) => {
 
     leftStatLabelX: u.w_5p,
     leftStatValueX: u.w_40p,
-    rightStatLabelX: u.w_50p,
+    rightStatLabelX: u.w_55p,
     rightStatValueX: u.w_85p,
     get statBaseY() { return this.statusLabelY + u.h_10p; },
     statVerticalPadding: u.h * 0.075,
