@@ -1,7 +1,7 @@
 import { endgame, depth } from '../../config';
 import GameStatManager from '../../gameStats/GameStatManager';
 
-const STATS_PER_SIDE = 5;
+const STATS_PER_SIDE = 4;
 
 export default class {
   constructor(scene, params) {

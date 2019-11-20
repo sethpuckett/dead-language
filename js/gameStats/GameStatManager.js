@@ -61,7 +61,7 @@ export default class {
   }
 
   getAccuracyScore(shotsFired, shotsHit) {
-    let accuracy = 0;
+    let accuracy = 1;
     if (shotsFired > 0) {
       accuracy = shotsHit / shotsFired;
     }
