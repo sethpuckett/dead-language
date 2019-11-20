@@ -3,7 +3,7 @@ import minigameItems from './minigameItems';
 export default [
   {
     id: 'base',
-    gameTime: 10,
+    gameTime: 180,
     waveId: 'waves-base-180',
     waves: [],
     maxHealth: 20,
