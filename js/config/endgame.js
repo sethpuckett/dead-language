@@ -5,6 +5,13 @@ export default {
   lose: 'lose',
   winText: 'You did it!',
   loseText: 'Let\'s get out of here!',
+  spawnRows: 3,
+  baseSpawnRate: 1000,
+  spawnRange: 500,
+  baseFrontRunSpeed: 120,
+  frontRunRange: 4,
+  baseBackRunSpeed: 80,
+  backRunRange: 2,
   screenFadeTime: 750,
   audio: {
     music: {

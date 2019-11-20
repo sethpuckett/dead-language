@@ -60,8 +60,16 @@ export default {
     lessonPin: 12,
   },
   endgame: {
-    background: 0,
-    text: 1,
+    sky: 0,
+    backGrass: 1,
+    // 2 - 10 reserved for back zombies
+    backZombies: 2,
+    trees: 11,
+    // 12 - 20 reserved for front zombies
+    frontZombies: 12,
+    frontGrass: 21,
+    text: 22,
+    selector: 22,
   },
   optionsMenu: {
     background: 0,

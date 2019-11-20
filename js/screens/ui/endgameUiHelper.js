@@ -37,5 +37,14 @@ export default (config) => {
     selectWidth: u.w_10p,
     selectHeight: u.w_5p,
     get selectVerticalPadding() { return this.menuTextVerticalPadding; },
+
+    minBackSpawnY: u.h * 0.75,
+    maxBackSpawnY: u.h * 0.84,
+    minFrontSpawnY: u.h * 0.88,
+    maxFrontSpawnY: u.h * 0.95,
+
+    zombieFrontWidth: u.w * 0.09,
+    zombieBackWidth: u.w * 0.05,
+    zombieOrigin: u.center,
   };
 };

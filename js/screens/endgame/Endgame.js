@@ -6,6 +6,8 @@ import GameProgressManager from '../../data/GameProgressManager';
 import AudioManager from '../../audio/AudioManager';
 import UserOptionsManager from '../../data/UserOptionsManager';
 import EndgameStatManager from './EndgameStatManager';
+import EndgameZombieManager from './EndgameZombieManager';
+import EndgameSpawnManager from './EndgameSpawnManager';
 
 const MAP = 'map';
 const REDO = 'redo';
@@ -21,6 +23,8 @@ export default class extends Phaser.Scene {
     this.progressManager = new GameProgressManager(this.sys.game.db);
     this.optionsManager = new UserOptionsManager(this.sys.game);
     this.statManager = new EndgameStatManager(this, params);
+    this.zombieManager = new EndgameZombieManager(this);
+    this.spawnManager = new EndgameSpawnManager(this);
     this.params = params;
     this.currentSelection = 0;
     this.inputHandled = false;
@@ -58,16 +62,57 @@ export default class extends Phaser.Scene {
     this.checkStartModal();
   }
 
+  update(time, delta) {
+    if (!this.won) {
+      const spawn = this.spawnManager.getSpawn(time);
+      if (spawn.canSpawn) {
+        this.zombieManager.spawnZombie(spawn);
+      }
+      this.zombieManager.moveZombies(delta);
+      this.zombieManager.destroyDeadZombies();
+    }
+  }
+
   showBackground() {
-    this.background = this.add.sprite(
+    this.bgFrontGrass = this.add.sprite(
       this.ui.backgroundImageX,
       this.ui.backgroundImageY,
-      images.storyScreenBackground
+      images.titleScreenBgFrontGrass
     );
-    this.background.displayWidth = this.ui.backgroundImageWidth;
-    this.background.displayHeight = this.ui.backgroundImageHeight;
-    this.background.setOrigin(this.ui.backgroundImageOriginX, this.ui.backgroundImageOriginY);
-    this.background.setDepth(depth.endgame.background);
+    this.bgFrontGrass.displayWidth = this.ui.backgroundImageWidth;
+    this.bgFrontGrass.displayHeight = this.ui.backgroundImageHeight;
+    this.bgFrontGrass.setOrigin(this.ui.backgroundImageOriginX, this.ui.backgroundImageOriginY);
+    this.bgFrontGrass.setDepth(depth.titleMenu.frontGrass);
+
+    this.bgTrees = this.add.sprite(
+      this.ui.backgroundImageX,
+      this.ui.backgroundImageY,
+      images.titleScreenBgTrees
+    );
+    this.bgTrees.displayWidth = this.ui.backgroundImageWidth;
+    this.bgTrees.displayHeight = this.ui.backgroundImageHeight;
+    this.bgTrees.setOrigin(this.ui.backgroundImageOriginX, this.ui.backgroundImageOriginY);
+    this.bgTrees.setDepth(depth.titleMenu.trees);
+
+    this.bgBackGrass = this.add.sprite(
+      this.ui.backgroundImageX,
+      this.ui.backgroundImageY,
+      images.titleScreenBgBackGrass
+    );
+    this.bgBackGrass.displayWidth = this.ui.backgroundImageWidth;
+    this.bgBackGrass.displayHeight = this.ui.backgroundImageHeight;
+    this.bgBackGrass.setOrigin(this.ui.backgroundImageOriginX, this.ui.backgroundImageOriginY);
+    this.bgBackGrass.setDepth(depth.titleMenu.backGrass);
+
+    this.bgSky = this.add.sprite(
+      this.ui.backgroundImageX,
+      this.ui.backgroundImageY,
+      images.endgameScreenBgSky
+    );
+    this.bgSky.displayWidth = this.ui.backgroundImageWidth;
+    this.bgSky.displayHeight = this.ui.backgroundImageHeight;
+    this.bgSky.setOrigin(this.ui.backgroundImageOriginX, this.ui.backgroundImageOriginY);
+    this.bgSky.setDepth(depth.titleMenu.sky);
   }
 
   showStatus() {
@@ -124,6 +169,7 @@ export default class extends Phaser.Scene {
     this.selector.displayHeight = this.ui.selectHeight;
     this.selector.flipX = true;
     this.selector.setOrigin(this.ui.selectOriginX, this.ui.selectOriginY);
+    this.selector.setDepth(depth.endgame.selector);
   }
 
   checkStartModal() {
