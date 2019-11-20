@@ -43,8 +43,15 @@ export default (config) => {
     minFrontSpawnY: u.h * 0.88,
     maxFrontSpawnY: u.h * 0.95,
 
+    minBackDeadY: u.h * 0.75,
+    maxBackDeadY: u.h * 0.84,
+    minFrontDeadY: u.h * 0.88,
+    maxFrontDeadY: u.h * 0.92,
+
     zombieFrontWidth: u.w * 0.09,
     zombieBackWidth: u.w * 0.05,
     zombieOrigin: u.center,
+
+    deadZombieBuffer: u.w_5p,
   };
 };

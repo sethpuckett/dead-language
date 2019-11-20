@@ -8,6 +8,7 @@ import UserOptionsManager from '../../data/UserOptionsManager';
 import EndgameStatManager from './EndgameStatManager';
 import EndgameZombieManager from './EndgameZombieManager';
 import EndgameSpawnManager from './EndgameSpawnManager';
+import EndgameDeadZombieManager from './EndgameDeadZombieManager';
 
 const MAP = 'map';
 const REDO = 'redo';
@@ -25,6 +26,7 @@ export default class extends Phaser.Scene {
     this.statManager = new EndgameStatManager(this, params);
     this.zombieManager = new EndgameZombieManager(this);
     this.spawnManager = new EndgameSpawnManager(this);
+    this.deadZombieManager = new EndgameDeadZombieManager(this);
     this.params = params;
     this.currentSelection = 0;
     this.inputHandled = false;
@@ -57,6 +59,9 @@ export default class extends Phaser.Scene {
     this.createAudio();
     this.enableInputHandling();
     this.updateMenuSelection();
+    if (this.won) {
+      this.deadZombieManager.spawnZombies();
+    }
 
     this.audioManager.playMusic();
     this.checkStartModal();

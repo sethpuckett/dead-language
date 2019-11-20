@@ -12,6 +12,9 @@ export default {
   frontRunRange: 4,
   baseBackRunSpeed: 80,
   backRunRange: 2,
+  deadZombieCount: 10,
+  deadZombieColumns: 12,
+  deadZombieRows: 3,
   screenFadeTime: 750,
   audio: {
     music: {
