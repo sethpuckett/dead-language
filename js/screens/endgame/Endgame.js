@@ -36,7 +36,7 @@ export default class extends Phaser.Scene {
     if (this.sys.game.db.isUserLoggedIn()) {
       this.winOptions = [{ text: endgame.menu.returnToMap, key: MAP }];
       this.loseOptions = [
-        { text: endgame.menu.tryAgain, key: REDO }, { text: endgame.menu.returnToMap, key: MAP }
+        { text: endgame.menu.tryAgain, key: REDO }, { text: endgame.menu.returnToMap, key: MAP },
       ];
       if (this.allowTargetPractice()) {
         this.loseOptions.push({ text: endgame.menu.targetPractice, key: PRACTICE });
@@ -121,7 +121,7 @@ export default class extends Phaser.Scene {
   }
 
   showStatus() {
-    const statusText = this.params.status === endgame.win ? this.getWinText() : this.getLoseText();
+    const statusText = this.params.status === endgame.win ? endgame.winText : endgame.loseText;
     const statusLabel = this.add.bitmapText(
       this.ui.statusLabelX,
       this.ui.statusLabelY,
@@ -258,13 +258,5 @@ export default class extends Phaser.Scene {
 
   allowTargetPractice() {
     return this.progressManager.getStageType(this.stageId) === gameTypes.zombieAssault;
-  }
-
-  getWinText() {
-    return Phaser.Math.RND.pick(endgame.winTexts);
-  }
-
-  getLoseText() {
-    return Phaser.Math.RND.pick(endgame.loseTexts);
   }
 }

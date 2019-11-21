@@ -192,12 +192,12 @@ export default class extends Phaser.Scene {
   }
 
   gameTimerFinish() {
-    // destroy zombies so player doesn't take damage before callback fires
+    // destroy zombies so player doesn't take damage during modal
     const releasedWords = this.zombieManager.destroyAllZombies();
     releasedWords.forEach(w => this.vocab.releaseWord(w));
+
     this.progressManager.saveStageCompleted(this.stageId, () => {
-      this.audioManager.stopMusic();
-      this.scene.start(screens.endgame, this.getEndgameParams(true));
+      this.createEndgameModal(true);
     });
   }
 
@@ -229,8 +229,10 @@ export default class extends Phaser.Scene {
   }
 
   loseGame() {
-    this.audioManager.stopMusic();
-    this.scene.start(screens.endgame, this.getEndgameParams(false));
+    // destroy zombies so player doesn't take during modal display
+    const releasedWords = this.zombieManager.destroyAllZombies();
+    releasedWords.forEach(w => this.vocab.releaseWord(w));
+    this.createEndgameModal(false);
   }
 
   updateGameTime() {
@@ -373,5 +375,25 @@ export default class extends Phaser.Scene {
       shotsFired: this.shotsFired,
       shotsHit: this.shotsHit,
     };
+  }
+
+  createEndgameModal(won) {
+    let text = '';
+    if (won) {
+      text = Phaser.Math.RND.pick(minigame.modals.winTexts);
+    } else {
+      text = Phaser.Math.RND.pick(minigame.modals.loseTexts);
+    }
+
+    this.gameTimer.paused = true;
+    this.disableInputHandling();
+    this.hudManager.disableInputHandling();
+    this.endgameModal = new Modal(this, text);
+    this.endgameModal.draw();
+    this.endgameModal.enableInputClose();
+    this.endgameModal.setCloseCallback(() => {
+      this.audioManager.stopMusic();
+      this.scene.start(screens.endgame, this.getEndgameParams(won));
+    });
   }
 }
