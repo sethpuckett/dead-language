@@ -121,7 +121,7 @@ export default class extends Phaser.Scene {
   }
 
   showStatus() {
-    const statusText = this.params.status === endgame.win ? endgame.winText : endgame.loseText;
+    const statusText = this.params.status === endgame.win ? this.getWinText() : this.getLoseText();
     const statusLabel = this.add.bitmapText(
       this.ui.statusLabelX,
       this.ui.statusLabelY,
@@ -258,5 +258,13 @@ export default class extends Phaser.Scene {
 
   allowTargetPractice() {
     return this.progressManager.getStageType(this.stageId) === gameTypes.zombieAssault;
+  }
+
+  getWinText() {
+    return Phaser.Math.RND.pick(endgame.winTexts);
+  }
+
+  getLoseText() {
+    return Phaser.Math.RND.pick(endgame.loseTexts);
   }
 }

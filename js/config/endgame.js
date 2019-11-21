@@ -3,8 +3,22 @@ import audio from './audio';
 export default {
   win: 'win',
   lose: 'lose',
-  winText: 'You did it!',
-  loseText: 'Let\'s get out of here!',
+  winTexts: [
+    'That\'s another area cleared!',
+    'Area clear. Nice work out there.',
+    'Those zombies didn\'t stand a chance!',
+    '¡Felicidades! This area is clear.',
+    'Great shooting out there!',
+    '¡Buen trabajo! Area clear.',
+  ],
+  loseTexts: [
+    'We\'ve got to get out of here!',
+    'There\'s too many of them! Run!',
+    '¡Dios mio! They\'re everywhere!',
+    'Argh! Retreat and regroup!',
+    '¡Ay ay ay! We\'re not gonna make it!',
+    '¡Madre mía! Let\'s get back to camp!',
+  ],
   spawnRows: 3,
   baseSpawnRate: 1000,
   spawnRange: 500,
@@ -31,7 +45,7 @@ export default {
     },
   },
   fonts: {
-    statusSize: 32,
+    statusSize: 20,
     statusTint: 0xffffff,
     menuSize: 22,
     menuTint: 0xffffff,
