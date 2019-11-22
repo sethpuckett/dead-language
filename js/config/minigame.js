@@ -76,5 +76,42 @@ export default {
       'Press ESC again to quit.',
       'Press any other key to continue.',
     ],
+    winTexts: [
+      'That\'s another area cleared! Great job.',
+      'Area clear. Nice work out there.',
+      [
+        'Those zombies didn\'t stand a chance! That',
+        'does it for this area.',
+      ],
+      [
+        '¡Felicidades! This area is clear. Let\'s head',
+        'back to camp.',
+      ],
+      [
+        'We\'ve cleared another area. That was some',
+        'great shooting out there.',
+      ],
+      [
+        '¡Buen trabajo! The area is clear. Let\'s head',
+        'back to camp.',
+      ],
+    ],
+    loseTexts: [
+      'There\'s too many of them! Run!',
+      '¡Dios mio! They\'re everywhere! Retreat!',
+      '¡Ay ay ay! We\'re not gonna make it! Run away!',
+      [
+        'They\'re everywhere! We\'ve got to get out',
+        'of here!',
+      ],
+      [
+        'Argh! We can\'t stop them all! Retreat and',
+        'regroup!',
+      ],
+      [
+        '¡Madre mía! Let\'s get back to camp while we',
+        'still can!',
+      ],
+    ],
   },
 };

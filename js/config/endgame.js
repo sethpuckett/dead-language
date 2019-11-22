@@ -3,8 +3,18 @@ import audio from './audio';
 export default {
   win: 'win',
   lose: 'lose',
-  winText: 'You did it!',
-  loseText: 'Let\'s get out of here!',
+  winText: 'You win!',
+  loseText: 'You lose!',
+  spawnRows: 3,
+  baseSpawnRate: 1000,
+  spawnRange: 500,
+  baseFrontRunSpeed: 120,
+  frontRunRange: 4,
+  baseBackRunSpeed: 80,
+  backRunRange: 2,
+  deadZombieCount: 10,
+  deadZombieColumns: 12,
+  deadZombieRows: 3,
   screenFadeTime: 750,
   audio: {
     music: {
@@ -22,9 +32,21 @@ export default {
   },
   fonts: {
     statusSize: 32,
-    statusTint: 0xffff22,
+    statusTint: 0xffffff,
     menuSize: 22,
     menuTint: 0xffffff,
+    statSize: 15,
+    statTint: 0xffff22,
+  },
+  stats: {
+    zombieKillLabel: 'Zombies killed',
+    hitsTakenLabel: 'Hits taken',
+    cashCollectedLabel: 'Cash collected',
+    foodEatenLabel: 'Food eaten',
+    mercenaryKillsLabel: 'Merc payments',
+    shotsFiredLabel: 'Shots fired',
+    accuracyLabel: 'Accuracy',
+    gradeLabel: 'Grade',
   },
   menu: {
     returnToMap: 'Return to Map',

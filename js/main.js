@@ -3,7 +3,7 @@ import Minigame from './screens/minigame/Minigame';
 import Boot from './screens/Boot';
 import Loading from './screens/Loading';
 import TitleMenu from './screens/titleMenu/TitleMenu';
-import Endgame from './screens/Endgame';
+import Endgame from './screens/endgame/Endgame';
 import VocabStudy from './screens/vocabStudy/VocabStudy';
 import TownMap from './screens/townMap/TownMap';
 import Story from './screens/Story';

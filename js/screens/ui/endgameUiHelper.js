@@ -12,11 +12,20 @@ export default (config) => {
     backgroundImageOriginY: u.top,
 
     statusLabelX: u.w_2,
-    statusLabelY: u.h_40p,
+    statusLabelY: u.h_15p,
     statusLabelOrigin: u.center,
 
+    leftStatLabelX: u.w_5p,
+    leftStatValueX: u.w_40p,
+    rightStatLabelX: u.w_55p,
+    rightStatValueX: u.w_85p,
+    get statBaseY() { return this.statusLabelY + u.h_10p; },
+    statVerticalPadding: u.h * 0.075,
+    statOriginX: u.left,
+    statOriginY: u.top,
+
     menuTextX: u.w_40p,
-    get menuTextY() { return this.statusLabelY + u.h_10p; },
+    menuTextY: u.h_75p,
     menuTextOriginX: u.left,
     menuTextOriginY: u.top,
     menuTextVerticalPadding: u.h * 0.075,
@@ -28,5 +37,21 @@ export default (config) => {
     selectWidth: u.w_10p,
     selectHeight: u.w_5p,
     get selectVerticalPadding() { return this.menuTextVerticalPadding; },
+
+    minBackSpawnY: u.h * 0.75,
+    maxBackSpawnY: u.h * 0.84,
+    minFrontSpawnY: u.h * 0.88,
+    maxFrontSpawnY: u.h * 0.95,
+
+    minBackDeadY: u.h * 0.75,
+    maxBackDeadY: u.h * 0.84,
+    minFrontDeadY: u.h * 0.88,
+    maxFrontDeadY: u.h * 0.92,
+
+    zombieFrontWidth: u.w * 0.09,
+    zombieBackWidth: u.w * 0.05,
+    zombieOrigin: u.center,
+
+    deadZombieBuffer: u.w_5p,
   };
 };

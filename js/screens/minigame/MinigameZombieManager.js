@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { animations, depth, images, minigame, fonts, hud, weapons, userOptions } from '../../config';
+import { animations, depth, images, minigame, hud, weapons, userOptions } from '../../config';
 import { animationHelper, textHelper } from '../../util';
 import enemyTypes from '../../config/enemyTypes';
 import UserOptionsManager from '../../data/UserOptionsManager';
@@ -176,6 +176,7 @@ export default class {
       const word = this.getCurrentZombieWord(z);
       if (guess === textHelper.cleanText(word.language1)) {
         if (killZombie) {
+          this.scene.mercenaryKills += 1;
           z.words[z.hits].missed = true;
           if (this.stageParameters.enemies.showAnswerOnMerc) {
             z.answer = word.language2;

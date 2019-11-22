@@ -9,6 +9,7 @@ export default class {
     switch (itemType) {
       case minigameItems.cash:
         this.scene.cash += this.scene.stageParameters.items.cashAmount;
+        this.scene.cashCollected += this.scene.stageParameters.items.cashAmount;
         this.scene.hudManager.setCash(this.scene.cash);
         this.scene.statusManager.setStatus({
           message: minigame.statusMessages.cashReceived,
@@ -16,6 +17,7 @@ export default class {
         });
         break;
       case minigameItems.foodTier1:
+        this.scene.foodEaten += 1;
         this.scene.changeHealth(this.scene.stageParameters.items.foodTier1HealAmount);
         this.scene.statusManager.setStatus({
           message: minigame.statusMessages.foodTier1Received,
