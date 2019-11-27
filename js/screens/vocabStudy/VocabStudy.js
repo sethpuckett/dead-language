@@ -257,6 +257,7 @@ export default class extends Phaser.Scene {
   }
 
   returnToMap() {
+    this.menuManager.disableInputHandling();
     this.cameras.main.fade(vocabStudy.screenFadeTime, 0, 0, 0, false, (_c, progress) => {
       this.audioManager.setMusicVolume(1 - progress);
       if (progress === 1) {

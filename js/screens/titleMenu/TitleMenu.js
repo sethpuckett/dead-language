@@ -26,6 +26,7 @@ export default class extends Phaser.Scene {
     this.menuOptions = [];
     this.currentSelection = 0;
     this.selectedOption = '';
+    this.inputHandled = false;
 
     if (!this.sys.game.db.isUserLoggedIn()) {
       this.menuOptions.push({ text: titleMenu.menu.playDemo, key: START });
@@ -42,10 +43,10 @@ export default class extends Phaser.Scene {
     this.createBackground();
     this.createMenu();
     this.createInstructions();
-    this.createInput();
     this.createAudio();
     this.createLoginPrompt();
     this.updateMenuSelection();
+    this.enableInputHandling();
   }
 
   update(time, delta) {
@@ -92,6 +93,21 @@ export default class extends Phaser.Scene {
     }
   }
 
+  enableInputHandling() {
+    if (!this.inputHandled) {
+      this.inputHandled = true;
+      this.createInput();
+    }
+  }
+
+  disableInputHandling() {
+    if (this.inputHandled) {
+      this.inputHandled = false;
+      this.keys = null;
+      this.input.keyboard.off('keydown', this.handleKeyDown);
+    }
+  }
+
   createInput() {
     this.keys = this.input.keyboard.addKeys(
       'SPACE,ENTER,UP,DOWN,TAB'
@@ -110,6 +126,7 @@ export default class extends Phaser.Scene {
     } else if (e.keyCode === this.keys.DOWN.keyCode) {
       this.incrementMenuSelection();
     } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
+      this.disableInputHandling();
       this.selectedOption = this.menuOptions[this.currentSelection].key;
       this.audioManager.playSound(titleMenu.audio.menuSelect);
       this.selector.setFrame(1);

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { screens, images, depth, fonts, optionsMenu, userOptions } from '../../config';
+import { screens, images, depth, optionsMenu, userOptions } from '../../config';
 import optionsMenuUiHelper from '../ui/optionsMenuUiHelper';
 import UserOptionsManager from '../../data/UserOptionsManager';
 import AudioManager from '../../audio/AudioManager';
@@ -19,6 +19,7 @@ export default class extends Phaser.Scene {
   init() {
     this.optionsManager = new UserOptionsManager(this.sys.game);
     this.audioManager = new AudioManager(this);
+    this.inputHandled = false;
 
     this.selectedOption = 0;
     this.menuOptions = [
@@ -42,8 +43,8 @@ export default class extends Phaser.Scene {
     this.createMenu();
     this.createOptionSelector();
     this.createAllValueSelectors();
-    this.createInput();
     this.createAudio();
+    this.enableInputHandling();
 
     this.audioManager.playMusic();
   }
@@ -165,6 +166,21 @@ export default class extends Phaser.Scene {
       v.selectedIndex = index;
       v.value = value;
     });
+  }
+
+  enableInputHandling() {
+    if (!this.inputHandled) {
+      this.inputHandled = true;
+      this.createInput();
+    }
+  }
+
+  disableInputHandling() {
+    if (this.inputHandled) {
+      this.inputHandled = false;
+      this.keys = null;
+      this.input.keyboard.off('keydown', this.handleKeyDown);
+    }
   }
 
   createInput() {
@@ -293,6 +309,7 @@ export default class extends Phaser.Scene {
 
   optionSelected() {
     if (this.getSelectedOptionKey() === RETURN) {
+      this.disableInputHandling();
       this.optionsManager.setOptions(this.selectedValues, () => {
         this.cameras.main.fade(optionsMenu.screenFadeTime, 0, 0, 0, false, this.fadeCallback);
       });
