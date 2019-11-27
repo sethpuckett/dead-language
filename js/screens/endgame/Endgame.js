@@ -217,6 +217,7 @@ export default class extends Phaser.Scene {
     } else if (e.keyCode === this.keys.DOWN.keyCode) {
       this.incrementMenuSelection();
     } else if (e.keyCode === this.keys.SPACE.keyCode || e.keyCode === this.keys.ENTER.keyCode) {
+      this.disableInputHandling();
       this.audioManager.playSound(endgame.audio.soundEffects.menuSelect);
       this.selectedOption = this.options[this.currentSelection].key;
       this.selector.setFrame(1);
