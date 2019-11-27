@@ -137,16 +137,23 @@ export default class {
     }
   }
 
+  /*
+    returns: {
+      correct: bool
+      kill: bool
+    }
+  */
   checkGuess(text, weapon) {
     const guess = textHelper.cleanText(text);
     let isCorrect = false;
+    let kill = false;
 
     // stop checking when find a correct answer
     this.zombies.some((z) => {
       const word = this.getCurrentZombieWord(z);
       if (guess === textHelper.cleanText(word.language2)) {
         z.words[z.hits].missed = false;
-        this.shootZombie(z, weapon);
+        kill = this.shootZombie(z, weapon);
         isCorrect = true;
       }
       return isCorrect;
@@ -160,14 +167,17 @@ export default class {
           ? word.alternatives.map(w => textHelper.cleanText(w)) : null;
         if (alternatives != null && alternatives.includes(guess)) {
           z.words[z.hits].missed = false;
-          this.shootZombie(z, weapon);
+          kill = this.shootZombie(z, weapon);
           isCorrect = true;
         }
         return isCorrect;
       });
     }
 
-    return isCorrect;
+    return {
+      correct: isCorrect,
+      kill,
+    };
   }
 
   checkMercenary(text, killZombie) {
@@ -204,7 +214,9 @@ export default class {
 
   // Private
 
+  // returns true if zombie is killed, false otherwise
   shootZombie(zombie, weapon) {
+    let kill = false;
     const shotImageConfig = this.getShotImageConfig(weapon);
     const shot = this.scene.add.sprite(
       zombie.x, zombie.y - this.getZombieImageSize(zombie.type) / 2, shotImageConfig.image
@@ -220,10 +232,13 @@ export default class {
     this.playShootZombieSound(weapon);
 
     if (zombie.health <= 0) {
+      kill = true;
       this.killShotZombie(zombie);
     } else {
       this.injuryShotZombie(zombie);
     }
+
+    return kill;
   }
 
   playShootZombieSound(weapon) {

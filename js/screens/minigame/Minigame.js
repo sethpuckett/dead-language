@@ -242,13 +242,13 @@ export default class extends Phaser.Scene {
 
   submitAnswer() {
     const guess = this.hudManager.getTextEntry();
-    const isCorrect = this.zombieManager.checkGuess(guess, this.weapon);
+    const zombieCheck = this.zombieManager.checkGuess(guess, this.weapon);
     let shotFired = true;
 
     // if guess did not match, check mercenary
     let mercKill = false;
     let mercAttempt = false;
-    if (!isCorrect && this.mercenaryEnabled) {
+    if (!zombieCheck.correct && this.mercenaryEnabled) {
       const canAffordMerc = this.cash >= this.stageParameters.mercenaryCost;
       mercAttempt = this.mercenaryManager.checkGuess(guess, canAffordMerc);
       if (mercAttempt) {
@@ -263,7 +263,7 @@ export default class extends Phaser.Scene {
     }
 
     // if no match & no mercenary, check items
-    if (!isCorrect && !mercKill) {
+    if (!zombieCheck.correct && !mercKill) {
       const itemConfig = this.itemManager.checkGuess(guess);
       if (itemConfig != null) {
         this.audioManager.playSound(minigame.audio.soundEffects.itemGet);
@@ -274,7 +274,7 @@ export default class extends Phaser.Scene {
       }
     }
 
-    if (isCorrect) {
+    if (zombieCheck.kill) {
       this.score += 1;
     }
     this.hudManager.setKillValue(this.score);
@@ -283,7 +283,7 @@ export default class extends Phaser.Scene {
     if (shotFired) {
       this.shotsFired += 1;
 
-      if (isCorrect) {
+      if (zombieCheck.correct) {
         this.shotsHit += 1;
       }
     }
