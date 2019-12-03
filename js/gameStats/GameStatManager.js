@@ -27,6 +27,12 @@ export default class {
     return this.getGradeFromScore(hitsTakenScore + mercScore + accuracyScore);
   }
 
+  isNewGradeBetter(newGrade, oldGrade) {
+    const newScore = this.getScoreFromGrade(newGrade);
+    const oldScore = this.getScoreFromGrade(oldGrade);
+    return newScore < oldScore;
+  }
+
   // private
 
   getHitsTakenScore(hitsTaken) {
@@ -97,5 +103,25 @@ export default class {
     }
 
     return letterGrades.d;
+  }
+
+  getScoreFromGrade(grade) {
+    if (grade === letterGrades.aPlus) {
+      return 0;
+    }
+    if (grade === letterGrades.a) {
+      return 10;
+    }
+    if (grade === letterGrades.b) {
+      return 20;
+    }
+    if (grade === letterGrades.c) {
+      return 30;
+    }
+    if (grade === letterGrades.d) {
+      return 40;
+    }
+
+    return 50;
   }
 }

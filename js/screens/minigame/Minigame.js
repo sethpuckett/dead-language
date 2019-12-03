@@ -17,6 +17,7 @@ import UnlockableManager from '../../data/UnlockableManager';
 import StageParameterManager from '../../gameContent/StageParameterManager';
 import ReviewVocabManager from '../../languageContent/ReviewVocabManager';
 import AudioManager from '../../audio/AudioManager';
+import GameStatManager from '../../gameStats/GameStatManager';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -36,6 +37,7 @@ export default class extends Phaser.Scene {
     this.unlockableManager = new UnlockableManager(this.sys.game.db);
     this.stageParameterManager = new StageParameterManager();
     this.audioManager = new AudioManager(this);
+    this.statManager = new GameStatManager();
 
     this.stageParameters = this.stageParameterManager.getParameters(this.stageId);
 
@@ -196,9 +198,12 @@ export default class extends Phaser.Scene {
     const releasedWords = this.zombieManager.destroyAllZombies();
     releasedWords.forEach(w => this.vocab.releaseWord(w));
 
-    this.progressManager.saveStageCompleted(this.stageId, () => {
-      this.createEndgameModal(true);
-    });
+    this.progressManager.saveStageCompleted(
+      this.getGameStats(true),
+      () => {
+        this.createEndgameModal(true);
+      }
+    );
   }
 
   changeHealth(amount) {
@@ -361,10 +366,10 @@ export default class extends Phaser.Scene {
     return stageType === gameTypes.zombieAssaultReview;
   }
 
-  getEndgameParams(won) {
+  getGameStats(won) {
     const endgameStatus = won ? endgame.win : endgame.lose;
 
-    return {
+    const params = {
       stageId: this.stageId,
       status: endgameStatus,
       zombiesKilled: this.score,
@@ -375,6 +380,10 @@ export default class extends Phaser.Scene {
       shotsFired: this.shotsFired,
       shotsHit: this.shotsHit,
     };
+
+    const grade = this.statManager.calculateLetterGrade(params);
+    params.grade = grade;
+    return params;
   }
 
   createEndgameModal(won) {
@@ -393,7 +402,7 @@ export default class extends Phaser.Scene {
     this.endgameModal.enableInputClose();
     this.endgameModal.setCloseCallback(() => {
       this.audioManager.stopMusic();
-      this.scene.start(screens.endgame, this.getEndgameParams(won));
+      this.scene.start(screens.endgame, this.getGameStats(won));
     });
   }
 }

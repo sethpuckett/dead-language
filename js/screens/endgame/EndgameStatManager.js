@@ -1,5 +1,4 @@
 import { endgame, depth } from '../../config';
-import GameStatManager from '../../gameStats/GameStatManager';
 
 const STATS_PER_SIDE = 4;
 
@@ -7,7 +6,6 @@ export default class {
   constructor(scene, params) {
     this.scene = scene;
     this.params = params;
-    this.gameStatManager = new GameStatManager();
   }
 
   drawStats() {
@@ -69,7 +67,7 @@ export default class {
 
   drawGrade(statIndex) {
     const labelText = endgame.stats.gradeLabel;
-    const valueText = this.gameStatManager.calculateLetterGrade(this.params);
+    const valueText = this.params.grade;
     this.drawStat(statIndex, labelText, valueText);
   }
 
