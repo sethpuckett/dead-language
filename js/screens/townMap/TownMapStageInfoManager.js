@@ -1,4 +1,4 @@
-import { fonts, townMap, images, animations, depth, gameTypes } from '../../config';
+import { townMap, images, animations, depth, gameTypes } from '../../config';
 import TownMapHelper from './TownMapHelper';
 import { animationHelper, gameTypeHelper } from '../../util';
 import GameProgressManager from '../../data/GameProgressManager';
@@ -112,8 +112,7 @@ export default class {
     this.stageInfoType.setTintFill(townMap.fonts.stageInfoTypeColor);
     this.stageInfoType.setCenterAlign();
     this.stageInfoType.setTintFill(townMap.fonts.stageInfoTypeColor);
-    const x = gameTypes.zombieAssault;
-    const subtitleText = cleared ? townMap.clearedText : gameTypeHelper.getDescription(stageType);
+    const subtitleText = cleared ? this.getClearedText() : gameTypeHelper.getDescription(stageType);
     this.stageInfoSubtitle = this.scene.add.bitmapText(
       this.scene.ui.stageInfoSubtitleX,
       this.scene.ui.stageInfoSubtitleY,
@@ -306,5 +305,11 @@ export default class {
     }
     const stage = this.scene.sys.game.db.getStage(this.stageId);
     return stage.type === this.currentStageType && cleared === this.currentStageCleared;
+  }
+
+  getClearedText() {
+    const stats = this.progressManager.getStats(this.stageId);
+    const grade = stats != null && stats.grade != null ? stats.grade : townMap.gradeMissingText;
+    return `${townMap.gradeText}: ${grade}`;
   }
 }
