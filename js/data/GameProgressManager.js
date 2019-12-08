@@ -1,6 +1,7 @@
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import UnlockableManager from './UnlockableManager';
+import GameStatManager from '../gameStats/GameStatManager';
 import { gameTypes } from '../config';
 import { util } from '../util';
 
@@ -8,6 +9,7 @@ export default class {
   constructor(db) {
     this.db = db;
     this.unlockableManager = new UnlockableManager(db);
+    this.statManager = new GameStatManager();
   }
 
   isNewGame() {
@@ -30,6 +32,21 @@ export default class {
     if (this.db.userProfileLoaded) {
       const completed = this.db.userProfile.stagesCompleted;
       return completed != null && completed.includes(stageId);
+    }
+    throw Error('user profile has not been loaded. Call loadUserProfile() first');
+  }
+
+  getStats(stageId) {
+    if (!this.db.isUserLoggedIn()) {
+      return null;
+    }
+
+    if (this.db.userProfileLoaded) {
+      const allStats = this.db.userProfile.stats;
+      if (allStats == null) {
+        return null;
+      }
+      return allStats.find(s => s.stageId === stageId) || null;
     }
     throw Error('user profile has not been loaded. Call loadUserProfile() first');
   }
@@ -189,11 +206,15 @@ export default class {
     this.updateUserProfile(updateObject, callback);
   }
 
-  saveStageCompleted(stageId, callback) {
-    const lesson = this.db.getLessonForStage(stageId);
-    const lessonCompleted = lesson.stages.every(s => s === stageId || this.isStageCompleted(s));
-    const unlockedItems = this.getAllUnlockedItems(stageId);
-    const updateObject = { stagesCompleted: firebase.firestore.FieldValue.arrayUnion(stageId) };
+  saveStageCompleted(stats, callback) {
+    const lesson = this.db.getLessonForStage(stats.stageId);
+    const lessonCompleted = lesson.stages.every(
+      s => s === stats.stageId || this.isStageCompleted(s)
+    );
+    const unlockedItems = this.getAllUnlockedItems(stats.stageId);
+    const updateObject = {
+      stagesCompleted: firebase.firestore.FieldValue.arrayUnion(stats.stageId),
+    };
     if (lessonCompleted) {
       updateObject.lessonsCompleted = firebase.firestore.FieldValue.arrayUnion(lesson.id);
       updateObject.mapState = { lesson: lesson.id, stage: null };
@@ -201,7 +222,9 @@ export default class {
     if (unlockedItems.length > 0) {
       updateObject.unlockedItems = firebase.firestore.FieldValue.arrayUnion(...unlockedItems);
     }
-    this.updateUserProfile(updateObject, callback);
+    this.updateUserProfile(updateObject, () => {
+      this.saveStatsIfBetter(stats, callback);
+    });
   }
 
   saveModalSeen(modalId, callback) {
@@ -219,6 +242,21 @@ export default class {
     const problemEntry = this.getProblemEntry(wordEntry);
     const updateObject = { problemVocab: firebase.firestore.FieldValue.arrayRemove(problemEntry) };
     this.updateUserProfile(updateObject, callback);
+  }
+
+  saveStatsIfBetter(stats, callback) {
+    if (this.areStatsBetter(stats)) {
+      const oldStats = this.getStats(stats.stageId);
+      if (oldStats != null) {
+        this.removeStats(oldStats, () => {
+          this.saveNewStats(stats, callback);
+        });
+      } else {
+        this.saveNewStats(stats, callback);
+      }
+    } else {
+      callback(true);
+    }
   }
 
   // Private
@@ -257,5 +295,24 @@ export default class {
     }
 
     return allUnlockedItems;
+  }
+
+  areStatsBetter(newStats) {
+    const oldStats = this.getStats(newStats.stageId);
+    if (oldStats == null) {
+      return true;
+    }
+
+    return this.statManager.isNewGradeBetter(newStats.grade, oldStats.grade);
+  }
+
+  removeStats(stats, callback) {
+    const updateObject = { stats: firebase.firestore.FieldValue.arrayRemove(stats) };
+    this.updateUserProfile(updateObject, callback);
+  }
+
+  saveNewStats(stats, callback) {
+    const updateObject = { stats: firebase.firestore.FieldValue.arrayUnion(stats) };
+    this.updateUserProfile(updateObject, callback);
   }
 }

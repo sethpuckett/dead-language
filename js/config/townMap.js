@@ -4,6 +4,8 @@ export default {
   mapTitleText: 'Choose a Location',
   stageTitleText: 'Choose a Stage',
   clearedText: 'Cleared!',
+  gradeText: 'Best Grade',
+  gradeMissingText: '?',
   lockedText: 'Locked!',
   screenFadeTime: 750,
   selectorFlashDelay: 350,

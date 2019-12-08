@@ -20,6 +20,20 @@ export default class extends Phaser.Scene {
     super({ key: screens.endgame });
   }
 
+  /*
+    params: {
+      stageId
+      status
+      zombiesKilled
+      hitsTaken
+      cashCollected
+      foodEaten
+      mercenaryKills
+      shotsFired
+      shotsHit
+      grade
+    }
+  */
   init(params) {
     this.progressManager = new GameProgressManager(this.sys.game.db);
     this.optionsManager = new UserOptionsManager(this.sys.game);
