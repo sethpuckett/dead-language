@@ -345,7 +345,7 @@ export default class extends Phaser.Scene {
       this.enableInputHandling();
       if (keyCode === this.keys.ESC.keyCode) {
         this.audioManager.stopMusic();
-        this.scene.start(screens.endgame, this.getEndgameParams(false));
+        this.scene.start(screens.endgame, this.getGameStats(false));
       }
     });
   }

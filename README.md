@@ -10,6 +10,12 @@ $ npm install
 $ npm run start
 ```
 
+If npm throws syntax errors make sure you're using the correct version of node.
+
+```
+$ nvm use 10.15.1
+```
+
 To update Firebase Functions run the following command after updating `functions/index.js`
 
 ```bash
