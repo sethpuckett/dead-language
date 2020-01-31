@@ -32,5 +32,6 @@ const phaserConfig = {
 };
 
 const web = new WebManager(phaserConfig);
+web.setCopyrightYear();
 web.initializeFirebase();
 web.setupCallbacks();
