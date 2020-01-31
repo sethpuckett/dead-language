@@ -9,6 +9,10 @@ export default class WebManager {
     this.phaserConfig = phaserConfig;
   }
 
+  setCopyrightYear() {
+    document.getElementById('current-year').innerHTML = new Date().getFullYear();
+  }
+
   initializeFirebase() {
     firebase.initializeApp(firebaseConfig.firestore);
     this.authUi = new firebaseui.auth.AuthUI(firebase.auth());
