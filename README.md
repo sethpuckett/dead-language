@@ -25,7 +25,7 @@ $ npm run deploy
 If npm throws syntax errors make sure you're using the correct version of node.
 
 ```
-$ nvm use 10.15.1
+$ nvm use 13.8.0
 ```
 
 To update Firebase Functions run the following command after updating `functions/index.js`
