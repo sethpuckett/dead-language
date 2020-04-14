@@ -10,6 +10,11 @@ $ npm install
 $ npm run start
 ```
 
+To deploy
+```bash
+$ npm run deploy
+```
+
 If npm throws syntax errors make sure you're using the correct version of node.
 
 ```
