@@ -1,5 +1,12 @@
-# dead-language
-Language Learning Zombie Game
+# Dead Language
+
+Dead Language is a zombie-themed language learning video game built using JavaScript and the PhaserJS game framework. It combines fast-paced zombie blasting gameplay and vocab study in a single package in a way that I hope is a little more entertaining than flashcards.
+
+## Links
+
+* [deadlanguage.io](https://www.deadlanguage.io): The game
+* [Project write-up](https://www.projects.sethpuckett.com/dead-language/): Background and technical overview
+* [Dev log](https://www.log.deadlanguage.io/): Follow development progress
 
 ## Developer Notes
 
@@ -10,7 +17,7 @@ $ npm install
 $ npm run start
 ```
 
-To deploy
+To deploy to production
 ```bash
 $ npm run deploy
 ```
