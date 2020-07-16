@@ -259,9 +259,17 @@ export default class extends Phaser.Scene {
 
     const menuLabel = this.menuStates[this.selectedOption].label;
     const bounds = menuLabel.getTextBounds().global;
+    let startX = 0;
+    let endX = 0;
 
-    const startX = bounds.x - bounds.width;
-    const endX = bounds.x;
+    if (menuLabel.originX === 1) {
+      startX = bounds.x - bounds.width;
+      endX = bounds.x;
+    } else if (menuLabel.originX === 0.5) {
+      startX = bounds.x - (bounds.width / 2.0);
+      endX = bounds.x + (bounds.width / 2.0);
+    }
+
     const startY = bounds.y + bounds.height + this.ui.selectorPadding;
     const endY = startY;
 
